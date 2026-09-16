@@ -25,3 +25,7 @@ jobs:
         run: python scripts/build_meta_dataset.py examples/synthetic_effects.csv /tmp/iwe-primary.csv
       - name: Run reference meta workflow
         run: python scripts/run_primary_meta.py examples/synthetic_effects.csv /tmp/iwe-meta
+      - name: Run leave-one-study reference sensitivity
+        run: python scripts/run_sensitivity.py examples/synthetic_effects.csv /tmp/iwe-meta/leave_one_study.csv
+      - name: Build machine-readable claim status
+        run: python scripts/build_claim_status.py examples/synthetic_effects.csv /tmp/iwe-meta/claim_status.json
