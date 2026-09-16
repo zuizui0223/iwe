@@ -1,0 +1,3 @@
+seed_id,source_id,title,year,role,notes
+SEED001,10.1016/j.tree.2007.05.006,Time after time: flowering phenology and biotic interactions,2007,backward_and_forward_seed,"Review explicitly separates pollinator and predispersal-seed-predator effects on flowering phenology; 65 references provide a finite historical source universe."
+SEED002,10.1111/j.1461-0248.2011.01601.x,Meta-analysis of phenotypic selection on flowering phenology suggests that early flowering plants are favoured,2011,backward_source_and_prior_art,"Meta-analysis includes 87 species for flowering time and 18 for conspecific flowering synchrony; supporting Appendix S1/S2 contain effect sizes and original source references. Prior art does not estimate plant-partner temporal matching by interaction role."
