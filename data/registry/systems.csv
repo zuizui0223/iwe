@@ -7,3 +7,4 @@ SYS005,Trollius,Chiastocheta,mixed_pollinating_seed_predator,candidate,Pollinati
 SYS006,Lithophragma,Greya,mixed_pollinating_seed_predator,candidate,Context-dependent pollinating seed parasite system
 SYS007,generalized_pollination,multiple,mutualist,candidate,Open stratum for direct mismatch-fitness studies
 SYS008,florivore_seed_predator,multiple,antagonist,candidate,Open stratum for direct overlap-fitness studies
+SYS009,Senita-Upiga,Upiga virescens,mixed_pollinating_seed_predator,candidate,Pollinating seed-consumer system with multi-year timing and redundancy data
