@@ -1,0 +1,9 @@
+age_label,age_days_for_model,n_syconia,mean_total_seeds,sd_total_seeds,source_note
+0,0,33,52.85,19.99,"Table 1; mean ± SD"
+4,4,50,37.66,14.99,"Table 1; mean ± SD"
+8,8,50,36.74,18.53,"Table 1; mean ± SD"
+12,12,51,27.27,26.35,"Table 1; mean ± SD"
+16,16,50,19.50,16.05,"Table 1; mean ± SD"
+20,20,46,22.48,17.09,"Table 1; mean ± SD"
+24,24,54,24.15,15.80,"Table 1; mean ± SD"
+>=28,28.9454545455,55,18.82,13.94,"Table 1 pooled 46 syconia at day 28, 5 at day 32, 4 at day 36; model age is sample-size-weighted mean"
