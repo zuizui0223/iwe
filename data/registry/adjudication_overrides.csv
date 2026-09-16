@@ -1,0 +1,6 @@
+study_id,adjudication_date,prior_status,current_status,current_lane,reason
+IWE004,2026-09-16,include,context_only,direct_seasonal_timing,"Pulsatilla study links Julian flowering date to estimated bee visitation and seed set, but it does not identify a plant-minus-partner or overlap exposure with a focal partner activity curve. Retain as timing-mediated pollination evidence, not strict H1 synchrony."
+IWE015,2026-09-16,include,context_only,direct_seasonal_timing,"Early versus late Silene stellata windows switch from Hadena-dominant to co-pollinator-dominant regimes but are not a quantitative synchrony metric. Year-specific final-fitness contrasts remain in timing_sensitivity_effects.csv."
+IWE010,2026-09-16,unresolved,context_only,direct_seasonal_timing,"Peucedanum flowering date is positioned relative to a known seasonal seed-predator oviposition window, but partner activity is not measured as a matched continuous population-year overlap exposure."
+IWE011,2026-09-16,unresolved,context_only,direct_seasonal_timing,"Four-year Peucedanum selection mosaic is strong timing evidence but does not provide the same explicit synchrony exposure required for strict H1."
+IWE012,2026-09-16,unresolved,context_only,direct_seasonal_timing,"Predator presence changes selection on Gentiana flowering time, but a continuous partner-activity overlap exposure is not measured."
