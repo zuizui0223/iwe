@@ -1,30 +1,29 @@
-# Screening batch 002 — strict synchrony versus seasonal timing
+# Screening batch 002 — strict synchrony, seasonal timing and nonlinear antagonist responses
 
-Date: 2026-09-16
-Status: adjudication and first quantitative sensitivity extraction
+Date: 2026-09-17
+Status: adjudication + estimand repair
 
-## Main result of this batch
+## Main result
 
 The literature is asymmetric in what it measures.
 
-Mutualist studies relatively often measure both plant and pollinator timing and connect their mismatch to seed or fruit production. Antagonist and mixed pollinating-seed-predator studies much more often measure plant flowering date or an early/late seasonal contrast, then quantify attack/predation and plant fitness, without an independently measured partner-activity curve.
+Mutualist studies relatively often measure both plant and pollinator timing and connect mismatch to seed or fruit production. Antagonist and mixed pollinating-seed-predator studies more often measure seasonal flowering position, attack/predation and final fitness without a single monotone partner-overlap exposure.
 
-IWE therefore keeps two non-interchangeable evidence lanes:
+IWE therefore keeps three non-interchangeable evidence lanes:
 
-1. **strict synchrony H1** — explicit overlap, absolute mismatch, a verified one-sided mismatch domain, or a timing manipulation prospectively ordered by measured partner availability;
-2. **direct seasonal timing sensitivity** — flowering date/seasonal position predicts reproductive outcome in a biologically identified interaction regime, but partner synchrony itself is not quantitatively identified.
+1. **strict synchrony H1** — explicit overlap, absolute mismatch, verified one-sided mismatch, or a timing manipulation ordered by measured partner availability;
+2. **direct seasonal timing sensitivity** — flowering date/seasonal position predicts reproductive outcome in a biologically identified interaction regime, but synchrony itself is not quantitatively identified;
+3. **shape evidence** — partner timing and final fitness are matched, but the timing-fitness surface is nonlinear or bidirectional and cannot be represented by one H1 slope.
 
-The second lane is scientifically useful but cannot be relabelled as the first.
+No study is promoted between lanes merely to balance interaction classes.
 
 ## Strict-H1 progress
 
 ### IWE001 — Corydalis ambigua × Bombus spp.
 
-The first extraction was re-audited after freezing `TIMING_METRIC_CONTRACT.md`. Kudo & Ida (2013) reports `mismatch_day = bee first detection - flowering onset`; negative values therefore represent years in which bees preceded flowering and cannot be combined with positive values as a single linear synchrony slope.
+Kudo & Ida (2013) reports `mismatch_day = bee first detection - flowering onset`. The first extraction incorrectly treated the full signed lag as a monotone mismatch axis. After freezing `TIMING_METRIC_CONTRACT.md`, strict H1 was restricted to the one-sided `mismatch_day >= 0` domain.
 
-Strict H1 now uses only the one-sided domain `mismatch_day >= 0`, where larger values consistently mean that plants flower farther ahead of bee availability.
-
-Recovered site-level Fisher-z effects for mismatch versus natural seed set are:
+Recovered site-level Fisher-z effects are:
 
 | Site | n | r | native Fisher z | variance | oriented synchrony z |
 |---|---:|---:|---:|---:|---:|
@@ -32,82 +31,84 @@ Recovered site-level Fisher-z effects for mismatch versus natural seed set are:
 | TOEF | 8 | -0.8330 | -1.1978 | 0.2000 | +1.1978 |
 | JOZ | 4 | -0.9518 | -1.8511 | 1.0000 | +1.8511 |
 
-All three share one publication/programme dependence structure; they are not three independent studies. JOZ is intentionally very imprecise after the estimand-safe restriction.
+These share one programme dependence structure and are not three independent publications.
 
-### IWE002 — Kudo & Cooper 2019
+### IWE002 / IWE008
 
-This remains a high-priority strict-H1 extraction. The source provides 19 years of monitoring, a snow-removal experiment, seed production, and a public Dryad workbook (`10.5061/dryad.q4fm37m`). The paper explicitly reports that seed production declined when flowering preceded bee emergence.
+IWE002 remains the next high-value Corydalis extraction, but its sign convention differs from IWE001 and dataset overlap must be mapped first.
 
-However, IWE002 cannot simply reuse IWE001's sign convention: the 2019 paper describes its mismatch with the opposite algebraic orientation. Population/year overlap with IWE001 must also be mapped before any pooled analysis.
+IWE008 is valuable because it directly compares flowering and key-pollinator peak timing and reports asymmetry between the two mismatch directions. It belongs high in the extraction queue once source-level effect/variance can be recovered.
 
-### IWE008 — Qilian alpine-community study 2024
-
-This is a particularly valuable future extraction because flowering and key-pollinator abundance peaks were both monitored and seed setting was measured at the individual level. It also reports asymmetric fitness effects for the two mismatch directions. This motivates the frozen directional-mismatch sub-analysis rather than an absolute-value assumption.
-
-## Mixed interaction adjudication
+## Mixed-system audit
 
 ### IWE015 — Silene stellata × Hadena ectypa
 
-Zhou et al. (2020) compares early and late experimental flowering windows in 2012 and 2013. The early period is `Hadena ectypa`-dominant; the late period is co-pollinator-dominant. Fruit initiation is high in all four experiments, whereas predation differs strongly among periods. Final female reproductive success is measured as successful fruits after predation.
+The early window is `Hadena ectypa`-dominant and the late window is co-pollinator-dominant. Final female reproductive success is reported as successful fruits after predation.
 
-This is excellent evidence for **interaction-regime-dependent seasonal timing**, but early versus late is not itself a quantitative synchrony metric. IWE015 is therefore removed from strict H1 and retained in the timing-sensitivity lane.
+Published summary means are:
 
-From the paper's Table 1, year-specific early-versus-late log response ratios for successful fruits are:
-
-| Year | early mean | late mean | ln(early/late) | delta-method variance |
+| Year | early n | early successful fruits | late n | late successful fruits |
 |---|---:|---:|---:|---:|
-| 2012 | 2.66 | 3.91 | -0.3852 | 2.3456 |
-| 2013 | 9.77 | 8.60 | +0.1276 | 1.1646 |
+| 2012 | 59 | 2.66 ± 2.95 | 58 | 3.91 ± 4.13 |
+| 2013 | 55 | 9.77 ± 6.91 | 55 | 8.60 ± 7.01 |
 
-The source labels the dispersion values as SE; those source-reported values are used transparently. These effects are deliberately not put in `direct_effects.csv`.
+The table heading labels uncertainty as `SE`. However, the same table gives bounded proportion summaries such as `0.59 ± 0.36`; with the stated sample sizes, interpreting `0.36` as a literal SE implies an impossible SD for a [0,1] variable. Therefore the earlier delta-method variances were withdrawn.
 
-The mixed result itself is heterogeneous across years: the Hadena-dominant window has lower successful-fruit production in 2012 but slightly higher production in 2013. This is exactly why a mixed system should not be forced into a universal synchrony-benefit story.
+IWE015 is now stored only in `provisional_effects.csv` with `variance_unresolved`. It contributes no quantitative meta-analytic effect until the archived Dryad rows are inspected.
 
-### IWE014 — Silene vulgaris × Hadena
+It is also not strict H1: early/late changes the identity mix of pollinators as well as Hadena exposure.
 
-Pettersson (1991) remains biologically compelling: Hadena adults pollinate while larvae consume reproductive structures, and early versus late flowering changes predation while final seed set is reported. But the current accessible evidence does not yet supply a recoverable quantitative synchrony effect with sampling variance. It therefore remains unresolved for quantitative admission rather than being promoted because it fits the preferred narrative.
+### IWE014
 
-## Antagonist adjudication
+The older Silene–Hadena study remains biologically promising but has not yielded a source-level common-scale effect plus sampling variance. It stays unresolved rather than being promoted because it matches the narrative.
 
-### IWE010 / IWE011 — Peucedanum multivittatum × Phaulernis fulviguttella
+## Antagonist audit: nonlinear timing is common in the strongest systems
 
-The system strongly supports phenological exposure to seed predation. The 2021 study reports that the predator's major oviposition period is mid- to late July; seed predation exceeded 50% when flowering occurred before about 20 July and was near absent after about 30 July. The 2025 study extends the system to a four-year phenological selection mosaic and final female fitness.
+### IWE032 — Geum urbanum × Byturus ochraceus
 
-For strict H1, however, the available studies primarily use plant flowering date/population phenology relative to a seasonal predator window rather than a quantitatively observed partner-activity curve for every population-year. These studies therefore currently belong in the **direct seasonal timing sensitivity** lane, not the strict synchrony meta-analysis.
+Decision: `include_shape`.
 
-This does not weaken their biological importance. It clarifies the estimand: they show a temporal enemy window and its reproductive consequences, but do not yet provide the same exposure object as a direct plant-pollinator overlap study.
+The host is mainly selfing, the seed predator has a restricted activity window, and the paper explicitly defines off-peak flowering relative to predator activity. Predation occurs primarily in the first flowering peak and final seed-mass fitness is measured.
 
-### IWE028 — Tripolium vulgare × Paroxyna plantaginis
+Predated plants show a quadratic plant-level fitness surface with maximum predicted total seed mass at about 36% of flowers in the second/off-peak period. A single linear synchrony effect would erase this biology.
 
-Albrectsen (2000) is the best strict-antagonist candidate recovered so far. Transplants were followed through the season; early flower heads had higher potential seed set and lower attack, and the study links the attack pattern to the density/emergence of ovipositing females. Full-text quantitative recovery is still required to establish an effect and variance on a common scale.
+### IWE033 — Cardamine pratensis × Anthocharis cardamines
 
-### IWE012 — Gentiana pneumonanthe × Phengaris alcon
+Decision: `include_shape`.
 
-Valdés & Ehrlén (2017) clearly shows that the seed predator changes selection on flowering phenology: populations without the butterfly favor earlier flowering, whereas caterpillar attack on early plants shifts selection later where the butterfly is present. But the design is based on predator presence/incidence rather than a continuous partner-activity overlap metric. It is therefore a strong timing-sensitivity study, not a strict H1 effect under the current contract.
+The butterfly flight/egg-laying season is shorter than the plant flowering season, leaving temporal refugia before and after antagonist activity. Infestation strongly reduces realized fecundity and the flowering response is bidirectional. This is shape evidence, not a single signed H1 slope.
 
-## Existing-work check
+### IWE034 — Erigeron glaucus × Tephritis ovatipennis
 
-A targeted search did not recover an existing meta-analysis that already estimates IWE's primary moderator — the plant reproductive effect of phenological synchrony compared among mutualists, antagonists and mixed pollinating seed predators. Existing reviews emphasize that population-level consequences of mismatch are rarely demonstrated, while recent macro work often models potential overlap or extinction risk rather than meta-analysing observed plant reproductive effects.
+Decision: `include_shape`.
 
-This keeps the IWE question distinct, but it also confirms that primary effect recovery will be the limiting step rather than statistical method development.
+Clone-level flowering synchrony, insect seed-head damage and annual viable seed production are measured together. Low-synchrony clones partly escape the tephritid by flowering into autumn, while viable seed success is lowest at intermediate synchrony. Again, a one-slope effect is inappropriate.
+
+These three records are stored in `data/extraction/shape_evidence.csv`.
+
+## Peucedanum status
+
+IWE010/IWE011 remain biologically strong evidence for a seasonal enemy window: early flowering overlaps predator oviposition and experiences much higher seed predation. But current published designs do not yet provide the same continuously observed partner-overlap exposure as strict H1. They remain timing-sensitivity/context evidence rather than being forced into the direct synchrony meta-analysis.
+
+## Consequence for hypothesis status
+
+H1 is unchanged.
+
+The nonlinear antagonist pattern was recognized during screening, after outcomes were visible. It is therefore not promoted to a new confirmatory hypothesis in this discovery corpus. `HYPOTHESES.md` now registers a screening-informed shape observation with an explicit rule: any confirmatory generalization about antagonist curvature must be tested on a prospectively defined holdout set.
 
 ## Current evidence diagnosis
 
-The most likely empirical shape is now:
+- **mutualist strict H1:** feasible; direct candidates exist.
+- **antagonist strict H1:** sparse; strongest studies often yield nonlinear or seasonal-window estimands.
+- **mixed strict H1:** very sparse; rich mechanism literature but few direct synchrony-to-net-fitness estimates.
+- **shape/timing-sensitivity evidence:** substantially richer for antagonist and mixed systems.
 
-- **mutualist strict H1:** feasible, with multiple direct candidates;
-- **antagonist strict H1:** sparse; many high-quality studies are seasonal-timing rather than direct-overlap studies;
-- **mixed strict H1:** very sparse; rich mechanism literature but few synchrony-to-net-fitness effects;
-- **timing-sensitivity synthesis:** likely much larger for antagonist and mixed classes.
-
-Therefore IWE should not promise a balanced three-class strict meta-analysis before screening is complete. A valid endpoint is an evidence-map result showing that the ecological literature measures timing differently across interaction classes.
+This evidence asymmetry is itself a potentially publishable measurement result, but no cross-class ecological conclusion is yet justified.
 
 ## Next extraction order
 
-1. IWE002 — recover 2019 Corydalis Dryad workbook and map overlap with IWE001.
-2. IWE008 — recover species-level directional mismatch effects and dependence structure.
-3. IWE028 — recover Tripolium attack/seed-set timing data and determine whether a strict antagonist effect is estimable.
-4. IWE014 — attempt quantitative recovery from the 1991 Silene vulgaris paper; otherwise lock as context/sensitivity only.
-5. IWE010/IWE011 — build a Peucedanum seasonal-timing extraction without pretending it is direct synchrony.
-
-No cross-class pooled ecological conclusion is yet justified.
+1. IWE028 — recover Tripolium × Paroxyna source-level attack/seed-set timing effect and sampling variance; highest-priority strict antagonist candidate.
+2. IWE002 — recover the 2019 Corydalis workbook and map overlap with IWE001.
+3. IWE008 — recover directional community mismatch effects and dependence structure.
+4. IWE014 — quantitative recovery attempt for Silene vulgaris × Hadena.
+5. IWE032/033/034 — recover compatible quantitative shape parameters where source data permit, without converting them into H1 slopes.
