@@ -1,0 +1,9 @@
+system_id,plant_group,animal_group,interaction_type,candidate_status,notes
+SYS001,Hadena-Caryophyllaceae,Hadena,mixed_pollinating_seed_predator,candidate,Initial nursery-pollination stratum
+SYS002,Epicephala-Phyllanthaceae,Epicephala,mixed_pollinating_seed_predator,candidate,Initial nursery-pollination stratum
+SYS003,Yucca,Tegeticula-Parategeticula,mixed_pollinating_seed_predator,candidate,Initial nursery-pollination stratum
+SYS004,Ficus,Agaonidae,mixed_pollinating_seed_predator,candidate,Pollinating seed consumer mutualism
+SYS005,Trollius,Chiastocheta,mixed_pollinating_seed_predator,candidate,Pollination and seed predation system
+SYS006,Lithophragma,Greya,mixed_pollinating_seed_predator,candidate,Context-dependent pollinating seed parasite system
+SYS007,generalized_pollination,multiple,mutualist,candidate,Open stratum for direct mismatch-fitness studies
+SYS008,florivore_seed_predator,multiple,antagonist,candidate,Open stratum for direct overlap-fitness studies
