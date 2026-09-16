@@ -1,7 +1,7 @@
 # Timing metric contract
 
 Date: 2026-09-16
-Status: frozen before extraction beyond IWE001
+Status: frozen before extraction beyond IWE001; IWE001 domain audit repaired 2026-09-16
 
 ## Why this contract exists
 
@@ -11,7 +11,7 @@ IWE will preserve the native timing definition before any orientation or pooling
 
 ## Canonical timing classes
 
-Every extracted Tier-A effect must be assigned one `timing_metric_type`:
+Every extracted Tier-A effect must be assigned one `timing_metric_type` in its extraction receipt or queue:
 
 - `overlap_index` — larger native values mean greater temporal overlap by construction;
 - `absolute_mismatch` — non-negative distance from temporal matching, irrespective of which partner is earlier;
@@ -25,7 +25,7 @@ Every extracted Tier-A effect must be assigned one `timing_metric_type`:
 
 For every real effect, the extraction receipt must state:
 
-1. the biological events being compared (for example flowering onset and first queen-bee detection, or flowering peak and pollinator-abundance peak);
+1. the biological events being compared;
 2. the source equation or verbal definition of the timing metric;
 3. which sign corresponds to plant earlier, exact matching, and partner earlier;
 4. whether the metric is signed or absolute;
@@ -51,7 +51,7 @@ A source using `partner_timing - plant_timing` must be multiplied by -1 before b
 
 ## Primary H1 synchrony estimand
 
-For the primary H1 analysis, an effect may be oriented as `greater synchrony -> plant reproductive performance` only when one of the following is justified:
+For the primary H1 analysis, an effect may be oriented as `greater synchrony -> plant reproductive performance` only when one of the following is justified.
 
 ### A. Explicit overlap
 
@@ -63,9 +63,9 @@ The source uses `|plant_timing - partner_timing|` or another non-negative mismat
 
 ### C. One-sided mismatch domain
 
-All observations used for the effect lie on one declared side of matching, and the source biology supports monotonic movement toward or away from zero. Example: flowering always occurs on or before bee emergence, so an increase in `plant - bee` from -7 to 0 is an increase in synchrony.
+All observations used for the effect lie on one declared side of matching, and the source biology supports monotonic movement toward or away from zero. The extraction receipt must list the retained domain and show that no opposite-sign observations enter that effect.
 
-The extraction receipt must show that the one-sided restriction is true for the analyzed rows.
+For example, with native `partner_timing - plant_timing`, restricting to values `>= 0` means the plant flowers on or before partner appearance. Larger values are then unambiguously greater plant-earlier mismatch and can be oriented toward synchrony by a sign reversal.
 
 ### D. Experimental timing contrast with a measured interaction window
 
@@ -93,7 +93,7 @@ They are classified as:
 
 The latter may enter a predeclared sensitivity analysis and may support statements about seasonal timing effects, but not the strict claim that phenological synchrony caused the response.
 
-## IWE001 source-specific convention
+## IWE001 source-specific convention and repair
 
 Kudo & Ida (2013) Appendix A reports `Mismatch day` as bumblebee first-detection date minus flowering-onset date. Thus its native sign is `partner_minus_plant`:
 
@@ -101,13 +101,17 @@ Kudo & Ida (2013) Appendix A reports `Mismatch day` as bumblebee first-detection
 - zero: matching onset/detection;
 - negative: bee detection precedes flowering.
 
-The three IWE001 site extractions were calculated as correlations between that native mismatch variable and natural seed set. They are retained as valid primary effects because the dominant biological mismatch reported in the source is early flowering relative to bee activity, but their source convention must not be assumed for later Corydalis papers.
+The dataset contains observations on both sides of zero. Therefore the original all-row signed correlations cannot be used as strict H1 synchrony effects.
+
+The strict-H1 IWE001 extraction is now restricted to rows with native `Mismatch day >= 0` within each population. This satisfies the one-sided-domain rule: within the retained rows, increasing native mismatch always means moving farther from matching on the plant-earlier side. Negative-mismatch rows are preserved in the source-row audit for directional analyses but are excluded from the strict-H1 effect.
+
+See `docs/EXTRACTION_IWE001.md` and `data/extraction/source_rows/IWE001_appendix_A1.csv`.
 
 ## IWE002 source-specific warning
 
 Kudo & Cooper (2019) describes mismatch as flowering onset minus bee emergence, i.e. `plant_minus_partner`, the opposite algebraic sign from the Kudo & Ida (2013) Appendix-A column. The two publications therefore cannot share a sign transform merely because both use the word `mismatch`.
 
-Before IWE002 effects are added to `direct_effects.csv`, the extracted source variable must be converted to the canonical `lag_PP` convention and its one-sided/absolute treatment must be documented.
+Before IWE002 effects are added to `direct_effects.csv`, the extracted source variable must be converted to the canonical `lag_PP` convention and its one-sided/absolute treatment must be documented. IWE001/IWE002 population-year overlap must also be resolved before both contribute to a pooled result.
 
 ## Claim boundary
 
