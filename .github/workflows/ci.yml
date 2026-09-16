@@ -21,6 +21,8 @@ jobs:
         run: python scripts/validate_registry.py data/registry/systems.csv
       - name: Validate synthetic extraction
         run: python scripts/validate_extraction.py examples/synthetic_effects.csv
+      - name: Validate direct extraction
+        run: python scripts/validate_extraction.py data/extraction/direct_effects.csv
       - name: Build primary dataset
         run: python scripts/build_meta_dataset.py examples/synthetic_effects.csv /tmp/iwe-primary.csv
       - name: Run reference meta workflow
