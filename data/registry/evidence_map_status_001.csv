@@ -1,0 +1,4 @@
+interaction_type,n_screened,strict_candidate_include,strict_effect_programmes_closed,unresolved_possible_strict,context_or_timing_only,shape_lane,notes
+mutualist,16,8,1,6,2,0,"IWE001 is the only currently extracted strict-H1 programme; its three site effects are dependent and count as one programme."
+antagonist,10,0,0,0,7,3,"IWE028 has been adjudicated out of strict H1 by extraction receipt although the registry row still awaits status sync; IWE032-IWE034 are nonlinear/bidirectional shape evidence."
+mixed_pollinating_seed_predator,8,0,0,2,6,0,"IWE014 and IWE019 remain unresolved strict candidates; all other screened mixed systems currently lack a common strict synchrony-to-net-fitness effect."
