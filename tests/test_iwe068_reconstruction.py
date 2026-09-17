@@ -39,6 +39,28 @@ def test_source_seed_outcome_matches_frozen_r_definition():
     assert math.isclose(result["seeds_per_flower"], seeds_est / flowers_est)
 
 
+def test_source_seed_outcome_preserves_r_na_when_no_counted_fruits():
+    """R source uses 0 * NA = NA, so fruitless plants cannot become zero-fitness rows."""
+    row = {
+        "seeds": 0.0,
+        "fruits": 0.0,
+        "fruits_split": 0.0,
+        "aborts": 1.0,
+        "fruits_fly_no_seeds": 0.0,
+        "fruits_fly_with_seeds": 0.0,
+        "seeds_fly": 0.0,
+        "fruits_caterpillar": 0.0,
+        "fruits_early_uncountable": 0.0,
+        "flowers_buds": 0.0,
+        "flowers_buds_collected_early": 0.0,
+        "flowers_buds_collected_last": 0.0,
+    }
+    result = source_seed_outcome(row)
+    assert math.isnan(result["seeds_per_fruit"])
+    assert math.isnan(result["seeds_est"])
+    assert math.isnan(result["seeds_per_flower"])
+
+
 def test_leave_one_out_overlap_avoids_own_egg_mechanical_correlation():
     rows = []
     # Plant A flowers only early and receives many eggs early.
