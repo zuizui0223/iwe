@@ -20,6 +20,7 @@ EFFECT_FAMILIES = {
     "fisher_z",
     "standardized_mean_difference",
     "log_response_ratio",
+    "log_rate_slope_per_day",
 }
 
 REQUIRED_EFFECT_COLUMNS = [
