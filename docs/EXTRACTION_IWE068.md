@@ -2,36 +2,50 @@
 
 Source article: Wu C, Powers JM, Hopp DZ, Campbell DR. *Effects of experimental warming on floral scent, display and rewards in two subalpine herbs*. Annals of Botany. DOI `10.1093/aob/mcad195`.
 
-Public source repository: `jmpowers/ipomopsis-temp`, pinned for this reconstruction at commit `9f4ceff87f5eb68c5a09f5e89ea457432e452542`.
+Public source repository: `jmpowers/ipomopsis-temp`, pinned at commit `9f4ceff87f5eb68c5a09f5e89ea457432e452542`.
 
-Relevant files at the pinned commit:
+Relevant pinned raw files:
 
 - `data/traits/2021 Maxfield Phenology - 2021.csv` — repeated plant-level flowers/buds and Hylemya eggs;
 - `data/traits/2021 Maxfield Seeds - 2021.csv` — fruit fate and seed counts;
-- `data/2021 Maxfield Rosettes - 2021OTCs.csv` — plant treatment metadata;
-- `traits.Rmd` — source code defining plant IDs, phenology variables and the final seed-fitness variables.
+- `data/2021 Maxfield Rosettes - 2021OTCs.csv` — plant treatment metadata.
 
-Status: **unresolved strict-H1 antagonist candidate; reconstruction frozen before the overlap–fitness result is computed**.
+Source transformation reference: `traits.Rmd` at the same pinned commit.
 
-## Source data architecture
+Status: **strict-H1 antagonist effect quantitatively closed**.
 
-The source code constructs a stable `plantid` at Maxfield and joins phenology and reproductive data to the same plant metadata.
+## Frozen design
 
-Phenology variables are defined prospectively by the source as:
+The reconstruction contract below was frozen before the overlap–fitness result was computed.
+
+### Primary biological subset
+
+Use only plants with:
+
+- `temp = control`;
+- `snow = normal`.
+
+The warming and early-snowmelt cells remain sensitivity lanes and cannot replace the primary result based on effect size or significance.
+
+### Source phenology variables
+
+The source workflow defines:
 
 - `open = rowSums(open_*)`;
 - `buds = rowSums(buds_*)`;
 - `eggs = rowSums(eggs_*)`;
 - `eggs_per_flower = eggs / (open + buds)`.
 
-The source recodes two late census dates to their intended census rounds:
+IWE reconstructs `plantid` from plot, subplot and plant, and preserves the source census recodes:
 
 - `2021-07-02 -> 2021-06-30`;
 - `2021-07-26 -> 2021-07-20`.
 
-Missing plant × census combinations are completed with zero `open` and `buds`, following the source workflow.
+Plant × census combinations absent from the repeated phenology file are completed with zero floral availability and zero eggs for the IWE overlap reconstruction.
 
-The reproductive source code aggregates repeated seed/fruit records by plant and defines:
+### Source reproductive outcome
+
+The source code aggregates repeated reproductive records and defines:
 
 - `seeds_per_fruit = seeds / fruits`;
 - `fruits_aborted = aborts + flowers_buds_collected_last`;
@@ -41,97 +55,86 @@ The reproductive source code aggregates repeated seed/fruit records by plant and
 - `flowers_est = fruits_nonaborted + aborts + flowers_buds`;
 - `seeds_per_flower = seeds_est / flowers_est`.
 
-`seeds_per_flower` is the source analysis's final plant reproductive-fitness variable and is therefore frozen as the IWE068 primary outcome. IWE will reproduce the source definition rather than selecting a different outcome after seeing the result.
+`seeds_per_flower` was frozen as the primary plant reproductive outcome.
 
-## Frozen primary biological subset
-
-Primary IWE068 reconstruction uses only plants with:
-
-- `temp = control`;
-- `snow = normal`.
-
-Rationale: the experiment independently manipulates temperature (`control` versus open-top-chamber warming) and snowmelt (`normal` versus early). IWE's primary aim here is the naturally realized antagonist timing–fitness association. Including warmed or early-snowmelt plants in the primary effect would allow an experimental treatment to induce covariance between flowering phenology, Hylemya activity and reproduction.
-
-The other treatment cells are retained only as labelled sensitivity analyses. They can never replace the primary control-normal result because their effects are larger, smaller, or more significant.
-
-All seasonal census dates for the control-normal plants are retained, including dates before temperature chambers were installed, because these plants did not receive the warming treatment and the full flowering/egg activity window is the exposure of interest.
+The Python reconstruction preserves R's NA propagation. In particular, fruitless plants with undefined `seeds_per_fruit` remain NA; they are not converted into artificial zero-fitness observations through `0 * NA -> 0` logic.
 
 ## Frozen timing metric
 
-For each focal primary plant `p` and census `t`:
+For focal primary plant `p` and census `t`:
 
-1. Define plant floral availability as
+`F[p,t] = open[p,t] + buds[p,t]`.
 
-   `F[p,t] = open[p,t] + buds[p,t]`.
+Estimate the Hylemya activity curve using all **other** primary plants:
 
-   This matches the denominator used by the source for `eggs_per_flower` and therefore includes the reproductive structures available to Hylemya oviposition.
+`A[-p,t] = sum_{q != p} eggs[q,t] / sum_{q != p} (open[q,t] + buds[q,t])`.
 
-2. Estimate the realized Hylemya activity curve using all **other** primary plants:
+The focal plant is left out to prevent its own egg load from mechanically generating its timing exposure.
 
-   `A[-p,t] = sum_{q != p} eggs[q,t] / sum_{q != p} (open[q,t] + buds[q,t])`.
+Census dates for which the leave-one-out reference population has zero floral denominator are omitted. On valid dates, normalize both curves to sum to one and calculate histogram intersection:
 
-   The focal plant is left out to prevent its own realized egg load from mechanically generating its timing exposure.
+`O[p] = sum_t min(Fnorm[p,t], Anorm[-p,t])`.
 
-3. Keep census dates for which the leave-one-out reference population has a positive floral denominator. No activity rate is imputed where the reference population has zero flowers/buds.
+Properties:
 
-4. On the shared valid census dates, normalize the focal floral curve and reference Hylemya curve to sum to one:
-
-   `Fnorm[p,t] = F[p,t] / sum_t F[p,t]`
-
-   `Anorm[-p,t] = A[-p,t] / sum_t A[-p,t]`.
-
-5. Define overlap by histogram intersection:
-
-   `O[p] = sum_t min(Fnorm[p,t], Anorm[-p,t])`.
-
-`O` lies in `[0,1]`; larger values mean a greater fraction of the plant's reproductive structures occur within the observed Hylemya oviposition window.
-
-This is registered as:
-
+- `O in [0,1]`;
+- larger `O` means greater temporal overlap between focal reproductive structures and observed Hylemya oviposition activity;
 - `timing_metric_type = overlap_index`;
 - `phenology_source = direct_interaction`;
 - `exposure_direction = synchrony`.
 
-No alternative overlap, peak-lag, first-date or flowering-date metric may replace this primary metric after the plant fitness values are analyzed.
-
 ## Frozen quantitative effect
 
-Among complete `temp=control, snow=normal` plants:
+Among complete primary plants:
 
-- compute Pearson `r = cor(O[p], seeds_per_flower[p])`;
-- transform `z = atanh(r)`;
-- use sampling variance `1/(n-3)`.
+1. Pearson `r = cor(O[p], seeds_per_flower[p])`;
+2. Fisher `z = atanh(r)`;
+3. sampling variance `1/(n-3)`.
 
-The native direction is retained. Because this is an antagonist overlap exposure, a negative z means greater temporal matching to Hylemya is associated with lower seed production per flower. IWE does not reverse antagonist effects to make them biologically positive.
+The native synchrony direction is retained. For this antagonist interaction, a negative effect means greater temporal matching to Hylemya is associated with lower plant reproductive performance.
 
-Register the resulting row only if `n >= 4`, all included plants have finite `O` and `seeds_per_flower`, and both variables have non-zero variance.
+## Executed result
 
-## Frozen sensitivity analyses
+The pinned reconstruction was executed in GitHub Actions from the three raw files above using `scripts/reconstruct_iwe068.py`.
 
-These are secondary and cannot replace the primary result:
+Recovered primary effect:
 
-1. `temp=control, snow=early` plants analyzed separately with the identical reconstruction;
-2. `temp=warmed, snow=normal` plants analyzed separately;
-3. `temp=warmed, snow=early` plants analyzed separately;
-4. all treatment cells analyzed in one model only if treatment-cell effects are explicitly retained rather than pooled as if observationally homogeneous.
+| quantity | value |
+|---|---:|
+| complete plants `n` | 11 |
+| Pearson `r` | -0.05224909311004083 |
+| Fisher `z` | -0.05229671725455789 |
+| variance | 0.125 |
 
-The primary control-normal row remains the strict-H1 evidence unit regardless of the sensitivity results.
+The result is therefore **essentially null on the registered linear synchrony scale**. The point estimate is slightly negative, but it is small relative to its sampling uncertainty.
 
-## Reproducibility contract
+This row is registered in `data/extraction/direct_effects.csv` as `IWE068_MAXFIELD_FZ` with dependence ID `DEP_IWE068_IPOMOPSIS_HYLEMYA`.
 
-The reconstruction script must fetch only the three raw files above from the pinned external commit `9f4ceff87f5eb68c5a09f5e89ea457432e452542`, verify the expected columns, reproduce the source variable definitions, and emit:
+## Reproducibility implementation
 
-- plant-level overlap and `seeds_per_flower` for the primary subset;
-- n, Pearson r, Fisher z and variance;
-- treatment-cell sensitivity summaries;
-- the external commit SHA and input paths used.
+The repository now contains:
 
-The result must not depend on the moving `main` branch of the external repository.
+- `src/iwe/reconstruction.py` — deterministic source-variable reconstruction and leave-one-out overlap helpers;
+- `tests/test_iwe068_reconstruction.py` — tests for overlap, source seed arithmetic, R-style NA propagation, date recoding/phenology preparation and seed aggregation;
+- `scripts/reconstruct_iwe068.py` — fetches only the three pinned raw inputs and emits plant-level data plus the strict effect;
+- CI execution of the reconstruction on every relevant branch update.
 
-## Claim ceiling
+The analysis does not depend on the moving external `main` branch.
 
-Before executing the pinned reconstruction, IWE068 supports only:
+## Interpretation ceiling
 
-> a public, source-coded dataset exists in which repeated plant flowering/bud availability, Hylemya egg activity and final plant seed production can be linked at plant level, allowing a prospectively frozen strict antagonist timing–fitness reconstruction.
+IWE068 supports:
 
-No effect sign or magnitude is claimed until the frozen script is run.
+> In the Maxfield 2021 untreated/normal-snow subset, the prospectively frozen leave-one-out temporal overlap between `Ipomopsis aggregata` reproductive structures and Hylemya oviposition activity showed little linear association with source-defined seeds per flower (`r=-0.052`, `n=11`).
+
+It does **not** establish:
+
+- no antagonist timing effect in general;
+- absence of nonlinear timing effects;
+- absence of treatment-dependent effects;
+- equivalence between Hylemya oviposition overlap and all forms of antagonist exposure;
+- a class-level antagonist estimate from one programme.
+
+## Consequence for IWE
+
+IWE068 is the first quantitatively closed strict-H1 antagonist programme. Together with IWE001 (mutualist) and IWE064 (mixed pollinating seed predator), IWE now has at least one strict quantitative programme represented in each preregistered interaction class. This is a milestone for estimand coverage, **not** sufficient replication for a cross-class biological conclusion.
