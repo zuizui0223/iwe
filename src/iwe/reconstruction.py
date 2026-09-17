@@ -1,0 +1,155 @@
+from __future__ import annotations
+
+from collections.abc import Mapping, Sequence
+
+import numpy as np
+import pandas as pd
+
+
+def histogram_intersection(a: Sequence[float], b: Sequence[float]) -> float:
+    """Return histogram intersection after normalizing two nonnegative curves.
+
+    Both curves must have the same length and a positive finite total. The
+    returned overlap is in [0, 1].
+    """
+    x = np.asarray(a, dtype=float)
+    y = np.asarray(b, dtype=float)
+    if x.shape != y.shape:
+        raise ValueError("curves must have the same shape")
+    if x.ndim != 1:
+        raise ValueError("curves must be one-dimensional")
+    if not np.all(np.isfinite(x)) or not np.all(np.isfinite(y)):
+        raise ValueError("curves must be finite")
+    if np.any(x < 0) or np.any(y < 0):
+        raise ValueError("curves must be nonnegative")
+    sx = float(x.sum())
+    sy = float(y.sum())
+    if sx <= 0 or sy <= 0:
+        raise ValueError("curves must have positive totals")
+    xn = x / sx
+    yn = y / sy
+    return float(np.minimum(xn, yn).sum())
+
+
+def _count(row: Mapping[str, object], key: str) -> float:
+    value = row.get(key, 0.0)
+    if value is None or (isinstance(value, float) and np.isnan(value)):
+        return 0.0
+    return float(value)
+
+
+def source_seed_outcome(row: Mapping[str, object]) -> dict[str, float]:
+    """Reproduce the Maxfield 2021 seed-fitness definitions in traits.Rmd.
+
+    Invalid source divisions are returned as NaN rather than imputed.
+    """
+    seeds = _count(row, "seeds")
+    fruits = _count(row, "fruits")
+    fruits_split = _count(row, "fruits_split")
+    aborts = _count(row, "aborts")
+    fly_no_seeds = _count(row, "fruits_fly_no_seeds")
+    fly_with_seeds = _count(row, "fruits_fly_with_seeds")
+    seeds_fly = _count(row, "seeds_fly")
+    fruits_caterpillar = _count(row, "fruits_caterpillar")
+    early_uncountable = _count(row, "fruits_early_uncountable")
+    flowers_buds = _count(row, "flowers_buds")
+    collected_early = _count(row, "flowers_buds_collected_early")
+    collected_last = _count(row, "flowers_buds_collected_last")
+
+    seeds_per_fruit = seeds / fruits if fruits > 0 else np.nan
+    fruits_aborted = aborts + collected_last
+    source_seed_denominator = (
+        fruits
+        + fruits_aborted
+        + fly_with_seeds
+        + fly_no_seeds
+        + fruits_caterpillar
+    )
+    mean_source_seeds = seeds / source_seed_denominator if source_seed_denominator > 0 else np.nan
+
+    if (collected_early + early_uncountable) > 0 and not np.isfinite(mean_source_seeds):
+        seeds_est = np.nan
+    elif fruits_split > 0 and not np.isfinite(seeds_per_fruit):
+        seeds_est = np.nan
+    else:
+        seeds_est = (
+            seeds
+            + seeds_fly
+            + (collected_early + early_uncountable) * (0.0 if np.isnan(mean_source_seeds) else mean_source_seeds)
+            + fruits_split * (0.0 if np.isnan(seeds_per_fruit) else seeds_per_fruit)
+        )
+
+    fruits_with_seeds = fruits + fruits_split + fly_with_seeds
+    fruits_nonaborted = fruits_with_seeds + fly_no_seeds + fruits_caterpillar + fruits_split
+    flowers_est = fruits_nonaborted + aborts + flowers_buds
+    seeds_per_flower = seeds_est / flowers_est if flowers_est > 0 and np.isfinite(seeds_est) else np.nan
+
+    return {
+        "seeds_per_fruit": float(seeds_per_fruit),
+        "fruits_aborted": float(fruits_aborted),
+        "seeds_est": float(seeds_est),
+        "fruits_with_seeds": float(fruits_with_seeds),
+        "fruits_nonaborted": float(fruits_nonaborted),
+        "flowers_est": float(flowers_est),
+        "seeds_per_flower": float(seeds_per_flower),
+    }
+
+
+def leave_one_out_overlaps(
+    df: pd.DataFrame,
+    *,
+    plant_col: str,
+    time_col: str,
+    floral_col: str,
+    egg_col: str,
+) -> pd.DataFrame:
+    """Compute focal-plant flower overlap with leave-one-out egg activity.
+
+    The activity curve at each census is total eggs divided by total floral
+    availability among all *other* plants. Each focal plant's floral curve and
+    the reference activity curve are then normalized over shared valid dates
+    and compared by histogram intersection.
+    """
+    required = {plant_col, time_col, floral_col, egg_col}
+    missing = required - set(df.columns)
+    if missing:
+        raise ValueError(f"missing columns: {sorted(missing)}")
+
+    work = df[[plant_col, time_col, floral_col, egg_col]].copy()
+    work[floral_col] = pd.to_numeric(work[floral_col], errors="coerce")
+    work[egg_col] = pd.to_numeric(work[egg_col], errors="coerce")
+    if work[[floral_col, egg_col]].isna().any().any():
+        raise ValueError("floral and egg values must be numeric and non-missing")
+    if (work[[floral_col, egg_col]] < 0).any().any():
+        raise ValueError("floral and egg counts must be nonnegative")
+
+    per_plant_time = (
+        work.groupby([plant_col, time_col], as_index=False)[[floral_col, egg_col]]
+        .sum()
+        .sort_values([plant_col, time_col])
+    )
+    totals = per_plant_time.groupby(time_col)[[floral_col, egg_col]].sum()
+
+    records: list[dict[str, object]] = []
+    for plant, focal in per_plant_time.groupby(plant_col, sort=True):
+        focal = focal.set_index(time_col)
+        common_times = totals.index.intersection(focal.index)
+        reference_floral = totals.loc[common_times, floral_col] - focal.loc[common_times, floral_col]
+        reference_eggs = totals.loc[common_times, egg_col] - focal.loc[common_times, egg_col]
+        valid = reference_floral > 0
+        common_times = common_times[valid.to_numpy()]
+        if len(common_times) == 0:
+            overlap = np.nan
+        else:
+            floral_curve = focal.loc[common_times, floral_col].to_numpy(dtype=float)
+            activity_curve = (
+                reference_eggs.loc[common_times].to_numpy(dtype=float)
+                / reference_floral.loc[common_times].to_numpy(dtype=float)
+            )
+            if floral_curve.sum() <= 0 or activity_curve.sum() <= 0:
+                overlap = np.nan
+            else:
+                overlap = histogram_intersection(floral_curve, activity_curve)
+        records.append({plant_col: plant, "overlap": overlap})
+
+    return pd.DataFrame.from_records(records)
