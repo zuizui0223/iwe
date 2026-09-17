@@ -49,6 +49,17 @@ def _id_token(value: object) -> str:
     return str(value).strip()
 
 
+def _metadata_subset(metadata: pd.DataFrame) -> pd.DataFrame:
+    required_meta = {"plantid", "snow", "temp"}
+    missing_meta = required_meta - set(metadata.columns)
+    if missing_meta:
+        raise ValueError(f"missing metadata columns: {sorted(missing_meta)}")
+    meta = metadata[["plantid", "snow", "temp"]].copy()
+    if meta["plantid"].duplicated().any():
+        raise ValueError("metadata plantid must be unique")
+    return meta
+
+
 def prepare_maxfield_phenology(phen_raw: pd.DataFrame, metadata: pd.DataFrame) -> pd.DataFrame:
     """Reproduce the Maxfield 2021 phenology preparation needed by IWE068.
 
@@ -61,10 +72,6 @@ def prepare_maxfield_phenology(phen_raw: pd.DataFrame, metadata: pd.DataFrame) -
     missing_phen = required_phen - set(phen_raw.columns)
     if missing_phen:
         raise ValueError(f"missing phenology columns: {sorted(missing_phen)}")
-    required_meta = {"plantid", "snow", "temp"}
-    missing_meta = required_meta - set(metadata.columns)
-    if missing_meta:
-        raise ValueError(f"missing metadata columns: {sorted(missing_meta)}")
 
     work = phen_raw.copy()
     open_cols = [c for c in work.columns if c.startswith("open_")]
@@ -93,10 +100,7 @@ def prepare_maxfield_phenology(phen_raw: pd.DataFrame, metadata: pd.DataFrame) -
     )
     work["census"] = census
 
-    meta = metadata[["plantid", "snow", "temp"]].copy()
-    if meta["plantid"].duplicated().any():
-        raise ValueError("metadata plantid must be unique")
-    work = work.merge(meta, on="plantid", how="left", validate="m:1")
+    work = work.merge(_metadata_subset(metadata), on="plantid", how="left", validate="m:1")
     work = work.dropna(subset=["snow", "temp"])
 
     observed = (
@@ -145,9 +149,6 @@ def source_seed_outcome(row: Mapping[str, object]) -> dict[str, float]:
     )
     mean_source_seeds = seeds / source_seed_denominator if source_seed_denominator > 0 else np.nan
 
-    # Match the source R expression literally: both rate terms are present in
-    # the expression even when their multipliers are zero, so any undefined
-    # rate propagates NA through seeds_est.
     if not np.isfinite(mean_source_seeds) or not np.isfinite(seeds_per_fruit):
         seeds_est = np.nan
     else:
@@ -172,6 +173,49 @@ def source_seed_outcome(row: Mapping[str, object]) -> dict[str, float]:
         "flowers_est": float(flowers_est),
         "seeds_per_flower": float(seeds_per_flower),
     }
+
+
+def prepare_maxfield_seeds(seed_raw: pd.DataFrame, metadata: pd.DataFrame) -> pd.DataFrame:
+    """Aggregate Maxfield 2021 seed records and reproduce source fitness variables."""
+    required = {"plot", "subplot", "plant", "date"}
+    missing = required - set(seed_raw.columns)
+    if missing:
+        raise ValueError(f"missing seed columns: {sorted(missing)}")
+
+    count_cols = [
+        "seeds",
+        "fruits",
+        "fruits_split",
+        "aborts",
+        "fruits_fly_no_seeds",
+        "fruits_fly_with_seeds",
+        "seeds_fly",
+        "fruits_caterpillar",
+        "fruits_early_uncountable",
+        "flowers_buds",
+    ]
+    missing_counts = set(count_cols) - set(seed_raw.columns)
+    if missing_counts:
+        raise ValueError(f"missing seed-count columns: {sorted(missing_counts)}")
+
+    work = seed_raw.copy()
+    work["plantid"] = [
+        f"{_id_token(plot)}{_id_token(subplot)}{_id_token(plant)}"
+        for plot, subplot, plant in zip(work["plot"], work["subplot"], work["plant"])
+    ]
+    work["date"] = pd.to_datetime(work["date"], errors="coerce")
+    work[count_cols] = work[count_cols].apply(pd.to_numeric, errors="coerce").fillna(0.0)
+    doy = work["date"].dt.dayofyear
+    work["flowers_buds_collected_last"] = np.where(doy >= 235, work["flowers_buds"], 0.0)
+    work["flowers_buds_collected_early"] = np.where(doy < 235, work["flowers_buds"], 0.0)
+
+    aggregate_cols = count_cols + ["flowers_buds_collected_early", "flowers_buds_collected_last"]
+    work = work.merge(_metadata_subset(metadata), on="plantid", how="left", validate="m:1")
+    work = work.dropna(subset=["snow", "temp"])
+    grouped = work.groupby(["plantid", "snow", "temp"], as_index=False)[aggregate_cols].sum()
+
+    outcomes = pd.DataFrame([source_seed_outcome(row) for row in grouped.to_dict("records")])
+    return pd.concat([grouped.reset_index(drop=True), outcomes], axis=1)
 
 
 def leave_one_out_overlaps(
