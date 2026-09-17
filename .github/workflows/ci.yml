@@ -17,6 +17,8 @@ jobs:
         run: python -m pip install -e '.[dev]'
       - name: Unit tests
         run: pytest -q
+      - name: Reconstruct IWE068 pinned raw-data effect
+        run: python scripts/reconstruct_iwe068.py --json /tmp/iwe068.json --plants /tmp/iwe068-plants.csv
       - name: Validate system registry
         run: python scripts/validate_registry.py data/registry/systems.csv
       - name: Validate synthetic extraction
