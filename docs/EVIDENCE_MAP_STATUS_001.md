@@ -13,19 +13,27 @@ H2 is separate: it preregisters the possibility that mixed systems show a non-mo
 
 ## Current screened corpus
 
-After source adjudication through IWE066:
+After source adjudication through IWE068:
 
 | interaction type | screened | strict `include` | strict programmes quantitatively closed | unresolved possible strict | context/timing/channel-only | nonlinear shape lane |
 |---|---:|---:|---:|---:|---:|---:|
 | mutualist | 17 | 7 | 1 | 6 | 4 | 0 |
-| antagonist | 22 | 0 | 0 | 1 | 18 | 3 |
+| antagonist | 24 | 1 | 1 | 2 | 18 | 3 |
 | mixed pollinating seed predator | 27 | 1 | 1 | 1 | 24 | 1 |
 
 IWE001–IWE040 are the discovery corpus. IWE041 onward are post-freeze records tracked in `prospective_search_log.csv`.
 
-IWE001 remains the quantitatively closed mutualist programme, with three dependent Corydalis population effects.
+IWE now has **at least one quantitatively closed strict-H1 programme in each preregistered interaction class**:
 
-**IWE064 is the first quantitatively closed mixed strict-H1 programme.**
+- mutualist — IWE001 (`Corydalis ambigua × Bombus spp.`);
+- antagonist — IWE068 (`Ipomopsis aggregata × Hylemya sp.`);
+- mixed pollinating seed predator — IWE064 (`Ficus curtipes × Eupristina sp.`).
+
+This is an estimand-coverage milestone, not sufficient replication for a class-level or cross-class biological conclusion. Effect families also differ across programmes and are not pooled without a separately frozen common-scale conversion.
+
+## Closed mutualist programme — IWE001
+
+IWE001 remains the quantitatively closed mutualist programme, with three dependent Corydalis population effects after the registered one-sided mismatch restriction. These population rows count as one programme rather than three independent studies.
 
 ## First closed mixed strict effect — IWE064
 
@@ -40,6 +48,28 @@ Using source Table-1 mean seed counts, SDs and group sample sizes, IWE reconstru
 - `variance = 0.0000093802`
 
 The pooled >=28-day category contains day-28, day-32 and day-36 figs. Deleting that entire category gives `beta=-0.03516954`, `SE=0.00381401`, so the registered slope is not driven by assigning a representative age to the pooled group.
+
+## First closed antagonist strict effect — IWE068
+
+IWE068 uses public Maxfield 2021 source data from `jmpowers/ipomopsis-temp`, pinned at commit `9f4ceff87f5eb68c5a09f5e89ea457432e452542`.
+
+For untreated, normal-snow `Ipomopsis aggregata` plants, the timing exposure was prospectively frozen before outcome calculation as a leave-one-plant-out histogram-intersection overlap between:
+
+- the focal plant's `open + buds` seasonal curve; and
+- Hylemya oviposition activity estimated as eggs per floral structure on all other primary plants.
+
+Final plant reproduction is the source-coded `seeds_per_flower` variable reconstructed from the raw fruit/seed records. Source R-style NA propagation is preserved, so fruitless plants with undefined source rates are not silently turned into zero-fitness observations.
+
+The pinned reconstruction yields:
+
+- `n = 11`
+- Pearson `r = -0.05224909311004083`
+- Fisher `z = -0.05229671725455789`
+- `variance = 0.125`
+
+This is essentially a **null linear antagonist-overlap effect** on the registered scale. It is not interpreted as evidence that antagonist timing never matters; nonlinear, treatment-dependent or other antagonist timing responses remain possible.
+
+The direct-effect row `IWE068_MAXFIELD_FZ` is locked in CI to the pinned raw-data reconstruction, including exact `n`, Fisher z and variance.
 
 ## Closely related but not primary — IWE065
 
@@ -73,23 +103,28 @@ IWE008 (Qilian 2024) directly measures flowering peaks, key-pollinator peaks and
 
 ### Antagonist
 
-IWE035 (wild `Helianthus annuus`) remains the only antagonist `unresolved_strict` bridge: seasonal abundance/damage of seed-feeding herbivores and plant fitness occur together, but a common synchrony coefficient plus sampling variance is still missing.
+Two additional antagonist bridges remain unresolved:
+
+- IWE035 (wild `Helianthus annuus`): seasonal abundance/damage of seed-feeding herbivores and plant fitness occur together, but a common synchrony coefficient plus sampling variance is still missing;
+- IWE067 (`Ipomopsis aggregata × Hylemya sp.` dust experiment): 2017–2018 plant flowering, Hylemya egg timing and final fruit/seed outcomes are jointly archived, and the strict reconstruction is frozen, but the required Dryad file streams remain inaccessible in the present execution environment.
+
+These are independent replication targets beyond IWE068.
 
 ### Mixed
 
 IWE059 (`Ficus pertusa ×` pollinating fig wasps) remains unresolved-strict. It combines crop receptivity/attractiveness timing, temporal pollinator abundance, visitation, seeds per fig and wasp production, but a registered crop-level timing effect plus variance has not yet been recovered.
 
-## Measurement asymmetry remains, but mixed is no longer empty
+## Measurement asymmetry remains despite three-class coverage
 
-The controlled Ficus experiments change the diagnosis from `mixed strict effects absent` to `mixed strict effects rare but demonstrably recoverable`.
+Closing one programme per class changes the diagnosis from `some classes empty` to `all classes represented but very unevenly replicated`.
 
 The broader asymmetry remains:
 
 - mutualist mismatch studies relatively often measure plant timing + partner timing + final reproduction;
-- antagonist studies usually measure flowering date plus attack/predation/selection, or nonlinear enemy windows;
+- antagonist studies usually measure flowering date plus attack/predation/selection, or nonlinear enemy windows; IWE068 is a rare raw-data reconstruction that closes all three pieces;
 - mixed nursery-pollination studies usually separate partner timing from final net plant fitness, with controlled monoecious fig experiments providing rare exceptions.
 
-A naive three-class pooled analysis would still confound interaction role with measurement design unless the systematic search recovers more comparable antagonist and mixed effects.
+A three-class meta-moderator estimate is not yet scientifically warranted from one closed programme in the antagonist and mixed classes.
 
 ## Nonlinear timing evidence
 
@@ -119,13 +154,13 @@ using comparable timing estimands where the published measurements allow it, wit
 
 ## Valid paper endpoints
 
-1. **Strict meta-analysis endpoint:** enough comparable strict effects are recovered for one or more interaction classes.
-2. **Evidence-architecture endpoint:** strict effects remain highly uneven across classes; IWE reports the measurement asymmetry, meta-analyzes estimable effect families/lanes, and separately synthesizes timing/shape/channel evidence without treating them as equivalent.
+1. **Strict meta-analysis endpoint:** enough independent comparable strict programmes are recovered for one or more interaction classes.
+2. **Evidence-architecture endpoint:** strict programmes remain highly uneven across classes; IWE reports the measurement asymmetry, meta-analyzes only defensibly comparable effect families/lanes, and separately synthesizes timing/shape/channel evidence without treating them as equivalent.
 
 ## Next falsification priorities
 
 1. Complete the frozen backward/query/forward/citation closure.
-2. Recover or close IWE035 to determine whether any antagonist strict effect can be obtained.
+2. Recover IWE067 to obtain an independent antagonist replication beyond IWE068; continue IWE035 source recovery in parallel.
 3. Recover IWE008 quantitative effects to expand the mutualist lane beyond one Corydalis programme.
 4. Recover IWE059 quantitatively to determine whether the mixed strict lane can replicate beyond IWE064.
 5. Search for additional mixed H2 studies with group-level numerical timing-fitness data so non-monotonicity can be tested quantitatively rather than narratively.
