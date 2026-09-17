@@ -1,0 +1,96 @@
+# IWE064 extraction receipt — Ficus curtipes × Eupristina sp.
+
+Source: Gu D, Yang D, Compton SG, Peng Y. 2012. *Age at pollination modifies relative male and female reproductive success in a monoecious fig tree*. Symbiosis 57:73–81. DOI `10.1007/s13199-012-0178-y`.
+
+Status: **Tier A strict H1; first quantitatively closed mixed pollinating-seed-predator programme**.
+
+## Why this qualifies as mixed net female reproductive output
+
+`Ficus curtipes` is monoecious. The same syconium contains female flowers that can become either:
+
+- seeds, contributing female plant reproduction; or
+- galls containing pollinator offspring, which use ovules and contribute to the plant's male pollination function.
+
+A single host-specific `Eupristina` female both pollinates flowers and oviposits in the same syconium. Therefore final seed number is measured **after both pollination benefit and ovule allocation/larval cost have acted in the same reproductive unit**.
+
+This differs from dioecious figs in which seeds and pollinator larvae occur on different plant sexes.
+
+## Experimental timing exposure
+
+Pre-receptive syconia were bagged to exclude all fig wasps. A single pollinator was experimentally introduced at declared ages after receptivity began:
+
+`0, 4, 8, 12, 16, 20, 24, >=28 days`.
+
+At least 30 syconia were assigned per age group. In total 422 syconia were pollinated, 389 matured and 33 aborted.
+
+The source pooled the oldest groups because wasps increasingly refused entry: day 28 (`n=46`), day 32 (`n=5`) and day 36 (`n=4`). For continuous reconstruction IWE assigns that pooled group the source-sample-weighted age:
+
+`(46*28 + 5*32 + 4*36) / 55 = 28.94545 days`.
+
+The exposure is a one-sided experimental mismatch:
+
+`delay_days = pollinator arrival day - first receptive day >= 0`.
+
+Thus larger values always mean farther from exact timing match.
+
+## Source seed-count table
+
+| delay day | n | mean seeds | SD |
+|---:|---:|---:|---:|
+| 0 | 33 | 52.85 | 19.99 |
+| 4 | 50 | 37.66 | 14.99 |
+| 8 | 50 | 36.74 | 18.53 |
+| 12 | 51 | 27.27 | 26.35 |
+| 16 | 50 | 19.50 | 16.05 |
+| 20 | 46 | 22.48 | 17.09 |
+| 24 | 54 | 24.15 | 15.80 |
+| 28.94545 | 55 | 18.82 | 13.94 |
+
+These are source-reported mature-syconium means ± SD.
+
+## Registered quantitative effect
+
+For each age group:
+
+`y_i = log(mean_seed_i)`
+
+and delta-method sampling variance:
+
+`v_i = SD_i^2 / (n_i * mean_seed_i^2)`.
+
+IWE fits a weighted log-linear regression across all eight source groups using `1/v_i` as the inverse-variance weight:
+
+`log(mean_seed) = alpha + beta * delay_days`.
+
+Recovered slope:
+
+- `beta_native = -0.03334257 log seed count / day mismatch`
+- `SE(beta) = 0.00306271`
+- `Var(beta) = 0.0000093802`
+
+This is stored as `effect_family = log_rate_slope_per_day`, not as a generic two-group log response ratio.
+
+Because the exposure direction is `mismatch`, IWE orientation gives:
+
+`+0.03334257` per day toward synchrony.
+
+Approximately, one additional day of delayed pollination multiplies expected seed output by `exp(-0.03334)`, i.e. a decline of about 3.3% on the reconstructed log-linear scale.
+
+## Endpoint sensitivity check
+
+A simple day-0 versus pooled-oldest standardized mean difference is large and in the same direction (Hedges g about +2.05 for more-matched versus highly delayed pollination), but it is **not entered as a second meta row** because it uses the same syconia and would double count the programme.
+
+## Claim ceiling
+
+IWE064 supports a causal within-experiment statement:
+
+> delaying the arrival of a pollinating seed-predator after the onset of fig receptivity reduces final seed production in a monoecious fig system.
+
+It does not establish:
+
+- that all nursery-pollination systems show a positive synchrony effect;
+- that the effect is linear outside the observed 0–36 day window;
+- that the same per-day slope is directly comparable to Fisher-z or SMD effects;
+- a net lifetime-fitness effect combining all female and male reproductive components.
+
+For H1, the outcome is specifically final female reproductive output after the mixed pollination/oviposition interaction has occurred.
