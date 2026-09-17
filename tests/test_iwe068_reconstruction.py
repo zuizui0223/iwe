@@ -78,7 +78,8 @@ def test_leave_one_out_overlap_avoids_own_egg_mechanical_correlation():
     overlap = dict(zip(out["plantid"], out["overlap"]))
     # A sees B+C activity split early/late, so overlap is 0.5 rather than 1.0 from its own eggs.
     assert math.isclose(overlap["A"], 0.5)
-    # B sees only early activity in A+C, so its late flowering has zero overlap.
-    assert math.isclose(overlap["B"], 0.0)
+    # For B, the only census where B flowers has zero floral denominator in the other plants.
+    # The frozen rule drops that date, leaving no focal floral mass on valid dates: undefined, not zero overlap.
+    assert math.isnan(overlap["B"])
     # C sees A+B activity split, so overlap is 0.5.
     assert math.isclose(overlap["C"], 0.5)
