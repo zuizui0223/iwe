@@ -38,6 +38,82 @@ def _count(row: Mapping[str, object], key: str) -> float:
     return float(value)
 
 
+def _id_token(value: object) -> str:
+    """Format spreadsheet numeric identifiers like R's character coercion."""
+    if pd.isna(value):
+        raise ValueError("identifier component cannot be missing")
+    if isinstance(value, (int, np.integer)):
+        return str(int(value))
+    if isinstance(value, (float, np.floating)) and float(value).is_integer():
+        return str(int(value))
+    return str(value).strip()
+
+
+def prepare_maxfield_phenology(phen_raw: pd.DataFrame, metadata: pd.DataFrame) -> pd.DataFrame:
+    """Reproduce the Maxfield 2021 phenology preparation needed by IWE068.
+
+    This mirrors the source workflow's rebuilt plant IDs, row sums, two date
+    recodes, metadata join, and plant-by-census completion. Inserted rows have
+    zero flowers/buds and zero eggs because a completed zero-floral census
+    cannot contain an oviposition event on that focal plant.
+    """
+    required_phen = {"date", "plot", "subplot", "plant"}
+    missing_phen = required_phen - set(phen_raw.columns)
+    if missing_phen:
+        raise ValueError(f"missing phenology columns: {sorted(missing_phen)}")
+    required_meta = {"plantid", "snow", "temp"}
+    missing_meta = required_meta - set(metadata.columns)
+    if missing_meta:
+        raise ValueError(f"missing metadata columns: {sorted(missing_meta)}")
+
+    work = phen_raw.copy()
+    open_cols = [c for c in work.columns if c.startswith("open_")]
+    bud_cols = [c for c in work.columns if c.startswith("buds_")]
+    egg_cols = [c for c in work.columns if c.startswith("eggs_")]
+    if not open_cols or not bud_cols or not egg_cols:
+        raise ValueError("phenology table must contain open_*, buds_*, and eggs_* columns")
+
+    work["plantid"] = [
+        f"{_id_token(plot)}{_id_token(subplot)}{_id_token(plant)}"
+        for plot, subplot, plant in zip(work["plot"], work["subplot"], work["plant"])
+    ]
+    numeric_cols = open_cols + bud_cols + egg_cols
+    work[numeric_cols] = work[numeric_cols].apply(pd.to_numeric, errors="coerce")
+    work["open"] = work[open_cols].sum(axis=1, skipna=True)
+    work["buds"] = work[bud_cols].sum(axis=1, skipna=True)
+    work["eggs"] = work[egg_cols].sum(axis=1, skipna=True)
+    work["floral"] = work["open"] + work["buds"]
+
+    census = pd.to_datetime(work["date"], errors="raise").dt.normalize()
+    census = census.replace(
+        {
+            pd.Timestamp("2021-07-02"): pd.Timestamp("2021-06-30"),
+            pd.Timestamp("2021-07-26"): pd.Timestamp("2021-07-20"),
+        }
+    )
+    work["census"] = census
+
+    meta = metadata[["plantid", "snow", "temp"]].copy()
+    if meta["plantid"].duplicated().any():
+        raise ValueError("metadata plantid must be unique")
+    work = work.merge(meta, on="plantid", how="left", validate="m:1")
+    work = work.dropna(subset=["snow", "temp"])
+
+    observed = (
+        work.groupby(["plantid", "snow", "temp", "census"], as_index=False)[["floral", "eggs"]]
+        .sum()
+        .sort_values(["plantid", "census"])
+    )
+    plant_meta = observed[["plantid", "snow", "temp"]].drop_duplicates()
+    dates = pd.DataFrame({"census": sorted(observed["census"].unique())})
+    plant_meta["_key"] = 1
+    dates["_key"] = 1
+    grid = plant_meta.merge(dates, on="_key", how="inner").drop(columns="_key")
+    out = grid.merge(observed, on=["plantid", "snow", "temp", "census"], how="left")
+    out[["floral", "eggs"]] = out[["floral", "eggs"]].fillna(0.0)
+    return out.sort_values(["plantid", "census"]).reset_index(drop=True)
+
+
 def source_seed_outcome(row: Mapping[str, object]) -> dict[str, float]:
     """Reproduce the Maxfield 2021 seed-fitness definitions in traits.Rmd.
 
