@@ -16,8 +16,21 @@ The first release accepts these `effect_family` values:
 - `fisher_z`
 - `standardized_mean_difference`
 - `log_response_ratio`
+- `log_rate_slope_per_day`
 
 Effect families are not silently converted into one another. The primary software can summarize a common family or a table whose values have already been placed on a justified common scale outside IWE. Cross-family pooling requires a separately documented conversion rule.
+
+### `log_rate_slope_per_day`
+
+This family is reserved for a continuous one-sided timing exposure measured in **days**, where the response is modeled on a log scale or with a count GLM using a log link. The native effect is:
+
+`change in log expected reproductive output per additional day of mismatch/delay`.
+
+Examples include experimentally delaying pollinator arrival after the onset of floral receptivity and modeling seed counts with a Poisson log-link model.
+
+A reconstructed slope may enter this family only when source group means, sampling variances and timing values are sufficient to obtain a transparent weighted log-linear slope. The reconstruction formula and source rows must be documented in an extraction receipt.
+
+`log_rate_slope_per_day` is **not interchangeable** with a two-group `log_response_ratio`. It must be analyzed separately unless a prospective conversion to a common exposure scale is registered.
 
 ## Required fields for an extracted effect
 
