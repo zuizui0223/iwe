@@ -3,7 +3,12 @@ import math
 import numpy as np
 import pandas as pd
 
-from iwe.reconstruction import histogram_intersection, source_seed_outcome, leave_one_out_overlaps
+from iwe.reconstruction import (
+    histogram_intersection,
+    leave_one_out_overlaps,
+    prepare_maxfield_phenology,
+    source_seed_outcome,
+)
 
 
 def test_histogram_intersection_uses_normalized_curves():
@@ -59,6 +64,42 @@ def test_source_seed_outcome_preserves_r_na_when_no_counted_fruits():
     assert math.isnan(result["seeds_per_fruit"])
     assert math.isnan(result["seeds_est"])
     assert math.isnan(result["seeds_per_flower"])
+
+
+def test_prepare_maxfield_phenology_rebuilds_ids_recodes_dates_and_completes_zeros():
+    phen = pd.DataFrame(
+        {
+            "date": ["2021-06-30", "2021-07-02"],
+            "plot": [1, 2],
+            "subplot": ["B", "A"],
+            "plant": [10, 20],
+            "open_1": [2, 3],
+            "buds_1": [1, 2],
+            "eggs_1": [1, np.nan],
+            "open_2": [np.nan, 4],
+            "buds_2": [np.nan, 1],
+            "eggs_2": [np.nan, 2],
+        }
+    )
+    metadata = pd.DataFrame(
+        {
+            "plantid": ["1B10", "2A20"],
+            "snow": ["normal", "early"],
+            "temp": ["control", "OTC"],
+        }
+    )
+    out = prepare_maxfield_phenology(phen, metadata)
+
+    # Source recodes 2021-07-02 to 2021-06-30 and rebuilds plantid from plot/subplot/plant.
+    assert set(out["plantid"]) == {"1B10", "2A20"}
+    assert out["census"].nunique() == 1
+    by_plant = out.set_index("plantid")
+    assert by_plant.loc["1B10", "floral"] == 3
+    assert by_plant.loc["1B10", "eggs"] == 1
+    assert by_plant.loc["2A20", "floral"] == 10
+    assert by_plant.loc["2A20", "eggs"] == 2
+    assert by_plant.loc["1B10", "temp"] == "control"
+    assert by_plant.loc["2A20", "snow"] == "early"
 
 
 def test_leave_one_out_overlap_avoids_own_egg_mechanical_correlation():
