@@ -7,6 +7,7 @@ from iwe.reconstruction import (
     histogram_intersection,
     leave_one_out_overlaps,
     prepare_maxfield_phenology,
+    prepare_maxfield_seeds,
     source_seed_outcome,
 )
 
@@ -90,7 +91,6 @@ def test_prepare_maxfield_phenology_rebuilds_ids_recodes_dates_and_completes_zer
     )
     out = prepare_maxfield_phenology(phen, metadata)
 
-    # Source recodes 2021-07-02 to 2021-06-30 and rebuilds plantid from plot/subplot/plant.
     assert set(out["plantid"]) == {"1B10", "2A20"}
     assert out["census"].nunique() == 1
     by_plant = out.set_index("plantid")
@@ -102,11 +102,36 @@ def test_prepare_maxfield_phenology_rebuilds_ids_recodes_dates_and_completes_zer
     assert by_plant.loc["2A20", "snow"] == "early"
 
 
+def test_prepare_maxfield_seeds_splits_early_and_last_collection_and_rebuilds_outcome():
+    seeds = pd.DataFrame(
+        {
+            "plot": [1, 1],
+            "subplot": ["B", "B"],
+            "plant": [10, 10],
+            "date": ["2021-08-16", "2021-08-23"],
+            "seeds": [20, 0],
+            "fruits": [4, 0],
+            "fruits_split": [1, 0],
+            "aborts": [2, 1],
+            "fruits_fly_no_seeds": [1, 0],
+            "fruits_fly_with_seeds": [1, 0],
+            "seeds_fly": [3, 0],
+            "fruits_caterpillar": [0, 0],
+            "fruits_early_uncountable": [1, 0],
+            "flowers_buds": [2, 3],
+        }
+    )
+    metadata = pd.DataFrame({"plantid": ["1B10"], "snow": ["normal"], "temp": ["control"]})
+    out = prepare_maxfield_seeds(seeds, metadata).set_index("plantid")
+    row = out.loc["1B10"]
+    assert row["flowers_buds_collected_early"] == 2
+    assert row["flowers_buds_collected_last"] == 3
+    assert row["flowers_buds"] == 5
+    assert np.isfinite(row["seeds_per_flower"])
+
+
 def test_leave_one_out_overlap_avoids_own_egg_mechanical_correlation():
     rows = []
-    # Plant A flowers only early and receives many eggs early.
-    # Plant B flowers only late and receives many eggs late.
-    # Plant C provides an early activity reference.
     for plant, floral, eggs in [
         ("A", [10, 0], [10, 0]),
         ("B", [0, 10], [0, 10]),
@@ -117,10 +142,6 @@ def test_leave_one_out_overlap_avoids_own_egg_mechanical_correlation():
     df = pd.DataFrame(rows)
     out = leave_one_out_overlaps(df, plant_col="plantid", time_col="census", floral_col="floral", egg_col="eggs")
     overlap = dict(zip(out["plantid"], out["overlap"]))
-    # A sees B+C activity split early/late, so overlap is 0.5 rather than 1.0 from its own eggs.
     assert math.isclose(overlap["A"], 0.5)
-    # For B, the only census where B flowers has zero floral denominator in the other plants.
-    # The frozen rule drops that date, leaving no focal floral mass on valid dates: undefined, not zero overlap.
     assert math.isnan(overlap["B"])
-    # C sees A+B activity split, so overlap is 0.5.
     assert math.isclose(overlap["C"], 0.5)
