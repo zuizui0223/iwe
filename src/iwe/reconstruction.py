@@ -41,7 +41,9 @@ def _count(row: Mapping[str, object], key: str) -> float:
 def source_seed_outcome(row: Mapping[str, object]) -> dict[str, float]:
     """Reproduce the Maxfield 2021 seed-fitness definitions in traits.Rmd.
 
-    Invalid source divisions are returned as NaN rather than imputed.
+    R arithmetic propagates NA even when an undefined rate is multiplied by
+    zero (``0 * NA`` is ``NA``). We preserve that behavior rather than turning
+    fruitless plants into artificial zero-fitness observations.
     """
     seeds = _count(row, "seeds")
     fruits = _count(row, "fruits")
@@ -67,16 +69,17 @@ def source_seed_outcome(row: Mapping[str, object]) -> dict[str, float]:
     )
     mean_source_seeds = seeds / source_seed_denominator if source_seed_denominator > 0 else np.nan
 
-    if (collected_early + early_uncountable) > 0 and not np.isfinite(mean_source_seeds):
-        seeds_est = np.nan
-    elif fruits_split > 0 and not np.isfinite(seeds_per_fruit):
+    # Match the source R expression literally: both rate terms are present in
+    # the expression even when their multipliers are zero, so any undefined
+    # rate propagates NA through seeds_est.
+    if not np.isfinite(mean_source_seeds) or not np.isfinite(seeds_per_fruit):
         seeds_est = np.nan
     else:
         seeds_est = (
             seeds
             + seeds_fly
-            + (collected_early + early_uncountable) * (0.0 if np.isnan(mean_source_seeds) else mean_source_seeds)
-            + fruits_split * (0.0 if np.isnan(seeds_per_fruit) else seeds_per_fruit)
+            + (collected_early + early_uncountable) * mean_source_seeds
+            + fruits_split * seeds_per_fruit
         )
 
     fruits_with_seeds = fruits + fruits_split + fly_with_seeds
