@@ -18,7 +18,7 @@ The current primary common-scale gate remains defined separately in `docs/COMMON
 | Interaction class | Screened | Strict admitted records | Quantitative strict programmes closed | Common-scale Fisher-z programmes | Unresolved possible strict | Shape lane | Context only |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | mutualist | 17 | 4 | 2 | 1 | 5 | 0 | 8 |
-| antagonist | 31 | 1 | 1 | 1 | 8 | 3 | 19 |
+| antagonist | 31 | 1 | 1 | 1 | 7 | 3 | 20 |
 | mixed pollinating seed predator | 29 | 1 | 1 | 1 | 2 | 1 | 25 |
 
 Current-corpus quantitative closure fractions are:
@@ -59,7 +59,7 @@ Three recurrent designs dominate:
 
 The third category is biologically important rather than a data-quality failure. IWE032–IWE034 are retained in a separate shape lane because forcing them into one signed H1 coefficient would erase the reported biology.
 
-IWE068 is currently the only published antagonist programme quantitatively closed on the strict Fisher-z scale. IWE078 demonstrates that another strict reconstruction is technically possible from public raw data, but it remains provisional and outside the primary programme count under `docs/SOURCE_ELIGIBILITY.md` because the corresponding research article has not yet been verified as formally published.
+IWE068 is currently the only published antagonist programme quantitatively closed on the strict Fisher-z scale. IWE079 provides unusually direct evidence that a high-synchrony patch experienced a much larger reproductive cost than a similarly egg-loaded but temporally delayed patch, but only two patch-level synchrony units were available, so it remains context rather than a meta-analytic row. IWE078 demonstrates that another strict reconstruction is technically possible from public raw data, but it remains provisional and outside the primary programme count under `docs/SOURCE_ELIGIBILITY.md` because the corresponding research article has not yet been verified as formally published.
 
 ### Mixed pollinating seed predators
 
