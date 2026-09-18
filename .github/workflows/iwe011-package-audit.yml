@@ -1,0 +1,77 @@
+name: iwe011-package-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe011-package-audit.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Download exact HUSCAP source package
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/iwe011/package
+          url='https://eprints.lib.hokudai.ac.jp/repo/huscap/all/95572/Kudo%24Shibata_JEcol_Data.zip'
+          code=$(curl -L --retry 2 --connect-timeout 20 --max-time 180 \
+            -A "iwe-source-audit/1.0" \
+            -w "%{http_code}" -o artifact/iwe011/data.zip "$url")
+          bytes=$(wc -c < artifact/iwe011/data.zip | tr -d ' ')
+          kind=$(file -b artifact/iwe011/data.zip)
+          echo "http=$code bytes=$bytes kind=$kind" | tee artifact/iwe011/status.txt
+          test "$code" = "200"
+          unzip -q artifact/iwe011/data.zip -d artifact/iwe011/package
+          find artifact/iwe011/package -maxdepth 4 -type f -printf '%P\t%s bytes\n' | sort | tee artifact/iwe011/files.txt
+
+      - name: Inspect schemas without estimating IWE effect
+        shell: bash
+        run: |
+          python - <<'PY' | tee artifact/iwe011/schema_audit.txt
+          from pathlib import Path
+          import pandas as pd, re
+
+          root=Path("artifact/iwe011/package")
+          for p in sorted(root.rglob("*")):
+              if not p.is_file():
+                  continue
+              print("\n" + "="*80)
+              print("FILE", p.relative_to(root), "bytes", p.stat().st_size)
+              suf=p.suffix.lower()
+              try:
+                  if suf in {".csv",".txt",".tsv",".dat"}:
+                      text=p.read_text(errors="replace")
+                      lines=text.splitlines()
+                      for line in lines[:20]:
+                          print(line[:2000])
+                  elif suf in {".xlsx",".xls"}:
+                      xf=pd.ExcelFile(p)
+                      print("SHEETS", xf.sheet_names)
+                      for sh in xf.sheet_names:
+                          df=pd.read_excel(p, sheet_name=sh)
+                          print("\nSHEET", sh, "shape", df.shape)
+                          print("COLUMNS", list(map(str,df.columns)))
+                          print(df.head(8).to_string(max_cols=100, index=False))
+                  elif suf in {".r",".rmd"}:
+                      text=p.read_text(errors="replace")
+                      lines=text.splitlines()
+                      print("R_MATCHES")
+                      for i,line in enumerate(lines,1):
+                          if re.search(r"egg|predat|fruit|flower|date|day|julian|doy|plot|year|fitness|glm|glmm|read|load", line, re.I):
+                              print(f"{i}: {line[:2000]}")
+              except Exception as e:
+                  print("AUDIT_ERROR", type(e).__name__, str(e))
+          PY
+
+      - name: Upload package audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe011-package-audit
+          path: artifact/iwe011
+          if-no-files-found: error
