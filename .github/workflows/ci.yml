@@ -71,3 +71,19 @@ jobs:
           assert h1['primary_claim_gate'] is False
           print('OK: biological claim status is locked to coverage_only.')
           PY
+
+      - name: Build current evidence architecture
+        run: python scripts/build_evidence_architecture.py --output /tmp/iwe-evidence-architecture.csv
+      - name: Verify evidence architecture preserves primary gate counts
+        run: |
+          python - <<'PY'
+          import pandas as pd
+          df = pd.read_csv('/tmp/iwe-evidence-architecture.csv').set_index('interaction_type')
+          assert int(df.loc['mutualist', 'strict_quantitative_programmes_closed']) == 2
+          assert int(df.loc['antagonist', 'strict_quantitative_programmes_closed']) == 1
+          assert int(df.loc['mixed_pollinating_seed_predator', 'strict_quantitative_programmes_closed']) == 1
+          assert int(df.loc['mutualist', 'common_scale_fisher_z_programmes_closed']) == 1
+          assert int(df.loc['antagonist', 'common_scale_fisher_z_programmes_closed']) == 1
+          assert int(df.loc['mixed_pollinating_seed_predator', 'common_scale_fisher_z_programmes_closed']) == 1
+          print(df.to_string())
+          PY
