@@ -96,6 +96,21 @@ jobs:
                       ]})
           PY
 
+          echo "===== Source wide-table/date-list audit ====="
+          python - <<'PY'
+          import csv
+          for name in [
+              "df2_exp1.csv","test.csv","df2_exp1_M.csv","test_mompha.csv",
+              "df2_exp2.csv","test_exp2.csv","df2_exp2M.csv","test_mompha_exp2.csv",
+          ]:
+              print("\nFILE", name)
+              with open(name, newline="", encoding="utf-8-sig") as fh:
+                  rr=list(csv.reader(fh))
+              print("header", rr[0] if rr else [])
+              for row in rr[1:4]:
+                  print(row)
+          PY
+
           echo "===== README relevant text ====="
           grep -niE "overlap|Mompha|Schinia|seed pred|fitness|flower" READ_ME_Phenological_plasticity.txt | head -n 300 || true
 
