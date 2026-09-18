@@ -2,95 +2,104 @@
 
 Source: Jordano D, Fernández Haeger J, Rodríguez J. 1990. *The effect of seed predation by Tomares ballus (Lepidoptera: Lycaenidae) on Astragalus lusitanicus (Fabaceae): determinants of differences among patches*. Oikos 57:250–256. DOI `10.2307/3565947`.
 
-Status: **published unresolved strict-H1 antagonist candidate; quantitative source table/data recovery pending**.
+Status: **context_only — direct synchrony mechanism plus final-fitness evidence, but no estimable strict H1 synchrony effect**.
 
-## Why this is unusually close to strict H1
+Interaction class: `antagonist`.
 
-The peer-reviewed source explicitly links three quantities across host-plant patches:
+Dependence ID: `DEP_IWE079_ASTRAGALUS_TOMARES`.
 
-1. temporal availability of immature `Astragalus lusitanicus` inflorescences;
-2. the `Tomares ballus` oviposition period / egg load;
-3. loss of final plant fecundity through consumption of flowers and developing seeds.
+## Full-text recovery
 
-The source abstract states that spatial heterogeneity in the butterfly effect on plant fecundity was explained not only by patch differences in egg load but also by **variation in synchrony between the oviposition period and temporal availability of immature inflorescences**.
+An author-uploaded seven-page copy of the published Oikos article was recovered and inspected on 2026-09-19.
 
-This is stronger for IWE than a study in which flowering date merely predicts damage: the animal interaction window itself is part of the source explanation.
+The source is formally published and satisfies `docs/SOURCE_ELIGIBILITY.md`. The reason it does not enter primary H1 is quantitative identification, not source status.
 
-## Source eligibility
+## What the study actually measured
 
-This is a formally published peer-reviewed journal article and therefore satisfies `docs/SOURCE_ELIGIBILITY.md`.
+The field study followed six patches of `Astragalus lusitanicus` in 1986.
 
-The study is independent of the currently closed IWE068 `Ipomopsis × Hylemya` antagonist programme and of provisional IWE078.
+For marked shoots, investigators:
 
-## Primary biological unit
+- tagged successive inflorescences and recorded their initial flower-bud counts;
+- classified inflorescence developmental age;
+- examined shoots weekly;
+- counted newly laid `Tomares ballus` eggs, which could be distinguished from previously counted eggs;
+- recorded ripe fruits and viable/aborted seeds at the end of the season.
 
-The recoverable primary unit should be the source's biological **patch**, because the reported synchrony and fecundity heterogeneity are patch-level quantities.
+The source-defined reproductive success index was:
 
-Multiple plants, inflorescences or seed observations within a patch must not be promoted to independent meta-analytic programmes.
+`RSI = ripe fruits / initial flower buds`.
 
-All effects from the paper share:
+Thus the study genuinely contains both a time-resolved antagonist interaction window and a final plant reproductive endpoint.
 
-`dependence_id = DEP_IWE079_ASTRAGALUS_TOMARES`.
+## Why it still does not close strict H1
 
-## Timing exposure
+The source states that the detailed temporal-coincidence analysis between `T. ballus` egg laying and `A. lusitanicus` flowering phenology could be performed for **patches 1 and 2 only**, because egg counts were too sparse in the remaining patches.
 
-Do not invent a new overlap metric from the abstract.
+The two focal patches had similar average egg load per shoot but differed in temporal matching:
 
-Primary extraction must preserve the exact source definition used to relate:
+- patch 1: clear synchrony between egg laying and availability of immature inflorescences;
+- patch 2: egg laying was noticeably delayed relative to the immature-inflorescence window.
 
-- the `T. ballus` oviposition period / egg timing; and
-- availability of immature `A. lusitanicus` inflorescences.
+The corresponding source estimates of predator-associated RSI reduction were:
 
-Before a numerical effect is entered, the full source must establish:
+- patch 1: **76.5%**;
+- patch 2: **26.7%**.
 
-1. the time grain of both curves or windows;
-2. whether synchrony is represented continuously, categorically, or as a source-derived index;
-3. whether larger native values mean greater matching or greater mismatch;
-4. whether the same timing definition is available for all patches entering the fecundity analysis.
+The paper therefore gives unusually direct evidence that timing can modify the realized reproductive cost of an antagonist even when average egg load is similar.
 
-If the published analysis contains only a qualitative synchrony interpretation and no reconstructable patch-level timing variable, IWE079 remains unresolved rather than being converted from calendar flowering date.
+However, only two patch-level synchrony units are available. The source does not report a continuous synchrony index with sampling uncertainty across a sufficient number of independent patches. Consequently IWE cannot estimate a study-level synchrony–fitness slope/correlation with a defensible sampling variance.
 
-## Final fitness outcome
+The contrast cannot be promoted by treating the many plants, inflorescences, eggs or seeds inside the two patches as independent synchrony replicates because the timing exposure is defined at patch level.
 
-The strict endpoint must be a final plant reproductive quantity from the same patch context after seed-predator attack can act, such as:
+## Source quantitative anchors
 
-- surviving seed production;
-- realized seed set;
-- final fecundity expressed in seeds or an equivalent source-defined reproductive output.
+### Patch-level egg load and overall RSI
 
-Egg load, attack incidence, larval abundance and percentage damage alone are intermediate antagonist channels and cannot substitute for final plant fitness.
+The published Table 1 reports mean egg load and RSI by patch. Examples include:
 
-## Quantitative effect route
+- patch 1: egg load `9.11 ± 0.14`; RSI `6.65 ± 0.76%`;
+- patch 2: egg load `8.92 ± 0.21`; RSI `12.98 ± 1.82%`.
 
-Preferred route, in order:
+These quantities are useful for checking that patches 1 and 2 have similar egg loads but different overall reproduction. They do not themselves constitute a synchrony effect.
 
-1. recover source patch-level synchrony and final fecundity values and compute a Pearson correlation, then Fisher `z = atanh(r)` with `var(z)=1/(n-3)`;
-2. recover a source regression coefficient with its SE/variance if it directly estimates synchrony -> final fecundity;
-3. recover a prospectively orderable matched-vs-mismatched contrast with means, uncertainty and sample sizes.
+### Attacked versus control shoots
 
-If synchrony predicts only egg load while final fecundity is reported separately, the two paths are not multiplied or algebraically combined to manufacture a net effect.
+For patches 1–5 the experiment compared attacked and egg-removal control shoots. Table 2 reports, among other results:
 
-## Prohibited shortcuts
+- patch 1: attacked RSI `0.04` versus control `0.17`; predator effect `76.5%`;
+- patch 2: attacked RSI `0.11` versus control `0.15`; predator effect `26.7%`;
+- patch 5: attacked RSI `0.15` versus control `0.19`; predator effect `21.1%`.
 
-IWE079 must not use as a meta-analytic effect:
+These quantify the final reproductive cost of attack. They must not be re-labelled as synchrony coefficients.
 
-- the later literature statement that attack can reduce seed production by up to about 81%;
-- a P value without an effect magnitude;
-- egg load as if it were final plant fitness;
-- the sign of a narrative statement;
-- a figure digitized by eye without a reproducible extraction procedure;
-- individual flowers/seeds as independent observations when synchrony is patch-level.
+## Why no Fisher-z row is constructed
 
-## Current recovery status
+A strict Fisher-z reconstruction would require several independent biological units with both:
 
-Public bibliographic sources and an author-uploaded full-text record confirm that the Oikos article exists and that the central mechanism is patch-level variation in oviposition-window × immature-inflorescence synchrony tied to fecundity loss.
+1. a quantified partner-matching exposure; and
+2. final plant reproduction.
 
-The currently machine-retrievable public text does not expose the required patch-level quantitative table/variance structure. Therefore no effect has been entered into `direct_effects.csv` or `common_scale_fisher_z.csv`.
+Here, the detailed synchrony comparison is effectively `n = 2` patches. That is insufficient for a finite Fisher-z sampling variance `1/(n-3)`, and no alternative source regression coefficient for synchrony -> final fecundity is reported.
+
+IWE therefore does not:
+
+- infer a correlation from two patches;
+- digitize Fig. 5 into pseudo-replicates;
+- use egg-load correlations as a substitute for timing;
+- use attacked/control plant sample sizes as if they were synchrony replication;
+- convert the reported 76.5% versus 26.7% contrast into an unregistered effect family.
+
+## Biological interpretation retained
+
+IWE079 is strong evidence for the mechanism:
+
+> the reproductive cost imposed by a seed predator can depend on temporal coincidence between its oviposition window and the host plant's susceptible reproductive stage, not only on average enemy load.
+
+That is directly relevant to the evidence-architecture result: antagonist timing can be biologically decisive while remaining difficult to represent as one comparable study-level monotone synchrony effect.
 
 ## Claim ceiling
 
-Before quantitative recovery, IWE079 supports only:
+IWE079 supports direct antagonist timing context and final-fitness interpretation.
 
-> a published antagonist study explicitly attributes among-patch variation in host-plant fecundity loss to variation in temporal matching between a seed predator's oviposition period and the host's immature reproductive structures.
-
-It does not yet contribute an antagonist programme to the primary H1 common-scale gate.
+It does **not** contribute an independent programme to the primary H1 meta-analysis or the Fisher-z common-scale gate.
