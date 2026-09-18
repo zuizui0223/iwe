@@ -50,5 +50,24 @@ jobs:
         run: python scripts/run_primary_meta.py examples/synthetic_effects.csv /tmp/iwe-meta
       - name: Run leave-one-study reference sensitivity
         run: python scripts/run_sensitivity.py examples/synthetic_effects.csv /tmp/iwe-meta/leave_one_study.csv
-      - name: Build machine-readable claim status
-        run: python scripts/build_claim_status.py examples/synthetic_effects.csv /tmp/iwe-meta/claim_status.json
+      - name: Build machine-readable claim status from biological corpus
+        run: python scripts/build_claim_status.py data/extraction/direct_effects.csv /tmp/iwe-meta/claim_status.json
+      - name: Verify H1 claim status obeys common-scale gate
+        run: |
+          python - <<'PY'
+          import json
+
+          status = json.load(open('/tmp/iwe-meta/claim_status.json', encoding='utf-8'))
+          h1 = status['H1']
+          assert status['schema'] == 'iwe_claim_status_v2'
+          assert h1['status'] == 'not_evaluable'
+          assert h1['common_scale_gate_status'] == 'coverage_only'
+          assert h1['programme_counts'] == {
+              'antagonist': 1,
+              'mixed_pollinating_seed_predator': 1,
+              'mutualist': 1,
+          }
+          assert h1['cross_class_fit_allowed'] is False
+          assert h1['primary_claim_gate'] is False
+          print('OK: biological claim status is locked to coverage_only.')
+          PY
