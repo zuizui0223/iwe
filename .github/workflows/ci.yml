@@ -38,6 +38,8 @@ jobs:
           PY
       - name: Validate system registry
         run: python scripts/validate_registry.py data/registry/systems.csv
+      - name: Validate study screening registry
+        run: python scripts/validate_studies.py data/registry/studies.csv
       - name: Validate synthetic extraction
         run: python scripts/validate_extraction.py examples/synthetic_effects.csv
       - name: Validate direct extraction
