@@ -109,3 +109,15 @@ jobs:
               ['study_id','interaction_type','blocker_type','next_action']
           ].to_string(index=False))
           PY
+      - name: Validate systematic-search completion gate
+        run: python scripts/check_search_completion.py data/registry/search_completion_status.csv /tmp/iwe-search-completion.json
+      - name: Verify search is not prematurely declared closed
+        run: |
+          python - <<'PY'
+          import json
+          status = json.load(open('/tmp/iwe-search-completion.json', encoding='utf-8'))
+          assert status['schema'] == 'iwe_search_completion_v1'
+          assert status['search_closed'] is False
+          assert set(status['remaining_components']) == {'A','B','C','D','E','F'}
+          print(status)
+          PY
