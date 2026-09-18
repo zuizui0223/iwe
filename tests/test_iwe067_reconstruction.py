@@ -108,7 +108,8 @@ def test_iwe067_missing_counts_are_not_silently_zero_imputed():
         synthetic_fruit(),
         year=2017,
     )
-    p1 = table.loc[table["plant_id"] == "P1"].iloc[0]
 
-    # The missing focal census is excluded rather than converted to zero.
-    assert int(p1["n_shared_censuses"]) == 2
+    # P1's only nonzero flowering census is missing, so its flowering curve
+    # cannot be normalized. The plant is excluded rather than treating the
+    # missing count as zero and manufacturing an overlap value.
+    assert "P1" not in set(table["plant_id"])
