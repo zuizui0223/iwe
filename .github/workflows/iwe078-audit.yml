@@ -76,6 +76,26 @@ jobs:
                               break
           PY
 
+          echo "===== Mompha weekly event-field audit ====="
+          python - <<'PY'
+          import csv
+          def rows(name):
+              with open(name, newline="", encoding="utf-8-sig") as fh:
+                  return list(csv.DictReader(fh))
+          for name, plant, corr in [
+              ("momphaCALC_exp1.csv","64.55","Pos GainedOLD+lostNEW"),
+              ("momphaCALC_exp2.csv","10.06","pos gin lost"),
+          ]:
+              print("\nFILE",name,"PLANT",plant)
+              for r in rows(name):
+                  if r.get("ID") == plant:
+                      print({k:r.get(k) for k in [
+                          "date","mompha","OLDmompha","increase in mompha","positive mompha",
+                          "negatove mompha","increase old","positive old","mompha lost",
+                          "old mompha gained","GainedOLD+lostNEW",corr,"mompha gained","TOTAL_Mompha"
+                      ]})
+          PY
+
           echo "===== README relevant text ====="
           grep -niE "overlap|Mompha|Schinia|seed pred|fitness|flower" READ_ME_Phenological_plasticity.txt | head -n 300 || true
 
