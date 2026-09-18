@@ -1,0 +1,76 @@
+name: iwe079-fulltext-recover
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe079-fulltext-recover.yml"
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recover author-uploaded IWE079 full text
+        shell: bash
+        run: |
+          set -u
+          mkdir -p artifact/iwe079/candidates
+          page='https://www.researchgate.net/publication/236591592_The_Effect_of_Seed_Predation_by_Tomares_ballus_Lepidoptera_Lycaenidae_on_Astragalus_lusitanicus_Fabaceae_Determinants_of_Differences_among_Patches'
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "Mozilla/5.0" "$page" -o artifact/iwe079/page.html || true
+
+          python - <<'PY' > artifact/iwe079/candidate_urls.txt
+          from pathlib import Path
+          import html, re
+          text=Path("artifact/iwe079/page.html").read_text(errors="replace")
+          text=html.unescape(text)
+          text=text.replace(r"\u002F","/").replace(r"\/","/")
+          pats=[
+              r'https?://[^"\'<> ]+\.pdf[^"\'<> ]*',
+              r'https?://[^"\'<> ]+download_file[^"\'<> ]*',
+              r'https?://[^"\'<> ]+/links/[^"\'<> ]+',
+          ]
+          seen=[]
+          for pat in pats:
+              for u in re.findall(pat,text,re.I):
+                  u=u.rstrip('\\,}')
+                  if u not in seen:
+                      seen.append(u)
+          seen.append("https://www.researchgate.net/publication/profile/Diego-Jordano-Barbudo/publication/236591592_The_Effect_of_Seed_Predation_by_Tomares_ballus_Lepidoptera_Lycaenidae_on_Astragalus_lusitanicus_Fabaceae_Determinants_of_Differences_among_Patches/links/56975fb408aec79ee32a7d4a/The-Effect-of-Seed-Predation-by-Tomares-ballus-Lepidoptera-Lycaenidae-on-Astragalus-lusitanicus-Fabaceae-Determinants-of-Differences-among-Patches.pdf")
+          for u in seen:
+              print(u)
+          PY
+
+          : > artifact/iwe079/status.txt
+          i=0
+          while IFS= read -r url; do
+            [ -z "$url" ] && continue
+            i=$((i+1))
+            out="artifact/iwe079/candidates/candidate_${i}.bin"
+            code=$(curl -L --retry 1 --connect-timeout 15 --max-time 90 \
+              -A "Mozilla/5.0" -e "$page" \
+              -w "%{http_code}" -o "$out" "$url" || true)
+            bytes=$(wc -c < "$out" 2>/dev/null | tr -d ' ')
+            kind=$(file -b "$out" 2>/dev/null || true)
+            echo "candidate=${i} http=$code bytes=$bytes kind=$kind url=$url" | tee -a artifact/iwe079/status.txt
+            if file "$out" | grep -qi PDF; then
+              cp "$out" artifact/iwe079/jordano1990.pdf
+              pdftotext -layout artifact/iwe079/jordano1990.pdf artifact/iwe079/jordano1990.txt
+              grep -niE 'Table|Fig\.|synchron|ovip|egg|inflores|fecund|seed|patch|mean|S\.E\.|SE|correl|regress|percent|loss' \
+                artifact/iwe079/jordano1990.txt | head -n 1200 > artifact/iwe079/hits.txt || true
+              cat artifact/iwe079/hits.txt
+              break
+            fi
+          done < artifact/iwe079/candidate_urls.txt
+
+          if [ ! -f artifact/iwe079/jordano1990.pdf ]; then
+            grep -oiE '.{0,100}(pdf|download|attachment|full-text|full_text|public-file).{0,250}' \
+              artifact/iwe079/page.html | head -n 300 > artifact/iwe079/page_hints.txt || true
+          fi
+
+      - name: Upload recovery artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe079-fulltext-recovery
+          path: artifact/iwe079
+          if-no-files-found: error
