@@ -19,7 +19,7 @@ After source adjudication through IWE068:
 |---|---:|---:|---:|---:|---:|---:|
 | mutualist | 17 | 3 | 1 | 6 | 8 | 0 |
 | antagonist | 24 | 1 | 1 | 2 | 18 | 3 |
-| mixed pollinating seed predator | 27 | 1 | 1 | 1 | 24 | 1 |
+| mixed pollinating seed predator | 29 | 1 | 1 | 2 | 25 | 1 |
 
 IWE001–IWE040 are the discovery corpus. IWE041 onward are post-freeze records tracked in `prospective_search_log.csv`.
 
@@ -114,7 +114,10 @@ These are independent replication targets beyond IWE068.
 
 ### Mixed
 
-IWE059 (`Ficus pertusa ×` pollinating fig wasps) remains unresolved-strict. It combines crop receptivity/attractiveness timing, temporal pollinator abundance, visitation, seeds per fig and wasp production, but a registered crop-level timing effect plus variance has not yet been recovered.
+Two independent mixed bridges remain unresolved beyond the closed IWE064 programme:
+
+- IWE059 (`Ficus pertusa ×` pollinating fig wasps) combines crop receptivity/attractiveness timing, temporal pollinator abundance, visitation, seeds per fig and wasp production, but a registered crop-level timing effect plus variance has not yet been recovered.
+- IWE070 (`Silene stellata × Hadena ectypa`) directly quantifies individual plant flowering–Hadena synchrony. Synchrony had no detectable effect on initiated fruit set in either 2008 or 2009, while the predation component reversed sign across years: higher synchrony increased predation in 2008 but decreased predation in 2009. A single synchrony coefficient for final surviving fruit/seed fitness has not yet been recovered, so IWE070 remains `unresolved_strict` rather than being forced into `direct_effects.csv`.
 
 ## Measurement asymmetry remains despite three-class coverage
 
@@ -164,6 +167,6 @@ using comparable timing estimands where the published measurements allow it, wit
 1. Complete the frozen backward/query/forward/citation closure.
 2. Recover IWE067 to obtain an independent antagonist replication beyond IWE068; continue IWE035 source recovery in parallel.
 3. Recover IWE008 quantitative effects to expand the mutualist lane beyond one Corydalis programme.
-4. Recover IWE059 quantitatively to determine whether the mixed strict lane can replicate beyond IWE064.
+4. Recover IWE059 and/or IWE070 quantitatively to determine whether the mixed strict lane can replicate beyond IWE064, prioritizing a final net plant reproductive endpoint rather than a component-only effect.
 5. Search for additional mixed H2 studies with group-level numerical timing-fitness data so non-monotonicity can be tested quantitatively rather than narratively.
 6. Do not pool `log_rate_slope_per_day`, Fisher-z, SMD or generic log-response-ratio effects without a separately frozen common-scale conversion.
