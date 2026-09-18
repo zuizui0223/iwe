@@ -1,0 +1,55 @@
+name: iwe067-materialize
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe067-materialize.yml"
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe public Dryad API downloads
+        shell: bash
+        run: |
+          set -u
+          mkdir -p artifact/iwe067
+          : > artifact/iwe067/status.txt
+
+          fetch_one () {
+            local id="$1"
+            local name="$2"
+            local url="https://datadryad.org/api/v2/files/${id}/download"
+            local tmp="artifact/iwe067/${name}.tmp"
+            local out="artifact/iwe067/${name}"
+
+            code=$(curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+              -A "iwe-public-data-recovery/1.0" \
+              -H "Accept: application/octet-stream" \
+              -w "%{http_code}" -o "$tmp" "$url" || true)
+
+            bytes=0
+            if [ -f "$tmp" ]; then
+              bytes=$(wc -c < "$tmp" | tr -d ' ')
+            fi
+            echo "${id} ${name} http=${code} bytes=${bytes}" | tee -a artifact/iwe067/status.txt
+
+            if [ "$code" = "200" ] && [ "$bytes" -gt 100 ]; then
+              mv "$tmp" "$out"
+            else
+              rm -f "$tmp"
+            fi
+          }
+
+          fetch_one 546028 Flower_and_Hylemya_Egg_Census_DATA.txt
+          fetch_one 1064066 2016-2018DustStudyFruitDataForDeposit.txt
+
+          ls -lah artifact/iwe067 | tee -a artifact/iwe067/status.txt
+
+      - name: Upload recovery artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe067-dryad-recovery
+          path: artifact/iwe067
+          if-no-files-found: error
