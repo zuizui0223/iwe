@@ -1,0 +1,39 @@
+name: iwe059-academia-recover
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe059-academia-recover.yml"
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recover author-uploaded Academia full text
+        shell: bash
+        run: |
+          set -u
+          mkdir -p artifact/iwe059
+          url='https://www.academia.edu/attachments/47959661/download_file?s=work_strip&st=MTc4Njc5NDY4Miw0MC4xMTYuNzMuMjIw'
+          code=$(curl -L --retry 2 --connect-timeout 20 --max-time 180 \
+            -A "Mozilla/5.0" \
+            -w "%{http_code}" -o artifact/iwe059/academia.bin "$url" || true)
+          bytes=$(wc -c < artifact/iwe059/academia.bin 2>/dev/null | tr -d ' ')
+          kind=$(file -b artifact/iwe059/academia.bin 2>/dev/null || true)
+          echo "http=$code bytes=$bytes kind=$kind" | tee artifact/iwe059/status.txt
+          if file artifact/iwe059/academia.bin | grep -qi PDF; then
+            mv artifact/iwe059/academia.bin artifact/iwe059/anstett1996.pdf
+            pdftotext -layout artifact/iwe059/anstett1996.pdf artifact/iwe059/anstett1996.txt
+            grep -niE 'Table|Fig\.|seed|offspring|crop|attract|recept|wasp|stage|regress|correl|mean|S\.E\.|SE|standard|visitor|visit' \
+              artifact/iwe059/anstett1996.txt | head -n 800 > artifact/iwe059/hits.txt || true
+            cat artifact/iwe059/hits.txt
+          else
+            head -c 2000 artifact/iwe059/academia.bin | strings | head -n 80 | tee artifact/iwe059/body_preview.txt || true
+          fi
+      - name: Upload recovery artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe059-academia-recovery
+          path: artifact/iwe059
+          if-no-files-found: error
