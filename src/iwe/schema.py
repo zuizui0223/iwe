@@ -21,6 +21,7 @@ EFFECT_FAMILIES = {
     "standardized_mean_difference",
     "log_response_ratio",
     "log_rate_slope_per_day",
+    "log_odds_ratio",
 }
 
 REQUIRED_EFFECT_COLUMNS = [
