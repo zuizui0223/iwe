@@ -1,0 +1,69 @@
+name: iwe059-recover
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe059-recover.yml"
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recover public author-uploaded full text
+        shell: bash
+        run: |
+          set -u
+          mkdir -p artifact/iwe059
+          : > artifact/iwe059/status.txt
+
+          try_url () {
+            local label="$1"
+            local url="$2"
+            local out="artifact/iwe059/${label}.bin"
+            code=$(curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+              -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36" \
+              -H "Accept: application/pdf,text/html;q=0.9,*/*;q=0.8" \
+              -w "%{http_code}" -o "$out" "$url" || true)
+            bytes=0
+            [ -f "$out" ] && bytes=$(wc -c < "$out" | tr -d ' ')
+            kind=$(file -b "$out" 2>/dev/null || true)
+            echo "$label http=$code bytes=$bytes kind=$kind" | tee -a artifact/iwe059/status.txt
+          }
+
+          try_url academia "https://www.academia.edu/attachments/86305960/download_file?s=profile"
+
+          # DOI/Wiley route for comparison; may require subscription, but record
+          # the response rather than assuming access.
+          try_url wiley "https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1365-2699.1996.tb00007.x"
+
+          for f in artifact/iwe059/*.bin; do
+            if file "$f" | grep -qi PDF; then
+              mv "$f" "${f%.bin}.pdf"
+            fi
+          done
+
+      - name: Extract quantitative text if PDF recovered
+        shell: bash
+        run: |
+          set -u
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils >/dev/null
+          for f in artifact/iwe059/*.pdf; do
+            [ -e "$f" ] || continue
+            pdftotext -layout "$f" "${f%.pdf}.txt" || true
+          done
+          for t in artifact/iwe059/*.txt; do
+            [ -e "$t" ] || continue
+            echo "===== $t ====="
+            grep -niE "Table|seed|offspring|crop|attract|recept|wasp|stage|regress|correl|mean|S\.E\.|SE|standard|Fig\." "$t" \
+              | head -n 500 > "artifact/iwe059/$(basename "${t%.txt}")_hits.txt" || true
+            cat "artifact/iwe059/$(basename "${t%.txt}")_hits.txt" || true
+          done
+
+      - name: Upload recovery audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe059-fulltext-recovery
+          path: artifact/iwe059
+          if-no-files-found: error
