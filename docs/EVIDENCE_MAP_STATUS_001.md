@@ -17,7 +17,7 @@ After source adjudication through IWE068:
 
 | interaction type | screened | strict `include` | strict programmes quantitatively closed | unresolved possible strict | context/timing/channel-only | nonlinear shape lane |
 |---|---:|---:|---:|---:|---:|---:|
-| mutualist | 17 | 3 | 1 | 6 | 8 | 0 |
+| mutualist | 17 | 4 | 2 | 5 | 8 | 0 |
 | antagonist | 24 | 1 | 1 | 2 | 18 | 3 |
 | mixed pollinating seed predator | 29 | 1 | 1 | 2 | 25 | 1 |
 
@@ -27,15 +27,24 @@ Source re-adjudication on 2026-09-18 tightened the mutualist lane symmetrically 
 
 IWE now has **at least one quantitatively closed strict-H1 programme in each preregistered interaction class**:
 
-- mutualist — IWE001 (`Corydalis ambigua × Bombus spp.`);
+- mutualist — IWE001 (`Corydalis ambigua × Bombus spp.`) and independent IWE029 (`Stigmaphyllon paralias × Centris spp.`);
 - antagonist — IWE068 (`Ipomopsis aggregata × Hylemya sp.`);
 - mixed pollinating seed predator — IWE064 (`Ficus curtipes × Eupristina sp.`).
 
 This is an estimand-coverage milestone, not sufficient replication for a class-level or cross-class biological conclusion. Effect families also differ across programmes and are not pooled without a separately frozen common-scale conversion.
 
-## Closed mutualist programme — IWE001
+## Closed mutualist programmes — IWE001 and IWE029
 
-IWE001 remains the quantitatively closed mutualist programme, with three dependent Corydalis population effects after the registered one-sided mismatch restriction. These population rows count as one programme rather than three independent studies.
+IWE001 provides three dependent Corydalis population effects after the registered one-sided mismatch restriction. These population rows count as one programme rather than three independent studies.
+
+IWE029 now supplies an independent Brazilian dry-forest mutualist programme. The study deliberately sampled two strongly contrasting flowering–pollinator overlap states: peak flowering with scarce legitimate oil-bee activity and a late period 3–4 weeks later with high pollinator activity. Legitimate-visit lesions occurred on 7.5% of 134 peak flowers versus 93.6% of 140 late flowers. In the source seed-set GLM (`n=173`), the late/high-overlap versus peak/low-overlap natural-pollination contrast is:
+
+- `log OR = +1.55`
+- `SE = 0.25`
+- `variance = 0.0625`.
+
+This is registered as `IWE029_SPAR_OVERLAP_LOGOR`. It remains on its source-native log-odds scale; no Fisher-z conversion is used in the current common-scale gate.
+
 
 ## First closed mixed strict effect — IWE064
 
@@ -166,7 +175,7 @@ using comparable timing estimands where the published measurements allow it, wit
 
 1. Complete the frozen backward/query/forward/citation closure.
 2. Recover IWE067 to obtain an independent antagonist replication beyond IWE068; continue IWE035 source recovery in parallel.
-3. Recover IWE008 quantitative effects to expand the mutualist lane beyond one Corydalis programme.
-4. Recover IWE059 and/or IWE070 quantitatively to determine whether the mixed strict lane can replicate beyond IWE064, prioritizing a final net plant reproductive endpoint rather than a component-only effect.
+3. Recover IWE008 or another independent mutualist effect on a Fisher-z-compatible scale; IWE029 already provides source-native independent mutualist replication.
+4. Recover IWE059 and/or another independent mixed strict effect beyond IWE064. IWE070 now has a locked raw-data requirement because its public analyses expose synchrony effects on fruit initiation and predation separately, not a final net-fitness coefficient.
 5. Search for additional mixed H2 studies with group-level numerical timing-fitness data so non-monotonicity can be tested quantitatively rather than narratively.
 6. Do not pool `log_rate_slope_per_day`, Fisher-z, SMD or generic log-response-ratio effects without a separately frozen common-scale conversion.
