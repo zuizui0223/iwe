@@ -1,0 +1,4 @@
+interaction_type,n_screened_current,strict_admitted_records,strict_quantitative_programmes_closed,common_scale_fisher_z_programmes_closed,unresolved_possible_strict,shape_lane_records,context_only_records,excluded_records,strict_admitted_fraction,quantitative_closed_fraction
+mutualist,17,4,2,1,5,0,8,0,0.23529411764705882,0.11764705882352941
+antagonist,31,1,1,1,8,3,19,0,0.03225806451612903,0.03225806451612903
+mixed_pollinating_seed_predator,29,1,1,1,2,1,25,0,0.034482758620689655,0.034482758620689655
