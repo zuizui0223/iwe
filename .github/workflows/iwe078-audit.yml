@@ -31,12 +31,12 @@ jobs:
           unzip -q /tmp/iwe078/data.zip -d /tmp/iwe078/u
           cd "/tmp/iwe078/u/Freese Stats"
 
-          echo "===== exp1_time_series overlap definition ====="
-          nl -ba exp1_time_series.R | sed -n '240,335p'
+          echo "===== exp1_time_series source construction ====="
+          nl -ba exp1_time_series.R | sed -n '1,335p'
           echo "===== exp1_pubver merge + SEM ====="
           nl -ba exp1_pubver.R | sed -n '35,75p;260,370p'
-          echo "===== exp2_time_series overlap definition ====="
-          nl -ba exp2_time_series.R | sed -n '235,330p'
+          echo "===== exp2_time_series source construction ====="
+          nl -ba exp2_time_series.R | sed -n '1,330p'
           echo "===== exp2_pubver merge + SEM ====="
           nl -ba exp2_pubver.R | sed -n '35,75p;235,330p'
 
@@ -45,14 +45,17 @@ jobs:
 
           echo "===== CSV structures ====="
           python - <<'PY'
-          import pandas as pd
+          import csv
           for name in [
               "fflr_overlap_ex1.csv","comp_final_sum_exp1.csv","fitness_exp1.csv","main_exp1.csv",
               "fflr_overlap_ex2.csv","comp_final_sum_exp2.csv","Exp 2 fitness.csv","main_exp2.csv",
+              "momphaCALC_exp1.csv","momphaCALC_exp2.csv","df2_exp1F.csv","df2_exp2F.csv",
           ]:
               print("\nFILE", name)
-              d=pd.read_csv(name)
-              print("shape",d.shape)
-              print("cols",list(d.columns))
-              print(d.head(3).to_string(index=False))
+              with open(name, newline="", encoding="utf-8-sig") as fh:
+                  rows = list(csv.reader(fh))
+              print("rows", max(0, len(rows)-1))
+              print("cols", rows[0] if rows else [])
+              for row in rows[1:4]:
+                  print(row)
           PY
