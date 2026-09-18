@@ -10,40 +10,72 @@ jobs:
   materialize:
     runs-on: ubuntu-latest
     steps:
-      - name: Probe public Dryad API downloads
+      - name: Probe public Dryad download routes
         shell: bash
         run: |
           set -u
           mkdir -p artifact/iwe067
           : > artifact/iwe067/status.txt
 
-          fetch_one () {
-            local id="$1"
+          ua="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36"
+
+          probe_file () {
+            local doi="$1"
+            local id="$2"
+            local name="$3"
+            local landing="https://datadryad.org/dataset/doi:${doi}"
+            local cookie="artifact/iwe067/cookies-${id}.txt"
+
+            curl -L --connect-timeout 20 --max-time 120 \
+              -A "$ua" -c "$cookie" -o /dev/null "$landing" || true
+
+            for route in \
+              "https://datadryad.org/downloads/file_stream/${id}" \
+              "https://datadryad.org/stash/downloads/file_stream/${id}" \
+              "https://datadryad.org/downloads/file_stream/${id}?download=1"
+            do
+              tag=$(echo "$route" | sed 's#https://datadryad.org/##; s#[/?=&:]#_#g')
+              tmp="artifact/iwe067/${name}.${tag}.tmp"
+              code=$(curl -L --retry 1 --connect-timeout 20 --max-time 120 \
+                -A "$ua" -b "$cookie" -e "$landing" \
+                -H "Accept: text/plain,*/*" \
+                -w "%{http_code}" -o "$tmp" "$route" || true)
+              bytes=0
+              [ -f "$tmp" ] && bytes=$(wc -c < "$tmp" | tr -d ' ')
+              echo "file id=${id} route=${route} http=${code} bytes=${bytes}" | tee -a artifact/iwe067/status.txt
+              if [ "$code" = "200" ] && [ "$bytes" -gt 100 ]; then
+                mv "$tmp" "artifact/iwe067/${name}"
+                rm -f "$cookie"
+                return 0
+              fi
+              rm -f "$tmp"
+            done
+            rm -f "$cookie"
+            return 0
+          }
+
+          probe_dataset () {
+            local encoded_doi="$1"
             local name="$2"
-            local url="https://datadryad.org/api/v2/files/${id}/download"
-            local tmp="artifact/iwe067/${name}.tmp"
-            local out="artifact/iwe067/${name}"
-
-            code=$(curl -L --retry 2 --connect-timeout 20 --max-time 120 \
-              -A "iwe-public-data-recovery/1.0" \
-              -H "Accept: application/octet-stream" \
+            local url="https://datadryad.org/api/v2/datasets/${encoded_doi}/download"
+            local tmp="artifact/iwe067/${name}.zip.tmp"
+            code=$(curl -L --retry 1 --connect-timeout 20 --max-time 120 \
+              -A "$ua" -H "Accept: application/zip,application/octet-stream" \
               -w "%{http_code}" -o "$tmp" "$url" || true)
-
             bytes=0
-            if [ -f "$tmp" ]; then
-              bytes=$(wc -c < "$tmp" | tr -d ' ')
-            fi
-            echo "${id} ${name} http=${code} bytes=${bytes}" | tee -a artifact/iwe067/status.txt
-
+            [ -f "$tmp" ] && bytes=$(wc -c < "$tmp" | tr -d ' ')
+            echo "dataset route=${url} http=${code} bytes=${bytes}" | tee -a artifact/iwe067/status.txt
             if [ "$code" = "200" ] && [ "$bytes" -gt 100 ]; then
-              mv "$tmp" "$out"
+              mv "$tmp" "artifact/iwe067/${name}.zip"
             else
               rm -f "$tmp"
             fi
           }
 
-          fetch_one 546028 Flower_and_Hylemya_Egg_Census_DATA.txt
-          fetch_one 1064066 2016-2018DustStudyFruitDataForDeposit.txt
+          probe_file "10.6086/D18D7B" 546028 Flower_and_Hylemya_Egg_Census_DATA.txt
+          probe_file "10.6086/D10X1R" 1064066 2016-2018DustStudyFruitDataForDeposit.txt
+          probe_dataset "doi%3A10.6086%2FD18D7B" D18D7B
+          probe_dataset "doi%3A10.6086%2FD10X1R" D10X1R
 
           ls -lah artifact/iwe067 | tee -a artifact/iwe067/status.txt
 
