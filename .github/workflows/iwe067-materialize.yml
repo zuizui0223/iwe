@@ -43,7 +43,12 @@ jobs:
               bytes=0
               [ -f "$tmp" ] && bytes=$(wc -c < "$tmp" | tr -d ' ')
               echo "file id=${id} route=${route} http=${code} bytes=${bytes}" | tee -a artifact/iwe067/status.txt
-              if [ "$code" = "200" ] && [ "$bytes" -gt 100 ]; then
+              is_html=0
+              if [ -f "$tmp" ] && grep -Eiq '<!doctype html|<html|Validating\.\.\.|challenge-platform' "$tmp"; then
+                is_html=1
+                echo "rejected anti-bot/html response for id=${id}" | tee -a artifact/iwe067/status.txt
+              fi
+              if [ "$code" = "200" ] && [ "$bytes" -gt 100 ] && [ "$is_html" = "0" ]; then
                 mv "$tmp" "artifact/iwe067/${name}"
                 rm -f "$cookie"
                 return 0
@@ -65,9 +70,10 @@ jobs:
             bytes=0
             [ -f "$tmp" ] && bytes=$(wc -c < "$tmp" | tr -d ' ')
             echo "dataset route=${url} http=${code} bytes=${bytes}" | tee -a artifact/iwe067/status.txt
-            if [ "$code" = "200" ] && [ "$bytes" -gt 100 ]; then
+            if [ "$code" = "200" ] && [ "$bytes" -gt 100 ] && unzip -t "$tmp" >/dev/null 2>&1; then
               mv "$tmp" "artifact/iwe067/${name}.zip"
             else
+              echo "rejected non-zip dataset response for ${encoded_doi}" | tee -a artifact/iwe067/status.txt
               rm -f "$tmp"
             fi
           }
