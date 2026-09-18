@@ -1,0 +1,81 @@
+name: iwe078-probe
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe078-probe.yml"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download and inspect Zenodo package
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/iwe078/unpacked
+          : > artifact/iwe078/status.txt
+
+          api="https://zenodo.org/api/records/19488509"
+          code=$(curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "iwe-literature-audit/1.0" -w "%{http_code}" \
+            -o artifact/iwe078/record.json "$api" || true)
+          echo "record_api http=$code bytes=$(wc -c < artifact/iwe078/record.json)" | tee -a artifact/iwe078/status.txt
+
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path("artifact/iwe078/record.json")
+          try:
+              data=json.loads(p.read_text())
+          except Exception as e:
+              print("record json parse failed:", e)
+              raise SystemExit(0)
+          for f in data.get("files", []):
+              print("FILE", f.get("key"), f.get("size"), f.get("links",{}).get("self") or f.get("links",{}).get("content"))
+          PY
+
+          zip_url=$(python - <<'PY'
+          import json
+          data=json.load(open("artifact/iwe078/record.json"))
+          for f in data.get("files", []):
+              if f.get("key") == "Freese Stats.zip":
+                  print(f.get("links",{}).get("content") or f.get("links",{}).get("self") or "")
+                  break
+          PY
+          )
+          readme_url=$(python - <<'PY'
+          import json
+          data=json.load(open("artifact/iwe078/record.json"))
+          for f in data.get("files", []):
+              if f.get("key") == "READ_ME_Phenological_plasticity.txt":
+                  print(f.get("links",{}).get("content") or f.get("links",{}).get("self") or "")
+                  break
+          PY
+          )
+
+          if [ -n "$zip_url" ]; then
+            curl -L --retry 2 --connect-timeout 20 --max-time 180 \
+              -A "iwe-literature-audit/1.0" "$zip_url" -o artifact/iwe078/Freese_Stats.zip
+            unzip -q artifact/iwe078/Freese_Stats.zip -d artifact/iwe078/unpacked
+          fi
+          if [ -n "$readme_url" ]; then
+            curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+              -A "iwe-literature-audit/1.0" "$readme_url" -o artifact/iwe078/READ_ME_Phenological_plasticity.txt
+          fi
+
+          find artifact/iwe078/unpacked -maxdepth 3 -type f | sort | tee artifact/iwe078/file_list.txt
+
+          grep -RniE "seed.?pred|overlap|flower.*seed|seed.*flower|fitness|structural equation|piecewise|SEM|Schinia|Oenothera" \
+            artifact/iwe078/unpacked artifact/iwe078/READ_ME_Phenological_plasticity.txt \
+            > artifact/iwe078/keyword_hits.txt || true
+
+          echo "keyword_hits=$(wc -l < artifact/iwe078/keyword_hits.txt)" | tee -a artifact/iwe078/status.txt
+          head -n 400 artifact/iwe078/keyword_hits.txt
+
+      - name: Upload probe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe078-zenodo-probe
+          path: artifact/iwe078
+          if-no-files-found: error
