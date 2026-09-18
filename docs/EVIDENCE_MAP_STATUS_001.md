@@ -17,11 +17,13 @@ After source adjudication through IWE068:
 
 | interaction type | screened | strict `include` | strict programmes quantitatively closed | unresolved possible strict | context/timing/channel-only | nonlinear shape lane |
 |---|---:|---:|---:|---:|---:|---:|
-| mutualist | 17 | 7 | 1 | 6 | 4 | 0 |
+| mutualist | 17 | 3 | 1 | 6 | 8 | 0 |
 | antagonist | 24 | 1 | 1 | 2 | 18 | 3 |
 | mixed pollinating seed predator | 27 | 1 | 1 | 1 | 24 | 1 |
 
 IWE001–IWE040 are the discovery corpus. IWE041 onward are post-freeze records tracked in `prospective_search_log.csv`.
+
+Source re-adjudication on 2026-09-18 tightened the mutualist lane symmetrically with antagonist/mixed criteria. IWE005, IWE023, IWE024 and IWE025 were moved from strict-candidate status to direct seasonal-timing/context because flowering week/date was manipulated or observed without an independently identified partner-activity curve that could be converted prospectively to the registered matching estimand. IWE004 had already been downgraded for the same reason. Their null, adverse or mechanistically informative outcomes remain in the evidence map; they are not discarded.
 
 IWE now has **at least one quantitatively closed strict-H1 programme in each preregistered interaction class**:
 
