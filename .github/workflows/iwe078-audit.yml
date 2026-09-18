@@ -1,0 +1,58 @@
+name: iwe078-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe078-audit.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download and audit exact overlap definition
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/iwe078
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "iwe-literature-audit/1.0" \
+            "https://zenodo.org/api/records/19488509" -o /tmp/iwe078/record.json
+          zip_url=$(python - <<'PY'
+          import json
+          data=json.load(open("/tmp/iwe078/record.json"))
+          for f in data["files"]:
+              if f["key"] == "Freese Stats.zip":
+                  print(f["links"].get("content") or f["links"].get("self"))
+                  break
+          PY
+          )
+          curl -L --retry 2 --max-time 180 -A "iwe-literature-audit/1.0" "$zip_url" -o /tmp/iwe078/data.zip
+          unzip -q /tmp/iwe078/data.zip -d /tmp/iwe078/u
+          cd "/tmp/iwe078/u/Freese Stats"
+
+          echo "===== exp1_time_series overlap definition ====="
+          nl -ba exp1_time_series.R | sed -n '240,335p'
+          echo "===== exp1_pubver merge + SEM ====="
+          nl -ba exp1_pubver.R | sed -n '35,75p;260,370p'
+          echo "===== exp2_time_series overlap definition ====="
+          nl -ba exp2_time_series.R | sed -n '235,330p'
+          echo "===== exp2_pubver merge + SEM ====="
+          nl -ba exp2_pubver.R | sed -n '35,75p;235,330p'
+
+          echo "===== README relevant text ====="
+          grep -niE "overlap|Mompha|Schinia|seed pred|fitness|flower" READ_ME_Phenological_plasticity.txt | head -n 300 || true
+
+          echo "===== CSV structures ====="
+          python - <<'PY'
+          import pandas as pd
+          for name in [
+              "fflr_overlap_ex1.csv","comp_final_sum_exp1.csv","fitness_exp1.csv","main_exp1.csv",
+              "fflr_overlap_ex2.csv","comp_final_sum_exp2.csv","Exp 2 fitness.csv","main_exp2.csv",
+          ]:
+              print("\nFILE", name)
+              d=pd.read_csv(name)
+              print("shape",d.shape)
+              print("cols",list(d.columns))
+              print(d.head(3).to_string(index=False))
+          PY
