@@ -1,0 +1,32 @@
+name: frozen-query-counts
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/frozen-query-counts.yml"
+      - "scripts/count_frozen_database_queries.py"
+      - "data/registry/frozen_database_queries.csv"
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Count frozen PubMed and OpenAlex queries
+        run: |
+          mkdir -p artifact/search
+          python scripts/count_frozen_database_queries.py \
+            data/registry/frozen_database_queries.csv \
+            artifact/search/frozen_query_counts.csv
+      - name: Show counts
+        run: cat artifact/search/frozen_query_counts.csv
+      - name: Upload counts
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-query-counts
+          path: artifact/search
+          if-no-files-found: error
