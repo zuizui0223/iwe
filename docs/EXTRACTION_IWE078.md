@@ -77,21 +77,19 @@ Reason:
 3. `Schinia florida` is sampled on fewer dates and on a different observation scale;
 4. summing raw Mompha and Schinia counts would require an arbitrary cross-species weighting.
 
-The source `momphaCALC` tables contain a week-over-week correction that distinguishes newly acquired galls from persisting/aging galls. IWE therefore defines the time-specific interaction event as the source-corrected **new Mompha acquisition**:
+The source `momphaCALC` tables expose both week-level change fields and end-of-season reconciliation fields. Source audit before effect calculation showed that `mompha gained`, `Pos GainedOLD+lostNEW` (Experiment 1), `pos gin lost` (Experiment 2), and `TOTAL_Mompha` are populated as seasonal reconciliation quantities at the final survey rather than as time-localized attack events. They therefore **cannot be assigned to particular weeks** without inventing timing.
 
-Experiment 1:
-
-```text
-M[p,t] = mompha gained + Pos GainedOLD+lostNEW
-```
-
-Experiment 2:
+The time-localized source field is `positive mompha`: the non-negative increase in fresh `Mompha stellella` galls relative to the preceding survey. IWE therefore freezes the primary partner-activity event as:
 
 ```text
-M[p,t] = mompha gained + pos gin lost
+M[p,t] = positive mompha[p,t]
 ```
 
-Negative/impossible values are invalid. Missing values are not converted to zero unless the source algorithm itself defines the relevant correction term as zero.
+This captures newly observed fresh-gall acquisition at a known survey interval. Seasonal correction galls that are recovered only from old/desiccated-gall reconciliation contribute to the source's cumulative damage estimates but are not back-assigned to an unknown week in the IWE timing curve.
+
+Negative values are impossible by construction and fail validation if encountered. Missing `positive mompha` values remain missing; they are not converted to zero.
+
+A sensitivity analysis may use fresh-gall prevalence (`mompha`) as a smoothed interaction-presence curve, but it cannot replace the primary incidence curve because it produces a stronger or more favorable effect.
 
 This choice is frozen before the timing–fitness effect is calculated.
 
@@ -189,7 +187,7 @@ Because the partner is antagonistic, the sign is not flipped to match an expecta
 The following may be computed only as labelled sensitivities:
 
 1. use observed open flowers rather than source `potential` flowers;
-2. use fresh Mompha prevalence rather than source-corrected new gall acquisition;
+2. use fresh Mompha prevalence rather than week-localized `positive mompha` acquisition;
 3. add `Schinia florida` to form a tracked seed-predator-guild activity curve;
 4. include manipulated plants while adjusting for source treatment;
 5. correlate overlap with untransformed `fitness_frt`.
