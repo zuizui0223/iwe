@@ -2,7 +2,7 @@
 
 Source data: Slimon K, Agrawal AA. 2026. *Data and scripts from Slimon & Agrawal (2026): "Phenological plasticity mediates sequential herbivory and fitness"*. Zenodo. DOI `10.5281/zenodo.19488509`.
 
-Source status: public empirical dataset + analysis scripts associated with a 2026 manuscript title. A journal publication under this exact title has not yet been verified. This record therefore remains **unresolved strict-H1 pending source-status and quantitative reconstruction**, even if the raw reconstruction is technically successful.
+Source status: public empirical dataset + analysis scripts associated with a 2026 manuscript title. A journal publication under this exact title has not yet been verified. The frozen quantitative reconstruction is now complete, but the record remains **provisional and excluded from the primary H1 programme gate pending publication eligibility**.
 
 Interaction class: `antagonist`.
 
@@ -182,6 +182,30 @@ A finite Fisher-z effect requires `n >= 4` complete primary plants and `|r| < 1`
 
 Because the partner is antagonistic, the sign is not flipped to match an expectation. A negative native effect means greater Mompha synchrony is associated with lower realized plant reproduction; a positive native effect means the opposite.
 
+## Frozen reconstruction result
+
+The source adapter and reconstruction were executed against the exact Zenodo archive after the timing metric, focal partner, control subset, fitness transformation, and source-eligibility rule were frozen.
+
+Experiment 1:
+
+- complete strict plants: `n = 20`;
+- Pearson `r = +0.3154846465`;
+- Fisher `z = +0.3266246773`;
+- sampling variance `= 0.0588235294`.
+
+Experiment 2:
+
+- complete strict plants: `n = 59`;
+- Pearson `r = -0.0536505789`;
+- Fisher `z = -0.0537021436`;
+- sampling variance `= 0.0178571429`.
+
+The two effects share `DEP_IWE078_OENOTHERA_MOMPHA` and represent one biological programme.
+
+The sign differs between experiments. Experiment 1 shows a positive association between Mompha temporal overlap and realized reproduction, whereas Experiment 2 is close to zero with a slight negative association. Thus the reconstructed dataset does not support a simple, repeatable monotone expectation that greater antagonist synchrony necessarily reduces final plant reproduction.
+
+These values are stored in `data/extraction/provisional_strict_fisher_z.csv`. They are not added to `common_scale_fisher_z.csv` and do not increase the primary antagonist programme count.
+
 ## Sensitivity analyses that cannot replace the primary result
 
 The following may be computed only as labelled sensitivities:
@@ -204,10 +228,10 @@ Therefore:
 - its numerical result must remain provisional until IWE's source-eligibility rule explicitly admits this source form or a corresponding citable publication is verified;
 - it cannot silently be promoted into the confirmatory H1 corpus merely because it supplies a needed antagonist replication.
 
-## Claim ceiling before reconstruction
+## Claim ceiling after reconstruction
 
-At this stage IWE078 supports only:
+IWE078 now supports a narrow provisional statement:
 
-> a public two-cohort Oenothera dataset contains source-documented flowering time series, directly observed Mompha seed-predator timing, and final realized reproduction sufficient for a prospectively frozen strict timing–fitness reconstruction.
+> under the frozen control-plant reconstruction, the association between normalized Mompha temporal overlap and final realized reproduction differs strongly between the two experiments, with a positive estimate in Experiment 1 and an approximately null estimate in Experiment 2.
 
-No IWE078 effect sign, magnitude, class mean, or H1 support state is claimed before the frozen reconstruction is executed and the source-status gate is resolved.
+It does not establish a class-level antagonist effect, a causal synchrony effect, or H1 support. Under `docs/SOURCE_ELIGIBILITY.md`, the dataset-only record remains outside the confirmatory primary programme gate until a corresponding eligible publication is verified.
