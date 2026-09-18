@@ -72,3 +72,32 @@ Current evidence supports:
 > individual plant synchrony with adult Hadena activity changes the predation component of a mixed pollinating-seed-predator interaction, and the sign of that effect reverses between years.
 
 It does not yet support a quantitative synchrony effect on final net plant fitness.
+
+
+## Public-source recovery audit — 2026-09-18
+
+A targeted recovery pass checked the public University of Maryland dissertation record, the indexed Chapter-3 text, the related 2013 American Journal of Botany paper, and the 2011 ESA abstract.
+
+The public dissertation abstract confirms that synchrony between S. stellata flowering and H. ectypa oviposition was one of the core analyses and that synchrony effects on flower/fruit predation differed among seasons.
+
+The ESA abstract is especially informative about data availability: in 2008 and 2009 all flowers on 114 and 94 plants, respectively, were marked, followed through senescence, and processed in the laboratory. The stated final analysis targets included seed set, fruit set, oviposition and flower/fruit/seed predation.
+
+However, the indexed Chapter-3 results expose initiated fruit set and predation models, not a coefficient for final mature seed or surviving-fruit fitness as a function of synchrony. The related 2013 American Journal of Botany paper likewise reports initiated fruit set and predation, not a strict final synchrony-to-net-fitness coefficient.
+
+Therefore the existence of processed seed data is **not** treated as evidence that the required net effect is recoverable from the published analysis.
+
+### Locked adjudication
+
+Current state:
+
+`unresolved_raw_data_required`
+
+IWE070 can close only if plant-level data become available containing, at minimum:
+
+- plant identifier;
+- the published flowering-Hadena synchrony metric or enough date-level records to reconstruct it;
+- final surviving fruit and/or mature-seed outcome from the same marked flowers.
+
+P values, chi-square statistics for initiated fruit set and predation, and annual means are insufficient substitutes.
+
+No source coefficient is entered into `direct_effects.csv` from the currently public material.
