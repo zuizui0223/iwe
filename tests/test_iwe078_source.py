@@ -206,9 +206,9 @@ def test_source_adapter_applies_control_and_source_fitness_rules(tmp_path):
     fit2 = source.fitness.loc[source.fitness["experiment"] == "2"]
 
     # Exp1: 15 - (1 + 0.2*5 + 0.2*5) = 12
-    assert set(fit1["final_reproduction"]) == {pytest.approx(12.0)}
+    assert all(v == pytest.approx(12.0) for v in fit1["final_reproduction"])
     # Exp2: 12 - (1 + 0.2*5 + 0.2*5) = 9
-    assert set(fit2["final_reproduction"]) == {pytest.approx(9.0)}
+    assert all(v == pytest.approx(9.0) for v in fit2["final_reproduction"])
     assert set(source.fitness["treatment"]) == {"control"}
 
 
