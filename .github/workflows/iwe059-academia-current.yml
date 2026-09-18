@@ -1,0 +1,47 @@
+name: iwe059-academia-current
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe059-academia-current.yml"
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recover current author-profile attachment
+        shell: bash
+        run: |
+          set -u
+          mkdir -p artifact/iwe059
+          profile='https://artehis-cnrs.academia.edu/MarieCharlotteAnstett'
+          url='https://www.academia.edu/attachments/86305960/download_file?s=profile'
+          # Establish profile session first, then request the current download link.
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "Mozilla/5.0" -c artifact/iwe059/cookies.txt \
+            "$profile" -o artifact/iwe059/profile.html || true
+          code=$(curl -L --retry 2 --connect-timeout 20 --max-time 180 \
+            -A "Mozilla/5.0" -b artifact/iwe059/cookies.txt -c artifact/iwe059/cookies.txt \
+            -e "$profile" -w "%{http_code}" \
+            -o artifact/iwe059/current.bin "$url" || true)
+          bytes=$(wc -c < artifact/iwe059/current.bin 2>/dev/null | tr -d ' ')
+          kind=$(file -b artifact/iwe059/current.bin 2>/dev/null || true)
+          echo "http=$code bytes=$bytes kind=$kind" | tee artifact/iwe059/status.txt
+
+          if file artifact/iwe059/current.bin | grep -qi PDF; then
+            mv artifact/iwe059/current.bin artifact/iwe059/anstett1996.pdf
+            pdftotext -layout artifact/iwe059/anstett1996.pdf artifact/iwe059/anstett1996.txt
+            grep -niE 'Table|Fig\.|seed|offspring|crop|attract|recept|wasp|stage|regress|correl|mean|S\.E\.|SE|standard|visitor|visit' \
+              artifact/iwe059/anstett1996.txt | head -n 1200 > artifact/iwe059/hits.txt || true
+            cat artifact/iwe059/hits.txt
+          else
+            head -c 3000 artifact/iwe059/current.bin | strings | head -n 120 | tee artifact/iwe059/body_preview.txt || true
+          fi
+
+      - name: Upload recovery artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe059-current-attachment
+          path: artifact/iwe059
+          if-no-files-found: error
