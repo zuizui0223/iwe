@@ -1,0 +1,77 @@
+name: iwe078-reconstruct
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe078-reconstruct.yml"
+      - "scripts/reconstruct_iwe078.py"
+      - "src/iwe/iwe078.py"
+      - "src/iwe/iwe078_source.py"
+
+jobs:
+  reconstruct:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: python -m pip install -e '.[dev]'
+      - name: Download exact Zenodo source package
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/iwe078
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "iwe-reconstruction/1.0" \
+            "https://zenodo.org/api/records/19488509" -o /tmp/iwe078/record.json
+          zip_url=$(python - <<'PY'
+          import json
+          data=json.load(open("/tmp/iwe078/record.json"))
+          matches=[
+              f for f in data["files"]
+              if f["key"] == "Freese Stats.zip"
+          ]
+          assert len(matches) == 1, "expected one Freese Stats.zip"
+          f=matches[0]
+          print(f["links"].get("content") or f["links"].get("self"))
+          PY
+          )
+          curl -L --retry 2 --connect-timeout 20 --max-time 180 \
+            -A "iwe-reconstruction/1.0" \
+            "$zip_url" -o /tmp/iwe078/data.zip
+          unzip -q /tmp/iwe078/data.zip -d /tmp/iwe078/u
+          test -d "/tmp/iwe078/u/Freese Stats"
+      - name: Run frozen IWE078 reconstruction
+        run: |
+          mkdir -p /tmp/iwe078/result/canonical
+          python scripts/reconstruct_iwe078.py "/tmp/iwe078/u/Freese Stats" \
+            --json /tmp/iwe078/result/effects.json \
+            --plants /tmp/iwe078/result/plants.csv \
+            --canonical-dir /tmp/iwe078/result/canonical
+      - name: Verify reconstruction invariants
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, math
+          p=json.load(open("/tmp/iwe078/result/effects.json"))
+          assert p["source_status"] == "provisional_pending_publication_eligibility"
+          assert len(p["effects"]) == 2
+          exps={e["experiment"] for e in p["effects"]}
+          assert exps == {"1","2"}
+          for e in p["effects"]:
+              assert e["n"] >= 4
+              assert math.isfinite(e["pearson_r"])
+              assert abs(e["pearson_r"]) < 1
+              assert math.isfinite(e["fisher_z_native"])
+              assert e["variance_native"] > 0
+          print("OK: IWE078 frozen reconstruction produced two finite experiment effects.")
+          PY
+      - name: Upload reconstruction artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe078-reconstruction
+          path: /tmp/iwe078/result
+          if-no-files-found: error
