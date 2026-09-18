@@ -33,12 +33,48 @@ jobs:
 
           echo "===== exp1_time_series source construction ====="
           nl -ba exp1_time_series.R | sed -n '1,335p'
-          echo "===== exp1_pubver merge + SEM ====="
-          nl -ba exp1_pubver.R | sed -n '35,75p;260,370p'
+          echo "===== exp1_pubver cleaning + fitness + SEM ====="
+          nl -ba exp1_pubver.R | sed -n '35,135p;260,370p'
           echo "===== exp2_time_series source construction ====="
           nl -ba exp2_time_series.R | sed -n '1,330p'
-          echo "===== exp2_pubver merge + SEM ====="
-          nl -ba exp2_pubver.R | sed -n '35,75p;235,330p'
+          echo "===== exp2_pubver cleaning + fitness + SEM ====="
+          nl -ba exp2_pubver.R | sed -n '35,145p;235,330p'
+
+          echo "===== Source treatment and Mompha-acquisition audit ====="
+          python - <<'PY'
+          import csv
+          from collections import Counter
+
+          def rows(name):
+              with open(name, newline="", encoding="utf-8-sig") as fh:
+                  return list(csv.DictReader(fh))
+
+          for name, field in [("main_exp1.csv","TRT"),("main_exp2.csv","Treatment")]:
+              rr=rows(name)
+              print(name, "treatments", Counter(r.get(field,"") for r in rr))
+
+          for name, corr in [
+              ("momphaCALC_exp1.csv","Pos GainedOLD+lostNEW"),
+              ("momphaCALC_exp2.csv","pos gin lost"),
+          ]:
+              rr=rows(name)
+              print("\n",name,"nonzero/observed acquisition examples")
+              shown=0
+              for r in rr:
+                  mg=r.get("mompha gained","")
+                  cr=r.get(corr,"")
+                  mo=r.get("mompha","")
+                  if mg not in ("","NA","na") or cr not in ("","NA","na"):
+                      try:
+                          value=(0 if mg in ("","NA","na") else float(mg)) + (0 if cr in ("","NA","na") else float(cr))
+                      except ValueError:
+                          continue
+                      if value > 0 or shown < 3:
+                          print({k:r.get(k) for k in ["ID","TRT","geno","date","mompha","OLDmompha","mompha gained",corr,"TOTAL_Mompha"]})
+                          shown += 1
+                          if shown >= 16:
+                              break
+          PY
 
           echo "===== README relevant text ====="
           grep -niE "overlap|Mompha|Schinia|seed pred|fitness|flower" READ_ME_Phenological_plasticity.txt | head -n 300 || true
