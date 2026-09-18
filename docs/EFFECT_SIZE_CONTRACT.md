@@ -17,6 +17,7 @@ The first release accepts these `effect_family` values:
 - `standardized_mean_difference`
 - `log_response_ratio`
 - `log_rate_slope_per_day`
+- `log_odds_ratio`
 
 Effect families are not silently converted into one another. The primary software can summarize a common family or a table whose values have already been placed on a justified common scale outside IWE. Cross-family pooling requires a separately documented conversion rule.
 
@@ -31,6 +32,12 @@ Examples include experimentally delaying pollinator arrival after the onset of f
 A reconstructed slope may enter this family only when source group means, sampling variances and timing values are sufficient to obtain a transparent weighted log-linear slope. The reconstruction formula and source rows must be documented in an extraction receipt.
 
 `log_rate_slope_per_day` is **not interchangeable** with a two-group `log_response_ratio`. It must be analyzed separately unless a prospective conversion to a common exposure scale is registered.
+
+### `log_odds_ratio`
+
+This family stores a source-model coefficient from a binomial/logit model when a declared two-state timing contrast has been independently ordered as lower versus higher plant–partner synchrony. The native effect is the log odds ratio for plant reproductive success in the higher-synchrony state relative to the lower-synchrony state.
+
+The timing order must be established from partner activity/interaction measurements, not from the reproductive outcome itself. A log-odds effect remains on its source-native scale and is not silently converted to Fisher-z, SMD, or a log response ratio.
 
 ## Required fields for an extracted effect
 
