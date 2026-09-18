@@ -7,7 +7,7 @@ Public data:
 - flowering + Hylemya egg census: Dryad `10.6086/D18D7B`;
 - mature fruit/fate/seed data: Dryad `10.6086/D10X1R`.
 
-Status: **unresolved strict-H1 antagonist candidate; reconstruction rule frozen before raw-file outcome analysis**.
+Status: **unresolved strict-H1 antagonist candidate; reconstruction rule is frozen and implemented, but raw Dryad files are not yet materialized**.
 
 ## Why this can identify a strict timing effect
 
@@ -94,9 +94,18 @@ No minimum flower-count threshold is introduced after viewing outcomes.
 
 None can replace the frozen control-plant successful-fruit effect because it is weaker or less significant.
 
-## Current data-access status
+## Current implementation and data-access status
 
-The Dryad landing pages and file metadata are publicly indexed and confirm the two required data files, their grains, and the census/fruit linkage design. In the current execution environment the direct Dryad file-stream downloads fail, so the numerical reconstruction has not yet been run.
+The frozen reconstruction is now implemented in `src/iwe/iwe067.py` and regression-tested in `tests/test_iwe067_reconstruction.py`. The executable entry point is `scripts/reconstruct_iwe067.py`. The code fixes the leave-one-plant-out overlap calculation, the successful-fruit endpoint, the 2017/2018 year restriction, the control-only primary subset, missing-value behavior, and Fisher-z variance before the raw outcomes are available.
+
+The Dryad landing pages expose the exact required files:
+
+- `Flower_and_Hylemya_Egg_Census_DATA.txt` — Dryad file stream `546028`;
+- `2016-2018DustStudyFruitDataForDeposit.txt` — Dryad file stream `1064066`.
+
+The linked file-stream endpoints currently return HTTP 403 in the execution environment, and a second direct-download route also fails. The landing-page metadata and the published article independently confirm that the first file contains plant-by-census flowering/egg data and that the second contains final flower/fruit fates for 2017–2018.
+
+The remaining implementation step is therefore narrow: materialize the two raw text files, map their source column names/fate codes into the canonical columns required by `iwe.iwe067`, and execute the already-frozen reconstruction. No choice of timing metric, treatment subset, outcome, year set, or effect-size formula remains open.
 
 This is an access limitation, not a negative adjudication. IWE067 remains `unresolved_strict` until the raw files can be materialized or an equivalent source-level coefficient is recovered.
 
