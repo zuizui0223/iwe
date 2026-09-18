@@ -91,3 +91,21 @@ jobs:
           assert int(df.loc['mixed_pollinating_seed_predator', 'common_scale_fisher_z_programmes_closed']) == 1
           print(df.to_string())
           PY
+      - name: Build strict-evidence blocker queue
+        run: python scripts/build_strict_blocker_queue.py data/registry/strict_blockers.csv /tmp/iwe-strict-blockers.csv
+      - name: Verify blocker queue prioritizes gate-changing programmes
+        run: |
+          python - <<'PY'
+          import pandas as pd
+          df = pd.read_csv('/tmp/iwe-strict-blockers.csv')
+          top = df.loc[
+              (df['priority'] == 1)
+              & (df['primary_gate_gain_if_closed'] == 1)
+              & (df['source_eligible'].astype(str).str.lower() == 'true')
+          ]
+          assert set(top['study_id']) == {'IWE035', 'IWE059', 'IWE067'}
+          assert (top['gate_value'] == top['gate_value'].max()).all()
+          print(top[
+              ['study_id','interaction_type','blocker_type','next_action']
+          ].to_string(index=False))
+          PY
