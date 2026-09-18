@@ -40,6 +40,41 @@ Admit IWE059 to strict H1 only if source tables/data permit one of:
 
 If only stage-of-attraction or visitation effects can be recovered, move the record to timing/context rather than inventing a strict effect.
 
+
+## Public-source recovery audit — 2026-09-19
+
+The quantitative blocker is now explicitly an **access/source-data blocker**, not a missing search lead.
+
+Verified public records include:
+
+- the peer-reviewed Journal of Biogeography article and DOI;
+- University of Arizona publication metadata;
+- a ResearchGate author-uploaded full-text record;
+- Marie Charlotte Anstett's CNRS Academia profile, which exposes a current `Download free PDF` action.
+
+Multiple source-authorized/public attachment routes were tested from the execution environment:
+
+1. an older Academia attachment route;
+2. the current Academia attachment `attachments/86305960/download_file?s=profile`;
+3. a profile-session + cookie + referrer request to that current attachment;
+4. the indexed ResearchGate author-upload route;
+5. the Wiley publisher PDF route.
+
+The current Academia route and the older author-upload routes return managed anti-bot/Cloudflare HTML rather than the PDF; the publisher route does not expose a machine-retrievable open full text. The responses are validated by content type/body and are not misclassified as source data.
+
+No crop-level raw dataset, supplementary table, institutional full-text mirror, or source regression coefficient has yet been recovered from an accessible repository.
+
+### Locked next action
+
+Do **not** continue trying alternate query parameters against the same Academia/ResearchGate attachment endpoints. IWE059 can advance only through a genuinely different source route, such as:
+
+- an institutional/author repository mirror containing the article or tables;
+- archived source data;
+- supplementary material with crop-level timing and seed output;
+- a source-reported timing coefficient plus uncertainty.
+
+Until one of those appears, IWE059 remains `unresolved_strict` with blocker type `fulltext_or_source_data_access`.
+
 ## Dependence
 
 Any crop-level estimates from the study share the same six-year `Ficus pertusa` research programme and must be clustered under one publication/programme dependence identifier.
