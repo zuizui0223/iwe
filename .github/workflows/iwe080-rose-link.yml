@@ -1,0 +1,138 @@
+name: iwe080-rose-link
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe080-rose-link.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install PDF tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils >/dev/null
+
+      - name: Recover Russell 2004 public full text
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/iwe080
+          url="https://digitalcommons.unl.edu/cgi/viewcontent.cgi?article=1019&context=bioscilouda"
+          code=$(curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "Mozilla/5.0 iwe-evidence-audit/1.0" \
+            -e "https://digitalcommons.unl.edu/bioscilouda/20/" \
+            -w "%{http_code}" -o artifact/iwe080/russell2004.bin "$url" || true)
+          kind=$(file -b artifact/iwe080/russell2004.bin || true)
+          bytes=$(wc -c < artifact/iwe080/russell2004.bin | tr -d ' ')
+          echo "russell http=$code bytes=$bytes kind=$kind" | tee artifact/iwe080/status.txt
+          if file artifact/iwe080/russell2004.bin | grep -qi PDF; then
+            mv artifact/iwe080/russell2004.bin artifact/iwe080/russell2004.pdf
+            pdftotext -layout artifact/iwe080/russell2004.pdf artifact/iwe080/russell2004.txt
+            grep -niE "Table|site|year|synchron|asynchron|egg load|oviposition|flower head|phenolog|Arapaho|Niobrara|Mahoney|Salzman" \
+              artifact/iwe080/russell2004.txt | head -n 1000 > artifact/iwe080/russell_hits.txt || true
+          fi
+
+      - name: Query Rose 2005 Figshare collection
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/iwe080/figshare
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "iwe-evidence-audit/1.0" \
+            "https://api.figshare.com/v2/collections/3298430/articles?page_size=1000" \
+            -o artifact/iwe080/figshare/collection.json
+
+          python - <<'PY'
+          import json, pathlib, urllib.request
+          root=pathlib.Path("artifact/iwe080/figshare")
+          data=json.load(open(root/"collection.json"))
+          print("collection_items", len(data))
+          out=[]
+          for item in data:
+              aid=item.get("id")
+              if not aid:
+                  continue
+              url=f"https://api.figshare.com/v2/articles/{aid}"
+              req=urllib.request.Request(url,headers={"User-Agent":"iwe-evidence-audit/1.0"})
+              with urllib.request.urlopen(req,timeout=60) as r:
+                  meta=json.load(r)
+              out.append(meta)
+              print("ARTICLE",aid,meta.get("title"))
+              for f in meta.get("files",[]):
+                  print(" FILE",f.get("id"),f.get("name"),f.get("size"),f.get("download_url"))
+          json.dump(out,open(root/"articles.json","w"),indent=2)
+          PY
+
+      - name: Download Figshare data files
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, pathlib, urllib.request, re
+          root=pathlib.Path("artifact/iwe080/figshare")
+          metas=json.load(open(root/"articles.json"))
+          for meta in metas:
+              aid=meta["id"]
+              for f in meta.get("files",[]):
+                  url=f.get("download_url")
+                  name=f.get("name") or str(f.get("id"))
+                  if not url:
+                      continue
+                  safe=re.sub(r"[^A-Za-z0-9._-]+","_",name)
+                  out=root/f"{aid}__{safe}"
+                  req=urllib.request.Request(url,headers={"User-Agent":"iwe-evidence-audit/1.0"})
+                  with urllib.request.urlopen(req,timeout=120) as r:
+                      out.write_bytes(r.read())
+                  print("DOWNLOADED",out,out.stat().st_size)
+          PY
+          find artifact/iwe080/figshare -maxdepth 1 -type f -printf '%f %s bytes\n' | sort | tee artifact/iwe080/figshare_files.txt
+
+      - name: Inspect Figshare table schemas and site-year keys
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' | tee artifact/iwe080/figshare_audit.txt
+          import pathlib, csv, json, re
+          root=pathlib.Path("artifact/iwe080/figshare")
+          for p in sorted(root.iterdir()):
+              if "__" not in p.name:
+                  continue
+              print("\nFILE",p.name,"bytes",p.stat().st_size)
+              suffix=p.suffix.lower()
+              if suffix in {".csv",".txt",".tsv",".dat"}:
+                  try:
+                      text=p.read_text(errors="replace")
+                      lines=text.splitlines()
+                      print("HEAD")
+                      for line in lines[:12]:
+                          print(line[:1200])
+                      print("MATCHES")
+                      for i,line in enumerate(lines,1):
+                          if re.search(r"site|year|seed|egg|rhin|flower|fecund|fitness|head",line,re.I):
+                              print(i,line[:1200])
+                              if i>500:
+                                  break
+                  except Exception as e:
+                      print("ERR",e)
+              else:
+                  print("kind",suffix)
+          PY
+
+      - name: Print key audit outputs
+        shell: bash
+        run: |
+          cat artifact/iwe080/status.txt || true
+          echo "===== RUSSELL HITS ====="
+          cat artifact/iwe080/russell_hits.txt || true
+          echo "===== FIGSHARE FILES ====="
+          cat artifact/iwe080/figshare_files.txt || true
+          echo "===== FIGSHARE AUDIT ====="
+          cat artifact/iwe080/figshare_audit.txt || true
+
+      - name: Upload audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe080-rose-link-audit
+          path: artifact/iwe080
+          if-no-files-found: error
