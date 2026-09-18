@@ -20,4 +20,5 @@ def test_registered_effect_families_are_explicit():
         "standardized_mean_difference",
         "log_response_ratio",
         "log_rate_slope_per_day",
+        "log_odds_ratio",
     }
