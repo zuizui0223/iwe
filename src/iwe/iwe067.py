@@ -99,7 +99,10 @@ def build_iwe067_plant_table(
     # Multiple raw records at one plant x census are safely aggregated.
     ph = (
         ph.groupby(["plant_id", "census"], as_index=False, dropna=False)
-        .agg(open_flowers=("open_flowers", "sum"), detected_eggs=("detected_eggs", "sum"))
+        .agg(
+            open_flowers=("open_flowers", lambda s: s.sum(min_count=1)),
+            detected_eggs=("detected_eggs", lambda s: s.sum(min_count=1)),
+        )
     )
 
     fruit_summary = (
@@ -121,7 +124,10 @@ def build_iwe067_plant_table(
 
     totals = (
         ph.groupby("census", as_index=False)
-        .agg(total_open=("open_flowers", "sum"), total_eggs=("detected_eggs", "sum"))
+        .agg(
+            total_open=("open_flowers", lambda s: s.sum(min_count=1)),
+            total_eggs=("detected_eggs", lambda s: s.sum(min_count=1)),
+        )
         .set_index("census")
     )
 
