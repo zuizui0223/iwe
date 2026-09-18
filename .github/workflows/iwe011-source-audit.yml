@@ -1,0 +1,58 @@
+name: iwe011-source-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe011-source-audit.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recover HUSCAP landing page
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/iwe011
+          for url in \
+            "https://hdl.handle.net/2115/95572" \
+            "https://eprints.lib.hokudai.ac.jp/repo/huscap/all/95572/"; do
+            tag=$(echo "$url" | sed 's#[/:?=&]#_#g')
+            code=$(curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+              -A "Mozilla/5.0 iwe-source-audit/1.0" \
+              -w "%{http_code}" -o "artifact/iwe011/${tag}.html" "$url" || true)
+            bytes=$(wc -c < "artifact/iwe011/${tag}.html" | tr -d ' ')
+            echo "$url http=$code bytes=$bytes" | tee -a artifact/iwe011/status.txt
+          done
+
+      - name: Extract candidate file links
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' | tee artifact/iwe011/links.txt
+          from pathlib import Path
+          import re, html
+          for p in Path("artifact/iwe011").glob("*.html"):
+              text=p.read_text(errors="replace")
+              print("\nPAGE",p.name)
+              for href in re.findall(r'href=["\x27]([^"\x27]+)', text, flags=re.I):
+                  href=html.unescape(href)
+                  if any(k in href.lower() for k in [".csv",".txt",".xlsx",".xls",".r",".zip","download","bitstream","file","95572"]):
+                      print(href)
+          PY
+
+      - name: Print page clues
+        shell: bash
+        run: |
+          for f in artifact/iwe011/*.html; do
+            echo "===== $f ====="
+            grep -oiE '.{0,120}(csv|xlsx|xls|\.R|zip|dataset|data|reproducible|download|file).{0,240}' "$f" | head -n 250 || true
+          done
+
+      - name: Upload audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe011-huscap-audit
+          path: artifact/iwe011
+          if-no-files-found: error
