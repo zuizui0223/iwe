@@ -110,3 +110,29 @@ It does not establish:
 - a net lifetime-fitness effect combining all female and male reproductive components.
 
 For H1, the outcome is specifically final female reproductive output after the mixed pollination/oviposition interaction has occurred.
+
+
+## Common-scale Fisher-z reconstruction
+
+For a cross-programme **effect-family feasibility check**, IWE also reconstructs a Pearson correlation from the seven unambiguous day-0 through day-24 groups. The pooled `>=28 d` group is excluded because individual exposure ages within that source category are 28, 32 and 36 days.
+
+Because pollination delay is constant within each retained age group, the individual-level correlation between delay and seed count is recoverable exactly from group `n`, seed mean and seed SD:
+
+`SSx = sum_g n_g (x_g - xbar)^2`
+
+`SSy = sum_g (n_g - 1) s_g^2 + sum_g n_g (ybar_g - ybar)^2`
+
+`SP = sum_g n_g (x_g - xbar)(ybar_g - ybar)`
+
+`r = SP / sqrt(SSx * SSy)`.
+
+Using the seven source groups gives:
+
+- `N = 334`
+- `r(delay, seed count) = -0.4083692193`
+- `Fisher z = -0.4336524864`
+- `Var(z) = 1/(334-3) = 0.0030211480`
+
+Because delay is a mismatch exposure, the oriented synchrony effect is `+0.4336524864`.
+
+This Fisher-z reconstruction is stored only in `data/extraction/common_scale_fisher_z.csv`. It does **not** replace the registered primary `log_rate_slope_per_day` row and is not counted as an additional independent effect. Its purpose is to test whether the three preregistered interaction classes can be represented on one correlation-based effect family without changing the source estimand.
