@@ -37,6 +37,30 @@ The search starts from, but is not restricted to:
 
 Candidate status is not admission.
 
+
+## Current empirical status
+
+The present screened corpus has quantitative strict programmes closed for:
+
+- mutualist: 2 independent programmes;
+- antagonist: 1 independent programme;
+- mixed pollinating seed predator: 1 independent programme.
+
+On the current Fisher-z common scale, each class has one independent programme, so the primary cross-class H1 gate remains **`coverage_only`**. This is a replication/effect-scale limitation, not a software failure.
+
+The current evidence architecture is generated with:
+
+```bash
+python scripts/build_evidence_architecture.py
+```
+
+See:
+
+- `docs/EVIDENCE_ARCHITECTURE_CURRENT.md` — interpretation of the current measurement/evidence structure;
+- `data/derived/evidence_architecture_current.csv` — machine-readable snapshot;
+- `docs/COMMON_SCALE_FEASIBILITY_GATE.md` — independent-programme thresholds for cross-class inference;
+- `docs/SOURCE_ELIGIBILITY.md` — source forms allowed into the confirmatory primary corpus.
+
 ## Project boundary
 
 IWE does **not** estimate `L`, `R`, `K`, `Phi`, accessibility, invasion, fixation, occupancy, or BITA mechanism allocations. SCH/BALANCE/SLK/BITA/PAYOFF may later use IWE as external empirical context, but IWE stands as an independent meta-analysis.
