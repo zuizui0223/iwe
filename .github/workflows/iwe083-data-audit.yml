@@ -1,0 +1,126 @@
+name: iwe083-data-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe083-data-audit.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download candidate dataset
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/iwe083
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "iwe-literature-audit/1.0" \
+            "https://zenodo.org/api/records/20805747/files/data.xlsx/content" \
+            -o artifact/iwe083/data.xlsx
+          file artifact/iwe083/data.xlsx
+          ls -lh artifact/iwe083/data.xlsx
+
+      - name: Inspect XLSX structure with standard library only
+        shell: bash
+        run: |
+          python - <<'PY' | tee artifact/iwe083/xlsx_audit.txt
+          from pathlib import Path
+          from zipfile import ZipFile
+          import re
+          import xml.etree.ElementTree as ET
+
+          path=Path("artifact/iwe083/data.xlsx")
+          NS={
+              "m":"http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+              "r":"http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+              "pr":"http://schemas.openxmlformats.org/package/2006/relationships",
+          }
+
+          def col_index(ref):
+              m=re.match(r"([A-Z]+)",ref)
+              n=0
+              for ch in m.group(1):
+                  n=n*26+(ord(ch)-64)
+              return n-1
+
+          with ZipFile(path) as z:
+              names=z.namelist()
+              print("ZIP_FILES",len(names))
+              for n in names:
+                  if any(k in n.lower() for k in ["workbook","sheet","sharedstrings","core.xml","app.xml"]):
+                      print("ZIP",n)
+
+              shared=[]
+              if "xl/sharedStrings.xml" in names:
+                  root=ET.fromstring(z.read("xl/sharedStrings.xml"))
+                  for si in root.findall("m:si",NS):
+                      parts=[t.text or "" for t in si.findall(".//m:t",NS)]
+                      shared.append("".join(parts))
+              print("SHARED_STRINGS",len(shared))
+
+              wb=ET.fromstring(z.read("xl/workbook.xml"))
+              relroot=ET.fromstring(z.read("xl/_rels/workbook.xml.rels"))
+              rels={r.attrib["Id"]:r.attrib["Target"] for r in relroot}
+              sheets=[]
+              for sh in wb.find("m:sheets",NS):
+                  name=sh.attrib["name"]
+                  rid=sh.attrib["{"+NS["r"]+"}id"]
+                  target=rels[rid]
+                  if not target.startswith("/"):
+                      target="xl/"+target.lstrip("/")
+                  else:
+                      target=target.lstrip("/")
+                  sheets.append((name,target))
+              print("SHEETS",sheets)
+
+              for sheet_name,target in sheets:
+                  print("\n"+"="*100)
+                  print("SHEET",sheet_name,target)
+                  root=ET.fromstring(z.read(target))
+                  rows=[]
+                  for row in root.findall(".//m:sheetData/m:row",NS)[:40]:
+                      vals={}
+                      for c in row.findall("m:c",NS):
+                          ref=c.attrib.get("r","")
+                          idx=col_index(ref)
+                          typ=c.attrib.get("t")
+                          v=c.find("m:v",NS)
+                          val="" if v is None else (v.text or "")
+                          if typ=="s" and val:
+                              try: val=shared[int(val)]
+                              except Exception: pass
+                          elif typ=="inlineStr":
+                              t=c.find(".//m:t",NS)
+                              val="" if t is None else (t.text or "")
+                          vals[idx]=val
+                      if vals:
+                          maxidx=max(vals)
+                          arr=[vals.get(i,"") for i in range(maxidx+1)]
+                          rows.append(arr)
+                  for i,row in enumerate(rows[:30],1):
+                      print("ROW",i,repr(row[:35]))
+
+              # Surface all string tokens that look biologically informative.
+              print("\n"+"="*100)
+              print("BIOLOGICAL_STRING_HITS")
+              patterns=re.compile(
+                  r"qilian|gansu|tibet|qinghai|flower|pollinat|seed|fecund|"
+                  r"mismatch|peak|duration|species|plant|bee|fly|butter|"
+                  r"longitude|latitude|elevation|site",
+                  re.I,
+              )
+              seen=set()
+              for s in shared:
+                  if patterns.search(s) and s not in seen:
+                      seen.add(s)
+                      print(repr(s))
+          PY
+
+      - name: Upload dataset audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe083-data-audit
+          path: artifact/iwe083
+          if-no-files-found: error
