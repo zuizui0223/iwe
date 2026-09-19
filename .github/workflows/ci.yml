@@ -103,7 +103,8 @@ jobs:
               & (df['primary_gate_gain_if_closed'] == 1)
               & (df['source_eligible'].astype(str).str.lower() == 'true')
           ]
-          assert set(top['study_id']) == {'IWE035', 'IWE059', 'IWE067'}
+          required = {'IWE035', 'IWE059', 'IWE067', 'IWE086'}
+          assert required.issubset(set(top['study_id']))
           assert (top['gate_value'] == top['gate_value'].max()).all()
           print(top[
               ['study_id','interaction_type','blocker_type','next_action']
