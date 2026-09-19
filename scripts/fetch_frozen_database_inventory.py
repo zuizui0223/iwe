@@ -145,49 +145,80 @@ def pubmed_search(row: dict) -> list[dict]:
 
 def openalex_search(row: dict) -> list[dict]:
     cursor = "*"
-    out: list[dict] = []
-    expected: int | None = None
+    by_id: dict[str, dict] = {}
+    expected_start: int | None = None
+    search_filter = (
+        f"title_and_abstract.search:{row['query']},"
+        f"to_publication_date:{row['cutoff_date']}"
+    )
+
     while cursor:
         params = {
-            "filter": (
-                f"title_and_abstract.search:{row['query']},"
-                f"to_publication_date:{row['cutoff_date']}"
-            ),
+            "filter": search_filter,
             "per-page": "200",
             "cursor": cursor,
             "select": "id,doi,display_name,publication_date,publication_year,type",
         }
         data = get_json("https://api.openalex.org/works?" + urlencode(params))
-        if expected is None:
-            expected = int(data["meta"]["count"])
+        if expected_start is None:
+            expected_start = int(data["meta"]["count"])
         for item in data["results"]:
-            out.append(
-                {
-                    "query_id": row["query_id"],
-                    "engine": "openalex",
-                    "family": row["family"],
-                    "record_id": str(item.get("id", "")).replace(
-                        "https://openalex.org/", ""
-                    ),
-                    "doi": canonical_doi(item.get("doi")),
-                    "title": str(item.get("display_name", "") or "").strip(),
-                    "publication_date": str(item.get("publication_date", "") or ""),
-                    "publication_year": str(item.get("publication_year", "") or ""),
-                    "record_type": str(item.get("type", "") or ""),
-                }
+            record_id = str(item.get("id", "")).replace(
+                "https://openalex.org/", ""
             )
+            if not record_id:
+                raise RuntimeError(f"{row['query_id']}: OpenAlex row missing id")
+            by_id[record_id] = {
+                "query_id": row["query_id"],
+                "engine": "openalex",
+                "family": row["family"],
+                "record_id": record_id,
+                "doi": canonical_doi(item.get("doi")),
+                "title": str(item.get("display_name", "") or "").strip(),
+                "publication_date": str(item.get("publication_date", "") or ""),
+                "publication_year": str(item.get("publication_year", "") or ""),
+                "record_type": str(item.get("type", "") or ""),
+            }
         cursor = data["meta"].get("next_cursor")
         if not data["results"]:
             break
         time.sleep(0.15)
 
-    if expected is None:
-        expected = 0
-    if len(out) != expected:
+    # OpenAlex is a live index. A few records can be indexed while a cursor
+    # pagination is running. Re-count after the final page and accept only a
+    # snapshot size bracketed by the start/end counts; larger discrepancies
+    # still fail closed.
+    end_params = {
+        "filter": search_filter,
+        "per-page": "1",
+        "select": "id",
+    }
+    expected_end = int(
+        get_json("https://api.openalex.org/works?" + urlencode(end_params))["meta"]["count"]
+    )
+    expected_start = 0 if expected_start is None else expected_start
+    observed = len(by_id)
+    low, high = sorted((expected_start, expected_end))
+    if not (low <= observed <= high):
         raise RuntimeError(
-            f"{row['query_id']}: OpenAlex returned {len(out)} rows for count {expected}"
+            f"{row['query_id']}: OpenAlex snapshot has {observed} unique IDs; "
+            f"start count={expected_start}, end count={expected_end}"
         )
-    return out
+    if expected_start != expected_end:
+        print(
+            json.dumps(
+                {
+                    "query_id": row["query_id"],
+                    "openalex_index_drift": {
+                        "start_count": expected_start,
+                        "end_count": expected_end,
+                        "snapshot_unique_ids": observed,
+                    },
+                },
+                sort_keys=True,
+            )
+        )
+    return [by_id[key] for key in sorted(by_id)]
 
 
 RAW_FIELDS = [
