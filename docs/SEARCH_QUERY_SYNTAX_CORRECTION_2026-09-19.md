@@ -34,6 +34,21 @@ The audit also encountered HTTP 429 after several rapid requests. The count util
 - fail closed on unrecovered HTTP/API errors rather than writing zero;
 - pause between requests to respect the unauthenticated E-utilities request limit.
 
+
+## OpenAlex field-scope correction
+
+After the Boolean/CSV correction, a diagnostic count using OpenAlex's default `search=` endpoint returned tens of thousands of records per broad interaction family. This exposed a second API-equivalence issue before corrected records were screened.
+
+The frozen PubMed strategies explicitly search `Title/Abstract`. Current OpenAlex default work search covers title, abstract **and full text**, whereas OpenAlex provides `title_and_abstract.search` for the equivalent restricted field.
+
+The operational OpenAlex count/inventory therefore uses:
+
+`title_and_abstract.search:<frozen Boolean concept expression>`
+
+together with the original publication-date cutoff.
+
+This changes only the database field implementation so that the two engines search comparable bibliographic text. It does not add/remove biological concepts based on study outcomes.
+
 ## Status of earlier counts
 
 The first count artifact containing PubMed `0/0/0` and OpenAlex `34/0/0` is retained only as an implementation diagnostic. It is not a systematic-review result and must not be used to declare any search component complete.
