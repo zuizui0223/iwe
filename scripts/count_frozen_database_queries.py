@@ -91,9 +91,14 @@ def pubmed_count(query: str, cutoff: str) -> int:
 
 
 def openalex_count(query: str, cutoff: str) -> int:
+    # PubMed's frozen strategy is explicitly Title/Abstract scoped.
+    # Use the equivalent OpenAlex field rather than default search, which also
+    # searches full text and massively expands the review universe.
     params = {
-        "search": query,
-        "filter": f"to_publication_date:{cutoff}",
+        "filter": (
+            f"title_and_abstract.search:{query},"
+            f"to_publication_date:{cutoff}"
+        ),
         "per-page": "1",
         "select": "id",
     }
