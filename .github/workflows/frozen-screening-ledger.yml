@@ -9,6 +9,7 @@ on:
       - "data/registry/frozen_database_inventory_unique.csv"
       - "data/registry/studies.csv"
       - "data/registry/prospective_search_log.csv"
+      - "data/registry/frozen_database_screening_decisions.csv"
 
 permissions:
   contents: write
