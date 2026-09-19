@@ -1,0 +1,91 @@
+name: iwe022-dryad-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe022-dryad-audit.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe IWE022 Dryad file routes
+        shell: bash
+        run: |
+          set -u
+          mkdir -p artifact/iwe022
+          : > artifact/iwe022/status.txt
+
+          # Public landing page first, to obtain the same session/cookies as a browser.
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36" \
+            -c artifact/iwe022/cookies.txt \
+            "https://datadryad.org/dataset/doi:10.5061/dryad.s4mw6m9bg" \
+            -o artifact/iwe022/landing.html || true
+
+          fetch_file () {
+            local id="$1"
+            local name="$2"
+            local tmp="artifact/iwe022/${name}.tmp"
+            local out="artifact/iwe022/${name}"
+            for route in \
+              "https://datadryad.org/downloads/file_stream/${id}" \
+              "https://datadryad.org/stash/downloads/file_stream/${id}" \
+              "https://datadryad.org/downloads/file_stream/${id}?download=1"
+            do
+              code=$(curl -L --retry 1 --connect-timeout 20 --max-time 120 \
+                -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36" \
+                -b artifact/iwe022/cookies.txt -c artifact/iwe022/cookies.txt \
+                -H "Referer: https://datadryad.org/dataset/doi:10.5061/dryad.s4mw6m9bg" \
+                -w "%{http_code}" -o "$tmp" "$route" || true)
+              bytes=0
+              [ -f "$tmp" ] && bytes=$(wc -c < "$tmp" | tr -d ' ')
+              kind=$(file -b "$tmp" 2>/dev/null || true)
+              echo "id=${id} route=${route} http=${code} bytes=${bytes} kind=${kind}" | tee -a artifact/iwe022/status.txt
+
+              # Accept only plausible CSV, never a Dryad anti-bot HTML page.
+              if [ "$code" = "200" ] && [ "$bytes" -gt 500 ] && ! grep -qiE '<html|<!doctype|captcha|cloudflare|challenge' "$tmp"; then
+                mv "$tmp" "$out"
+                return 0
+              fi
+              rm -f "$tmp"
+            done
+            return 0
+          }
+
+          fetch_file 2710518 2021TrifoliumBarnebyiBees.csv
+          fetch_file 2710520 2021TrifoliumBarnebyiSeedSet.csv
+          fetch_file 2710523 README.md
+
+          ls -lah artifact/iwe022 | tee -a artifact/iwe022/status.txt
+
+      - name: Audit raw schemas if materialized
+        shell: bash
+        run: |
+          python - <<'PY' | tee artifact/iwe022/schema.txt
+          from pathlib import Path
+          import csv, json
+          root=Path("artifact/iwe022")
+          for name in [
+              "2021TrifoliumBarnebyiBees.csv",
+              "2021TrifoliumBarnebyiSeedSet.csv",
+          ]:
+              p=root/name
+              print("\nFILE",name,"exists",p.exists())
+              if not p.exists():
+                  continue
+              with p.open(newline="",encoding="utf-8-sig",errors="replace") as fh:
+                  rows=list(csv.reader(fh))
+              print("N_ROWS",max(0,len(rows)-1))
+              print("COLUMNS",json.dumps(rows[0] if rows else []))
+              for row in rows[1:8]:
+                  print("ROW",json.dumps(row))
+          PY
+
+      - name: Upload IWE022 audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe022-dryad-audit
+          path: artifact/iwe022
+          if-no-files-found: error
