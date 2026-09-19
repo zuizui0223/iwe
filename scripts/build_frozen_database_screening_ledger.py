@@ -26,6 +26,39 @@ def read_csv(path: Path) -> list[dict]:
     return list(csv.DictReader(path.open(encoding="utf-8", newline="")))
 
 
+ALLOWED_SCREENING_DECISIONS = {
+    "include",
+    "include_shape",
+    "context_only",
+    "exclude",
+    "unresolved",
+    "unresolved_strict",
+}
+
+
+def load_decisions(path: Path, inventory_keys: set[str]) -> dict[str, dict]:
+    if not path.exists():
+        return {}
+    rows = read_csv(path)
+    out: dict[str, dict] = {}
+    for row in rows:
+        key = str(row.get("record_key", "")).strip()
+        decision = str(row.get("screening_decision", "")).strip()
+        reason = str(row.get("screening_reason", "")).strip()
+        if not key:
+            raise ValueError("screening decision row has empty record_key")
+        if key in out:
+            raise ValueError(f"duplicate screening decision record_key: {key}")
+        if key not in inventory_keys:
+            raise ValueError(f"screening decision key not present in frozen inventory: {key}")
+        if decision not in ALLOWED_SCREENING_DECISIONS:
+            raise ValueError(f"{key}: invalid screening_decision {decision!r}")
+        if not reason:
+            raise ValueError(f"{key}: screening_reason is required")
+        out[key] = row
+    return out
+
+
 def build_known(studies_path: Path, prospective_path: Path) -> tuple[dict[str, list[dict]], dict[str, list[dict]]]:
     by_doi: dict[str, list[dict]] = defaultdict(list)
     by_title: dict[str, list[dict]] = defaultdict(list)
@@ -172,6 +205,8 @@ OUTPUT_FIELDS = [
     "priority_reasons",
     "screening_decision",
     "screening_reason",
+    "screened_date",
+    "decision_source",
 ]
 
 
@@ -192,6 +227,10 @@ def main() -> int:
         default="data/registry/prospective_search_log.csv",
     )
     parser.add_argument(
+        "--decisions",
+        default="data/registry/frozen_database_screening_decisions.csv",
+    )
+    parser.add_argument(
         "--output",
         default="data/registry/frozen_database_screening_ledger.csv",
     )
@@ -202,6 +241,10 @@ def main() -> int:
     args = parser.parse_args()
 
     inventory = read_csv(Path(args.inventory))
+    inventory_keys = {str(r.get("record_key", "")).strip() for r in inventory}
+    if "" in inventory_keys or len(inventory_keys) != len(inventory):
+        raise ValueError("frozen inventory has empty or duplicate record_key")
+    decisions = load_decisions(Path(args.decisions), inventory_keys)
     by_doi, by_title = build_known(Path(args.studies), Path(args.prospective))
 
     rows: list[dict] = []
@@ -223,6 +266,7 @@ def main() -> int:
             rec.get("families", ""),
             rec.get("record_type", ""),
         )
+        manual = decisions.get(str(rec.get("record_key", "")).strip())
 
         if known:
             priority = "already_screened"
@@ -230,7 +274,23 @@ def main() -> int:
                 sorted({x["screening_status"] for x in known})
             )
             screening_reason = "matched existing IWE registry by DOI/title"
+            screened_date = ""
+            decision_source = "iwe_registry"
+            if manual and manual.get("screening_decision") not in {
+                x["screening_status"] for x in known
+            }:
+                raise ValueError(
+                    f"{rec['record_key']}: manual decision conflicts with existing IWE registry"
+                )
+        elif manual:
+            priority = "screened_decision"
+            decision = str(manual["screening_decision"]).strip()
+            screening_reason = str(manual["screening_reason"]).strip()
+            screened_date = str(manual.get("screened_date", "")).strip()
+            decision_source = str(manual.get("decision_source", "")).strip() or "database_screening"
         elif score >= 9:
+            screened_date = ""
+            decision_source = ""
             priority = "P1"
             decision = ""
             screening_reason = ""
@@ -238,15 +298,19 @@ def main() -> int:
             priority = "P2"
             decision = ""
             screening_reason = ""
+            screened_date = ""
+            decision_source = ""
         else:
             priority = "P3"
             decision = ""
             screening_reason = ""
+            screened_date = ""
+            decision_source = ""
 
         rows.append(
             {
                 **{k: rec.get(k, "") for k in OUTPUT_FIELDS if k in rec},
-                "already_screened": str(bool(known)).lower(),
+                "already_screened": str(bool(known) or bool(manual)).lower(),
                 "existing_study_ids": ";".join(x["study_id"] for x in known),
                 "existing_screening_statuses": ";".join(
                     sorted({x["screening_status"] for x in known})
@@ -256,10 +320,12 @@ def main() -> int:
                 "priority_reasons": ";".join(reasons),
                 "screening_decision": decision,
                 "screening_reason": screening_reason,
+                "screened_date": screened_date,
+                "decision_source": decision_source,
             }
         )
 
-    order = {"already_screened": 0, "P1": 1, "P2": 2, "P3": 3}
+    order = {"already_screened": 0, "screened_decision": 1, "P1": 2, "P2": 3, "P3": 4}
     rows.sort(
         key=lambda r: (
             order[r["screening_priority"]],
@@ -283,13 +349,17 @@ def main() -> int:
     for r in rows:
         for family in filter(None, str(r["families"]).split(";")):
             family_counts[family] += 1
-            if r["screening_priority"] != "already_screened":
+            if r["screening_priority"] in {"P1", "P2", "P3"}:
                 unscreened_family_counts[family] += 1
 
     summary = {
-        "schema": "iwe_frozen_database_screening_v1",
+        "schema": "iwe_frozen_database_screening_v2",
         "inventory_records": len(rows),
-        "already_screened_records": priority_counts["already_screened"],
+        "registry_matched_records": priority_counts["already_screened"],
+        "decision_registry_records": priority_counts["screened_decision"],
+        "screened_records": (
+            priority_counts["already_screened"] + priority_counts["screened_decision"]
+        ),
         "unscreened_records": (
             priority_counts["P1"] + priority_counts["P2"] + priority_counts["P3"]
         ),
@@ -297,8 +367,8 @@ def main() -> int:
         "family_memberships_all": dict(sorted(family_counts.items())),
         "family_memberships_unscreened": dict(sorted(unscreened_family_counts.items())),
         "note": (
-            "Priority is triage only. P2/P3 are not exclusions; every unscreened "
-            "record requires a final screening decision for search completion."
+            "Priority is triage only. P2/P3 are not exclusions. Final decisions "
+            "persist in frozen_database_screening_decisions.csv or the IWE registries."
         ),
     }
     summary_path = Path(args.summary)
