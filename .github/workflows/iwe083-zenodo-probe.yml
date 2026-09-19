@@ -1,0 +1,54 @@
+name: iwe083-zenodo-probe
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe083-zenodo-probe.yml"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe candidate Zenodo metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/iwe083
+          for id in 20805746 20805747; do
+            curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+              -A "iwe-literature-audit/1.0" \
+              "https://zenodo.org/api/records/${id}" \
+              -o "artifact/iwe083/${id}.json"
+          done
+
+          python - <<'PY' | tee artifact/iwe083/summary.txt
+          import json
+          from pathlib import Path
+
+          for path in sorted(Path("artifact/iwe083").glob("*.json")):
+              data=json.load(open(path,encoding="utf-8"))
+              md=data.get("metadata",{})
+              print("\nRECORD",data.get("id"))
+              print("TITLE",md.get("title"))
+              print("DOI",md.get("doi"))
+              print("PUBLICATION_DATE",md.get("publication_date"))
+              print("RESOURCE_TYPE",md.get("resource_type"))
+              print("CREATORS",md.get("creators"))
+              print("RELATED_IDENTIFIERS")
+              for item in md.get("related_identifiers",[]) or []:
+                  print(" ",item)
+              print("REFERENCES")
+              for item in md.get("references",[]) or []:
+                  print(" ",item)
+              print("DESCRIPTION",str(md.get("description",""))[:4000])
+              print("FILES")
+              for f in data.get("files",[]) or []:
+                  print(" ",f.get("key"),f.get("size"),f.get("links"))
+          PY
+      - name: Upload probe
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe083-zenodo-probe
+          path: artifact/iwe083
+          if-no-files-found: error
