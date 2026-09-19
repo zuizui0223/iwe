@@ -1,1 +1,24 @@
 record_key,screening_decision,screening_reason,screened_date,decision_source
+doi:10.1002/ecy.1856,exclude,Primary reproductive endpoint is avian herbivore reproduction rather than plant reproductive performance; outside IWE outcome scope.,2026-09-19,title_abstract_scope_screening
+doi:10.2307/5744,exclude,Phenology is linked to age at first reproduction of a temperate herbivore; the focal fitness outcome is animal rather than plant fitness.,2026-09-19,title_abstract_scope_screening
+doi:10.1603/0046-225x(2007)36[1356:ospvar]2.0.co;2,exclude,"Study concerns survival, phenology, voltinism and reproduction of a leaf beetle; no plant reproductive-fitness endpoint for IWE.",2026-09-19,title_abstract_scope_screening
+doi:10.1111/1365-2656.12694,exclude,"Phenological desynchronization is evaluated through solitary-bee fitness losses; the focal reproductive endpoint is pollinator fitness, not plant fitness.",2026-09-19,title_abstract_scope_screening
+doi:10.1002/ecy.2475,exclude,Experimental phenology shift study reports fitness/foraging/parasitism of a native solitary bee; plant final reproduction is not the focal outcome.,2026-09-19,title_abstract_scope_screening
+doi:10.1093/conphys/coab047,exclude,Worker emergence is related to queen reproduction and survival in bumble-bee nests; animal life-history outcome is outside IWE plant-fitness scope.,2026-09-19,title_abstract_scope_screening
+doi:10.14411/eje.2021.029,exclude,Year-round phenology and reproduction concern Vanessa cardui itself; no plant reproductive endpoint matched to herbivore timing.,2026-09-19,title_abstract_scope_screening
+doi:10.1111/ele.13609,exclude,Focal system is a wind-pollinated tree; flowering synchrony is not temporal matching with an animal interaction partner.,2026-09-19,title_abstract_scope_screening
+doi:10.1042/etls20190139,exclude,Review article on plant-pollinator mismatches; not a new empirical biological study contributing a recoverable IWE effect.,2026-09-19,source_type_screening
+doi:10.1098/rstb.2010.0144,exclude,Review/synthesis of herbivore-host phenological asynchrony rather than a primary empirical plant timing-to-final-fitness study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v2/response1,exclude,Peer-review response associated with an empirical article; administrative companion record rather than an independent biological study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v1/decision1,exclude,Editorial decision-letter record; not an independent empirical study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v2/decision1,exclude,Editorial decision-letter record; not an independent empirical study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v3/decision1,exclude,Editorial decision-letter record; not an independent empirical study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v1/review1,exclude,Peer-review report attached to an empirical article; not an independent biological study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v1/review2,exclude,Peer-review report attached to an empirical article; not an independent biological study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v1/review3,exclude,Peer-review report attached to an empirical article; not an independent biological study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v2/review1,exclude,Peer-review report attached to an empirical article; not an independent biological study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v2/review2,exclude,Peer-review report attached to an empirical article; not an independent biological study.,2026-09-19,source_type_screening
+doi:10.1111/ele.14158/v2/review3,exclude,Peer-review report attached to an empirical article; not an independent biological study.,2026-09-19,source_type_screening
+doi:10.6084/m9.figshare.8198561,exclude,"Supplementary appendix to the already registered Kudo & Cooper spring-ephemeral study; data companion, not an independent biological publication/programme.",2026-09-19,duplicate_companion_screening
+doi:10.6084/m9.figshare.c.4521761.v1,exclude,Supplementary-material collection for the already registered Kudo & Cooper study; not an independent biological study.,2026-09-19,duplicate_companion_screening
+doi:10.5281/zenodo.19488508,exclude,Concept/companion repository record for the already tracked IWE078 Oenothera-Mompha dataset; not an independent published biological study.,2026-09-19,duplicate_companion_screening
