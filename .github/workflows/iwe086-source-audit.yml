@@ -1,0 +1,71 @@
+name: iwe086-source-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe086-source-audit.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recover public Zimmerman 1980 source routes
+        shell: bash
+        run: |
+          set -u
+          mkdir -p artifact/iwe086
+          : > artifact/iwe086/status.txt
+
+          fetch () {
+            local label="$1"
+            local url="$2"
+            local out="artifact/iwe086/${label}.bin"
+            code=$(curl -L --retry 1 --connect-timeout 20 --max-time 120 \
+              -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36" \
+              -H "Accept: application/pdf,application/xml,text/xml,text/html;q=0.9,*/*;q=0.8" \
+              -w "%{http_code}" -o "$out" "$url" || true)
+            bytes=0
+            [ -f "$out" ] && bytes=$(wc -c < "$out" | tr -d ' ')
+            kind=$(file -b "$out" 2>/dev/null || true)
+            echo "${label} http=${code} bytes=${bytes} kind=${kind} url=${url}" | tee -a artifact/iwe086/status.txt
+          }
+
+          fetch jstor_xml "https://www.jstor.org/doi/xml/10.2307/1937414"
+          fetch jstor_stable "https://www.jstor.org/stable/1937414?seq=1"
+          fetch jstor_pdf "https://www.jstor.org/stable/pdf/1937414.pdf"
+          fetch esa_pdf "https://esajournals.onlinelibrary.wiley.com/doi/pdfdirect/10.2307/1937414"
+          fetch esa_html "https://esajournals.onlinelibrary.wiley.com/doi/10.2307/1937414"
+
+          for f in artifact/iwe086/*.bin; do
+            if file "$f" | grep -qi PDF; then
+              mv "$f" "${f%.bin}.pdf"
+            elif file "$f" | grep -qiE 'XML|HTML|text'; then
+              mv "$f" "${f%.bin}.txt"
+            fi
+          done
+
+      - name: Extract searchable text
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils >/dev/null
+          for f in artifact/iwe086/*.pdf; do
+            [ -e "$f" ] || continue
+            pdftotext -layout "$f" "${f%.pdf}_pdf.txt" || true
+          done
+          for f in artifact/iwe086/*.txt; do
+            [ -e "$f" ] || continue
+            echo "===== $f ====="
+            grep -niE "bee|flower|seed|ovary|visit|correl|ratio|period|July|August|Table|Fig|figure|r[ =]|P[ <=>]|n[ =]" "$f" \
+              | head -n 600 > "${f%.txt}_hits.txt" || true
+            cat "${f%.txt}_hits.txt" || true
+          done
+          ls -lah artifact/iwe086 | tee -a artifact/iwe086/status.txt
+
+      - name: Upload source audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe086-source-audit
+          path: artifact/iwe086
+          if-no-files-found: error
