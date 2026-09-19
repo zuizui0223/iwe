@@ -1,0 +1,23 @@
+{
+  "already_screened_records": 43,
+  "family_memberships_all": {
+    "antagonist": 1117,
+    "mixed_pollinating_seed_predator": 85,
+    "mutualist": 2246
+  },
+  "family_memberships_unscreened": {
+    "antagonist": 1095,
+    "mixed_pollinating_seed_predator": 77,
+    "mutualist": 2218
+  },
+  "inventory_records": 3178,
+  "note": "Priority is triage only. P2/P3 are not exclusions; every unscreened record requires a final screening decision for search completion.",
+  "priority_counts": {
+    "P1": 55,
+    "P2": 388,
+    "P3": 2692,
+    "already_screened": 43
+  },
+  "schema": "iwe_frozen_database_screening_v1",
+  "unscreened_records": 3135
+}
