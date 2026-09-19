@@ -46,6 +46,29 @@ def get_json(url: str, *, retries: int = 5) -> dict:
     raise last
 
 
+def validate_query_registry(rows: list[dict]) -> None:
+    for row in rows:
+        query_id = row.get("query_id", "")
+        query = row.get("query", "")
+        engine = row.get("engine", "")
+        if not query_id or not query:
+            raise ValueError("query registry contains an empty id/query")
+        if '\\"' in query:
+            raise ValueError(
+                f"{query_id}: query contains backslash-escaped quotes; "
+                "CSV must use doubled quotes instead"
+            )
+        if query.count('"') % 2:
+            raise ValueError(f"{query_id}: unbalanced quote in query")
+        if engine == "openalex":
+            # The frozen concept design is three OR synonym groups joined by AND.
+            # Whitespace-only concept serialization silently becomes all-AND in OpenAlex.
+            if " OR " not in query or " AND " not in query:
+                raise ValueError(
+                    f"{query_id}: OpenAlex query does not preserve Boolean concept groups"
+                )
+
+
 def pubmed_count(query: str, cutoff: str) -> int:
     params = {
         "db": "pubmed",
@@ -93,6 +116,7 @@ def main() -> int:
     rows = list(csv.DictReader(Path(args.input).open(encoding="utf-8", newline="")))
     if not rows:
         raise ValueError("query registry is empty")
+    validate_query_registry(rows)
 
     out: list[dict] = []
     for row in rows:
