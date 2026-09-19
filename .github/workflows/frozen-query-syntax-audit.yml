@@ -1,0 +1,80 @@
+name: frozen-query-syntax-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/frozen-query-syntax-audit.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Audit PubMed translation and OpenAlex boolean semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/search
+          python - <<'PY' | tee artifact/search/query_syntax_audit.txt
+          import json
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+
+          UA="iwe-query-audit/1.0 (https://github.com/zuizui0223/iwe)"
+
+          def get(url):
+              req=Request(url,headers={"User-Agent":UA,"Accept":"application/json"})
+              with urlopen(req,timeout=60) as r:
+                  return json.load(r)
+
+          def pubmed(label, term):
+              params={
+                  "db":"pubmed",
+                  "term":term,
+                  "retmode":"json",
+                  "retmax":"3",
+                  "datetype":"pdat",
+                  "mindate":"1800/01/01",
+                  "maxdate":"2026/09/17",
+                  "tool":"iwe_systematic_search",
+              }
+              d=get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?"+urlencode(params))
+              e=d["esearchresult"]
+              print("\nPUBMED",label)
+              print("COUNT",e.get("count"))
+              print("IDS",e.get("idlist"))
+              print("QUERYTRANSLATION",e.get("querytranslation"))
+              print("WARNINGLIST",json.dumps(e.get("warninglist"),sort_keys=True))
+              print("ERRORLIST",json.dumps(e.get("errorlist"),sort_keys=True))
+
+          pubmed("positive_control_doi", '"10.1111/njb.03877"[aid]')
+          pubmed("phenology", 'phenolog*[tiab]')
+          pubmed("pollination", 'pollinat*[tiab]')
+          pubmed("fitness", '("seed set"[tiab] OR "fruit set"[tiab] OR fecund*[tiab] OR fitness[tiab] OR reproduction[tiab])')
+          pubmed("mutualist_original", '(phenolog*[Title/Abstract] OR synchron*[Title/Abstract] OR mismatch[Title/Abstract] OR overlap[Title/Abstract] OR "flowering time"[Title/Abstract] OR "flowering date"[Title/Abstract]) AND (pollinat*[Title/Abstract] OR "pollinator emergence"[Title/Abstract] OR "pollinator activity"[Title/Abstract]) AND ("seed set"[Title/Abstract] OR "fruit set"[Title/Abstract] OR fecund*[Title/Abstract] OR fitness[Title/Abstract] OR reproduction[Title/Abstract])')
+          pubmed("mutualist_tiab", '(phenolog*[tiab] OR synchron*[tiab] OR mismatch[tiab] OR overlap[tiab] OR "flowering time"[tiab] OR "flowering date"[tiab]) AND (pollinat*[tiab] OR "pollinator emergence"[tiab] OR "pollinator activity"[tiab]) AND ("seed set"[tiab] OR "fruit set"[tiab] OR fecund*[tiab] OR fitness[tiab] OR reproduction[tiab])')
+
+          def oa(label, search):
+              params={
+                  "search":search,
+                  "filter":"to_publication_date:2026-09-17",
+                  "per-page":"3",
+                  "select":"id,display_name,doi",
+              }
+              d=get("https://api.openalex.org/works?"+urlencode(params))
+              print("\nOPENALEX",label)
+              print("COUNT",d["meta"]["count"])
+              for r in d["results"]:
+                  print("RESULT",json.dumps(r,ensure_ascii=False,sort_keys=True))
+
+          oa("original_antagonist_words", "phenology synchrony mismatch overlap flowering time flowering date seed predator seed predation florivore flower predator oviposition herbivore seed set fruit set fecundity fitness reproduction")
+          oa("boolean_antagonist", '("phenology" OR "synchrony" OR "mismatch" OR "overlap" OR "flowering time" OR "flowering date") AND ("seed predator" OR "seed predation" OR florivore OR "flower predator" OR oviposition OR herbivore) AND ("seed set" OR "fruit set" OR fecundity OR fitness OR reproduction)')
+          oa("boolean_mutualist", '("phenology" OR "synchrony" OR "mismatch" OR "overlap" OR "flowering time" OR "flowering date") AND (pollinator OR pollination OR "pollinator emergence" OR "pollinator activity") AND ("seed set" OR "fruit set" OR fecundity OR fitness OR reproduction)')
+          PY
+
+      - name: Upload syntax audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-query-syntax-audit
+          path: artifact/search
+          if-no-files-found: error
