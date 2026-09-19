@@ -1,0 +1,18 @@
+{
+  "cutoff_date": [
+    "2026-09-17"
+  ],
+  "query_counts": {
+    "OA_ANTAGONIST": 981,
+    "OA_MIXED": 81,
+    "OA_MUTUALIST": 2131,
+    "PUB_ANTAGONIST": 336,
+    "PUB_MIXED": 22,
+    "PUB_MUTUALIST": 503
+  },
+  "raw_query_memberships": 4054,
+  "schema": "iwe_frozen_database_inventory_v1",
+  "unique_records": 3178,
+  "unique_records_in_multiple_engines": 568,
+  "unique_records_in_multiple_families": 244
+}
