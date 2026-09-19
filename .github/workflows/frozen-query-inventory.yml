@@ -8,6 +8,9 @@ on:
       - "scripts/fetch_frozen_database_inventory.py"
       - "data/registry/frozen_database_queries.csv"
 
+permissions:
+  contents: write
+
 jobs:
   inventory:
     runs-on: ubuntu-latest
@@ -22,6 +25,25 @@ jobs:
           python scripts/fetch_frozen_database_inventory.py             data/registry/frozen_database_queries.csv             --raw artifact/search/frozen_database_inventory_raw.csv             --unique artifact/search/frozen_database_inventory_unique.csv             --summary artifact/search/frozen_database_inventory_summary.json
       - name: Show inventory summary
         run: cat artifact/search/frozen_database_inventory_summary.json
+      - name: Persist immutable inventory in repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp artifact/search/frozen_database_inventory_raw.csv data/registry/frozen_database_inventory_raw.csv
+          cp artifact/search/frozen_database_inventory_unique.csv data/registry/frozen_database_inventory_unique.csv
+          cp artifact/search/frozen_database_inventory_summary.json data/registry/frozen_database_inventory_summary.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/registry/frozen_database_inventory_raw.csv \
+                  data/registry/frozen_database_inventory_unique.csv \
+                  data/registry/frozen_database_inventory_summary.json
+          if git diff --cached --quiet; then
+            echo "Inventory already matches repository."
+          else
+            git commit -m "research: freeze corrected database search inventory"
+            git pull --rebase origin research/tier-a-extraction-001
+            git push origin HEAD:research/tier-a-extraction-001
+          fi
       - name: Upload inventory
         uses: actions/upload-artifact@v4
         with:
