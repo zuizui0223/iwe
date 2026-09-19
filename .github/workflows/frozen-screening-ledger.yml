@@ -1,0 +1,50 @@
+name: frozen-screening-ledger
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/frozen-screening-ledger.yml"
+      - "scripts/build_frozen_database_screening_ledger.py"
+      - "data/registry/frozen_database_inventory_unique.csv"
+      - "data/registry/studies.csv"
+      - "data/registry/prospective_search_log.csv"
+
+permissions:
+  contents: write
+
+jobs:
+  ledger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build screening ledger
+        run: |
+          python scripts/build_frozen_database_screening_ledger.py             --output /tmp/frozen_database_screening_ledger.csv             --summary /tmp/frozen_database_screening_summary.json
+      - name: Persist screening ledger
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp /tmp/frozen_database_screening_ledger.csv data/registry/frozen_database_screening_ledger.csv
+          cp /tmp/frozen_database_screening_summary.json data/registry/frozen_database_screening_summary.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/registry/frozen_database_screening_ledger.csv                   data/registry/frozen_database_screening_summary.json
+          if git diff --cached --quiet; then
+            echo "Screening ledger already matches repository."
+          else
+            git commit -m "research: freeze database screening ledger"
+            git pull --rebase origin research/tier-a-extraction-001
+            git push origin HEAD:research/tier-a-extraction-001
+          fi
+      - name: Upload screening ledger
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-screening-ledger
+          path: |
+            /tmp/frozen_database_screening_ledger.csv
+            /tmp/frozen_database_screening_summary.json
+          if-no-files-found: error
