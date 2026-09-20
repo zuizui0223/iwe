@@ -1,0 +1,114 @@
+name: iwe085-source-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe085-source-audit.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe public IWE085 source routes
+        shell: bash
+        run: |
+          set -u
+          mkdir -p artifact/iwe085
+          : > artifact/iwe085/status.txt
+
+          ua='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36'
+          rg='https://www.researchgate.net/publication/227066952_The_effect_of_density-dependent_insect_visits_flowering_phenology_and_plant_size_on_seed_set_of_the_endangered_vernal_pool_plant_Pogogyne_abramsii_Lamiaceae_in_natural_compared_to_created_vernal_pools'
+
+          code=$(curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "$ua" -c artifact/iwe085/cookies.txt \
+            -w "%{http_code}" -o artifact/iwe085/researchgate.html "$rg" || true)
+          bytes=$(wc -c < artifact/iwe085/researchgate.html | tr -d ' ')
+          echo "researchgate_page http=$code bytes=$bytes" | tee -a artifact/iwe085/status.txt
+
+          python - <<'PY' | tee artifact/iwe085/links.txt
+          from pathlib import Path
+          import html, re
+          p=Path("artifact/iwe085/researchgate.html")
+          text=p.read_text(errors="replace") if p.exists() else ""
+          urls=[]
+          for m in re.finditer(r'''(?:href|content)=["']([^"']+)["']''', text, re.I):
+              u=html.unescape(m.group(1))
+              if any(k in u.lower() for k in ["download","attachment","fulltext","publication","researchgate"]):
+                  if u not in urls:
+                      urls.append(u)
+          for u in urls[:200]:
+              print(u)
+          PY
+
+          # Probe direct article/DOI routes too.
+          for pair in \
+            'springer|https://link.springer.com/article/10.1672/0277-5212(2000)020%5B0386:TEODDI%5D2.0.CO;2' \
+            'doi|https://doi.org/10.1672/0277-5212(2000)020%5B0386:TEODDI%5D2.0.CO;2'
+          do
+            label="${pair%%|*}"
+            url="${pair#*|}"
+            code=$(curl -L --retry 1 --connect-timeout 20 --max-time 120 \
+              -A "$ua" -w "%{http_code}" -o "artifact/iwe085/${label}.bin" "$url" || true)
+            bytes=$(wc -c < "artifact/iwe085/${label}.bin" 2>/dev/null | tr -d ' ' || echo 0)
+            kind=$(file -b "artifact/iwe085/${label}.bin" 2>/dev/null || true)
+            echo "${label} http=${code} bytes=${bytes} kind=${kind}" | tee -a artifact/iwe085/status.txt
+          done
+
+          # Try any absolute attachment/download URLs exposed in public HTML.
+          python - <<'PY' > /tmp/iwe085_candidates.txt
+          from pathlib import Path
+          import html, re
+          text=Path("artifact/iwe085/researchgate.html").read_text(errors="replace")
+          urls=[]
+          for m in re.finditer(r'''(?:href|content)=["']([^"']+)["']''', text, re.I):
+              u=html.unescape(m.group(1))
+              if u.startswith("//"):
+                  u="https:"+u
+              elif u.startswith("/"):
+                  u="https://www.researchgate.net"+u
+              if u.startswith("http") and any(k in u.lower() for k in ["download","attachment","fulltext"]):
+                  if u not in urls:
+                      urls.append(u)
+          for u in urls[:30]:
+              print(u)
+          PY
+
+          i=0
+          while IFS= read -r url; do
+            [ -n "$url" ] || continue
+            i=$((i+1))
+            code=$(curl -L --retry 1 --connect-timeout 20 --max-time 120 \
+              -A "$ua" -b artifact/iwe085/cookies.txt -c artifact/iwe085/cookies.txt \
+              -e "$rg" -w "%{http_code}" -o "artifact/iwe085/candidate_${i}.bin" "$url" || true)
+            bytes=$(wc -c < "artifact/iwe085/candidate_${i}.bin" 2>/dev/null | tr -d ' ' || echo 0)
+            kind=$(file -b "artifact/iwe085/candidate_${i}.bin" 2>/dev/null || true)
+            echo "candidate_${i} http=${code} bytes=${bytes} kind=${kind} url=${url}" | tee -a artifact/iwe085/status.txt
+          done < /tmp/iwe085_candidates.txt
+
+          for f in artifact/iwe085/*.bin; do
+            [ -e "$f" ] || continue
+            if file "$f" | grep -qi PDF; then
+              mv "$f" "${f%.bin}.pdf"
+            fi
+          done
+
+      - name: Extract quantitative text from any PDFs
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils >/dev/null
+          for f in artifact/iwe085/*.pdf; do
+            [ -e "$f" ] || continue
+            pdftotext -layout "$f" "${f%.pdf}.txt" || true
+            grep -niE "pollinat|visit|flower|phenolog|seed set|seed production|Table|Fig|correl|regress|mean|SE|S\.E\.|sample|pool" "${f%.pdf}.txt" \
+              | head -n 600 > "${f%.pdf}_hits.txt" || true
+            cat "${f%.pdf}_hits.txt" || true
+          done
+
+      - name: Upload IWE085 audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe085-source-audit
+          path: artifact/iwe085
+          if-no-files-found: error
