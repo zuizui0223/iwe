@@ -1,26 +1,25 @@
 {
-  "decision_registry_records": 43,
+  "decision_registry_records": 60,
   "family_memberships_all": {
     "antagonist": 1117,
     "mixed_pollinating_seed_predator": 85,
     "mutualist": 2246
   },
   "family_memberships_unscreened": {
-    "antagonist": 1084,
-    "mixed_pollinating_seed_predator": 75,
-    "mutualist": 2180
+    "antagonist": 1079,
+    "mixed_pollinating_seed_predator": 74,
+    "mutualist": 2166
   },
   "inventory_records": 3178,
   "note": "Priority is triage only. P2/P3 are not exclusions. Final decisions persist in frozen_database_screening_decisions.csv or the IWE registries.",
   "priority_counts": {
-    "P1": 17,
     "P2": 379,
     "P3": 2692,
     "already_screened": 47,
-    "screened_decision": 43
+    "screened_decision": 60
   },
   "registry_matched_records": 47,
   "schema": "iwe_frozen_database_screening_v2",
-  "screened_records": 90,
-  "unscreened_records": 3088
+  "screened_records": 107,
+  "unscreened_records": 3071
 }
