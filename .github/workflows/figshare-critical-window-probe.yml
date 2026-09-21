@@ -1,0 +1,104 @@
+name: figshare-critical-window-probe
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/figshare-critical-window-probe.yml"
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe Figshare record and files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/figshare30962885
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "iwe-literature-audit/1.0" \
+            "https://api.figshare.com/v2/articles/30962885" \
+            -o artifact/figshare30962885/record.json
+
+          python - <<'PY' | tee artifact/figshare30962885/summary.txt
+          import json
+          from pathlib import Path
+
+          d=json.load(open("artifact/figshare30962885/record.json",encoding="utf-8"))
+          keys=[
+              "id","title","doi","url_public_api","url_public_html",
+              "published_date","modified_date","defined_type_name",
+              "resource_title","resource_doi","description","license",
+          ]
+          for k in keys:
+              print(k.upper(),d.get(k))
+          print("AUTHORS")
+          for a in d.get("authors",[]) or []:
+              print(a)
+          print("REFERENCES")
+          for x in d.get("references",[]) or []:
+              print(x)
+          print("TAGS",d.get("tags"))
+          print("CATEGORIES",d.get("categories"))
+          print("CUSTOM_FIELDS",d.get("custom_fields"))
+          print("FILES")
+          for f in d.get("files",[]) or []:
+              print(f)
+          PY
+
+          python - <<'PY' > /tmp/files.tsv
+          import json
+          d=json.load(open("artifact/figshare30962885/record.json",encoding="utf-8"))
+          for f in d.get("files",[]) or []:
+              url=f.get("download_url")
+              if url:
+                  print(f.get("id"), f.get("name"), url, sep="\t")
+          PY
+
+          while IFS=$'\t' read -r id name url; do
+            [ -n "$url" ] || continue
+            safe=$(printf '%s' "$name" | tr '/ ' '__')
+            code=$(curl -L --retry 2 --connect-timeout 20 --max-time 180 \
+              -A "iwe-literature-audit/1.0" \
+              -w "%{http_code}" -o "artifact/figshare30962885/${safe}" "$url" || true)
+            bytes=$(wc -c < "artifact/figshare30962885/${safe}" 2>/dev/null | tr -d ' ' || echo 0)
+            kind=$(file -b "artifact/figshare30962885/${safe}" 2>/dev/null || true)
+            echo "FILE id=${id} name=${name} http=${code} bytes=${bytes} kind=${kind}" | tee -a artifact/figshare30962885/status.txt
+          done < /tmp/files.tsv
+
+      - name: Audit text/tabular source structure without estimating effects
+        shell: bash
+        run: |
+          python - <<'PY' | tee artifact/figshare30962885/file_audit.txt
+          from pathlib import Path
+          import csv, json, zipfile
+
+          root=Path("artifact/figshare30962885")
+          for p in sorted(root.iterdir()):
+              if p.name in {"record.json","summary.txt","status.txt","file_audit.txt"}:
+                  continue
+              if not p.is_file():
+                  continue
+              print("\n"+"="*100)
+              print("FILE",p.name,"BYTES",p.stat().st_size,"SUFFIX",p.suffix.lower())
+              try:
+                  if p.suffix.lower() in {".csv",".tsv",".txt",".r",".rmd",".md"}:
+                      text=p.read_text(errors="replace")
+                      for line in text.splitlines()[:80]:
+                          print(line[:3000])
+                  elif p.suffix.lower()==".zip":
+                      with zipfile.ZipFile(p) as z:
+                          print("ZIP_FILES",z.namelist()[:200])
+                  elif p.suffix.lower() in {".xlsx",".xlsm"}:
+                      with zipfile.ZipFile(p) as z:
+                          print("XLSX_FILES",[n for n in z.namelist() if "workbook" in n or "sheet" in n][:100])
+              except Exception as e:
+                  print("AUDIT_ERROR",type(e).__name__,str(e))
+          PY
+
+      - name: Upload probe
+        uses: actions/upload-artifact@v4
+        with:
+          name: figshare-critical-window-probe
+          path: artifact/figshare30962885
+          if-no-files-found: error
