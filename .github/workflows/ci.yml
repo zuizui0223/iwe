@@ -27,6 +27,8 @@ jobs:
         run: python scripts/validate_extraction.py data/extraction/direct_effects.csv
       - name: Validate registered dependence assignments
         run: python scripts/validate_dependencies.py
+      - name: Validate strict H1 adjudications
+        run: python scripts/validate_adjudications.py
       - name: Build primary dataset
         run: python scripts/build_meta_dataset.py examples/synthetic_effects.csv /tmp/iwe-primary.csv
       - name: Run dependence-aware reference meta workflow
@@ -35,3 +37,9 @@ jobs:
         run: python scripts/run_sensitivity.py examples/synthetic_effects.csv /tmp/iwe-meta/leave_one_dependence.csv
       - name: Build machine-readable claim status
         run: python scripts/build_claim_status.py examples/synthetic_effects.csv /tmp/iwe-meta/claim_status.json
+      - name: Build real strict primary dataset
+        run: python scripts/build_meta_dataset.py data/extraction/direct_effects.csv /tmp/iwe-real-primary.csv
+      - name: Run real dependence-aware reference meta workflow
+        run: python scripts/run_primary_meta.py data/extraction/direct_effects.csv /tmp/iwe-real-meta
+      - name: Build real machine-readable claim status
+        run: python scripts/build_claim_status.py data/extraction/direct_effects.csv /tmp/iwe-real-meta/claim_status.json
