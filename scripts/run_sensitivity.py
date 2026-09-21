@@ -27,9 +27,10 @@ def main() -> int:
         reduced = primary.loc[primary["dependence_id"].astype(str) != dependence_id]
         if reduced.empty:
             continue
-        summary = cluster_robust_summary(reduced)
-        summary.insert(0, "omitted_dependence_id", dependence_id)
-        rows.append(summary)
+        for _, part in reduced.groupby("effect_family", sort=True):
+            summary = cluster_robust_summary(part)
+            summary.insert(0, "omitted_dependence_id", dependence_id)
+            rows.append(summary)
 
     if rows:
         out = pd.concat(rows, ignore_index=True)
@@ -38,6 +39,7 @@ def main() -> int:
             columns=[
                 "omitted_dependence_id",
                 "interaction_type",
+                "effect_family",
                 "estimate",
                 "se",
                 "ci_low",
@@ -54,7 +56,7 @@ def main() -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     out.to_csv(output, index=False)
     print(
-        f"Wrote {len(out)} leave-one-dependence reference rows to {output}; "
+        f"Wrote {len(out)} effect-family-stratified leave-one-dependence rows to {output}; "
         f"starting from {len(dependence_ids)} dependence clusters."
     )
     return 0
