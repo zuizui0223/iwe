@@ -93,7 +93,7 @@ This is no longer a missing-information problem. Promotion of these whole-site c
 | TOEF | 1999–2003, 2005–2008 | 9 | -0.9041525384 | -1.4945171706 | 0.1666666667 | both sides |
 | JOZ | 2002, 2003, 2007–2009, 2011, 2012 | 7 | -0.8184761715 | -1.1521836148 | 0.2500000000 | both sides |
 
-All three site effects currently share `dependence_id = DEP_IWE001_LONGTERM`.
+All three site effects currently share `dependence_id = DEP_CORYDALIS_KUDO_LONGTERM`.
 
 ## Directional re-extraction route
 
