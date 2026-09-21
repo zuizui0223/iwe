@@ -161,3 +161,44 @@ def test_class_contrast_with_single_cluster_class_has_no_ci():
     assert row["estimate"] == pytest.approx(0.5)
     assert row["inferential_status"] == "insufficient_dependence_clusters"
     assert math.isnan(row["ci_low"])
+
+
+def test_cluster_robust_summary_refuses_mixed_effect_families_without_conversion():
+    df = pd.DataFrame(
+        [
+            {
+                "interaction_type": "mutualist",
+                "dependence_id": "DEP1",
+                "effect_family": "fisher_z",
+                "effect_oriented": 0.2,
+                "variance_native": 0.04,
+            },
+            {
+                "interaction_type": "mutualist",
+                "dependence_id": "DEP2",
+                "effect_family": "log_odds_ratio",
+                "effect_oriented": 0.4,
+                "variance_native": 0.04,
+            },
+        ]
+    )
+    with pytest.raises(ValueError, match="cannot pool multiple effect_family"):
+        cluster_robust_summary(df)
+
+
+def test_cluster_robust_summary_reports_common_effect_family():
+    df = pd.DataFrame(
+        [
+            {
+                "interaction_type": "mutualist",
+                "dependence_id": "DEP1",
+                "effect_family": "log_odds_ratio",
+                "effect_oriented": 1.55,
+                "variance_native": 0.0625,
+            }
+        ]
+    )
+    row = cluster_robust_summary(df).iloc[0]
+    assert row["effect_family"] == "log_odds_ratio"
+    assert row["estimate"] == pytest.approx(1.55)
+    assert row["inferential_status"] == "insufficient_dependence_clusters"

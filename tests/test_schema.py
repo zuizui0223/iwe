@@ -26,6 +26,7 @@ def test_registered_effect_families_are_explicit():
         "fisher_z",
         "standardized_mean_difference",
         "log_response_ratio",
+        "log_odds_ratio",
     }
 
 

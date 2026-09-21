@@ -25,8 +25,9 @@ The first release accepts these `effect_family` values:
 - `fisher_z`
 - `standardized_mean_difference`
 - `log_response_ratio`
+- `log_odds_ratio`
 
-Effect families are not silently converted into one another. The primary software can summarize a common family or a table whose values have already been placed on a justified common scale outside IWE. Cross-family pooling requires a separately documented conversion rule.
+Effect families are not silently converted into one another. The dependence-aware primary summary accepts only one effect family at a time and fails closed if multiple native families are present. Cross-family pooling requires a separately documented and executable conversion rule.
 
 ## Required fields for an extracted effect
 
@@ -124,3 +125,12 @@ Tier-A rows classified as `direct_timing_sensitivity`, `directional_mismatch`, o
 `dependence_id` is not descriptive metadata only. The executable primary reference analysis clusters uncertainty by `dependence_id`, and leave-one-out sensitivity removes one dependence cluster at a time.
 
 The output must report both effect-row count and dependence-cluster count. Fewer than two dependence clusters in an interaction class is insufficient for an inferential SE/CI under the reference workflow; see `ANALYSIS_DEPENDENCE_CONTRACT.md`.
+
+
+## Strict-H1 adjudication rule
+
+Screening status and Tier-A provenance do not by themselves authorize a row for the strict synchrony analysis.
+
+Source/component decisions are recorded in `data/registry/strict_h1_adjudications.csv`. Every real extracted study must be represented there, and every `strict_window` effect must match an exact `eligible + strict_extracted` adjudication for its effect ID and timing/effect-family fields.
+
+`scripts/validate_adjudications.py` enforces this gate in CI.

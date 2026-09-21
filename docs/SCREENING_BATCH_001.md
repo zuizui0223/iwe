@@ -31,14 +31,14 @@ Search terms combined variants of `phenological mismatch`, `flowering time`, `po
 <!-- BEGIN GENERATED SCREENING SNAPSHOT -->
 _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 
-**Registered publications: 31.** Current decisions: 10 include, 11 unresolved, 10 context only, 0 exclude.
+**Registered publications: 31.** Current decisions: 11 include, 10 unresolved, 10 context only, 0 exclude.
 
 | Candidate class | Include | Unresolved | Context only | Exclude | Total |
 |---|---:|---:|---:|---:|---:|
-| mutualist | 8 | 6 | 2 | 0 | 16 |
+| mutualist | 9 | 5 | 2 | 0 | 16 |
 | antagonist | 0 | 4 | 3 | 0 | 7 |
 | mixed pollinating seed predator | 2 | 1 | 5 | 0 | 8 |
-| **Total** | **10** | **11** | **10** | **0** | **31** |
+| **Total** | **11** | **10** | **10** | **0** | **31** |
 
 ### Registry snapshot
 
@@ -72,7 +72,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 | `IWE026` | mutualist | `unresolved` | `10.3732/ajb.0900083` | Consequences of variation in flowering time within and among individuals of Mertensia fusiformis (Boraginaceae) an early spring wildflower |
 | `IWE027` | mutualist | `include` | `10.1093/aob/mcp037` | Flowering phenology influences seed production and outcrossing rate in populations of an alpine snowbed shrub Phyllodoce aleutica: effects of pollinators and self-incompatibility |
 | `IWE028` | antagonist | `unresolved` | `10.1080/11956860.2000.11682614` | Flowering phenology and seed predation by a tephritid fly: Escape of seeds in time and space |
-| `IWE029` | mutualist | `unresolved` | `10.1093/aob/mcaf126` | Evolutionary consequences of flowering-pollinator asynchrony: the case of a floral oil-producing plant and its oil-collecting bees |
+| `IWE029` | mutualist | `include` | `10.1093/aob/mcaf126` | Evolutionary consequences of flowering-pollinator asynchrony: the case of a floral oil-producing plant and its oil-collecting bees |
 | `IWE030` | antagonist | `context_only` | `10.1890/0012-9658(1997)078[1624:EOPHAS]2.0.CO;2` | Effects of pollinators herbivores and seed predators on flowering phenology |
 | `IWE031` | antagonist | `context_only` | `10.1002/ecy.3854` | Timing of a plant-herbivore interaction alters plant growth and reproduction |
 <!-- END GENERATED SCREENING SNAPSHOT -->
@@ -96,6 +96,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 3. `IWE004` — Kehrberger & Holzschuh 2019, *Pulsatilla vulgaris*, DOI `10.1038/s41598-019-51916-0`.
    - Flowering timing, pollinator activity/visitation and seed set in matched grasslands.
    - Raw-data route reported.
+   - Subsequent timing adjudication retains this as Tier-A provenance but classifies the Julian-date effect as `direct_timing_sensitivity`, not strict H1.
 
 4. `IWE005` — Rafferty & Ives 2012, DOI `10.1890/11-0967.1`.
    - Experimental flowering-time shifts.
@@ -113,6 +114,15 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
    - Early/late seasonal windows differ in the contribution of the pollinating seed predator.
    - Direct reproductive data and archived raw data are reported.
    - Year and sex-function outcomes must remain dependent rather than being treated as independent studies.
+
+## Strict-H1 adjudication update — 2026-09-21
+
+- `IWE001`: native whole-site signed-lag effects remain Tier A but are excluded from strict H1 because all three sites span both sides of matching.
+- `IWE002`: pooled long-term and snow-removal effects are not admitted to strict H1; directional/year-specific alternatives remain possible.
+- `IWE004`: seasonal Julian-date effect is timing sensitivity, not a monotonic partner-synchrony effect.
+- `IWE029`: promoted from unresolved to include after full-text adjudication. Peak and late windows are independently ordered by measured pollinator activity, and the late-versus-peak natural-pollination seed-set effect is extracted as the first real `strict_window` row.
+
+These decisions are machine-readable in `data/registry/strict_h1_adjudications.csv`.
 
 ## Unresolved high-value studies
 

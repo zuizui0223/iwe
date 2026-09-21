@@ -39,6 +39,16 @@ Outputs distinguish:
 
 With fewer than two dependence clusters in an interaction class, the workflow withholds SEs and confidence intervals. See `docs/ANALYSIS_DEPENDENCE_CONTRACT.md`.
 
+## Current real strict-H1 corpus
+
+The current real extraction contains one strict-H1 row:
+
+- `IWE029_LATE_VS_PEAK_NP_LOGOR` — *Stigmaphyllon paralias* × oil-collecting *Centris* bees, late high-pollinator window versus peak low-pollinator window, natural-pollination seed set, `log_odds_ratio = 1.55`.
+
+This is one dependence cluster in the mutualist class. The reference workflow therefore withholds a cluster-robust SE/CI and H1 remains not evaluable. The row establishes an executable empirical path, not a pooled biological conclusion.
+
+Study/component admission is recorded in `data/registry/strict_h1_adjudications.csv`; screening inclusion alone does not authorize strict-H1 pooling.
+
 ## Initial candidate system families
 
 The search starts from, but is not restricted to:

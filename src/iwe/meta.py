@@ -15,6 +15,19 @@ _CLASS_ORDER = [
 ]
 
 
+
+def _single_effect_family(df: pd.DataFrame) -> str | None:
+    if "effect_family" not in df.columns:
+        return None
+    families = sorted(set(df["effect_family"].dropna().astype(str)))
+    if len(families) > 1:
+        raise ValueError(
+            "cannot pool multiple effect_family values without a registered conversion: "
+            + ", ".join(families)
+        )
+    return families[0] if families else None
+
+
 def fixed_effect_summary(df: pd.DataFrame, group_col: str = "interaction_type") -> pd.DataFrame:
     """Naive inverse-variance summary used only for low-level software checks.
 
@@ -61,6 +74,7 @@ def cluster_robust_summary(
     one cluster in a class, an estimate may be shown descriptively but no SE or
     confidence interval is produced.
     """
+    effect_family = _single_effect_family(df)
     required = {group_col, cluster_col, "effect_oriented", "variance_native"}
     missing = sorted(required - set(df.columns))
     if missing:
@@ -70,6 +84,7 @@ def cluster_robust_summary(
         return pd.DataFrame(
             columns=[
                 group_col,
+                "effect_family",
                 "estimate",
                 "se",
                 "ci_low",
@@ -121,6 +136,7 @@ def cluster_robust_summary(
         rows.append(
             {
                 group_col: group,
+                "effect_family": effect_family,
                 "estimate": estimate,
                 "se": se,
                 "ci_low": ci_low,
@@ -162,6 +178,13 @@ def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
         )
     if set(summary["interaction_type"]) - INTERACTION_TYPES:
         raise ValueError("summary contains unknown interaction_type")
+    if "effect_family" in summary.columns:
+        families = sorted(set(summary["effect_family"].dropna().astype(str)))
+        if len(families) > 1:
+            raise ValueError(
+                "class contrasts require one common effect_family; observed: "
+                + ", ".join(families)
+            )
 
     lookup = {row["interaction_type"]: row for _, row in summary.iterrows()}
     pairs = [
