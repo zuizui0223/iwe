@@ -46,7 +46,6 @@ def fixed_effect_summary(df: pd.DataFrame, group_col: str = "interaction_type") 
         rows.append(
             {
                 group_col: group,
-                "effect_family": effect_family,
                 "estimate": estimate,
                 "se": se,
                 "ci_low": estimate - 1.96 * se,
@@ -137,6 +136,7 @@ def cluster_robust_summary(
         rows.append(
             {
                 group_col: group,
+                "effect_family": effect_family,
                 "estimate": estimate,
                 "se": se,
                 "ci_low": ci_low,
