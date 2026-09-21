@@ -132,19 +132,35 @@ Kudo & Ida (2013) Appendix A reports `Mismatch day` as bumblebee first-detection
 - zero: matching onset/detection;
 - negative: bee detection precedes flowering.
 
-The three IWE001 site extractions are correlations between that native signed mismatch variable and natural seed set. The current extraction receipt does **not** show the actual analyzed mismatch-day values or demonstrate that every analyzed row lies on one side of zero. Therefore these rows are currently registered as:
+A row-level audit of the actual annual values used in the three site correlations shows that **NFP, TOEF, and JOZ all span both sides of zero**. The native whole-site effects are therefore registered as:
 
 - `timing_metric_type = partner_minus_plant`;
 - `timing_analysis_class = unresolved_for_strict_h1`;
-- `timing_domain = unknown`.
+- `timing_domain = both_sides`.
 
-They remain valid native Tier-A extractions, but they are not admitted to the strict H1 synchrony dataset and are not sign-flipped into a pooled synchrony effect. Promotion to `strict_window` requires a source-backed row-level domain audit for each extracted site effect.
+This is a resolved exclusion from the strict synchrony estimand, not a pending documentation gap. A whole-site signed correlation cannot be promoted to `strict_window` by any sign transformation. A separate one-sided directional re-extraction is allowed where the annual data provide enough observations.
 
-## IWE002 source-specific warning
+## IWE002 source-specific adjudication
 
-Kudo & Cooper (2019) describes mismatch as flowering onset minus bee emergence, i.e. `plant_minus_partner`, the opposite algebraic sign from the Kudo & Ida (2013) Appendix-A column. The two publications therefore cannot share a sign transform merely because both use the word `mismatch`.
+Kudo & Cooper (2019) defines mismatch as
 
-Before IWE002 effects are added to `direct_effects.csv`, the extracted source variable must be converted to the canonical `lag_PP` convention and its one-sided/absolute treatment must be documented.
+`flowering onset - bee emergence`,
+
+i.e. `plant_minus_partner`, the opposite native algebraic sign from IWE001. Negative values mean flowering occurred before bee emergence.
+
+The long-term component uses the Nopporo population from 1999–2017. This extends the Nopporo/NFP series used in IWE001 rather than providing an independent biological replication. Any later IWE002 extraction from this series must therefore share a Corydalis/Nopporo dependence cluster with the overlapping IWE001 evidence.
+
+The paper's experimental individual-level mismatch spans `-9` to `+11` days, so the pooled mismatch slope is explicitly two-sided. It cannot be relabelled as a strict synchrony slope.
+
+The snow-removal manipulation also cannot be represented as one universally ordered `strict_window` contrast across years: controls flowered after bee emergence in 2014, 2015 and 2017 and concurrently in 2016, whereas removal plots flowered concurrently in 2014–2015 and before bee emergence in 2016. The same treatment therefore moved plants toward matching in some years and through/past matching in another.
+
+Accordingly, no whole-series or pooled-treatment IWE002 effect is admitted to `direct_effects.csv` as strict H1 evidence. Valid future routes are:
+
+- a source-backed one-sided directional mismatch extraction;
+- a year-specific experimental contrast ordered prospectively by distance from the measured bee-emergence window; or
+- a non-strict `direct_timing_sensitivity` effect if only the treatment response, rather than a matching contrast, is recoverable.
+
+See `EXTRACTION_IWE002.md` and `CORYDALIS_DEPENDENCY_MAP.md`.
 
 ## Claim boundary
 
