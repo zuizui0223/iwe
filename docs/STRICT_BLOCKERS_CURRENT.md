@@ -9,7 +9,7 @@ The primary H1 gate is still `coverage_only` on the current Fisher-z common scal
 - antagonist: 1 independent programme;
 - mixed pollinating seed predator: 1 independent programme.
 
-The broader source-native strict corpus has two closed mutualist programmes, one antagonist programme, and one mixed programme. The most valuable next work is therefore an **independent published antagonist or mixed programme**, not another row from an already represented dependence cluster.
+The broader source-native strict corpus now has **three** closed mutualist programmes (IWE001, IWE029, IWE084), one antagonist programme, and one mixed programme. IWE084 closes a published source-native SMD but does not increase the Fisher-z common-scale count. The most valuable next work is therefore an **independent published antagonist or mixed programme**, not another mutualist source-native effect merely because it is easier to recover.
 
 Machine-readable source:
 
@@ -20,6 +20,19 @@ Executable ranking:
 ```bash
 python scripts/build_strict_blocker_queue.py
 ```
+
+## Newly closed since the previous queue
+
+### IWE084 — mutualist — Solidago graminifolia × Apis mellifera
+
+The published 1980 seasonal Apis record prospectively orders source-defined early and late clone groups. Source Table-5/Table-10 natural filled-seed means, 95% confidence intervals and clone sample sizes were reconstructed on the source angular scale and registered as:
+
+- Hedges `g = +1.1401607637`;
+- sampling variance `= 0.1497495743`;
+- `n = 37` clones;
+- effect family `standardized_mean_difference`.
+
+The reconstruction is executable and CI-locked. It closes a third independent source-native mutualist programme but is deliberately **not** converted to Fisher-z to change the common-scale gate.
 
 ## Priority 1 — can directly change the present replication gate
 
@@ -61,6 +74,10 @@ Do not substitute:
 
 If the original tables/raw data do not yield the required effect, close the record as timing context.
 
+### IWE086 — mutualist — Polemonium × bee pollinators
+
+This remains technically priority 1 in the machine queue because it could close another independent published mutualist programme, but it is **not** the current biological bottleneck after IWE084. JSTOR returns challenge HTML and the ESA/Wiley route is Cloudflare-blocked. Keep the frozen timing contract, but do not spend disproportionate effort on it while antagonist and mixed classes remain at one programme each.
+
 ## Priority 2 — useful independent replication, but farther from numerical closure
 
 Published candidates currently requiring original tables, temporal group uncertainty or data joins include:
@@ -99,6 +116,7 @@ The following recently looked promising but have now been adjudicated rather tha
 - `IWE011` — raw HUSCAP files contain flowering totals, oviposition totals and final fruit fitness, but no time-resolved partner activity curve; closed as timing context.
 - `IWE028` — direct temporal escape/attack evidence, but no observed final-fitness effect at the strict matched grain; closed as timing context.
 - `IWE079` — unusually direct Tomares–Astragalus synchrony mechanism and final RSI, but detailed synchrony is available for only two patch-level units; no defensible study-level effect variance; closed as context.
+- `IWE087` — four Rhododendron plots have matched peak-flowering Bombus visitation and natural fruit set, but the prospectively frozen deterministic PDF-vector extraction could not recover exact plot means; manual/raster digitization was not substituted.
 
 These records strengthen the evidence-architecture diagnosis and should not be repeatedly reopened simply because primary replication is sparse.
 
