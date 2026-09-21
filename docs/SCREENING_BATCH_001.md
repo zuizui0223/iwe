@@ -31,14 +31,14 @@ Search terms combined variants of `phenological mismatch`, `flowering time`, `po
 <!-- BEGIN GENERATED SCREENING SNAPSHOT -->
 _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 
-**Registered publications: 31.** Current decisions: 11 include, 9 unresolved, 11 context only, 0 exclude.
+**Registered publications: 31.** Current decisions: 12 include, 8 unresolved, 11 context only, 0 exclude.
 
 | Candidate class | Include | Unresolved | Context only | Exclude | Total |
 |---|---:|---:|---:|---:|---:|
 | mutualist | 9 | 5 | 2 | 0 | 16 |
-| antagonist | 0 | 3 | 4 | 0 | 7 |
+| antagonist | 1 | 2 | 4 | 0 | 7 |
 | mixed pollinating seed predator | 2 | 1 | 5 | 0 | 8 |
-| **Total** | **11** | **9** | **11** | **0** | **31** |
+| **Total** | **12** | **8** | **11** | **0** | **31** |
 
 ### Registry snapshot
 
@@ -54,7 +54,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 | `IWE008` | mutualist | `unresolved` | `10.1016/j.scitotenv.2024.170458` | Pollinator peaking earlier than flowering is more detrimental to plant fecundity |
 | `IWE009` | mutualist | `context_only` | `10.1002/ecy.3658` | A specialist bee and its host plants experience phenological shifts at different rates in response to climate change |
 | `IWE010` | antagonist | `unresolved` | `10.1002/ece3.7468` | Is increased male flower production a strategy for avoidance of predispersal seed predation in andromonoecious plants? |
-| `IWE011` | antagonist | `unresolved` | `10.1111/1365-2745.70130` | Phenological selection mosaic of predispersal seed predation affects gender variation in an andromonoecious plant |
+| `IWE011` | antagonist | `include` | `10.1111/1365-2745.70130` | Phenological selection mosaic of predispersal seed predation affects gender variation in an andromonoecious plant |
 | `IWE012` | antagonist | `unresolved` | `10.1002/ecy.1633` | Caterpillar seed predators mediate shifts in selection on flowering phenology in their host plant |
 | `IWE013` | antagonist | `context_only` | `10.1890/14-1860.1` | Flowering schedule in a perennial plant; life-history trade-offs seed predation and total offspring fitness |
 | `IWE014` | mixed pollinating seed predator | `include` | `10.1111/j.1600-0587.1991.tb00632.x` | Flower herbivory and seed predation in Silene vulgaris (Caryophyllaceae): effects of pollination and phenology |
