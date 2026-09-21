@@ -1,6 +1,6 @@
 # IWE evidence-map status 001
 
-Date: 2026-09-17
+Date: 2026-09-21
 Status: screening-stage diagnostic, not final systematic-review counts
 
 ## Strict question
@@ -13,13 +13,15 @@ H2 is separate: it preregisters the possibility that mixed systems show a non-mo
 
 ## Current screened corpus
 
-After source adjudication through IWE068:
+Current registry-derived diagnostic:
 
 | interaction type | screened | strict `include` | strict programmes quantitatively closed | unresolved possible strict | context/timing/channel-only | nonlinear shape lane |
 |---|---:|---:|---:|---:|---:|---:|
-| mutualist | 17 | 4 | 2 | 5 | 8 | 0 |
-| antagonist | 24 | 1 | 1 | 2 | 18 | 3 |
+| mutualist | 23 | 5 | 3 | 9 | 9 | 0 |
+| antagonist | 31 | 1 | 1 | 7 | 20 | 3 |
 | mixed pollinating seed predator | 29 | 1 | 1 | 2 | 25 | 1 |
+
+These are current-corpus diagnostics, not final systematic-review counts. The frozen database search now contains 3,178 unique records and screening is still in progress.
 
 IWE001–IWE040 are the discovery corpus. IWE041 onward are post-freeze records tracked in `prospective_search_log.csv`.
 
@@ -27,13 +29,13 @@ Source re-adjudication on 2026-09-18 tightened the mutualist lane symmetrically 
 
 IWE now has **at least one quantitatively closed strict-H1 programme in each preregistered interaction class**:
 
-- mutualist — IWE001 (`Corydalis ambigua × Bombus spp.`) and independent IWE029 (`Stigmaphyllon paralias × Centris spp.`);
+- mutualist — IWE001 (`Corydalis ambigua × Bombus spp.`), IWE029 (`Stigmaphyllon paralias × Centris spp.`) and IWE084 (`Solidago graminifolia × Apis mellifera`);
 - antagonist — IWE068 (`Ipomopsis aggregata × Hylemya sp.`);
 - mixed pollinating seed predator — IWE064 (`Ficus curtipes × Eupristina sp.`).
 
 This is an estimand-coverage milestone, not sufficient replication for a class-level or cross-class biological conclusion. Effect families also differ across programmes and are not pooled without a separately frozen common-scale conversion.
 
-## Closed mutualist programmes — IWE001 and IWE029
+## Closed mutualist programmes — IWE001, IWE029 and IWE084
 
 IWE001 provides three dependent Corydalis population effects after the registered one-sided mismatch restriction. These population rows count as one programme rather than three independent studies.
 
@@ -44,6 +46,15 @@ IWE029 now supplies an independent Brazilian dry-forest mutualist programme. The
 - `variance = 0.0625`.
 
 This is registered as `IWE029_SPAR_OVERLAP_LOGOR`. It remains on its source-native log-odds scale; no Fisher-z conversion is used in the current common-scale gate.
+
+IWE084 adds an independent historical `Solidago graminifolia × Apis mellifera` programme. The source independently documents the seasonal transition from scarce honeybee activity before 1 September to Apis-dominated visitation in September, and reports open-pollinated filled-seed percentages for source-defined early and late clone groups. Under the frozen angular-scale reconstruction:
+
+- early/lower-Apis group: `21.71%` filled seeds, 95% CI `14.97–29.31%`, `n=10` clones;
+- late/higher-Apis group: `39.56%`, 95% CI `32.69–46.64%`, `n=27`;
+- Hedges `g = +1.1401607637`;
+- sampling variance `= 0.1497495743`.
+
+The exact published-table reconstruction is regression-tested and CI-locked. It remains a source-native standardized mean difference and is **not** converted to Fisher-z merely to increase the common-scale programme count.
 
 
 ## First closed mixed strict effect — IWE064
@@ -110,7 +121,15 @@ A formal quadratic coefficient/turning-point interval is **not** reconstructed b
 
 ### Mutualist
 
-IWE008 (Qilian 2024) directly measures flowering peaks, key-pollinator peaks and individual seed setting with mismatch direction retained. The design is strict-eligible but a recoverable quantitative coefficient plus variance remains unavailable from public sources.
+Three source-native programmes are now quantitatively closed, but only IWE001 is on the Fisher-z common scale. The highest-information unresolved published bridges include:
+
+- IWE008 (Qilian 2024): signed flowering–key-pollinator peak mismatch plus seed setting, but a published coefficient/variance remains unrecovered;
+- IWE022 (`Trifolium barnebyi`): plant seed outcomes and bee timing are archived but current Dryad file streams are anti-bot blocked; a site/date join contract is frozen;
+- IWE081 (Mizunaga & Kudo 2017): direct pollinator frequency at flowering peak predicts natural fruit set, but the direct coefficient/covariance or underlying population-year table is missing;
+- IWE082 (`Chamaedorea pinnatifrons × Brooksithrips`): partner abundance and final fruit set are available by flowering window, but repeated inflorescences within plants prevent an independence-safe variance from the published aggregates;
+- IWE085/IWE086: biologically promising published partner-availability studies whose current public full-text/data routes remain blocked.
+
+IWE087 (`Rhododendron aureum × Bombus`) was closed as context after its prospectively required deterministic PDF-vector extraction failed; manual figure digitization was not substituted.
 
 ### Antagonist
 
@@ -134,7 +153,7 @@ Closing one programme per class changes the diagnosis from `some classes empty` 
 
 The broader asymmetry remains:
 
-- mutualist mismatch studies relatively often measure plant timing + partner timing + final reproduction;
+- mutualist studies relatively often measure plant timing + partner timing + final reproduction, and three independent source-native programmes can now be quantified, but they still occupy different effect families;
 - antagonist studies usually measure flowering date plus attack/predation/selection, or nonlinear enemy windows; IWE068 is a rare raw-data reconstruction that closes all three pieces;
 - mixed nursery-pollination studies usually separate partner timing from final net plant fitness, with controlled monoecious fig experiments providing rare exceptions.
 
@@ -175,7 +194,7 @@ using comparable timing estimands where the published measurements allow it, wit
 
 1. Complete the frozen backward/query/forward/citation closure.
 2. Recover IWE067 to obtain an independent antagonist replication beyond IWE068; continue IWE035 source recovery in parallel.
-3. Recover IWE008 or another independent mutualist effect on a Fisher-z-compatible scale; IWE029 already provides source-native independent mutualist replication.
+3. For mutualists, prioritize a genuinely Fisher-z-compatible independent programme only when the source naturally supports that scale; do not convert IWE029 or IWE084 merely to open the gate.
 4. Recover IWE059 and/or another independent mixed strict effect beyond IWE064. IWE070 now has a locked raw-data requirement because its public analyses expose synchrony effects on fruit initiation and predation separately, not a final net-fitness coefficient.
 5. Search for additional mixed H2 studies with group-level numerical timing-fitness data so non-monotonicity can be tested quantitatively rather than narratively.
 6. Do not pool `log_rate_slope_per_day`, Fisher-z, SMD or generic log-response-ratio effects without a separately frozen common-scale conversion.
