@@ -1,0 +1,12 @@
+interaction_type,blocker_family,n_open_blockers,n_source_eligible,n_gate_changing_if_closed,n_priority1
+antagonist,access,3,3,3,1
+antagonist,uncertainty,3,3,3,1
+antagonist,source_eligibility,1,0,0,0
+mixed_pollinating_seed_predator,access,1,1,1,1
+mixed_pollinating_seed_predator,shape_uncertainty,1,1,0,0
+mixed_pollinating_seed_predator,source_eligibility_net_outcome,1,0,1,0
+mutualist,dependence,2,2,1,0
+mutualist,effect_recovery,2,2,2,1
+mutualist,uncertainty,2,2,2,0
+mutualist,access,1,1,1,0
+mutualist,access_alignment,1,1,1,0
