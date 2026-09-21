@@ -28,14 +28,54 @@ Search terms combined variants of `phenological mismatch`, `flowering time`, `po
 
 ## Batch counts
 
-Twenty-one publications were registered.
+<!-- BEGIN GENERATED SCREENING SNAPSHOT -->
+_Generated from `data/registry/studies.csv`; do not edit this block by hand._
 
-| Candidate class | Include | Unresolved | Context only | Total |
-|---|---:|---:|---:|---:|
-| mutualist | 4 | 3 | 2 | 9 |
-| antagonist | 0 | 3 | 1 | 4 |
-| mixed pollinating seed predator | 2 | 1 | 5 | 8 |
-| **Total** | **6** | **7** | **8** | **21** |
+**Registered publications: 31.** Current decisions: 10 include, 11 unresolved, 10 context only, 0 exclude.
+
+| Candidate class | Include | Unresolved | Context only | Exclude | Total |
+|---|---:|---:|---:|---:|---:|
+| mutualist | 8 | 6 | 2 | 0 | 16 |
+| antagonist | 0 | 4 | 3 | 0 | 7 |
+| mixed pollinating seed predator | 2 | 1 | 5 | 0 | 8 |
+| **Total** | **10** | **11** | **10** | **0** | **31** |
+
+### Registry snapshot
+
+| Study | Candidate class | Status | Source | Title |
+|---|---|---|---|---|
+| `IWE001` | mutualist | `include` | `10.1890/12-2003.1` | Early onset of spring increases the phenological mismatch between plants and pollinators |
+| `IWE002` | mutualist | `include` | `10.1098/rspb.2019.0573` | When spring ephemerals fail to meet pollinators: mechanism of phenological mismatch and its impact on plant reproduction |
+| `IWE003` | mutualist | `unresolved` | `10.1093/aob/mcag165` | Site-specific variation in flowering phenology of a spring ephemeral plant and its implications for phenological mismatch with pollinators under climate change |
+| `IWE004` | mutualist | `include` | `10.1038/s41598-019-51916-0` | How does timing of flowering affect competition for pollinators, flower visitation and seed set in an early spring grassland plant? |
+| `IWE005` | mutualist | `include` | `10.1890/11-0967.1` | Pollinator effectiveness varies with experimental shifts in flowering time |
+| `IWE006` | mutualist | `context_only` | `10.1111/j.1461-0248.2010.01557.x` | Effects of experimental shifts in flowering phenology on plant-pollinator interactions |
+| `IWE007` | mutualist | `unresolved` | `10.1111/ele.14158` | Warming of experimental plant-pollinator communities advances phenologies alters traits reduces interactions and depresses reproduction |
+| `IWE008` | mutualist | `unresolved` | `10.1016/j.scitotenv.2024.170458` | Pollinator peaking earlier than flowering is more detrimental to plant fecundity |
+| `IWE009` | mutualist | `context_only` | `10.1002/ecy.3658` | A specialist bee and its host plants experience phenological shifts at different rates in response to climate change |
+| `IWE010` | antagonist | `unresolved` | `10.1002/ece3.7468` | Is increased male flower production a strategy for avoidance of predispersal seed predation in andromonoecious plants? |
+| `IWE011` | antagonist | `unresolved` | `10.1111/1365-2745.70130` | Phenological selection mosaic of predispersal seed predation affects gender variation in an andromonoecious plant |
+| `IWE012` | antagonist | `unresolved` | `10.1002/ecy.1633` | Caterpillar seed predators mediate shifts in selection on flowering phenology in their host plant |
+| `IWE013` | antagonist | `context_only` | `10.1890/14-1860.1` | Flowering schedule in a perennial plant; life-history trade-offs seed predation and total offspring fitness |
+| `IWE014` | mixed pollinating seed predator | `include` | `10.1111/j.1600-0587.1991.tb00632.x` | Flower herbivory and seed predation in Silene vulgaris (Caryophyllaceae): effects of pollination and phenology |
+| `IWE015` | mixed pollinating seed predator | `include` | `10.1111/evo.13965` | Variable and sexually conflicting selection on Silene stellata floral traits by a putative moth pollinator selective agent |
+| `IWE016` | mixed pollinating seed predator | `context_only` | `10.1002/ece3.1134` | Interactions between a pollinating seed predator and its host plant: the role of environmental context within a population |
+| `IWE017` | mixed pollinating seed predator | `context_only` | `10.1186/s12862-021-01889-4` | Staying in touch: how highly specialised moth pollinators track host plant phenology in unpredictable climates |
+| `IWE018` | mixed pollinating seed predator | `context_only` | `10.1073/pnas.0837153100` | An obligate pollination mutualism and reciprocal diversification in the tree genus Glochidion (Euphorbiaceae) |
+| `IWE019` | mixed pollinating seed predator | `unresolved` | `10.1371/journal.pone.0097783` | Competitive Exclusion among Fig Wasps Achieved via Entrainment of Host Plant Flowering Phenology |
+| `IWE020` | mixed pollinating seed predator | `context_only` | `10.1002/ece3.1544` | Asymmetrical nature of the Trollius-Chiastocheta interaction: insights into the evolution of nursery pollination systems |
+| `IWE021` | mixed pollinating seed predator | `context_only` | `10.1111/j.1461-0248.2010.01529.x` | Retention of mutualism in a geographically diverging interaction |
+| `IWE022` | mutualist | `unresolved` | `10.1111/njb.03877` | Pollinators limit seed production in an early blooming rare plant: evidence of a mismatch between plant phenology and pollinator emergence |
+| `IWE023` | mutualist | `include` | `10.1002/ajb2.1439` | Pollinator visitation rate and effectiveness vary with flowering phenology |
+| `IWE024` | mutualist | `include` | `10.1111/gcb.13209` | Phenological change in a spring ephemeral: implications for pollination and plant reproduction |
+| `IWE025` | mutualist | `include` | `10.3389/fevo.2021.641693` | Experimental Test of the Combined Effects of Water Availability and Flowering Time on Pollinator Visitation and Seed Set |
+| `IWE026` | mutualist | `unresolved` | `10.3732/ajb.0900083` | Consequences of variation in flowering time within and among individuals of Mertensia fusiformis (Boraginaceae) an early spring wildflower |
+| `IWE027` | mutualist | `include` | `10.1093/aob/mcp037` | Flowering phenology influences seed production and outcrossing rate in populations of an alpine snowbed shrub Phyllodoce aleutica: effects of pollinators and self-incompatibility |
+| `IWE028` | antagonist | `unresolved` | `10.1080/11956860.2000.11682614` | Flowering phenology and seed predation by a tephritid fly: Escape of seeds in time and space |
+| `IWE029` | mutualist | `unresolved` | `10.1093/aob/mcaf126` | Evolutionary consequences of flowering-pollinator asynchrony: the case of a floral oil-producing plant and its oil-collecting bees |
+| `IWE030` | antagonist | `context_only` | `10.1890/0012-9658(1997)078[1624:EOPHAS]2.0.CO;2` | Effects of pollinators herbivores and seed predators on flowering phenology |
+| `IWE031` | antagonist | `context_only` | `10.1002/ecy.3854` | Timing of a plant-herbivore interaction alters plant growth and reproduction |
+<!-- END GENERATED SCREENING SNAPSHOT -->
 
 `include` means the publication currently appears to satisfy the biological Tier-A screen and should proceed to quantitative extraction. It does not mean an effect size has already been recovered or that the study will survive variance/dependence checks.
 
