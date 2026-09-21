@@ -83,6 +83,19 @@ IWE081 may enter `direct_effects.csv` only if one of these is recovered prospect
 
 If multiple effect rows are produced, they retain study/year/guild dependence rather than being counted as independent programmes.
 
+## Figure-derived prediction warning
+
+Source Figure 4 is biologically useful but is **not** a set of new independent empirical synchrony observations. The plotted visitation-frequency and fruit-set values are generated from the source's seasonal models at weekly intervals. Multiple plotted weeks therefore share the same fitted model, source populations and year-level data.
+
+IWE will not:
+
+- count Figure-4 weekly prediction points as independent observations;
+- compute a Fisher-z variance as `1/(number_of_plotted_points - 3)`;
+- use a near-perfect correlation between two fitted seasonal curves as if it were a sampling correlation among independent populations;
+- infer the direct coefficient covariance by algebraically combining the separate visitation-vs-week and fruit-set-vs-week model tables.
+
+A quantitative strict effect still requires the underlying population/year observations or the source's direct partner-frequency coefficient with valid uncertainty.
+
 ## Figure-digitization rule
 
 The current primary route does **not** digitize the plotted direct relationship by eye.
