@@ -1,0 +1,104 @@
+name: iwe087-vector-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe087-vector-audit.yml"
+      - "docs/EXTRACTION_IWE087.md"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install vector PDF audit dependency
+        run: python -m pip install pymupdf
+      - name: Download exact HUSCAP version of record
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/iwe087
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "iwe-vector-audit/1.0" \
+            "https://eprints.lib.hokudai.ac.jp/dspace/bitstream/2115/47946/1/IJPS172-1_70-77.pdf" \
+            -o artifact/iwe087/source.pdf
+          file artifact/iwe087/source.pdf
+          test "$(head -c 4 artifact/iwe087/source.pdf)" = "%PDF"
+
+      - name: Audit Figure 2 vector objects and text coordinates
+        shell: bash
+        run: |
+          python - <<'PY' | tee artifact/iwe087/vector_audit.txt
+          import fitz, json, math
+
+          doc=fitz.open("artifact/iwe087/source.pdf")
+          # Figure 2 is on PDF page 6 in the displayed article, zero-index 5.
+          page=doc[5]
+          print("PAGE_RECT",tuple(page.rect))
+          words=page.get_text("words")
+          print("\nTEXT_WORDS_RELEVANT")
+          for w in words:
+              x0,y0,x1,y1,text,*_=w
+              if text in {"0.3","0.5","0.7","0.9","2007","F1","F2","S1","S2","(35)","(40)"} or "Fruit" in text:
+                  print(json.dumps({"text":text,"bbox":[x0,y0,x1,y1]}))
+
+          drawings=page.get_drawings()
+          print("\nN_DRAWINGS",len(drawings))
+          candidates=[]
+          for i,d in enumerate(drawings):
+              r=d["rect"]
+              width=float(r.width); height=float(r.height); area=width*height
+              fill=d.get("fill")
+              color=d.get("color")
+              # Print small, near-square filled objects; likely mean markers.
+              if 1.0 <= width <= 15 and 1.0 <= height <= 15 and 0.55 <= width/height <= 1.8:
+                  rec={
+                      "i":i,
+                      "rect":[float(r.x0),float(r.y0),float(r.x1),float(r.y1)],
+                      "width":width,"height":height,"area":area,
+                      "fill":fill,"color":color,
+                      "items":len(d.get("items",[])),
+                  }
+                  candidates.append(rec)
+          print("\nSMALL_SQUARE_DRAWINGS",len(candidates))
+          for rec in candidates:
+              print(json.dumps(rec,sort_keys=True))
+
+          # Broader audit of filled black-ish shapes in lower half.
+          print("\nFILLED_LOWER_PAGE")
+          for i,d in enumerate(drawings):
+              r=d["rect"]; fill=d.get("fill")
+              if fill is None or r.y0 < 250:
+                  continue
+              if max(r.width,r.height) > 80:
+                  continue
+              print(json.dumps({
+                  "i":i,
+                  "rect":[float(r.x0),float(r.y0),float(r.x1),float(r.y1)],
+                  "fill":fill,
+                  "color":d.get("color"),
+                  "items":len(d.get("items",[])),
+              },sort_keys=True))
+          PY
+
+      - name: Render page for validation only
+        shell: bash
+        run: |
+          python - <<'PY'
+          import fitz
+          doc=fitz.open("artifact/iwe087/source.pdf")
+          page=doc[5]
+          pix=page.get_pixmap(matrix=fitz.Matrix(2,2),alpha=False)
+          pix.save("artifact/iwe087/page6.png")
+          PY
+
+      - name: Upload IWE087 vector audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe087-vector-audit
+          path: artifact/iwe087
+          if-no-files-found: error
