@@ -90,6 +90,21 @@ def test_strict_signed_lag_requires_one_sided_domain():
     assert any("one-sided timing_domain" in error for error in errors)
 
 
+def test_strict_signed_lag_rejects_both_sides_domain():
+    errors = validate_effect_rows(
+        pd.DataFrame(
+            [
+                _row(
+                    timing_metric_type="plant_minus_partner",
+                    timing_domain="both_sides",
+                    exposure_direction="mismatch",
+                )
+            ]
+        )
+    )
+    assert any("one-sided timing_domain" in error for error in errors)
+
+
 def test_signed_lag_direction_is_derived_from_metric_and_domain():
     row = _row(
         timing_metric_type="partner_minus_plant",
