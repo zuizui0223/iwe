@@ -162,6 +162,40 @@ Accordingly, no whole-series or pooled-treatment IWE002 effect is admitted to `d
 
 See `EXTRACTION_IWE002.md` and `CORYDALIS_DEPENDENCY_MAP.md`.
 
+## IWE004 source-specific adjudication
+
+Kehrberger & Holzschuh (2019) uses Julian date of bud opening as the focal seasonal timing variable. Bee abundance and pollinator-suitable hours increased over the season, whereas visitation and estimated total bee visits to *Pulsatilla vulgaris* decreased as co-flowering competition increased and floral longevity shortened.
+
+Calendar date therefore does not provide a monotonic axis of plant–pollinator synchrony in this study.
+
+The registered component is:
+
+- `timing_metric_type = seasonal_position`;
+- `timing_analysis_class = direct_timing_sensitivity`;
+- `timing_domain = not_applicable`.
+
+Recovering the raw Julian-date slope from Dryad would make the timing-sensitivity effect quantitative, but would not make it strict H1 evidence.
+
+## IWE029 source-specific adjudication
+
+Carneiro & Machado (2025) sampled *Stigmaphyllon paralias* during two within-season windows chosen after monitoring pollinator activity:
+
+- peak flowering with scarce legitimate oil-bee visitation;
+- late flowering 3–4 weeks later with high pollinator activity.
+
+Measured visit marks occurred on 7.5% of peak flowers versus 93.6% of late flowers. The two-level seasonal exposure is therefore independently ordered by a measured partner-activity window.
+
+The natural-pollination seed-set contrast is registered as:
+
+- `timing_metric_type = seasonal_position`;
+- `timing_analysis_class = strict_window`;
+- `timing_domain = ordered_by_measured_window`;
+- `exposure_direction = synchrony`.
+
+The published binomial model coefficient for late versus peak natural-pollination seed set is extracted as `log_odds_ratio = 1.55`, with `SE = 0.25`.
+
+See `EXTRACTION_IWE029.md` for the coefficient-direction audit and effect-family boundary.
+
 ## Claim boundary
 
 IWE will never treat:
