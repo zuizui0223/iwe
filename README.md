@@ -6,7 +6,7 @@ IWE is a **hypothesis-testing meta-analysis project** on the reproductive conseq
 
 > Does the fitness effect of phenological synchrony differ among mutualists, antagonists, and mixed pollinating seed predators?
 
-IWE is empirical rather than theoretical. It synthesizes published effects, preserves study dependence in the extraction layer, and separates direct interaction phenology from occurrence-derived potential overlap.
+IWE is empirical rather than theoretical. It synthesizes published effects, preserves dependence from extraction through reference inference, and separates direct interaction phenology from occurrence-derived potential overlap.
 
 ## Primary hypotheses
 
@@ -23,6 +23,21 @@ Strict H1 effect sizes are oriented so **positive = greater synchrony is associa
 - **Tier C:** occurrence-derived potential overlap. Extension/screening only; never pooled into Tier A and always `proxy_only`.
 
 Tier A therefore describes evidence provenance, not automatic eligibility for the strict synchrony estimand. Direct seasonal-timing effects, directional mismatch effects, and unresolved signed-lag effects remain extractable without being forced into H1.
+
+## Screening registry
+
+`data/registry/studies.csv` is the source of truth for screening decisions. The counts and record table in `docs/SCREENING_BATCH_001.md` are generated from that registry and CI fails if the Markdown snapshot drifts.
+
+## Dependence
+
+Every extracted effect carries a `dependence_id`. The reference primary workflow clusters uncertainty by that identifier rather than treating effect rows as independent.
+
+Outputs distinguish:
+
+- `k_effects` — extracted effect rows;
+- `m_dependence` — inferential dependence clusters.
+
+With fewer than two dependence clusters in an interaction class, the workflow withholds SEs and confidence intervals. See `docs/ANALYSIS_DEPENDENCE_CONTRACT.md`.
 
 ## Initial candidate system families
 
@@ -46,9 +61,9 @@ IWE does **not** estimate `L`, `R`, `K`, `Phi`, accessibility, invasion, fixatio
 ## Repository layout
 
 ```text
-docs/        hypotheses, screening, effect-size and claim contracts
+docs/        hypotheses, screening, effect-size, timing, dependence and claim contracts
 data/        registries, extraction templates and derived tables
-src/iwe/     validation, overlap, effect orientation and meta helpers
+src/iwe/     validation, screening, overlap, effect orientation and meta helpers
 scripts/     executable validation and analysis entry points
 examples/    synthetic software fixtures only
 tests/       contract and regression tests
@@ -56,6 +71,6 @@ tests/       contract and regression tests
 
 ## First-release success criterion
 
-The first release must validate registries and extracted effects, enforce the timing-metric contract in code, admit only strict Tier-A synchrony effects to H1, exclude Tier C from the primary dataset, produce interaction-class summaries/contrasts on synthetic fixtures, and emit no biological conclusion before adequate real literature extraction.
+The first release must validate registries and extracted effects, keep screening documentation synchronized to the registry, enforce the timing-metric contract in code, admit only strict Tier-A synchrony effects to H1, use `dependence_id` in uncertainty and sensitivity analyses, exclude Tier C from the primary dataset, and emit no biological conclusion before adequate real literature extraction.
 
 See `docs/superpowers/specs/2026-09-16-interaction-window-meta-analysis-design.md` for the frozen design.
