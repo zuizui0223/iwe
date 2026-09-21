@@ -96,6 +96,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 3. `IWE004` — Kehrberger & Holzschuh 2019, *Pulsatilla vulgaris*, DOI `10.1038/s41598-019-51916-0`.
    - Flowering timing, pollinator activity/visitation and seed set in matched grasslands.
    - Raw-data route reported.
+   - Subsequent timing adjudication retains this as Tier-A provenance but classifies the Julian-date effect as `direct_timing_sensitivity`, not strict H1.
 
 4. `IWE005` — Rafferty & Ives 2012, DOI `10.1890/11-0967.1`.
    - Experimental flowering-time shifts.
@@ -113,6 +114,15 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
    - Early/late seasonal windows differ in the contribution of the pollinating seed predator.
    - Direct reproductive data and archived raw data are reported.
    - Year and sex-function outcomes must remain dependent rather than being treated as independent studies.
+
+## Strict-H1 adjudication update — 2026-09-21
+
+- `IWE001`: native whole-site signed-lag effects remain Tier A but are excluded from strict H1 because all three sites span both sides of matching.
+- `IWE002`: pooled long-term and snow-removal effects are not admitted to strict H1; directional/year-specific alternatives remain possible.
+- `IWE004`: seasonal Julian-date effect is timing sensitivity, not a monotonic partner-synchrony effect.
+- `IWE029`: promoted from unresolved to include after full-text adjudication. Peak and late windows are independently ordered by measured pollinator activity, and the late-versus-peak natural-pollination seed-set effect is extracted as the first real `strict_window` row.
+
+These decisions are machine-readable in `data/registry/strict_h1_adjudications.csv`.
 
 ## Unresolved high-value studies
 
