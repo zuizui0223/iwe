@@ -176,6 +176,26 @@ The registered component is:
 
 Recovering the raw Julian-date slope from Dryad would make the timing-sensitivity effect quantitative, but would not make it strict H1 evidence.
 
+## IWE011 source-specific adjudication
+
+Kudo & Shibata (2025) directly records final intact-fruit production across five permanent *Peucedanum multivittatum* plots along a flowering gradient. The predator moth *Phaulernis fulviguttella* concentrates oviposition in mid- to late July.
+
+For the predeclared extreme contrast:
+
+- HA flowers in mid-July and represents the high predator-overlap end;
+- HD flowers in early to late August and represents the low predator-overlap end.
+
+The exposure is therefore registered as:
+
+- `timing_metric_type = seasonal_position`;
+- `timing_analysis_class = strict_window`;
+- `timing_domain = ordered_by_measured_window`;
+- `exposure_direction = synchrony`.
+
+The final intact-fruit-set contrast is reconstructed from published Table 1 as Hedges' `g = -1.1368391965` for high overlap minus low overlap. The negative sign means greater antagonist synchrony is associated with lower final reproductive performance.
+
+This is observational across permanent plots, not an experimental manipulation of synchrony. See `EXTRACTION_IWE011.md` and `PEUCEDANUM_DEPENDENCY_MAP.md`.
+
 ## IWE029 source-specific adjudication
 
 Carneiro & Machado (2025) sampled *Stigmaphyllon paralias* during two within-season windows chosen after monitoring pollinator activity:
