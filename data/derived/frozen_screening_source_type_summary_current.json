@@ -1,0 +1,19 @@
+{
+  "note": "Source-type triage proposes the next screening action only. It never writes include/context/exclude decisions.",
+  "priority_counts": {
+    "P2": 357,
+    "P3": 2626
+  },
+  "schema": "iwe_frozen_screening_source_type_audit_v1",
+  "source_type_bucket_counts": {
+    "conference_or_abstract": 41,
+    "dataset_or_repository": 64,
+    "editorial_or_companion": 25,
+    "other_source_type": 114,
+    "preprint": 84,
+    "published_research_candidate": 2334,
+    "review_or_synthesis": 66,
+    "thesis_or_dissertation": 255
+  },
+  "unscreened_records": 2983
+}
