@@ -3,3 +3,5 @@ IWE001,confirmed,DEP_CORYDALIS_KUDO_LONGTERM,Corydalis Kudo long-term programme,
 IWE002,confirmed,DEP_CORYDALIS_KUDO_LONGTERM,Corydalis Kudo long-term programme,"Nopporo 1999-2017 extends IWE001 NFP; snow-removal experiment is embedded in the same population/programme."
 IWE003,unresolved,,Corydalis Liew-Kudo multi-population programme,"Population identities must be recovered before an independent or shared dependence assignment is permitted."
 IWE029,confirmed,DEP_IWE029_CATIMBAU_2020,Catimbau 2020 within-season sampling,"Peak and late flowering windows are two temporal samples from one population and year; all IWE029 effects remain one dependence cluster."
+IWE010,confirmed,DEP_PEUCEDANUM_KUDO_PROGRAM,Peucedanum Kudo-Shibata predation programme,"2017-2019 survey includes HA HL HC KD HD among nine plots and establishes the flowering/predator phenology gradient."
+IWE011,confirmed,DEP_PEUCEDANUM_KUDO_PROGRAM,Peucedanum Kudo-Shibata predation programme,"2020-2023 study reuses HA HL HC KD HD and explicitly identifies the 2017-2019 study as the previous study; current one-level dependence model treats the programme conservatively as one cluster."

@@ -27,7 +27,7 @@ The first release accepts these `effect_family` values:
 - `log_response_ratio`
 - `log_odds_ratio`
 
-Effect families are not silently converted into one another. The dependence-aware primary summary accepts only one effect family at a time and fails closed if multiple native families are present. Cross-family pooling requires a separately documented and executable conversion rule.
+Effect families are not silently converted into one another. The low-level dependence-aware summary accepts only one effect family at a time. The reference workflow therefore stratifies extracted strict effects by native `effect_family` and never pools or contrasts different families. Cross-family synthesis requires a separately documented and executable conversion rule.
 
 ## Required fields for an extracted effect
 
@@ -134,3 +134,10 @@ Screening status and Tier-A provenance do not by themselves authorize a row for 
 Source/component decisions are recorded in `data/registry/strict_h1_adjudications.csv`. Every real extracted study must be represented there, and every `strict_window` effect must match an exact `eligible + strict_extracted` adjudication for its effect ID and timing/effect-family fields.
 
 `scripts/validate_adjudications.py` enforces this gate in CI.
+
+
+## Summary-statistic reconstruction
+
+A strict effect may be reconstructed from published group means, standard deviations and sample sizes when the exposure groups are defined by the timing contract independently of the fitness result.
+
+For independent-group standardized mean differences, IWE uses the executable `hedges_g_from_summary()` helper. The contrast direction must be declared before calculation. The helper records Hedges' small-sample correction and sampling variance rather than treating the reported group SDs as standard errors.

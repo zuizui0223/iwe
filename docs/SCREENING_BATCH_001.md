@@ -31,14 +31,14 @@ Search terms combined variants of `phenological mismatch`, `flowering time`, `po
 <!-- BEGIN GENERATED SCREENING SNAPSHOT -->
 _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 
-**Registered publications: 31.** Current decisions: 11 include, 10 unresolved, 10 context only, 0 exclude.
+**Registered publications: 31.** Current decisions: 12 include, 8 unresolved, 11 context only, 0 exclude.
 
 | Candidate class | Include | Unresolved | Context only | Exclude | Total |
 |---|---:|---:|---:|---:|---:|
 | mutualist | 9 | 5 | 2 | 0 | 16 |
-| antagonist | 0 | 4 | 3 | 0 | 7 |
+| antagonist | 1 | 2 | 4 | 0 | 7 |
 | mixed pollinating seed predator | 2 | 1 | 5 | 0 | 8 |
-| **Total** | **11** | **10** | **10** | **0** | **31** |
+| **Total** | **12** | **8** | **11** | **0** | **31** |
 
 ### Registry snapshot
 
@@ -54,7 +54,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 | `IWE008` | mutualist | `unresolved` | `10.1016/j.scitotenv.2024.170458` | Pollinator peaking earlier than flowering is more detrimental to plant fecundity |
 | `IWE009` | mutualist | `context_only` | `10.1002/ecy.3658` | A specialist bee and its host plants experience phenological shifts at different rates in response to climate change |
 | `IWE010` | antagonist | `unresolved` | `10.1002/ece3.7468` | Is increased male flower production a strategy for avoidance of predispersal seed predation in andromonoecious plants? |
-| `IWE011` | antagonist | `unresolved` | `10.1111/1365-2745.70130` | Phenological selection mosaic of predispersal seed predation affects gender variation in an andromonoecious plant |
+| `IWE011` | antagonist | `include` | `10.1111/1365-2745.70130` | Phenological selection mosaic of predispersal seed predation affects gender variation in an andromonoecious plant |
 | `IWE012` | antagonist | `unresolved` | `10.1002/ecy.1633` | Caterpillar seed predators mediate shifts in selection on flowering phenology in their host plant |
 | `IWE013` | antagonist | `context_only` | `10.1890/14-1860.1` | Flowering schedule in a perennial plant; life-history trade-offs seed predation and total offspring fitness |
 | `IWE014` | mixed pollinating seed predator | `include` | `10.1111/j.1600-0587.1991.tb00632.x` | Flower herbivory and seed predation in Silene vulgaris (Caryophyllaceae): effects of pollination and phenology |
@@ -71,7 +71,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 | `IWE025` | mutualist | `include` | `10.3389/fevo.2021.641693` | Experimental Test of the Combined Effects of Water Availability and Flowering Time on Pollinator Visitation and Seed Set |
 | `IWE026` | mutualist | `unresolved` | `10.3732/ajb.0900083` | Consequences of variation in flowering time within and among individuals of Mertensia fusiformis (Boraginaceae) an early spring wildflower |
 | `IWE027` | mutualist | `include` | `10.1093/aob/mcp037` | Flowering phenology influences seed production and outcrossing rate in populations of an alpine snowbed shrub Phyllodoce aleutica: effects of pollinators and self-incompatibility |
-| `IWE028` | antagonist | `unresolved` | `10.1080/11956860.2000.11682614` | Flowering phenology and seed predation by a tephritid fly: Escape of seeds in time and space |
+| `IWE028` | antagonist | `context_only` | `10.1080/11956860.2000.11682614` | Flowering phenology and seed predation by a tephritid fly: Escape of seeds in time and space |
 | `IWE029` | mutualist | `include` | `10.1093/aob/mcaf126` | Evolutionary consequences of flowering-pollinator asynchrony: the case of a floral oil-producing plant and its oil-collecting bees |
 | `IWE030` | antagonist | `context_only` | `10.1890/0012-9658(1997)078[1624:EOPHAS]2.0.CO;2` | Effects of pollinators herbivores and seed predators on flowering phenology |
 | `IWE031` | antagonist | `context_only` | `10.1002/ecy.3854` | Timing of a plant-herbivore interaction alters plant growth and reproduction |
@@ -120,7 +120,10 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 - `IWE001`: native whole-site signed-lag effects remain Tier A but are excluded from strict H1 because all three sites span both sides of matching.
 - `IWE002`: pooled long-term and snow-removal effects are not admitted to strict H1; directional/year-specific alternatives remain possible.
 - `IWE004`: seasonal Julian-date effect is timing sensitivity, not a monotonic partner-synchrony effect.
-- `IWE029`: promoted from unresolved to include after full-text adjudication. Peak and late windows are independently ordered by measured pollinator activity, and the late-versus-peak natural-pollination seed-set effect is extracted as the first real `strict_window` row.
+- `IWE029`: promoted from unresolved to include after full-text adjudication. Peak and late windows are independently ordered by measured pollinator activity, and the late-versus-peak natural-pollination seed-set effect is extracted as the first real mutualist `strict_window` row.
+- `IWE028`: moved from unresolved to context-only. The study demonstrates temporal escape from a specialist seed predator, but its final seed-set result is model-derived from potential seed set plus attack-risk assumptions rather than a variance-bearing direct fitness effect.
+- `IWE010`: remains unresolved quantitatively. Its published fruit-number response is measured before intensive predation and represents pollination success; the archived workbook may permit a final intact-fruit reconstruction.
+- `IWE011`: promoted from unresolved to include. The timing-extreme HA-versus-HD contrast is independently ordered by the moth oviposition window and final intact-fruit set is directly reported; it supplies the first real antagonist `strict_window` row.
 
 These decisions are machine-readable in `data/registry/strict_h1_adjudications.csv`.
 
@@ -131,7 +134,7 @@ The most important unresolved records are:
 - `IWE003` — Liew & Kudo 2026: likely usable but population/year overlap with earlier Corydalis studies must be mapped.
 - `IWE007` — de Manincor et al. 2023: reproduction declines under warming, but warming alters multiple plant/pollinator traits as well as phenology; a mismatch-specific effect must be isolated.
 - `IWE008` — Wang et al. 2024: explicit pollinator–flowering peak mismatch and seed setting across an alpine community; quantitative extraction and dependence structure need full-text/data adjudication.
-- `IWE010` / `IWE011` — Kudo & Shibata 2021/2025: strong antagonist timing systems, but the strict synchrony-to-net-reproduction effect must be reconstructed and the two publications are likely dependent.
+- `IWE010` — Kudo & Shibata 2021: the archived reproductive workbook is needed to reconstruct a strict final-intact-fruit effect; its dependence with IWE011 is already fixed.
 - `IWE012` — Valdés & Ehrlén 2017: seed predators reverse flowering-time selection, but partner activity is not yet represented as an explicit overlap metric.
 - `IWE019` — Liu et al. 2014: direct fig/fig-wasp phenology and abortion during a poorly matched crop, but the plant-fitness estimand is not yet clean enough for Tier A.
 
@@ -157,18 +160,18 @@ The first remains eligible for the primary H1 model. The second may later form a
 ## Dependence risks already identified
 
 - Corydalis programme: `IWE001`, `IWE002`, `IWE003` may share populations and years.
-- Peucedanum programme: `IWE010`, `IWE011` likely share sites and/or years.
+- Peucedanum programme: `IWE010` and `IWE011` reuse five permanent plots across successive survey periods and are locked to `DEP_PEUCEDANUM_KUDO_PROGRAM`.
 - Silene stellata–Hadena programme: multiple publications share the same focal population/system and may share years.
 
 Publication count therefore cannot be used as the effective sample size.
 
 ## Next quantitative tasks
 
-1. Recover source/raw data for IWE001, IWE002, IWE004, IWE005, IWE014 and IWE015.
-2. Freeze a dataset-overlap map for the Corydalis and Peucedanum publication families before effect estimation.
-3. Determine the native effect form in each source (slope, correlation, experimental contrast, or reconstructable response ratio).
+1. Recover a final-intact-fruit effect from the archived IWE010 workbook if possible.
+2. Quantitatively adjudicate the mixed pollinating-seed-predator candidates IWE014 and IWE015.
+3. Continue mutualist extraction within a common effect family so class contrasts do not depend on unregistered cross-scale conversion.
 4. Recover sampling variance without automatic imputation.
 5. Admit effects only after direction can be oriented as `greater synchrony -> higher plant reproductive performance`.
-6. Separately adjudicate whether IWE008 and the antagonist timing papers qualify for strict H1 or only the broader sensitivity analysis.
+6. Keep screening, strict-H1 adjudication, dependence assignment and effect-family compatibility as separate executable gates.
 
 No pooled ecological result is reported from this batch. Screening status is not biological evidence.

@@ -41,5 +41,7 @@ jobs:
         run: python scripts/build_meta_dataset.py data/extraction/direct_effects.csv /tmp/iwe-real-primary.csv
       - name: Run real dependence-aware reference meta workflow
         run: python scripts/run_primary_meta.py data/extraction/direct_effects.csv /tmp/iwe-real-meta
+      - name: Run real leave-one-dependence reference sensitivity
+        run: python scripts/run_sensitivity.py data/extraction/direct_effects.csv /tmp/iwe-real-meta/leave_one_dependence.csv
       - name: Build real machine-readable claim status
         run: python scripts/build_claim_status.py data/extraction/direct_effects.csv /tmp/iwe-real-meta/claim_status.json

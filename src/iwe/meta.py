@@ -167,6 +167,7 @@ def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
     if summary.empty:
         return pd.DataFrame(
             columns=[
+                "effect_family",
                 "contrast",
                 "estimate",
                 "se",
@@ -178,6 +179,7 @@ def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
         )
     if set(summary["interaction_type"]) - INTERACTION_TYPES:
         raise ValueError("summary contains unknown interaction_type")
+    effect_family = None
     if "effect_family" in summary.columns:
         families = sorted(set(summary["effect_family"].dropna().astype(str)))
         if len(families) > 1:
@@ -185,6 +187,7 @@ def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
                 "class contrasts require one common effect_family; observed: "
                 + ", ".join(families)
             )
+        effect_family = families[0] if families else None
 
     lookup = {row["interaction_type"]: row for _, row in summary.iterrows()}
     pairs = [
@@ -219,6 +222,7 @@ def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
 
         rows.append(
             {
+                "effect_family": effect_family,
                 "contrast": f"{left} - {right}",
                 "estimate": estimate,
                 "se": se,

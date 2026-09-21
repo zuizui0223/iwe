@@ -35,24 +35,51 @@ def main() -> int:
         for interaction_type in sorted(INTERACTION_TYPES)
     }
 
+    family_cluster_counts: dict[str, dict[str, int]] = {}
+    if not real_rows.empty:
+        for effect_family, part in real_rows.groupby("effect_family", sort=True):
+            family_cluster_counts[str(effect_family)] = {
+                interaction_type: int(
+                    part.loc[
+                        part["interaction_type"] == interaction_type, "dependence_id"
+                    ].nunique()
+                )
+                for interaction_type in sorted(INTERACTION_TYPES)
+            }
+
+    evaluable_families = [
+        family
+        for family, counts in family_cluster_counts.items()
+        if all(counts[c] >= 2 for c in INTERACTION_TYPES)
+    ]
+
     if real_rows.empty:
         h1_status = "unresolved"
         h1_reason = "no real extracted strict Tier-A evidence"
+    elif evaluable_families:
+        h1_status = "evaluable"
+        h1_reason = (
+            "at least one common effect family spans all three interaction classes "
+            "with at least two dependence clusters per class"
+        )
     elif not INTERACTION_TYPES.issubset(classes):
         h1_status = "not_evaluable"
         h1_reason = "one or more preregistered interaction classes absent"
-    elif any(cluster_counts[c] < 2 for c in INTERACTION_TYPES):
-        h1_status = "not_evaluable"
-        h1_reason = "one or more interaction classes have fewer than two dependence clusters"
     else:
-        h1_status = "evaluable"
-        h1_reason = "all three interaction classes represented with at least two dependence clusters"
+        h1_status = "not_evaluable"
+        h1_reason = (
+            "no single native effect family spans all three interaction classes "
+            "with at least two dependence clusters per class"
+        )
 
     payload = {
-        "schema": "iwe_claim_status_v2",
+        "schema": "iwe_claim_status_v3",
         "biological_evidence_rows": int(len(real_rows)),
         "biological_dependence_clusters": int(real_rows["dependence_id"].nunique()),
+        "effect_families_present": sorted(set(real_rows["effect_family"].astype(str))),
         "dependence_clusters_by_interaction_type": cluster_counts,
+        "dependence_clusters_by_effect_family_and_interaction_type": family_cluster_counts,
+        "h1_evaluable_effect_families": evaluable_families,
         "synthetic_rows_excluded_from_biological_claims": int(
             len(primary) - len(real_rows)
         ),
@@ -74,8 +101,8 @@ def main() -> int:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     print(
-        f"Wrote claim status to {output}; dependence clusters are the replication units "
-        "for H1 evaluability."
+        f"Wrote claim status to {output}; dependence clusters and common effect family "
+        "are required for H1 evaluability."
     )
     return 0
 

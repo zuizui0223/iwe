@@ -61,12 +61,12 @@ It does not use publication (`study_id`) as the omission unit because one depend
 
 ## H1 evaluability
 
-The machine-readable claim gate requires:
+The machine-readable claim gate requires at least one **common native effect family** (or a future registered conversion scale) that has:
 
 - real strict Tier-A evidence in all three interaction classes; and
 - at least two `dependence_id` clusters in every interaction class.
 
-This minimum permits the reference cluster-robust variance to exist. It is not a claim that two clusters provide strong or publication-ready evidence.
+The reference workflow stratifies by `effect_family`; effects on different native scales are retained but are not numerically pooled or used for class contrasts. This minimum permits the reference cluster-robust variance to exist. It is not a claim that two clusters provide strong or publication-ready evidence.
 
 
 ## Cross-publication assignment registry
