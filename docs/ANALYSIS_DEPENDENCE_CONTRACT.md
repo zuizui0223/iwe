@@ -67,3 +67,12 @@ The machine-readable claim gate requires:
 - at least two `dependence_id` clusters in every interaction class.
 
 This minimum permits the reference cluster-robust variance to exist. It is not a claim that two clusters provide strong or publication-ready evidence.
+
+
+## Cross-publication assignment registry
+
+Known study-level overlap is registered in `data/registry/study_dependencies.csv`.
+
+For rows with `dependency_status = confirmed`, every extracted effect from that study must use the registered `required_dependence_id`. `scripts/validate_dependencies.py` enforces this in CI.
+
+Rows marked `unresolved` cannot be assigned a required cluster prospectively; their source overlap must be adjudicated first. This prevents a later publication from being counted as an independent cluster merely because it has a new DOI.
