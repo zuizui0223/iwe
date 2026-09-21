@@ -4,7 +4,7 @@ Source: Kudo G, Hirao AS, Kawai Y. 2011. *Pollination Efficiency of Bumblebee Qu
 
 Public version of record: Hokkaido University HUSCAP handle `2115/47946`.
 
-Status: **unresolved strict-H1 mutualist candidate; biological estimand and 2007 plot-level reconstruction are frozen before exact figure-value extraction**.
+Status: **context_only — the strict biological design is valid, but the prospectively required deterministic figure extraction failed and no exact four-plot outcome table is printed**.
 
 Interaction class: `mutualist`.
 
@@ -114,10 +114,25 @@ The paper incorporates some 2003 reproductive data from Hirao et al. (2006), but
 
 Older early/late-season results are retained as context and are not counted as additional independent programmes.
 
+## Deterministic extraction result
+
+The frozen vector-PDF audit was executed against the exact HUSCAP version of record.
+
+PyMuPDF recovered the Figure-2 text layer, including the 2007/plot labels, but the page exposed only two drawing objects in total and **no independently addressable filled mean-marker objects**. The four 2007 fruit-set means therefore cannot be uniquely recovered by the prospectively declared vector route.
+
+Under the frozen rule above, IWE does **not** replace this failed route with:
+
+- visual transcription from the plotted bars/points;
+- manual pixel clicking;
+- an approximate value inferred from the narrative range;
+- treating the printed within-plot inflorescence sample sizes as extra timing units.
+
+The study is therefore closed from `unresolved_strict` to `context_only`. This is a terminal adjudication under the current source: reopening it requires a genuinely new exact numerical source (for example author data or a supplementary table), not a more permissive digitization rule.
+
 ## Claim ceiling
 
-Before vector extraction, IWE087 supports:
+IWE087 supports:
 
-> four published alpine populations were observed at their flowering peaks in 2007, with >10-fold variation in bumblebee visitation and matched natural fruit-set measurements, providing a prospectively defined route to an independent mutualist Fisher-z effect.
+> four published alpine populations were observed at their flowering peaks in 2007, with large among-plot variation in bumblebee visitation and matched natural fruit-set measurements, providing direct evidence that seasonal partner availability and reproduction covary across the same populations.
 
-No effect magnitude or H1 conclusion is claimed until the deterministic PDF extraction is executed.
+It does **not** contribute a Fisher-z effect or an independent programme to the primary H1 gate because the four exact plot-level fruit-set means are not recoverable under the predeclared deterministic extraction rule.
