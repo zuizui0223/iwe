@@ -19,15 +19,17 @@ jobs:
         run: pytest -q
       - name: Validate system registry
         run: python scripts/validate_registry.py data/registry/systems.csv
+      - name: Check screening snapshot
+        run: python scripts/render_screening_batch.py --check
       - name: Validate synthetic extraction
         run: python scripts/validate_extraction.py examples/synthetic_effects.csv
       - name: Validate direct extraction
         run: python scripts/validate_extraction.py data/extraction/direct_effects.csv
       - name: Build primary dataset
         run: python scripts/build_meta_dataset.py examples/synthetic_effects.csv /tmp/iwe-primary.csv
-      - name: Run reference meta workflow
+      - name: Run dependence-aware reference meta workflow
         run: python scripts/run_primary_meta.py examples/synthetic_effects.csv /tmp/iwe-meta
-      - name: Run leave-one-study reference sensitivity
-        run: python scripts/run_sensitivity.py examples/synthetic_effects.csv /tmp/iwe-meta/leave_one_study.csv
+      - name: Run leave-one-dependence reference sensitivity
+        run: python scripts/run_sensitivity.py examples/synthetic_effects.csv /tmp/iwe-meta/leave_one_dependence.csv
       - name: Build machine-readable claim status
         run: python scripts/build_claim_status.py examples/synthetic_effects.csv /tmp/iwe-meta/claim_status.json
