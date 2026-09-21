@@ -66,3 +66,30 @@ def test_hedges_g_from_mean_se_reconstructs_iwe015_2013():
 def test_hedges_g_from_mean_se_rejects_nonpositive_se():
     with pytest.raises(ValueError):
         hedges_g_from_mean_se(1.0, 0.0, 10, 2.0, 0.2, 10)
+
+
+
+def test_hedges_g_from_mean_se_reconstructs_iwe027_his_2007():
+    g, variance = hedges_g_from_mean_se(
+        mean_high=0.77,
+        se_high=0.03,
+        n_high=24,
+        mean_low=0.62,
+        se_low=0.04,
+        n_low=24,
+    )
+    assert g == pytest.approx(0.8518282660)
+    assert variance == pytest.approx(0.0885105687)
+
+
+def test_hedges_g_from_mean_se_reconstructs_iwe027_gos_2007():
+    g, variance = hedges_g_from_mean_se(
+        mean_high=0.65,
+        se_high=0.05,
+        n_high=24,
+        mean_low=0.40,
+        se_low=0.05,
+        n_low=24,
+    )
+    assert g == pytest.approx(1.0038892388)
+    assert variance == pytest.approx(0.0915777666)

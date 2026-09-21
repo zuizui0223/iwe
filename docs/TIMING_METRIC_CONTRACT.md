@@ -218,6 +218,26 @@ Both year effects share one dependence cluster, `DEP_SILENE_STELLATA_HADENA_MLBS
 
 See `EXTRACTION_IWE015.md`.
 
+## IWE027 source-specific adjudication
+
+Kameyama & Kudo (2009) measures both flowering timing and bumble-bee seasonal activity in 2007. Early to mid-July has very low queen visitation; worker bees appear in late July and visit frequency then rises abruptly and remains high.
+
+For the 2007 E-to-M contrasts at HIS and GOS:
+
+- E = lower-overlap early seasonal window;
+- M = higher-overlap worker-bee seasonal window.
+
+The extracted intact natural seed-set effects use:
+
+- `timing_metric_type = seasonal_position`;
+- `timing_analysis_class = strict_window`;
+- `timing_domain = ordered_by_measured_window`;
+- `exposure_direction = synchrony`.
+
+Only 2007 is admitted. The 2006 seed-set summaries are not promoted to strict H1 because partner activity was not directly measured that year.
+
+Both 2007 site effects share `DEP_IWE027_TAISETSU_2007`. See `EXTRACTION_IWE027.md`.
+
 ## IWE029 source-specific adjudication
 
 Carneiro & Machado (2025) sampled *Stigmaphyllon paralias* during two within-season windows chosen after monitoring pollinator activity:

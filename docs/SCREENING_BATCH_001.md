@@ -125,6 +125,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 - `IWE010`: remains unresolved quantitatively. Its published fruit-number response is measured before intensive predation and represents pollination success; the archived workbook may permit a final intact-fruit reconstruction.
 - `IWE011`: promoted from unresolved to include. The timing-extreme HA-versus-HD contrast is independently ordered by the moth oviposition window and final intact-fruit set is directly reported; it supplies the first real antagonist `strict_window` row.
 - `IWE015`: early and late experiments are explicitly ordered by *Hadena ectypa* activity. Successful fruits are final fruits surviving Hadena predation; year-specific 2012 and 2013 SMDs are extracted as the first real mixed `strict_window` rows and share one dependence cluster.
+- `IWE027`: 2007 E-to-M contrasts at HIS and GOS are ordered by contemporaneously measured bumble-bee activity. Intact natural seed-set mean±SE+n reconstructs two mutualist SMD rows; 2006 is deliberately excluded because animal activity was not directly measured that year.
 
 These decisions are machine-readable in `data/registry/strict_h1_adjudications.csv`.
 
@@ -168,9 +169,9 @@ Publication count therefore cannot be used as the effective sample size.
 
 ## Next quantitative tasks
 
-1. Continue mutualist extraction on the standardized-mean-difference scale if a source-supported contrast is available; SMD now spans antagonist and mixed classes but not mutualists.
-2. Quantitatively adjudicate IWE014 as the remaining high-priority mixed candidate and retain its dependence separately from IWE015 unless source overlap is demonstrated.
-3. Recover a final-intact-fruit effect from the archived IWE010 workbook if possible without double counting IWE011.
+1. Add a **second independent SMD dependence cluster in each interaction class**; effect-family coverage is no longer the primary bottleneck.
+2. Prioritize an independent antagonist SMD source, because IWE011 is currently the sole antagonist SMD cluster.
+3. Quantitatively adjudicate IWE014 as a possible second mixed cluster, keeping it separate from IWE015 unless source overlap is demonstrated.
 4. Recover sampling variance without automatic imputation.
 5. Admit effects only after direction can be oriented as `greater synchrony -> higher plant reproductive performance`.
 6. Keep screening, strict-H1 adjudication, dependence assignment and effect-family compatibility as separate executable gates.
