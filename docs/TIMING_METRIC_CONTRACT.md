@@ -196,6 +196,28 @@ The final intact-fruit-set contrast is reconstructed from published Table 1 as H
 
 This is observational across permanent plots, not an experimental manipulation of synchrony. See `EXTRACTION_IWE011.md` and `PEUCEDANUM_DEPENDENCY_MAP.md`.
 
+## IWE015 source-specific adjudication
+
+Zhou et al. (2020) explicitly conducts early and late experiments in two measured partner-activity windows:
+
+- early = *Hadena ectypa*-dominant, corresponding to the adult activity peak of the mixed pollinating seed predator;
+- late = co-pollinator-dominant, after *H. ectypa* activity drops.
+
+The final female-fitness measure is the number of successful fruits, defined as initiated fruits that escape *H. ectypa* predation.
+
+The 2012 and 2013 contrasts are therefore registered as:
+
+- `timing_metric_type = seasonal_position`;
+- `timing_analysis_class = strict_window`;
+- `timing_domain = ordered_by_measured_window`;
+- `exposure_direction = synchrony`.
+
+Each effect is high focal-partner overlap (early) minus low focal-partner overlap (late). The source reports mean ± SE and n, so IWE reconstructs SD as `SE * sqrt(n)` before calculating Hedges g.
+
+Both year effects share one dependence cluster, `DEP_SILENE_STELLATA_HADENA_MLBS`.
+
+See `EXTRACTION_IWE015.md`.
+
 ## IWE029 source-specific adjudication
 
 Carneiro & Machado (2025) sampled *Stigmaphyllon paralias* during two within-season windows chosen after monitoring pollinator activity:

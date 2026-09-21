@@ -1,6 +1,6 @@
 import pytest
 
-from iwe.effects import hedges_g_from_summary, orient_effect
+from iwe.effects import hedges_g_from_mean_se, hedges_g_from_summary, orient_effect
 
 
 def test_synchrony_effect_keeps_sign():
@@ -34,3 +34,35 @@ def test_hedges_g_rejects_invalid_group_summary():
         hedges_g_from_summary(0.1, 0.2, 1, 0.3, 0.4, 10)
     with pytest.raises(ValueError):
         hedges_g_from_summary(0.1, 0.0, 10, 0.3, 0.4, 10)
+
+
+
+def test_hedges_g_from_mean_se_reconstructs_iwe015_2012():
+    g, variance = hedges_g_from_mean_se(
+        mean_high=2.66,
+        se_high=2.95,
+        n_high=59,
+        mean_low=3.91,
+        se_low=4.13,
+        n_low=58,
+    )
+    assert g == pytest.approx(-0.0453662495)
+    assert variance == pytest.approx(0.0337540056)
+
+
+def test_hedges_g_from_mean_se_reconstructs_iwe015_2013():
+    g, variance = hedges_g_from_mean_se(
+        mean_high=9.77,
+        se_high=6.91,
+        n_high=55,
+        mean_low=8.60,
+        se_low=7.01,
+        n_low=55,
+    )
+    assert g == pytest.approx(0.0225087081)
+    assert variance == pytest.approx(0.0358615214)
+
+
+def test_hedges_g_from_mean_se_rejects_nonpositive_se():
+    with pytest.raises(ValueError):
+        hedges_g_from_mean_se(1.0, 0.0, 10, 2.0, 0.2, 10)

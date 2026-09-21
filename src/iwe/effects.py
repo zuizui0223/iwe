@@ -46,3 +46,32 @@ def hedges_g_from_summary(
     )
     variance_g = correction**2 * variance_d
     return float(g), float(variance_g)
+
+
+
+def hedges_g_from_mean_se(
+    mean_high: float,
+    se_high: float,
+    n_high: int,
+    mean_low: float,
+    se_low: float,
+    n_low: int,
+) -> tuple[float, float]:
+    """Return Hedges g when a source reports group means and standard errors.
+
+    Standard deviations are reconstructed as SE * sqrt(n), then passed to the
+    independent-groups Hedges-g implementation. The contrast remains
+    high-exposure minus low-exposure.
+    """
+    if se_high <= 0 or se_low <= 0:
+        raise ValueError("Hedges g from SE requires positive standard errors")
+    sd_high = float(se_high) * math.sqrt(n_high)
+    sd_low = float(se_low) * math.sqrt(n_low)
+    return hedges_g_from_summary(
+        mean_high=mean_high,
+        sd_high=sd_high,
+        n_high=n_high,
+        mean_low=mean_low,
+        sd_low=sd_low,
+        n_low=n_low,
+    )
