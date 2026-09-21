@@ -31,14 +31,14 @@ Search terms combined variants of `phenological mismatch`, `flowering time`, `po
 <!-- BEGIN GENERATED SCREENING SNAPSHOT -->
 _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 
-**Registered publications: 31.** Current decisions: 11 include, 10 unresolved, 10 context only, 0 exclude.
+**Registered publications: 31.** Current decisions: 11 include, 9 unresolved, 11 context only, 0 exclude.
 
 | Candidate class | Include | Unresolved | Context only | Exclude | Total |
 |---|---:|---:|---:|---:|---:|
 | mutualist | 9 | 5 | 2 | 0 | 16 |
-| antagonist | 0 | 4 | 3 | 0 | 7 |
+| antagonist | 0 | 3 | 4 | 0 | 7 |
 | mixed pollinating seed predator | 2 | 1 | 5 | 0 | 8 |
-| **Total** | **11** | **10** | **10** | **0** | **31** |
+| **Total** | **11** | **9** | **11** | **0** | **31** |
 
 ### Registry snapshot
 
@@ -71,7 +71,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 | `IWE025` | mutualist | `include` | `10.3389/fevo.2021.641693` | Experimental Test of the Combined Effects of Water Availability and Flowering Time on Pollinator Visitation and Seed Set |
 | `IWE026` | mutualist | `unresolved` | `10.3732/ajb.0900083` | Consequences of variation in flowering time within and among individuals of Mertensia fusiformis (Boraginaceae) an early spring wildflower |
 | `IWE027` | mutualist | `include` | `10.1093/aob/mcp037` | Flowering phenology influences seed production and outcrossing rate in populations of an alpine snowbed shrub Phyllodoce aleutica: effects of pollinators and self-incompatibility |
-| `IWE028` | antagonist | `unresolved` | `10.1080/11956860.2000.11682614` | Flowering phenology and seed predation by a tephritid fly: Escape of seeds in time and space |
+| `IWE028` | antagonist | `context_only` | `10.1080/11956860.2000.11682614` | Flowering phenology and seed predation by a tephritid fly: Escape of seeds in time and space |
 | `IWE029` | mutualist | `include` | `10.1093/aob/mcaf126` | Evolutionary consequences of flowering-pollinator asynchrony: the case of a floral oil-producing plant and its oil-collecting bees |
 | `IWE030` | antagonist | `context_only` | `10.1890/0012-9658(1997)078[1624:EOPHAS]2.0.CO;2` | Effects of pollinators herbivores and seed predators on flowering phenology |
 | `IWE031` | antagonist | `context_only` | `10.1002/ecy.3854` | Timing of a plant-herbivore interaction alters plant growth and reproduction |
