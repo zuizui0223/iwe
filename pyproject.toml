@@ -8,7 +8,6 @@ version = "0.1.0"
 description = "Interaction Window Ecology meta-analysis contracts and reproducible analysis helpers"
 requires-python = ">=3.11"
 dependencies = [
-  "numpy>=1.26",
   "pandas>=2.1",
   "scipy>=1.11",
 ]
