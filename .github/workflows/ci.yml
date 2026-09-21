@@ -36,6 +36,26 @@ jobs:
           assert math.isclose(float(row['variance_native']), float(result['variance_native']), rel_tol=0, abs_tol=1e-12)
           print('OK: IWE068 registered row exactly matches pinned raw-data reconstruction.')
           PY
+      - name: Reconstruct IWE084 published SMD effect
+        run: python scripts/reconstruct_iwe084.py --json /tmp/iwe084.json
+      - name: Verify IWE084 registered effect matches frozen reconstruction
+        run: |
+          python - <<'PY'
+          import json
+          import math
+          import pandas as pd
+
+          result = json.load(open('/tmp/iwe084.json', encoding='utf-8'))
+          effects = pd.read_csv('data/extraction/direct_effects.csv')
+          row = effects.loc[effects['effect_id'] == 'IWE084_SGRAM_APIS_SMD']
+          assert len(row) == 1, 'expected exactly one IWE084 direct-effect row'
+          row = row.iloc[0]
+          assert row['effect_family'] == 'standardized_mean_difference'
+          assert int(row['sample_size']) == int(result['sample_size'])
+          assert math.isclose(float(row['effect_native']), float(result['hedges_g']), rel_tol=0, abs_tol=1e-12)
+          assert math.isclose(float(row['variance_native']), float(result['variance_native']), rel_tol=0, abs_tol=1e-12)
+          print('OK: IWE084 registered row exactly matches frozen published-table reconstruction.')
+          PY
       - name: Validate system registry
         run: python scripts/validate_registry.py data/registry/systems.csv
       - name: Validate study screening registry
@@ -83,7 +103,7 @@ jobs:
           python - <<'PY'
           import pandas as pd
           df = pd.read_csv('/tmp/iwe-evidence-architecture.csv').set_index('interaction_type')
-          assert int(df.loc['mutualist', 'strict_quantitative_programmes_closed']) == 2
+          assert int(df.loc['mutualist', 'strict_quantitative_programmes_closed']) == 3
           assert int(df.loc['antagonist', 'strict_quantitative_programmes_closed']) == 1
           assert int(df.loc['mixed_pollinating_seed_predator', 'strict_quantitative_programmes_closed']) == 1
           assert int(df.loc['mutualist', 'common_scale_fisher_z_programmes_closed']) == 1
