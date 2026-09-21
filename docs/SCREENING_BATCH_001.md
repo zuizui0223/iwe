@@ -120,7 +120,10 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 - `IWE001`: native whole-site signed-lag effects remain Tier A but are excluded from strict H1 because all three sites span both sides of matching.
 - `IWE002`: pooled long-term and snow-removal effects are not admitted to strict H1; directional/year-specific alternatives remain possible.
 - `IWE004`: seasonal Julian-date effect is timing sensitivity, not a monotonic partner-synchrony effect.
-- `IWE029`: promoted from unresolved to include after full-text adjudication. Peak and late windows are independently ordered by measured pollinator activity, and the late-versus-peak natural-pollination seed-set effect is extracted as the first real `strict_window` row.
+- `IWE029`: promoted from unresolved to include after full-text adjudication. Peak and late windows are independently ordered by measured pollinator activity, and the late-versus-peak natural-pollination seed-set effect is extracted as the first real mutualist `strict_window` row.
+- `IWE028`: moved from unresolved to context-only. The study demonstrates temporal escape from a specialist seed predator, but its final seed-set result is model-derived from potential seed set plus attack-risk assumptions rather than a variance-bearing direct fitness effect.
+- `IWE010`: remains unresolved quantitatively. Its published fruit-number response is measured before intensive predation and represents pollination success; the archived workbook may permit a final intact-fruit reconstruction.
+- `IWE011`: promoted from unresolved to include. The timing-extreme HA-versus-HD contrast is independently ordered by the moth oviposition window and final intact-fruit set is directly reported; it supplies the first real antagonist `strict_window` row.
 
 These decisions are machine-readable in `data/registry/strict_h1_adjudications.csv`.
 
@@ -131,7 +134,7 @@ The most important unresolved records are:
 - `IWE003` — Liew & Kudo 2026: likely usable but population/year overlap with earlier Corydalis studies must be mapped.
 - `IWE007` — de Manincor et al. 2023: reproduction declines under warming, but warming alters multiple plant/pollinator traits as well as phenology; a mismatch-specific effect must be isolated.
 - `IWE008` — Wang et al. 2024: explicit pollinator–flowering peak mismatch and seed setting across an alpine community; quantitative extraction and dependence structure need full-text/data adjudication.
-- `IWE010` / `IWE011` — Kudo & Shibata 2021/2025: strong antagonist timing systems, but the strict synchrony-to-net-reproduction effect must be reconstructed and the two publications are likely dependent.
+- `IWE010` — Kudo & Shibata 2021: the archived reproductive workbook is needed to reconstruct a strict final-intact-fruit effect; its dependence with IWE011 is already fixed.
 - `IWE012` — Valdés & Ehrlén 2017: seed predators reverse flowering-time selection, but partner activity is not yet represented as an explicit overlap metric.
 - `IWE019` — Liu et al. 2014: direct fig/fig-wasp phenology and abortion during a poorly matched crop, but the plant-fitness estimand is not yet clean enough for Tier A.
 
@@ -157,18 +160,18 @@ The first remains eligible for the primary H1 model. The second may later form a
 ## Dependence risks already identified
 
 - Corydalis programme: `IWE001`, `IWE002`, `IWE003` may share populations and years.
-- Peucedanum programme: `IWE010`, `IWE011` likely share sites and/or years.
+- Peucedanum programme: `IWE010` and `IWE011` reuse five permanent plots across successive survey periods and are locked to `DEP_PEUCEDANUM_KUDO_PROGRAM`.
 - Silene stellata–Hadena programme: multiple publications share the same focal population/system and may share years.
 
 Publication count therefore cannot be used as the effective sample size.
 
 ## Next quantitative tasks
 
-1. Recover source/raw data for IWE001, IWE002, IWE004, IWE005, IWE014 and IWE015.
-2. Freeze a dataset-overlap map for the Corydalis and Peucedanum publication families before effect estimation.
-3. Determine the native effect form in each source (slope, correlation, experimental contrast, or reconstructable response ratio).
+1. Recover a final-intact-fruit effect from the archived IWE010 workbook if possible.
+2. Quantitatively adjudicate the mixed pollinating-seed-predator candidates IWE014 and IWE015.
+3. Continue mutualist extraction within a common effect family so class contrasts do not depend on unregistered cross-scale conversion.
 4. Recover sampling variance without automatic imputation.
 5. Admit effects only after direction can be oriented as `greater synchrony -> higher plant reproductive performance`.
-6. Separately adjudicate whether IWE008 and the antagonist timing papers qualify for strict H1 or only the broader sensitivity analysis.
+6. Keep screening, strict-H1 adjudication, dependence assignment and effect-family compatibility as separate executable gates.
 
 No pooled ecological result is reported from this batch. Screening status is not biological evidence.
