@@ -1,0 +1,88 @@
+name: iwe008-zenodo-link-audit
+
+on:
+  push:
+    branches: ["research/tier-a-extraction-001"]
+    paths:
+      - ".github/workflows/iwe008-zenodo-link-audit.yml"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install audit dependencies
+        run: python -m pip install pandas openpyxl
+      - name: Download Jun Du Zenodo workbook
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifact/iwe008_link
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "iwe-source-link-audit/1.0" \
+            "https://zenodo.org/api/records/20805747" \
+            -o artifact/iwe008_link/record.json
+          curl -L --retry 2 --connect-timeout 20 --max-time 120 \
+            -A "iwe-source-link-audit/1.0" \
+            "https://zenodo.org/api/records/20805747/files/data.xlsx/content" \
+            -o artifact/iwe008_link/data.xlsx
+
+      - name: Audit study identity without fitting outcomes
+        shell: bash
+        run: |
+          python - <<'PY' | tee artifact/iwe008_link/link_audit.txt
+          import json
+          import pandas as pd
+          from pathlib import Path
+
+          md=json.load(open("artifact/iwe008_link/record.json",encoding="utf-8"))["metadata"]
+          print("ZENODO_TITLE",md.get("title"))
+          print("ZENODO_CREATORS",md.get("creators"))
+          print("ZENODO_DATE",md.get("publication_date"))
+          print("ZENODO_RELATED",md.get("related_identifiers"))
+
+          xls=pd.ExcelFile("artifact/iwe008_link/data.xlsx")
+          print("SHEETS",xls.sheet_names)
+
+          for sh in ["Sensitivity & factors","Flowering traits","Insect traits","Seed setting rate"]:
+              df=pd.read_excel(xls,sheet_name=sh,header=None)
+              print("\n"+"="*100)
+              print("SHEET",sh,"SHAPE",df.shape)
+              print(df.head(12).to_string(index=False,header=False,max_cols=40))
+
+          # Read headers from the second row where present.
+          sens=pd.read_excel(xls,sheet_name="Sensitivity & factors",header=1)
+          flower=pd.read_excel(xls,sheet_name="Flowering traits",header=1)
+          insect=pd.read_excel(xls,sheet_name="Insect traits",header=1)
+          seed=pd.read_excel(xls,sheet_name="Seed setting rate",header=1)
+
+          def summarize(name,df):
+              print("\nSUMMARY",name)
+              print("COLUMNS",list(map(str,df.columns)))
+              for col in ["Year","Altitude","Species","Family","Insect category"]:
+                  if col in df.columns:
+                      vals=df[col].dropna().astype(str)
+                      print(col,"N_UNIQUE",vals.nunique(),"VALUES",sorted(vals.unique())[:80])
+
+          summarize("Sensitivity & factors",sens)
+          summarize("Flowering traits",flower)
+          summarize("Insect traits",insect)
+          summarize("Seed setting rate",seed)
+
+          # Cross-sheet key overlap only; no seed-outcome regression/effect is calculated.
+          common=set(map(str, sens.get("Species",pd.Series(dtype=str)).dropna()))
+          for name,df in [("flower",flower),("insect",insect),("seed",seed)]:
+              if "Species" in df.columns:
+                  other=set(map(str,df["Species"].dropna()))
+                  print("SPECIES_OVERLAP",name,len(common & other),"of",len(common),len(other))
+          PY
+
+      - name: Upload link audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe008-zenodo-link-audit
+          path: artifact/iwe008_link
+          if-no-files-found: error
