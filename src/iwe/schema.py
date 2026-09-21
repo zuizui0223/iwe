@@ -48,6 +48,7 @@ EFFECT_FAMILIES = {
     "fisher_z",
     "standardized_mean_difference",
     "log_response_ratio",
+    "log_odds_ratio",
 }
 
 REQUIRED_EFFECT_COLUMNS = [
