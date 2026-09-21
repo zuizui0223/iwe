@@ -130,6 +130,33 @@ jobs:
               ['study_id','interaction_type','blocker_type','next_action']
           ].to_string(index=False))
           PY
+      - name: Build current strict-blocker family summary
+        run: python scripts/build_strict_blocker_summary.py data/registry/strict_blockers.csv /tmp/iwe-strict-blocker-summary.csv
+      - name: Verify blocker-family summary
+        run: |
+          python - <<'PY'
+          import pandas as pd
+          df = pd.read_csv('/tmp/iwe-strict-blocker-summary.csv')
+          total = df.groupby('interaction_type')['n_open_blockers'].sum().to_dict()
+          assert total == {
+              'antagonist': 7,
+              'mixed_pollinating_seed_predator': 3,
+              'mutualist': 8,
+          }
+          def n(cls, family):
+              row = df.loc[
+                  (df['interaction_type'] == cls)
+                  & (df['blocker_family'] == family),
+                  'n_open_blockers',
+              ]
+              return 0 if row.empty else int(row.iloc[0])
+          assert n('antagonist', 'access') == 3
+          assert n('antagonist', 'uncertainty') == 3
+          assert n('mutualist', 'uncertainty') == 2
+          assert n('mutualist', 'dependence') == 2
+          assert n('mixed_pollinating_seed_predator', 'access') == 1
+          print(df.to_string(index=False))
+          PY
       - name: Validate systematic-search completion gate
         run: python scripts/check_search_completion.py data/registry/search_completion_status.csv /tmp/iwe-search-completion.json
       - name: Verify search is not prematurely declared closed
