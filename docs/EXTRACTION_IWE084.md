@@ -2,7 +2,7 @@
 
 Source: Gross RS, Werner PA. 1983. *Relationships among Flowering Phenology, Insect Visitors, and Seed-Set of Individuals: Experimental Studies on Four Co-occurring Species of Goldenrod (Solidago: Compositae).* Ecological Monographs 53:95–117. DOI `10.2307/1942589`.
 
-Status: **strict-H1 mutualist extraction route frozen; published grouped values are sufficient for a source-native standardized mean difference, pending executable reconstruction and registration**.
+Status: **strict-H1 mutualist programme quantitatively closed on a source-native standardized-mean-difference scale**.
 
 Interaction class: `mutualist`.
 
@@ -119,6 +119,29 @@ The registered strict row uses 1980 `S. graminifolia` only. Other source results
 
 This is an observational timing contrast supported by direct seasonal partner monitoring and the source's pollination experiment. It should be interpreted as an association between a prospectively ordered low/high partner-availability flowering state and final reproduction, not as a randomized manipulation of synchrony.
 
-## Claim ceiling before executable reconstruction
+## Frozen reconstruction result
 
-IWE084 now supports a defensible source-native strict effect route. It does not enter `direct_effects.csv` until the exact transformation, CI inversion, Hedges correction and variance calculation are implemented and regression-tested.
+The executable reconstruction in `src/iwe/iwe084.py` and `scripts/reconstruct_iwe084.py` uses only the published source rows stored in `data/extraction/source_rows/IWE084_table5.csv`.
+
+The registered result is:
+
+- early/lower-availability clones: `n = 10`;
+- late/higher-availability clones: `n = 27`;
+- transformed mean, early: `0.4846965804`;
+- transformed mean, late: `0.6802242871`;
+- recovered transformed SD, early: `0.1221815814`;
+- recovered transformed SD, late: `0.1809128134`;
+- Cohen `d = +1.1653423702`;
+- exact Hedges correction `J = 0.9783912375`;
+- **Hedges `g = +1.1401607637`**;
+- **sampling variance = `0.1497495743`**.
+
+The positive sign already has the registered IWE orientation: higher independently observed Apis availability during flowering is associated with higher final filled-seed production.
+
+The result is entered as `IWE084_SGRAM_APIS_SMD` in `data/extraction/direct_effects.csv`.
+
+## Claim ceiling after reconstruction
+
+IWE084 closes one additional independent mutualist strict-H1 programme on the `standardized_mean_difference` family.
+
+It does **not** increase the Fisher-z common-scale programme count, and it does not by itself open the cross-class H1 moderator model. Cross-family conversion remains prohibited unless a separate prospective conversion contract is added.
