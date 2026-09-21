@@ -117,3 +117,10 @@ Tier A identifies direct matched phenology–fitness evidence, but Tier A alone 
 - `timing_analysis_class == "strict_window"`.
 
 Tier-A rows classified as `direct_timing_sensitivity`, `directional_mismatch`, or `unresolved_for_strict_h1` remain valid extracted evidence but cannot enter the strict H1 pool. Tier B remains mechanistic/context evidence. Tier C is potential-overlap proxy evidence and must use `proxy_only`; it cannot be promoted by having a small variance or large sample size.
+
+
+## Dependence rule
+
+`dependence_id` is not descriptive metadata only. The executable primary reference analysis clusters uncertainty by `dependence_id`, and leave-one-out sensitivity removes one dependence cluster at a time.
+
+The output must report both effect-row count and dependence-cluster count. Fewer than two dependence clusters in an interaction class is insufficient for an inferential SE/CI under the reference workflow; see `ANALYSIS_DEPENDENCE_CONTRACT.md`.
