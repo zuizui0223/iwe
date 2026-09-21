@@ -41,11 +41,12 @@ With fewer than two dependence clusters in an interaction class, the workflow wi
 
 ## Current real strict-H1 corpus
 
-The current real extraction contains one strict-H1 row:
+The current real extraction contains two strict-H1 rows in two interaction classes:
 
-- `IWE029_LATE_VS_PEAK_NP_LOGOR` — *Stigmaphyllon paralias* × oil-collecting *Centris* bees, late high-pollinator window versus peak low-pollinator window, natural-pollination seed set, `log_odds_ratio = 1.55`.
+- `IWE029_LATE_VS_PEAK_NP_LOGOR` — mutualist; *Stigmaphyllon paralias* × oil-collecting *Centris* bees; late high-pollinator window versus peak low-pollinator window; natural-pollination seed set; `log_odds_ratio = +1.55`.
+- `IWE011_HA_VS_HD_FINALSET_SMD` — antagonist; *Peucedanum multivittatum* × *Phaulernis fulviguttella*; high-overlap mid-July HA versus low-overlap August HD; final intact-fruit set; `standardized_mean_difference = -1.1368391965`.
 
-This is one dependence cluster in the mutualist class. The reference workflow therefore withholds a cluster-robust SE/CI and H1 remains not evaluable. The row establishes an executable empirical path, not a pooled biological conclusion.
+Each currently contributes one dependence cluster, so class-level cluster-robust SEs/CIs are withheld. The two rows also use different native effect families and are **not numerically pooled or contrasted**. The reference workflow stratifies by `effect_family`; H1 requires a common effect family (or a future registered conversion rule), all three interaction classes, and sufficient dependence clusters.
 
 Study/component admission is recorded in `data/registry/strict_h1_adjudications.csv`; screening inclusion alone does not authorize strict-H1 pooling.
 
