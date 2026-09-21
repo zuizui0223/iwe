@@ -25,6 +25,8 @@ jobs:
         run: python scripts/validate_extraction.py examples/synthetic_effects.csv
       - name: Validate direct extraction
         run: python scripts/validate_extraction.py data/extraction/direct_effects.csv
+      - name: Validate registered dependence assignments
+        run: python scripts/validate_dependencies.py
       - name: Build primary dataset
         run: python scripts/build_meta_dataset.py examples/synthetic_effects.csv /tmp/iwe-primary.csv
       - name: Run dependence-aware reference meta workflow
