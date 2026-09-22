@@ -76,3 +76,19 @@ Known study-level overlap is registered in `data/registry/study_dependencies.csv
 For rows with `dependency_status = confirmed`, every extracted effect from that study must use the registered `required_dependence_id`. `scripts/validate_dependencies.py` enforces this in CI.
 
 Rows marked `unresolved` cannot be assigned a required cluster prospectively; their source overlap must be adjudicated first. This prevents a later publication from being counted as an independent cluster merely because it has a new DOI.
+
+
+## Replication-first target
+
+For the current empirical build, the operational H1 target is frozen to the native `standardized_mean_difference` family with a minimum of **two independent dependence clusters per interaction class**.
+
+This is stricter than merely having rows in all three classes. A new effect advances the replication target only when it introduces a previously unrepresented `dependence_id` in the target effect family.
+
+Consequences:
+
+- another year, site, outcome or model from an existing dependence cluster does not reduce the replication gap;
+- converting an existing programme to another effect scale does not reduce the SMD replication gap;
+- a second independent mixed programme is prioritized first, then a second independent antagonist programme, then a second independent mutualist programme;
+- `src/iwe/replication.py` and the machine-readable claim status report the current and missing cluster counts.
+
+The two-cluster threshold is only a minimum evaluability gate. It is not a declaration that H1 would be publication-ready once the count reaches two.
