@@ -59,6 +59,24 @@ The two IWE027 rows share one dependence cluster and the two IWE015 rows share o
 
 Study/component admission is recorded in `data/registry/strict_h1_adjudications.csv`; screening inclusion alone does not authorize strict-H1 pooling.
 
+## Replication target
+
+The current operational priority is **not** to add more effects from already represented programmes. IWE targets the native `standardized_mean_difference` family and requires **at least two independent `dependence_id` clusters per interaction class** before class-level inference is considered minimally evaluable.
+
+Current SMD replication state:
+
+- mutualist: 1 independent cluster;
+- antagonist: 1 independent cluster;
+- mixed pollinating seed predator: 1 independent cluster.
+
+The machine-readable claim status reports both current cluster counts and remaining gaps. Search/extraction priority is frozen as:
+
+1. second independent mixed programme;
+2. second independent antagonist programme;
+3. second independent mutualist programme.
+
+Adding another year, site, or outcome inside an existing dependence cluster does not advance this replication target.
+
 ## Initial candidate system families
 
 The search starts from, but is not restricted to:
