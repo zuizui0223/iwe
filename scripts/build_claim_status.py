@@ -7,6 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from iwe.replication import replication_target_status
 from iwe.schema import INTERACTION_TYPES
 from iwe.validation import build_primary_dataset
 
@@ -73,13 +74,14 @@ def main() -> int:
         )
 
     payload = {
-        "schema": "iwe_claim_status_v3",
+        "schema": "iwe_claim_status_v4",
         "biological_evidence_rows": int(len(real_rows)),
         "biological_dependence_clusters": int(real_rows["dependence_id"].nunique()),
         "effect_families_present": sorted(set(real_rows["effect_family"].astype(str))),
         "dependence_clusters_by_interaction_type": cluster_counts,
         "dependence_clusters_by_effect_family_and_interaction_type": family_cluster_counts,
         "h1_evaluable_effect_families": evaluable_families,
+        "replication_target": replication_target_status(real_rows),
         "synthetic_rows_excluded_from_biological_claims": int(
             len(primary) - len(real_rows)
         ),
