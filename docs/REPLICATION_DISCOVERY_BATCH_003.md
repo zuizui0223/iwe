@@ -104,3 +104,18 @@ The highest-value route is now citation/programme completion rather than another
 3. only if those fail, continue design-signature search.
 
 A second cluster is promoted only when all four gates coexist in one dependence-compatible programme. Evidence from two different studies is never spliced into a synthetic strict effect.
+
+
+## Opportunistic replication closure — mutualist #2
+
+Although mixed and antagonist remain the frozen search priorities, the same design-signature audit exposed a fully reconstructable independent mutualist programme in IWE023 (*Mertensia ciliata*).
+
+The 2015 experiment has four balanced flowering cohorts (n=10 each), contemporaneous pollinator visitation that declines by more than fivefold from week 1 to week 4, final per-plant mature seed set, all four relative group means, and the same outcome's one-way ANOVA F(3,36)=1.01.
+
+Because the design is balanced, the ANOVA identity recovers the pooled within-group residual variance on the same common scale as the reported means. The strict week-1 versus week-4 contrast gives:
+
+- Hedges g = **+0.3732395638**;
+- sampling variance = **0.1873253239**;
+- dependence cluster = `DEP_MERTENSIA_GALLAGHER_CAMPBELL_RMBL`.
+
+This raises mutualist SMD replication from one to **two independent clusters** without changing the estimand, converting a slope, or imputing variance. Mixed and antagonist still require one additional independent cluster each.
