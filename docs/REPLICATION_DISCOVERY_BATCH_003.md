@@ -85,6 +85,18 @@ The focal weevil activity interpretation, however, relies on prior life-history 
 
 Decision: `rejected_timing`.
 
+### Jordano, Fernández Haeger & Rodríguez 1990 — Astragalus lusitanicus × Tomares ballus
+
+DOI: `10.2307/3565947`
+
+This is the first antagonist lead in the design-signature search to pass all three biological gates simultaneously. The focal-season field protocol repeatedly records newly laid *T. ballus* eggs and immature *Astragalus* inflorescences, the source explicitly analyzes their temporal coincidence, and final ripe-fruit reproductive success is measured.
+
+Patch 1 and patch 2 are especially informative: egg loads are similar but temporal coincidence differs, and the source attributes part of the between-patch difference in butterfly impact to synchrony.
+
+The remaining blocker is statistical rather than biological. Published RSI summaries use inflorescence-level N (211 and 77), whereas the synchrony contrast is patch-level and the tagged plant/shoot counts are much smaller. Treating those inflorescences as independent SMD units would pseudoreplicate, while substituting plant N into inflorescence-level SEs would mix sampling units.
+
+Decision: `blocked_summary_stats`, **P1**. Recover plant/shoot-level raw data or a source-backed correct-unit summary before extracting an SMD.
+
 ## What the near-misses reveal
 
 The missing information is now decomposed into three recurring study types:
