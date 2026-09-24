@@ -41,12 +41,13 @@ With fewer than two dependence clusters in an interaction class, the workflow wi
 
 ## Current real strict-H1 corpus
 
-The current real extraction contains six strict-H1 rows across all three interaction classes.
+The current real extraction contains seven strict-H1 rows across all three interaction classes.
 
 Mutualists:
 - `IWE029_LATE_VS_PEAK_NP_LOGOR` — *Stigmaphyllon paralias* × oil-collecting *Centris* bees; `log_odds_ratio = +1.55`.
 - `IWE027_2007_HIS_M_VS_E_SEEDSET_SMD` — *Phyllodoce aleutica* × bumblebees; high-worker-bee M window versus low-visit E window; intact natural seed set; `standardized_mean_difference = +0.8518282660`.
 - `IWE027_2007_GOS_M_VS_E_SEEDSET_SMD` — the same 2007 regional contrast at GOS; `standardized_mean_difference = +1.0038892388`.
+- `IWE023_2015_W1_VS_W4_SEEDSET_SMD` — *Mertensia ciliata* × seasonal pollinator assemblage; experimentally shifted week 1 has >5× the contemporaneous visitation of week 4; final seed set; `standardized_mean_difference = +0.3732395638`.
 
 Antagonists:
 - `IWE011_HA_VS_HD_FINALSET_SMD` — *Peucedanum multivittatum* × *Phaulernis fulviguttella*; high-overlap HA versus low-overlap HD; final intact-fruit set; `standardized_mean_difference = -1.1368391965`.
@@ -55,7 +56,7 @@ Mixed pollinating seed predators:
 - `IWE015_2012_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — *Silene stellata* × *Hadena ectypa*; `standardized_mean_difference = -0.0453662495`.
 - `IWE015_2013_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — the same mixed system in 2013; `standardized_mean_difference = +0.0225087081`.
 
-The two IWE027 rows share one dependence cluster and the two IWE015 rows share one dependence cluster. **Standardized mean difference is now the first native effect family represented in all three preregistered interaction classes.** H1 nevertheless remains **not evaluable** because each SMD class currently has only one independent dependence cluster; the reference gate requires at least two per class before inferential class contrasts are allowed.
+The two IWE027 rows share one dependence cluster and the two IWE015 rows share one dependence cluster. IWE023 is a second, independent mutualist SMD cluster. **Standardized mean difference is the first native effect family represented in all three preregistered interaction classes, and the mutualist class now reaches the frozen two-cluster minimum.** H1 nevertheless remains **not evaluable** because antagonist and mixed systems still have only one independent SMD cluster each; the reference gate requires at least two per class before inferential class contrasts are allowed.
 
 Study/component admission is recorded in `data/registry/strict_h1_adjudications.csv`; screening inclusion alone does not authorize strict-H1 pooling.
 
@@ -65,7 +66,7 @@ The current operational priority is **not** to add more effects from already rep
 
 Current SMD replication state:
 
-- mutualist: 1 independent cluster;
+- mutualist: **2 independent clusters — target satisfied**;
 - antagonist: 1 independent cluster;
 - mixed pollinating seed predator: 1 independent cluster.
 
@@ -73,7 +74,7 @@ The machine-readable claim status reports both current cluster counts and remain
 
 1. second independent mixed programme;
 2. second independent antagonist programme;
-3. second independent mutualist programme.
+3. second independent mutualist programme — **satisfied by IWE023**.
 
 Adding another year, site, or outcome inside an existing dependence cluster does not advance this replication target.
 
@@ -84,8 +85,8 @@ The four-gate candidate ledger is `data/registry/replication_candidates.csv`. A 
 Current replication-search state is:
 
 - mixed #2: **no current one-blocker candidate**. Audit of the legacy *Silene–Hadena* literature removes `IWE014` (Pettersson 1991) and Biere & Honders 1996 from the strict target because flowering-season effects are reported without an independently quantified focal-season *Hadena* activity window. *Silene ciliata × Hadena consparcatoides* is also excluded because day/night visitor exclusion is diel access, not flowering phenology;
-- antagonist #2: **no current one-blocker candidate**. Full-text audit demotes `IWE013` (*Actaea spicata × Eupithecia immundata*): the focal paper imports the predator oviposition window from earlier studies rather than measuring partner activity contemporaneously;
-- mutualist #2 remains lower search priority until the mixed and antagonist independent-cluster gaps are addressed.
+- antagonist #2: **one strong P1 one-blocker candidate** — Jordano et al. 1990, *Astragalus lusitanicus × Tomares ballus*. Weekly focal-season egg laying and immature-inflorescence availability directly establish the partner window, and final ripe-fruit reproduction is reported. The blocker is the correct SMD sampling unit: published RSI N is inflorescence-level within patch, so those observations cannot be treated as independent replicates of the patch-level synchrony contrast. Plant/shoot-level raw data or variance is still required;
+- mutualist #2: **complete** via IWE023 (*Mertensia ciliata*). Four experimental flowering cohorts were ordered by same-season visitation; week 1 versus week 4 final seed set yields Hedges g = +0.3732395638 from published relative group means and the balanced ANOVA F statistic, with no variance imputation.
 
 The next mixed and antagonist search targets must jointly provide contemporaneous partner activity, a prospectively orderable plant timing contrast, final realized plant reproduction, and SMD-compatible variance-bearing summaries.
 

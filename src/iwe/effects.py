@@ -75,3 +75,55 @@ def hedges_g_from_mean_se(
         sd_low=sd_low,
         n_low=n_low,
     )
+
+
+
+def hedges_g_from_balanced_anova_means(
+    group_means: list[float] | tuple[float, ...],
+    n_per_group: int,
+    f_statistic: float,
+    high_index: int,
+    low_index: int,
+) -> tuple[float, float]:
+    """Reconstruct Hedges g from balanced one-way ANOVA means and F.
+
+    This is valid when the reported F tests the same outcome across all groups,
+    every group has the same independent sample size, and the supplied means are
+    on one common linear scale. Because an SMD is scale invariant, means may be
+    reported after multiplication by one common positive constant (for example,
+    relative to the largest group mean).
+
+    The ANOVA identity F = MS_between / MS_within deterministically recovers the
+    pooled within-group variance on that same scale. No missing variance is
+    imputed and no regression coefficient is converted to an SMD.
+    """
+    means = [float(value) for value in group_means]
+    if len(means) < 2:
+        raise ValueError("balanced ANOVA reconstruction requires at least two groups")
+    if n_per_group < 2:
+        raise ValueError("balanced ANOVA reconstruction requires n_per_group >= 2")
+    if not math.isfinite(float(f_statistic)) or float(f_statistic) <= 0:
+        raise ValueError("balanced ANOVA reconstruction requires a positive finite F statistic")
+    if any(not math.isfinite(value) for value in means):
+        raise ValueError("balanced ANOVA reconstruction requires finite group means")
+    if not (0 <= high_index < len(means)) or not (0 <= low_index < len(means)):
+        raise ValueError("balanced ANOVA contrast index out of range")
+    if high_index == low_index:
+        raise ValueError("high_index and low_index must identify different groups")
+
+    grand_mean = sum(means) / len(means)
+    ss_between = n_per_group * sum((value - grand_mean) ** 2 for value in means)
+    if ss_between <= 0:
+        raise ValueError("balanced ANOVA reconstruction requires between-group variation")
+    ms_between = ss_between / (len(means) - 1)
+    ms_within = ms_between / float(f_statistic)
+    pooled_sd = math.sqrt(ms_within)
+
+    return hedges_g_from_summary(
+        mean_high=means[high_index],
+        sd_high=pooled_sd,
+        n_high=n_per_group,
+        mean_low=means[low_index],
+        sd_low=pooled_sd,
+        n_low=n_per_group,
+    )

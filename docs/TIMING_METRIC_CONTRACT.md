@@ -218,6 +218,27 @@ Both year effects share one dependence cluster, `DEP_SILENE_STELLATA_HADENA_MLBS
 
 See `EXTRACTION_IWE015.md`.
 
+## IWE023 source-specific adjudication
+
+Gallagher & Campbell (2020) experimentally shifted *Mertensia ciliata* flowering onset into four weekly cohorts in 2015 while directly observing the same-season pollinator community during each cohort.
+
+The partner-availability ordering is fixed independently of seed set:
+
+- week 1 has the higher-availability window;
+- week 4 has the lower-availability window;
+- measured visitation is more than fivefold higher in week 1 than week 4.
+
+The week-1 versus week-4 seed-set contrast is therefore registered as:
+
+- `timing_metric_type = experimental_plant_shift`;
+- `timing_analysis_class = strict_window`;
+- `timing_domain = ordered_by_measured_window`;
+- `exposure_direction = synchrony`.
+
+The order is based on contemporaneous observed visitation, not on calendar date or on the seed-set result. The final seed-set SMD is reconstructed separately from the reported balanced-group means and ANOVA residual variance.
+
+All IWE023 evidence uses `DEP_MERTENSIA_GALLAGHER_CAMPBELL_RMBL`. See `EXTRACTION_IWE023.md`.
+
 ## IWE027 source-specific adjudication
 
 Kameyama & Kudo (2009) measures both flowering timing and bumble-bee seasonal activity in 2007. Early to mid-July has very low queen visitation; worker bees appear in late July and visit frequency then rises abruptly and remains high.
