@@ -9,6 +9,7 @@ CANDIDATE_STATUSES = {
     "blocked_summary_stats",
     "blocked_effect_form",
     "blocked_final_surface",
+    "blocked_timing_linkage",
     "rejected_timing",
     "rejected_dependence",
     "rejected_other",
