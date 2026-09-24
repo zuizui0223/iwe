@@ -141,3 +141,14 @@ Source/component decisions are recorded in `data/registry/strict_h1_adjudication
 A strict effect may be reconstructed from published group means, standard deviations and sample sizes when the exposure groups are defined by the timing contract independently of the fitness result.
 
 For independent-group standardized mean differences, IWE uses the executable `hedges_g_from_summary()` helper. The contrast direction must be declared before calculation. The helper records Hedges' small-sample correction and sampling variance rather than treating the reported group SDs as standard errors.
+
+A pooled within-group SD may also be reconstructed **deterministically** from a reported balanced one-way ANOVA when all of the following are source-backed:
+
+- all group means for the same outcome are reported on one common linear scale;
+- every group has the same independent sample size;
+- the reported F statistic tests exactly those groups and that outcome; and
+- the ANOVA degrees of freedom are consistent with the reported group count and sample sizes.
+
+For this case IWE may use `F = MS_between / MS_within` to recover `MS_within`, then calculate the requested contrast with `hedges_g_from_balanced_anova_means()`. Means may be multiplied by one common positive constant (for example, reported relative to the maximum group mean), because that scale factor cancels from the SMD. This route is an algebraic reconstruction of reported residual variance, **not variance imputation and not cross-family conversion**.
+
+The ANOVA route is prohibited when group sizes are unequal or unknown, the F statistic comes from a transformed/model-adjusted outcome incompatible with the reported means, the reported test includes different groups/covariates, or the degrees of freedom cannot be reconciled with the claimed design.
