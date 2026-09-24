@@ -1,6 +1,11 @@
 import pytest
 
-from iwe.effects import (\n    hedges_g_from_balanced_anova_means,\n    hedges_g_from_mean_se,\n    hedges_g_from_summary,\n    orient_effect,\n)
+from iwe.effects import (
+    hedges_g_from_balanced_anova_means,
+    hedges_g_from_mean_se,
+    hedges_g_from_summary,
+    orient_effect,
+)
 
 
 def test_synchrony_effect_keeps_sign():
