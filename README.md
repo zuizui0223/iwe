@@ -81,11 +81,13 @@ Adding another year, site, or outcome inside an existing dependence cluster does
 
 The four-gate candidate ledger is `data/registry/replication_candidates.csv`. A candidate advances the two-cluster target only when all four conditions are satisfied: independent programme, independently measured timing window, post-predation final reproduction, and SMD-ready summary statistics.
 
-Current highest-priority blocked candidates are:
+Current replication-search state is:
 
-- mixed #2: `IWE014` (*Silene vulgaris × Hadena*) — biologically admissible, blocked only by unrecovered mean + SD/SE + n;
-- mixed #2 alternate: *Silene ciliata × Hadena consparcatoides* — independent Iberian programme, blocked only by unrecovered post-predation fecundity summary statistics;
-- antagonist #2: `IWE013` (*Actaea spicata × Eupithecia immundata*) — independent programme with a measured predator window and final offspring fitness, blocked by unrecovered SMD-ready high-vs-low overlap summaries.
+- mixed #2: **no current one-blocker candidate**. Audit of the legacy *Silene–Hadena* literature removes `IWE014` (Pettersson 1991) and Biere & Honders 1996 from the strict target because flowering-season effects are reported without an independently quantified focal-season *Hadena* activity window. *Silene ciliata × Hadena consparcatoides* is also excluded because day/night visitor exclusion is diel access, not flowering phenology;
+- antagonist #2: **no current one-blocker candidate**. Full-text audit demotes `IWE013` (*Actaea spicata × Eupithecia immundata*): the focal paper imports the predator oviposition window from earlier studies rather than measuring partner activity contemporaneously;
+- mutualist #2 remains lower search priority until the mixed and antagonist independent-cluster gaps are addressed.
+
+The next mixed and antagonist search targets must jointly provide contemporaneous partner activity, a prospectively orderable plant timing contrast, final realized plant reproduction, and SMD-compatible variance-bearing summaries.
 
 No candidate is promoted by qualitative direction alone, and no SMD is reconstructed from a regression slope or model-derived fitness surface.
 
