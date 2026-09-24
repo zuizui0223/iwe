@@ -107,6 +107,15 @@ The missing information is now decomposed into three recurring study types:
 
 This is much narrower than “the literature is sparse”.
 
+## Archival retrieval targets now identified
+
+Two source programmes now have concrete long-form targets rather than vague citation-mining tasks:
+
+- **Mixed — Bopp 2003**, *Parasitismus oder Symbiose? Beziehungen zwischen einem parasitischen Bestäuber (Hadena bicruris) und seinen Wirtspflanzen (Silene-Arten)*, Zoologica 152, 140 pp., 36 tables. The 2004 Oikos paper establishes the same-season timing gate but lacks final plant fitness; the monograph is the highest-value place to look for an unpublished/omitted plant reproductive table from that programme.
+- **Antagonist — Jordano 1987 PhD thesis**, *Estudio ecológico de las relaciones entre mariposas y plantas: interacciones de Tomares ballus y Astragalus lusitanicus*, University of Córdoba, 197 pp. The 1990 Oikos paper already passes the biological gates; the thesis is the highest-value place to recover plant/shoot-level final-reproduction variance without pseudoreplication.
+
+Neither long-form source has been recovered as an accessible full text in the current search. Their existence does not count as evidence that the missing statistics are present.
+
 ## Next retrieval target
 
 The highest-value route is now citation/programme completion rather than another broad search:
