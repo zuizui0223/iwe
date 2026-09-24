@@ -81,11 +81,13 @@ Adding another year, site, or outcome inside an existing dependence cluster does
 
 The four-gate candidate ledger is `data/registry/replication_candidates.csv`. A candidate advances the two-cluster target only when all four conditions are satisfied: independent programme, independently measured timing window, post-predation final reproduction, and SMD-ready summary statistics.
 
-Current highest-priority blocked candidates are:
+Current replication-search state is:
 
-- mixed #2: `IWE014` (*Silene vulgaris × Hadena*) — biologically admissible, blocked only by unrecovered mean + SD/SE + n;
-- mixed #2 alternate search: *Silene ciliata × Hadena consparcatoides* is no longer a replication candidate after full-text/thesis audit; its day-only versus night-only exclusion manipulates diel pollinator access rather than plant–partner phenological synchrony. The active mixed target remains `IWE014` plus newly screened independent seasonal-phenology programmes;
-- antagonist #2: no current one-blocker candidate. Full-text audit demotes `IWE013` (*Actaea spicata × Eupithecia immundata*): the 2008 paper imports the predator oviposition window from earlier studies rather than measuring partner activity contemporaneously, so it fails the frozen strict-window timing gate before SMD recovery is considered. The next search target is an independent antagonist programme with contemporaneous predator activity, final plant reproduction, and variance-bearing group summaries.
+- mixed #2: **no current one-blocker candidate**. Audit of the legacy *Silene–Hadena* literature removes `IWE014` (Pettersson 1991) and Biere & Honders 1996 from the strict target because flowering-season effects are reported without an independently quantified focal-season *Hadena* activity window. *Silene ciliata × Hadena consparcatoides* is also excluded because day/night visitor exclusion is diel access, not flowering phenology;
+- antagonist #2: **no current one-blocker candidate**. Full-text audit demotes `IWE013` (*Actaea spicata × Eupithecia immundata*): the focal paper imports the predator oviposition window from earlier studies rather than measuring partner activity contemporaneously;
+- mutualist #2 remains lower search priority until the mixed and antagonist independent-cluster gaps are addressed.
+
+The next mixed and antagonist search targets must jointly provide contemporaneous partner activity, a prospectively orderable plant timing contrast, final realized plant reproduction, and SMD-compatible variance-bearing summaries.
 
 No candidate is promoted by qualitative direction alone, and no SMD is reconstructed from a regression slope or model-derived fitness surface.
 
