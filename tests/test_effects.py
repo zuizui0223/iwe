@@ -1,6 +1,6 @@
 import pytest
 
-from iwe.effects import hedges_g_from_mean_se, hedges_g_from_summary, orient_effect
+from iwe.effects import (\n    hedges_g_from_balanced_anova_means,\n    hedges_g_from_mean_se,\n    hedges_g_from_summary,\n    orient_effect,\n)
 
 
 def test_synchrony_effect_keeps_sign():
@@ -93,3 +93,27 @@ def test_hedges_g_from_mean_se_reconstructs_iwe027_gos_2007():
     )
     assert g == pytest.approx(1.0038892388)
     assert variance == pytest.approx(0.0915777666)
+
+
+
+def test_balanced_anova_reconstructs_iwe023_week1_vs_week4():
+    g, variance = hedges_g_from_balanced_anova_means(
+        group_means=[0.85, 1.00, 0.91, 0.69],
+        n_per_group=10,
+        f_statistic=1.01,
+        high_index=0,
+        low_index=3,
+    )
+    assert g == pytest.approx(0.3732395638)
+    assert variance == pytest.approx(0.1873253239)
+
+
+def test_balanced_anova_reconstruction_fails_closed_on_invalid_inputs():
+    with pytest.raises(ValueError):
+        hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 0.0, 0, 1)
+    with pytest.raises(ValueError):
+        hedges_g_from_balanced_anova_means([0.8, 0.7], 1, 1.2, 0, 1)
+    with pytest.raises(ValueError):
+        hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 1.2, 0, 0)
+    with pytest.raises(ValueError):
+        hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 1.2, 0, 2)
