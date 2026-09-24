@@ -69,3 +69,13 @@ def test_ready_filter_returns_only_ready_candidates():
 def test_duplicate_candidate_id_fails():
     errors = validate_replication_candidates(pd.DataFrame([_row(), _row()]))
     assert any("duplicate candidate_id" in e for e in errors)
+
+
+def test_partial_timing_linkage_can_remain_blocked():
+    row = _row(
+        timing_window_measured="partial",
+        smd_summary_stats="partial",
+        status="blocked_timing_linkage",
+        blocker="partner activity and final fitness are measured but not linked at the focal unit",
+    )
+    assert validate_replication_candidates(pd.DataFrame([row])) == []
