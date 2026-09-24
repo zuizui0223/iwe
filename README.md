@@ -84,7 +84,7 @@ The four-gate candidate ledger is `data/registry/replication_candidates.csv`. A 
 Current highest-priority blocked candidates are:
 
 - mixed #2: `IWE014` (*Silene vulgaris × Hadena*) — biologically admissible, blocked only by unrecovered mean + SD/SE + n;
-- mixed #2 alternate: *Silene ciliata × Hadena consparcatoides* — independent Iberian programme, blocked only by unrecovered post-predation fecundity summary statistics;
+- mixed #2 alternate search: *Silene ciliata × Hadena consparcatoides* is no longer a replication candidate after full-text/thesis audit; its day-only versus night-only exclusion manipulates diel pollinator access rather than plant–partner phenological synchrony. The active mixed target remains `IWE014` plus newly screened independent seasonal-phenology programmes;
 - antagonist #2: no current one-blocker candidate. Full-text audit demotes `IWE013` (*Actaea spicata × Eupithecia immundata*): the 2008 paper imports the predator oviposition window from earlier studies rather than measuring partner activity contemporaneously, so it fails the frozen strict-window timing gate before SMD recovery is considered. The next search target is an independent antagonist programme with contemporaneous predator activity, final plant reproduction, and variance-bearing group summaries.
 
 No candidate is promoted by qualitative direction alone, and no SMD is reconstructed from a regression slope or model-derived fitness surface.
