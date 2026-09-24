@@ -74,3 +74,21 @@ The mixed class now has three qualitatively different completion routes:
 3. **Rentería/Cantú Yucca–Tegeticula** — same-season partner window + final seed surface both present; flowering-cohort-to-mature-fruit linkage missing.
 
 The next useful action is not another broad taxonomic search. It is to recover the missing linkage/surface inside one of these three programmes.
+
+
+## Sambucus supporting-information closure
+
+The former P1 `blocked_timing_linkage` status was re-opened after locating the complete supporting-information index.
+
+The distinction is now resolved:
+
+- Dataset S4 = fruit set and net fruit set per inflorescence;
+- Dataset S10 = flower/fruit fate per inflorescence through pollination, abortion and larval infestation;
+- Dataset S11 = consumed and viable seeds per fruit;
+- Supporting Table S1 = **dates and durations** of direct floral-visitor observations.
+
+The article itself reports only that Heterhelus beetles were abundant during anthesis and declined as flowers senesced. Neither the supporting workbook description nor Table S1 provides a quantitative beetle-abundance time series that can independently order reproductive inflorescences into higher- versus lower-partner-availability windows.
+
+Therefore this is not merely a missing join between two existing quantitative tables. The strict partner-window exposure is absent.
+
+Revised decision: `rejected_timing`, DROP from the mixed #2 completion queue.
