@@ -77,6 +77,18 @@ The machine-readable claim status reports both current cluster counts and remain
 
 Adding another year, site, or outcome inside an existing dependence cluster does not advance this replication target.
 
+## Replication candidate readiness
+
+The four-gate candidate ledger is `data/registry/replication_candidates.csv`. A candidate advances the two-cluster target only when all four conditions are satisfied: independent programme, independently measured timing window, post-predation final reproduction, and SMD-ready summary statistics.
+
+Current highest-priority blocked candidates are:
+
+- mixed #2: `IWE014` (*Silene vulgaris × Hadena*) — biologically admissible, blocked only by unrecovered mean + SD/SE + n;
+- mixed #2 alternate: *Silene ciliata × Hadena consparcatoides* — independent Iberian programme, blocked only by unrecovered post-predation fecundity summary statistics;
+- antagonist #2: `IWE013` (*Actaea spicata × Eupithecia immundata*) — independent programme with a measured predator window and final offspring fitness, blocked by unrecovered SMD-ready high-vs-low overlap summaries.
+
+No candidate is promoted by qualitative direction alone, and no SMD is reconstructed from a regression slope or model-derived fitness surface.
+
 ## Initial candidate system families
 
 The search starts from, but is not restricted to:
