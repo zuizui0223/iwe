@@ -82,3 +82,16 @@ Until then:
 Antagonist #2 is no longer an unrestricted discovery problem. It now has a **one-blocker candidate**: recover the correct-unit quantitative summary for the Jordano–Fernández Haeger–Rodríguez *Astragalus–Tomares* programme.
 
 The 1987 Córdoba PhD thesis by Diego Jordano and companion *Tomares* life-history papers are the highest-value retrieval targets, but no plant/shoot-level final-reproduction table or raw archive has yet been recovered.
+
+
+## Archival retrieval update — 2026-09-25
+
+The 1987 Diego Jordano PhD thesis was located in Dialnet metadata:
+
+*Estudio ecológico de las relaciones entre mariposas y plantas: interacciones de Tomares ballus y Astragalus lusitanicus*, Universidad de Córdoba.
+
+The thesis abstract explicitly states that it studies annual plant and butterfly cycles, **phenological synchronization**, oviposition-site selection, and the butterfly's effect on host reproductive success across habitats. This independently confirms that the Oikos synchrony result is part of the thesis's primary empirical programme rather than a post-hoc interpretation.
+
+However, Dialnet marks the thesis full text as unavailable. No University of Córdoba/Helvia scan or raw data archive containing the plant/shoot-level final-reproduction summaries was recovered in the current search.
+
+The statistical blocker therefore remains unchanged: do not derive an SMD from the published nested inflorescence N.
