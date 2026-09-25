@@ -82,6 +82,23 @@ IWE will not:
 | SMD-ready final seed summary by timing contrast | **no** |
 | candidate status | **P1 blocked_summary_stats** |
 
+
+## Full-thesis retrieval audit
+
+The complete Library and Archives Canada PDF (MQ28950; 151 PDF pages) was recovered and text-audited on 2026-09-25. This resolves the previous archival uncertainty.
+
+Chapter 4 methods explicitly tie the required variables to the same 1996 field programme:
+
+- each plant's flowering start/end was recorded;
+- non-pollinator oviposition activity was checked repeatedly through the flight period;
+- one to two fruits per plant were collected after larval development;
+- oviposition scars, larvae, intact seeds and damaged seeds were counted;
+- the stated analysis plan included testing effects of flowering day, isolation and fruit number on seed destruction.
+
+The published Chapter 4 results then report flowering-time relationships for oviposition probability, oviposition count and larval occurrence, but they do **not** report the corresponding flowering-time result for intact/damaged seeds. Searches of the thesis text and tables do not reveal an appendix containing the plant-level seed-by-date records.
+
+Therefore the remaining blocker is no longer “retrieve the thesis.” It is specifically **recover unpublished plant-level final-seed summaries/raw data**.
+
 ## Exact unlock condition
 
 This candidate can close antagonist #2 if the original 1995/1996 plant-level data or a companion source provides, for the predeclared more-versus-less synchronized flowering groups:
