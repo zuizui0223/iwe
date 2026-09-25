@@ -92,6 +92,18 @@ The next mixed and antagonist search targets must jointly provide contemporaneou
 
 No candidate is promoted by qualitative direction alone, and no SMD is reconstructed from a regression slope or model-derived fitness surface.
 
+
+### Completion-route queue
+
+`data/registry/replication_completion_routes.csv` ranks only the still-blocked P1/P2 programmes and records the exact unlock datum, source-access state, next retrieval action and a stop rule. This prevents repeated public-web searching from being mistaken for scientific progress.
+
+Current completion order is:
+
+- mixed: Hurlburt 2004 Yucca programme → Bopp 2003/2004 Silene–Hadena programme → Rentería/Cantú Yucca filifera raw provenance;
+- antagonist: Wen 2024 Parnassia fate table → James 1998 Yucca-cheater plant-level summaries → Jordano 1987/1990 Tomares correct-unit variance → Cirsium–Rhinocyllus same-unit programme data.
+
+Candidates whose public search is marked `exhausted` are not re-searched generically; they advance only through the registered long-form, archive or author-data route. Inactive repositories use `monitor_only`, not repeated claims that the data are publicly retrievable.
+
 ## Initial candidate system families
 
 The search starts from, but is not restricted to:
