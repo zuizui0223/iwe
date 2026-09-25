@@ -55,17 +55,25 @@ IWE therefore does not:
 - treat 31/41/25 survivor fruits as though the focal peduncle-loss process did not exist;
 - assign zero seed output to missing flowers without source-backed fate information.
 
-## Why the Dryad deposit changes the priority
+## Dryad publication/access audit
 
-Unlike the Tomares and James blockers, this source explicitly deposits the **full dataset** in Dryad.
+The article cites Dryad DOI `10.5061/dryad.b2rbnzsqg` and a reviewer-share URL. A 2026-09-25 audit changes how IWE must describe that deposit.
 
-The raw-data audit needs only to establish whether the dataset contains enough information to reconstruct a final outcome at the initially marked-flower or plant grain, for example:
+Current checks found:
+
+- the exact Dryad DOI does not resolve to an active dataset;
+- the cited reviewer-share URL returns 404;
+- exact DOI/title searches do not expose a published Dryad record.
+
+Dryad's own documentation explains the relevant workflow: a reviewer sharing link is temporary access to an uncurated submission, while the reserved DOI activates when the dataset is actually published after curation. The presence of a reserved DOI in the paper therefore does **not** establish that the raw table is currently public or retrievable.
+
+This is not evidence that the authors never submitted data. It is a current-access result: **no active published Dryad record was recoverable in this audit**.
+
+The scientific unlock remains unchanged. If a corrected/public archive or source table becomes available, IWE needs to determine whether it contains enough information to reconstruct final reproduction at the initially marked-flower or plant grain, for example:
 
 `flowering cohort + fruit fate + final seed count`.
 
-If unrecovered flowers have source-coded beetle-damage fate, a strict net reproductive outcome such as total mature seeds per initially marked flower can be constructed without imputation. If the data contain only seed counts for surviving fruits, this candidate remains blocked.
-
-The current web/runtime environment could reach the article and Dryad DOI metadata but not retrieve the Dryad files; the share/API path returned an access/404 failure. This is an access-path limitation, not evidence that the data are unavailable.
+If unrecovered flowers have source-coded beetle-damage fate, a strict net reproductive outcome could be constructed without imputation. If the data contain only seed counts for surviving fruits, this candidate remains blocked.
 
 ## Gate status
 
@@ -79,10 +87,11 @@ The current web/runtime environment could reach the article and Dryad DOI metada
 
 ## Comparison with other antagonist P1 routes
 
-This is now the highest retrieval priority because the missing information is nominally public.
+Parnassia remains biologically one of the strongest antagonist candidates, but it no longer receives priority merely because the paper cites a nominally public raw dataset.
 
-- **Parnassia–florivore**: raw dataset public; need final fate/seed audit.
-- **Astragalus–Tomares**: biological effect present, but correct-unit thesis/raw data are not public.
-- **Yucca–cheater**: biological effect present, but timing-stratified final seed summary is not published.
+- **Parnassia–florivore**: timing contrast is excellent; final net-fitness surface is blocked and the cited Dryad record is not currently active/retrievable.
+- **Astragalus–Tomares**: biological effect is present; correct-unit plant/shoot variance is unavailable.
+- **Yucca–cheater**: biological effect is present; timing-stratified final-seed summary is unpublished.
+- **Cirsium–Rhinocyllus**: direct synchrony and final seed consequences exist in one long-term programme, but only as separate model surfaces; source-level final-seed-by-synchrony summaries would be needed.
 
-If the Dryad raw table closes the fate question, Parnassia is the most direct route to antagonist cluster #2.
+No route is promoted by access assumptions.
