@@ -122,3 +122,16 @@ def test_balanced_anova_reconstruction_fails_closed_on_invalid_inputs():
         hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 1.2, 0, 0)
     with pytest.raises(ValueError):
         hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 1.2, 0, 2)
+
+
+def test_hedges_g_reconstructs_iwe032_day24_vs_day0_seed_count():
+    g, variance = hedges_g_from_summary(
+        mean_high=24.15,
+        sd_high=15.80,
+        n_high=54,
+        mean_low=52.85,
+        sd_low=19.99,
+        n_low=33,
+    )
+    assert g == pytest.approx(-1.6258967235)
+    assert variance == pytest.approx(0.0635115103)
