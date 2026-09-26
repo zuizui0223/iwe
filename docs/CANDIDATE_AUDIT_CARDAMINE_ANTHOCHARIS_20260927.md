@@ -118,3 +118,21 @@ The other antagonist P1 routes require unreleased fate data, unpublished plant-l
 Here, the plant trajectories and final response are already public. The missing object is narrowly limited to the adult capture/recapture dates that the paper explicitly used.
 
 This makes `ANT002_CARDAMINE_ANTHOCHARIS_2024` the highest-value current completion target, without changing the strict timing or SMD contracts.
+
+
+## Public retrieval closure — 2026-09-27
+
+A second retrieval pass did not recover the focal 2012–2014 adult-date table.
+
+Audited public routes now include:
+
+- the 2024 article and its publisher supplementary files;
+- Dryad `10.5061/dryad.v9s4mw741`, which lists only six plant-transect spreadsheets plus README;
+- indexed Dibbinsdale *A. cardamines* publications;
+- the 2016 University of Liverpool PhD thesis/programme route.
+
+The older Dibbinsdale mark–release–recapture study documents daily fieldwork and female/male emergence schedules for **2005–2010**. Those dates cannot be substituted for the focal 2012–2014 seasons.
+
+No source-backed 2012–2014 female capture/recapture date list or numeric year-specific flight-window table was recovered publicly.
+
+The route therefore changes from `public_search_status = active` to `exhausted`. The next action is a minimal author/institutional data request for the adult timing object only; the already-public plant response data should not be requested or inspected further before the exposure rule is frozen.
