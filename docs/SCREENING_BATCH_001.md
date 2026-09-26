@@ -31,14 +31,14 @@ Search terms combined variants of `phenological mismatch`, `flowering time`, `po
 <!-- BEGIN GENERATED SCREENING SNAPSHOT -->
 _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 
-**Registered publications: 31.** Current decisions: 12 include, 8 unresolved, 11 context only, 0 exclude.
+**Registered publications: 31.** Current decisions: 12 include, 7 unresolved, 12 context only, 0 exclude.
 
 | Candidate class | Include | Unresolved | Context only | Exclude | Total |
 |---|---:|---:|---:|---:|---:|
 | mutualist | 9 | 5 | 2 | 0 | 16 |
 | antagonist | 1 | 2 | 4 | 0 | 7 |
-| mixed pollinating seed predator | 2 | 1 | 5 | 0 | 8 |
-| **Total** | **12** | **8** | **11** | **0** | **31** |
+| mixed pollinating seed predator | 2 | 0 | 6 | 0 | 8 |
+| **Total** | **12** | **7** | **12** | **0** | **31** |
 
 ### Registry snapshot
 
@@ -62,7 +62,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 | `IWE016` | mixed pollinating seed predator | `context_only` | `10.1002/ece3.1134` | Interactions between a pollinating seed predator and its host plant: the role of environmental context within a population |
 | `IWE017` | mixed pollinating seed predator | `context_only` | `10.1186/s12862-021-01889-4` | Staying in touch: how highly specialised moth pollinators track host plant phenology in unpredictable climates |
 | `IWE018` | mixed pollinating seed predator | `context_only` | `10.1073/pnas.0837153100` | An obligate pollination mutualism and reciprocal diversification in the tree genus Glochidion (Euphorbiaceae) |
-| `IWE019` | mixed pollinating seed predator | `unresolved` | `10.1371/journal.pone.0097783` | Competitive Exclusion among Fig Wasps Achieved via Entrainment of Host Plant Flowering Phenology |
+| `IWE019` | mixed pollinating seed predator | `context_only` | `10.1371/journal.pone.0097783` | Competitive Exclusion among Fig Wasps Achieved via Entrainment of Host Plant Flowering Phenology |
 | `IWE020` | mixed pollinating seed predator | `context_only` | `10.1002/ece3.1544` | Asymmetrical nature of the Trollius-Chiastocheta interaction: insights into the evolution of nursery pollination systems |
 | `IWE021` | mixed pollinating seed predator | `context_only` | `10.1111/j.1461-0248.2010.01529.x` | Retention of mutualism in a geographically diverging interaction |
 | `IWE022` | mutualist | `unresolved` | `10.1111/njb.03877` | Pollinators limit seed production in an early blooming rare plant: evidence of a mismatch between plant phenology and pollinator emergence |
