@@ -26,17 +26,7 @@ Next action: obtain the University of Alberta dissertation or archived Onefour f
 
 Stop rule: do not keep mining annual government summaries and do not equate annual moth density with synchrony.
 
-### 2. Bopp 2003/2004 — Silene × Hadena
-
-Why second: the Oikos paper directly measures contemporaneous flowering and oviposition. The missing object is final plant reproduction from the same programme.
-
-Access state: long-form Zoologica 152 monograph is catalogue-confirmed but not publicly retrieved.
-
-Next action: obtain the monograph/programme archive and inspect its 36 tables.
-
-Stop rule: no more generic Hadena searching until the long-form source is obtained; larval performance is not plant fitness.
-
-### 3. Rentería/Cantú — Yucca filifera × Tegeticula
+### 2. Rentería/Cantú — Yucca filifera × Tegeticula
 
 Why third: article and thesis have already been audited. They contain partner timing and final seed fate, but the mature-fruit records are pooled across flowering cohorts.
 
@@ -45,6 +35,16 @@ Access state: thesis already recovered; public-source search is exhausted.
 Next action: original fruit-level field records or author/archive material.
 
 Stop rule: never assign pooled fruits to March/April/May without source-backed provenance.
+
+### 3. Bopp 2003/2004 — Silene × Hadena
+
+Why third: the Oikos paper measures flowering and oviposition phenology, but its field “moth activity” series is inferred from newly deposited eggs inside host flowers. Egg receipt is a realized interaction outcome and depends on host availability/preference, so it is not an independent partner-availability curve under the frozen timing gate. The published plant-side endpoint is also larval performance rather than final post-cost plant reproduction.
+
+Access state: long-form Zoologica 152 monograph is catalogue-confirmed but not publicly retrieved.
+
+Next action: inspect the monograph only for a two-part rescue: an independent focal-season adult-moth activity/availability series AND a linked final fruit/seed reproductive surface with variance.
+
+Stop rule: do not treat egg deposition as independent partner availability, do not use larval performance as plant fitness, and do not return Bopp to P1 unless both missing surfaces are source-backed.
 
 ### 4. Thomas, Hoover & Busby / USGS 2022–2023 — Yucca jaegeriana × Tegeticula antithetica
 
