@@ -58,9 +58,19 @@ Stop rule: do not use preliminary poster values as primary evidence and do not s
 
 ## Antagonist order
 
-### 1. Wen 2024 — Parnassia wightiana × florivorous beetles
+### 1. Davies & Saccheri 2024 — Cardamine pratensis × Anthocharis cardamines
 
-Why first: the strict early/middle/late partner window is already source-defined and final seeds are measured. The only biologically important uncertainty is fate of the initially marked flowers that disappeared through beetle peduncle damage.
+Why first: this candidate already has the hardest biological pieces in public sources. Female butterfly flight season was independently measured from capture/recapture of females in Dibbinsdale Reserve, while individually labelled ramets were followed every 5–7 days from first flowering to dehiscence. Dryad exposes the plant trajectories needed to reconstruct flowering intervals, potential fecundity and final intact reproductive units.
+
+Access state: public plant data are complete enough for the response, but the Dryad archive does not include the female capture/recapture date list used to define the adult flight window; the paper shows that window graphically.
+
+Next action: recover the source-backed 2012–2014 female capture/recapture dates or an equivalent numeric flight-window table from the same programme. Once recovered, commit a timing-only synchrony grouping rule before consulting final intact-RU outcomes.
+
+Stop rule: no Figure 4 digitization, no egg-receipt surrogate for adult availability, no response-driven cut-points, and no use of final-fitness distributions before the exposure rule is frozen.
+
+### 2. Wen 2024 — Parnassia wightiana × florivorous beetles
+
+Why second: the strict early/middle/late partner window is already source-defined and final seeds are measured. The only biologically important uncertainty is fate of the initially marked flowers that disappeared through beetle peduncle damage.
 
 Access state: cited Dryad DOI/reviewer route is inactive as of the audit.
 
@@ -68,9 +78,9 @@ Next action: monitor for a corrected/activated repository record or obtain the f
 
 Stop rule: no boxplot digitization, no survivor-only interpretation as net reproduction, and no zero assignment to missing flowers without fate codes.
 
-### 2. James 1998 — Yucca kanabensis × non-pollinating Tegeticula cheater
+### 3. James 1998 — Yucca kanabensis × non-pollinating Tegeticula cheater
 
-Why second: the thesis is public and already defines the same-season timing contrast and final damaged/intact seed endpoint.
+Why third: the thesis is public and already defines the same-season timing contrast and final damaged/intact seed endpoint.
 
 Access state: public thesis is insufficient for timing-stratified final-seed variance.
 
@@ -78,9 +88,9 @@ Next action: seek plant-level raw data or author/archive summaries.
 
 Stop rule: do not derive an SMD from timing tests that omit final-seed group means and variance.
 
-### 3. Jordano 1987/1990 — Astragalus lusitanicus × Tomares ballus
+### 4. Jordano 1987/1990 — Astragalus lusitanicus × Tomares ballus
 
-Why third: all biological gates pass, but public variance is nested at inflorescence grain while synchrony is a patch/programme contrast.
+Why fourth: all biological gates pass, but public variance is nested at inflorescence grain while synchrony is a patch/programme contrast.
 
 Access state: long-form thesis not publicly retrieved.
 
@@ -88,9 +98,9 @@ Next action: thesis/tagged-shoot data.
 
 Stop rule: never use 211/77 nested inflorescences as independent SMD n and never substitute the egg-load sample size into the RSI SE.
 
-### 4. Cirsium canescens × Rhinocyllus conicus
+### 5. Cirsium canescens × Rhinocyllus conicus
 
-Why fourth: same programme has genuine synchrony and final seed consequences, but public results expose separate synchrony→egg-load and damage→seed-set surfaces.
+Why fifth: same programme has genuine synchrony and final seed consequences, but public results expose separate synchrony→egg-load and damage→seed-set surfaces.
 
 Access state: programme publications are public; same-unit raw table not yet recovered.
 
@@ -98,9 +108,9 @@ Next action: search programme archives/data for a unit carrying both synchrony a
 
 Stop rule: do not multiply or splice published model coefficients.
 
-### 5. Eureka 2001 — squarrose knapweed × Larinus/Urophora
+### 6. Eureka 2001 — squarrose knapweed × Larinus/Urophora
 
-Why fifth: this programme has an unusually clean timing architecture for an antagonist candidate. Adult seed predators were sampled independently by 100 sweep-net sweeps each week. After flowering began, up to 200 open flowers per week were tagged as cohorts and collected 4–6 weeks later as mature seed heads for dissection. The public synthesis therefore links an independent adult-activity window to source-defined flower cohorts.
+Why sixth: this programme has an unusually clean timing architecture for an antagonist candidate. Adult seed predators were sampled independently by 100 sweep-net sweeps each week. After flowering began, up to 200 open flowers per week were tagged as cohorts and collected 4–6 weeks later as mature seed heads for dissection. The public synthesis therefore links an independent adult-activity window to source-defined flower cohorts.
 
 Access state: the public synthesis exposes cohort infestation patterns, but not a variance-bearing final viable-seed/seed-production surface for those same tagged cohorts.
 
