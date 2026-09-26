@@ -100,6 +100,16 @@ An experimental plant-timing treatment may enter H1 if partner availability acro
 
 Executable strict-window rows using `experimental_plant_shift` or `seasonal_position` require `timing_domain = ordered_by_measured_window`.
 
+## Independence of the partner-window measurement
+
+For `seasonal_position` and `experimental_plant_shift` to use `timing_domain = ordered_by_measured_window`, the partner window must be measured independently enough that it can order plant timing **before** the plant reproductive response is inspected.
+
+Direct adult censuses, trapping, visitation observations, or other source-defined partner-activity series can satisfy this requirement when they measure availability/activity through the focal season.
+
+Realized interaction outcomes do not satisfy it by themselves. In particular, counts of eggs received by host flowers, attacked flowers, infestation, larval occupancy, fruit damage, or seed predation cannot be recycled as the independent partner-availability curve because those quantities already depend on host availability, host choice and/or interaction success. They remain valuable mechanism or damage measurements, but a source using only those quantities cannot enter the strict synchrony estimand unless an additional independent partner-activity measurement is recovered.
+
+This is a clarification of the existing fail-closed rule, not a new estimand. It makes explicit the same logic already used when rejecting candidates whose apparent “activity” window was inferred from attack or egg receipt.
+
 ## Directional mismatch is a separate estimand
 
 When data span both sides of matching, IWE will not force them into one linear synchrony slope. Instead, where data permit, estimate directional responses separately:
