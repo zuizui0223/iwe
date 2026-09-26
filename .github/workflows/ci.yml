@@ -31,6 +31,8 @@ jobs:
         run: python scripts/validate_adjudications.py
       - name: Validate replication candidate ledger
         run: python scripts/validate_replication_candidates.py
+      - name: Validate replication completion routes
+        run: python scripts/validate_replication_routes.py
       - name: Build primary dataset
         run: python scripts/build_meta_dataset.py examples/synthetic_effects.csv /tmp/iwe-primary.csv
       - name: Run dependence-aware reference meta workflow
