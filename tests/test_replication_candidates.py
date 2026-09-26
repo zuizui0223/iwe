@@ -79,3 +79,14 @@ def test_partial_timing_linkage_can_remain_blocked():
         blocker="partner activity and final fitness are measured but not linked at the focal unit",
     )
     assert validate_replication_candidates(pd.DataFrame([row])) == []
+
+
+def test_unreleased_source_can_remain_blocked():
+    row = _row(
+        timing_window_measured="partial",
+        post_predation_final_reproduction="partial",
+        smd_summary_stats="no",
+        status="blocked_source_release",
+        blocker="design is promising but citable quantitative source is not released",
+    )
+    assert validate_replication_candidates(pd.DataFrame([row])) == []
