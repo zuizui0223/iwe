@@ -1,16 +1,16 @@
 # Parnassia Dryad access recheck
 
-Date: 2026-09-26  
+Date: 2026-09-27  
 Candidate: `ANT002_PARNASSIA_WEN_2024`
 
 The published open-access article explicitly states that the full dataset was deposited under Dryad DOI `10.5061/dryad.b2rbnzsqg` and also prints a Dryad reviewer/share URL.
 
-The 2026-09-26 access audit followed both links from the publisher's live article:
+The public-access audit was repeated on 2026-09-27 after the original 2026-09-26 check. The DOI/share routes still do not expose a retrievable indexed Dryad dataset:
 
 - DOI target: returns 404 / no active Dryad landing page;
 - printed share target: returns 404.
 
-Searches for the exact DOI recover the article/Data Availability statement but no indexed Dryad dataset/files.
+Searches for the exact DOI still recover the article/Data Availability statement but no indexed Dryad dataset/files. The 2026-09-27 recheck therefore does not change the completion status.
 
 Therefore the repository state remains:
 
