@@ -62,9 +62,9 @@ Stop rule: do not use preliminary poster values as primary evidence and do not s
 
 Why first: this candidate already has the hardest biological pieces in public sources. Female butterfly flight season was independently measured from capture/recapture of females in Dibbinsdale Reserve, while individually labelled ramets were followed every 5–7 days from first flowering to dehiscence. Dryad exposes the plant trajectories needed to reconstruct flowering intervals, potential fecundity and final intact reproductive units.
 
-Access state: public plant data are complete enough for the response, but the Dryad archive does not include the female capture/recapture date list used to define the adult flight window; the paper shows that window graphically.
+Access state: public plant data are complete enough for the response, but the Dryad archive does not include the female capture/recapture date list used to define the adult flight window. Public retrieval has now been exhausted across the article/supplements, Dryad, indexed Dibbinsdale publications and the 2016 Liverpool thesis route.
 
-Next action: recover the source-backed 2012–2014 female capture/recapture dates or an equivalent numeric flight-window table from the same programme. Once recovered, commit a timing-only synchrony grouping rule before consulting final intact-RU outcomes.
+Next action: use a targeted author/institutional request for only the source-backed 2012–2014 female capture/recapture dates (or an equivalent numeric flight-window table). Once recovered, commit a timing-only synchrony grouping rule before consulting final intact-RU outcomes.
 
 Stop rule: no Figure 4 digitization, no egg-receipt surrogate for adult availability, no response-driven cut-points, and no use of final-fitness distributions before the exposure rule is frozen.
 
