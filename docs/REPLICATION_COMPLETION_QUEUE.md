@@ -1,6 +1,6 @@
 # Replication completion queue
 
-Date: 2026-09-26  
+Date: 2026-09-27  
 Status: executable retrieval queue; does not change the frozen estimand
 
 ## Purpose
@@ -97,6 +97,16 @@ Access state: programme publications are public; same-unit raw table not yet rec
 Next action: search programme archives/data for a unit carrying both synchrony and final viable seeds.
 
 Stop rule: do not multiply or splice published model coefficients.
+
+### 5. Eureka 2001 — squarrose knapweed × Larinus/Urophora
+
+Why fifth: this programme has an unusually clean timing architecture for an antagonist candidate. Adult seed predators were sampled independently by 100 sweep-net sweeps each week. After flowering began, up to 200 open flowers per week were tagged as cohorts and collected 4–6 weeks later as mature seed heads for dissection. The public synthesis therefore links an independent adult-activity window to source-defined flower cohorts.
+
+Access state: the public synthesis exposes cohort infestation patterns, but not a variance-bearing final viable-seed/seed-production surface for those same tagged cohorts.
+
+Next action: search the Evans/Rieder Utah State programme for the original 2001 Eureka marked-head data, appendices, companion papers or archive material preserving weekly cohort identity and final seed production.
+
+Stop rule: do not use infestation percentage as plant fitness; do not splice seed-destruction values from California, other sites or other years into the 2001 Eureka timing programme.
 
 ## What this queue does not do
 
