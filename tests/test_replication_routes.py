@@ -6,7 +6,7 @@ from iwe.replication_routes import (
 )
 
 
-def _candidate(\n    candidate_id="C1",\n    target_class="antagonist",\n    status="blocked_summary_stats",\n    priority="P1",\n):
+def _candidate(candidate_id="C1", target_class="antagonist", status="blocked_summary_stats", priority="P1"):
     return {
         "candidate_id": candidate_id,
         "target_class": target_class,
