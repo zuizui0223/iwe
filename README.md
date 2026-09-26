@@ -94,6 +94,18 @@ The next mixed and antagonist search targets must jointly provide contemporaneou
 
 No candidate is promoted by qualitative direction alone, and no SMD is reconstructed from a regression slope or model-derived fitness surface.
 
+
+### Completion-route queue
+
+`data/registry/replication_completion_routes.csv` turns the still-blocked P1/P2 programmes into an executable retrieval queue. A route records the exact unlock datum, access state, next action and a stop rule, so repeated generic searching cannot masquerade as progress.
+
+Current order is:
+
+- mixed: Hurlburt 2004 *Yucca* archival timing linkage → Bopp 2003/2004 *Silene–Hadena* final-fitness surface → Rentería/Cantú *Yucca filifera* fruit provenance → USGS 2022–2023 *Yucca jaegeriana* source-release watch;
+- antagonist: Wen 2024 *Parnassia* fate table → James 1998 yucca-cheater plant-level summaries → Jordano *Tomares–Astragalus* correct-unit variance → *Cirsium–Rhinocyllus* same-unit programme data.
+
+`blocked_source_release` is explicitly allowed in this queue, but it remains prospective and contributes **zero** strict-H1 evidence until a citable final source exposes compatible timing and post-cost reproduction.
+
 ## Initial candidate system families
 
 The search starts from, but is not restricted to:
