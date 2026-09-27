@@ -112,11 +112,11 @@ Stop rule: do not multiply or splice published model coefficients.
 
 Why sixth: this programme has an unusually clean timing architecture for an antagonist candidate. Adult seed predators were sampled independently by 100 sweep-net sweeps each week. After flowering began, up to 200 open flowers per week were tagged as cohorts and collected 4–6 weeks later as mature seed heads for dissection. The public synthesis therefore links an independent adult-activity window to source-defined flower cohorts.
 
-Access state: the public synthesis exposes cohort infestation patterns, but not a variance-bearing final viable-seed/seed-production surface for those same tagged cohorts.
+Access state: **public route exhausted**. The 2016 Applied Entomology and Zoology synthesis publishes weekly adult phenology plus cohort infestation percentages. The 2006 Western Society of Weed Science abstract independently confirms fates of individually marked flowerheads and programme-level reproductive impact. The 2001 Rieder et al. paper provides earlier site/year flowerhead-quality context. None exposes weekly Eureka 2001 mature viable-seed means with sampling variance.
 
-Next action: search the Evans/Rieder Utah State programme for the original 2001 Eureka marked-head data, appendices, companion papers or archive material preserving weekly cohort identity and final seed production.
+Next action: retrieve the original Evans/Rieder/Toler/Newbold 2001 Eureka marked-head field/lab table from an institutional or programme archive. Required unlock: flowering cohort/date plus final mature viable-seed production and variance-bearing information at the same marked-head unit.
 
-Stop rule: do not use infestation percentage as plant fitness; do not splice seed-destruction values from California, other sites or other years into the 2001 Eureka timing programme.
+Stop rule: do not repeat generic public searches; do not use infestation percentage as plant fitness; do not infer seed counts merely because heads were dissected; do not splice seed-destruction values from California, other sites or other years into the 2001 Eureka timing programme.
 
 ## What this queue does not do
 
