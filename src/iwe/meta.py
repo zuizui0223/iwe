@@ -10,6 +10,8 @@ from scipy.stats import t
 from .schema import INTERACTION_TYPES
 
 
+MIN_REFERENCE_DF = 4
+
 _CLASS_ORDER = [
     "mutualist",
     "antagonist",
@@ -142,8 +144,9 @@ def cluster_robust_summary(
     dependence_id is the inferential replication unit. REML supplies a working
     between-effect heterogeneity variance once at least two independent
     dependence clusters exist. CR2 then leaves within-cluster covariance
-    unrestricted. With one cluster, tau2 is not estimable and no SE/CI is
-    produced. Confidence intervals use a conservative t reference with m-1 df.
+    unrestricted. Reference inference is withheld whenever the conservative
+    cluster degrees of freedom m-1 is below MIN_REFERENCE_DF (=4), because
+    RVE has too little information for trustworthy small-sample inference.
     """
     effect_family = _single_effect_family(df)
     required = {group_col, cluster_col, "effect_oriented", "variance_native"}
@@ -197,11 +200,11 @@ def cluster_robust_summary(
         weights = 1.0 / (variances + tau2)
         estimate = float((weights * effects).sum() / weights.sum())
 
-        if m < 2:
+        if df_t < MIN_REFERENCE_DF:
             se = math.nan
             ci_low = math.nan
             ci_high = math.nan
-            status = "insufficient_dependence_clusters"
+            status = "insufficient_cluster_information"
         else:
             estimate, se = _cr2_intercept_se(effects, variances, clusters, tau2)
             critical = float(t.ppf(0.975, df=df_t))
