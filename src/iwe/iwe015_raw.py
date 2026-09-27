@@ -137,6 +137,9 @@ def audit_iwe015_group(
     if group not in PUBLISHED_IWE015:
         raise ValueError(f"unknown IWE015 group: {group}")
     published = PUBLISHED_IWE015[group]
+    sf_values = _numeric_values(df, successful_fruits_col)
+    if (sf_values < 0).any():
+        raise ValueError("successful fruits must be non-negative")
     sf = summarize_column(df, successful_fruits_col)
 
     row: dict[str, object] = {
@@ -189,6 +192,9 @@ def audit_iwe015_group(
     for component, column, mean_key, dispersion_key in specs:
         if column is None:
             continue
+        bounded_values = _numeric_values(df, column)
+        if ((bounded_values < 0) | (bounded_values > 1)).any():
+            raise ValueError(f"{column}: bounded proportion values must lie in [0, 1]")
         raw = summarize_column(df, column)
         bounded = bounded_dispersion_check(
             float(published[mean_key]),
