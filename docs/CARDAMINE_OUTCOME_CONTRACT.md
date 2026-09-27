@@ -42,12 +42,13 @@ Because the Dryad spreadsheets are currently not downloadable in this execution 
 
 After the missing female adult dates are recovered:
 
-1. build the timing-only exposure table with the already frozen q10–q90 rule;
+1. build the timing-only exposure table with the frozen three groups `early_refugium`, `core_flight`, and `late_refugium`;
 2. build the outcome table independently;
 3. join only by `year, ecotype, plant_id`, retaining the full timing-exposure table so missing/censored outcomes are explicitly counted rather than silently dropped;
-4. analyze every `year × ecotype` stratum in which both `higher_synchrony` and `lower_synchrony` have at least two source-backed outcomes and positive within-group SD;
-5. do not pool early and late ecotypes before effect calculation;
-6. do not retain or drop a stratum because of effect direction, effect magnitude, p-value or biological attractiveness.
+4. within each `year × ecotype`, audit `core_flight - early_refugium` and `core_flight - late_refugium` separately;
+5. analyze only direction-specific contrasts in which both groups have at least two source-backed outcomes and positive within-group SD;
+6. do not pool early and late refugia or early and late ecotypes before effect calculation;
+7. do not retain or drop a contrast because of effect direction, effect magnitude, p-value or biological attractiveness.
 
 The audit reports, by timing group, both the number of exposed plants and the number with source-backed outcomes. Missing/censored outcomes may reduce the analyzable sample but are never converted to zero and are never hidden by an inner join.
 
@@ -55,10 +56,10 @@ The minimum of two source-backed outcomes per group is the mathematical minimum 
 
 ## Frozen effect
 
-For every mathematically estimable year × ecotype stratum:
+For every mathematically estimable year × ecotype × direction contrast:
 
 - native effect family: `standardized_mean_difference`;
-- contrast: `higher_synchrony - lower_synchrony`;
+- contrasts: `core_flight - early_refugium` and/or `core_flight - late_refugium`;
 - response: `realized_fraction`;
 - estimator: the existing IWE independent-group Hedges g helper;
 - orientation: positive means greater synchrony is associated with higher plant reproductive performance, matching the global IWE orientation.
@@ -77,7 +78,7 @@ This outcome freeze does not make Cardamine ready.
 
 The source-backed 2012–2014 female capture/recapture dates (or equivalent numeric flight-window summaries) are still absent. Until that timing object is recovered, no real synchrony group assignments or SMDs are calculated.
 
-If exposure recovery produces no year × ecotype stratum satisfying the predeclared mathematical estimability rule, the candidate remains blocked. No percentile, ecotype pooling, calendar cut-point or response-driven regrouping may be introduced to rescue it.
+If exposure recovery produces no year × ecotype × direction contrast satisfying the predeclared mathematical estimability rule, the candidate remains blocked. No percentile, ecotype pooling, early/late refugium pooling, calendar cut-point or response-driven regrouping may be introduced to rescue it.
 
 ## Executable implementation
 
@@ -91,7 +92,8 @@ The module requires a source-normalized plant summary rather than guessing raw s
 
 - outcome calculation ignores eggs/timing extras;
 - ecotypes remain separate;
-- the contrast direction is higher minus lower synchrony;
+- each contrast direction is core female-flight onset minus one phenological refugium;
+- early and late refugia are never pooled;
 - all estimable strata share one dependence cluster;
 - an underpowered stratum is reported rather than rescued by selecting another cut-point.
 
