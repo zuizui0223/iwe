@@ -94,3 +94,19 @@ The module requires a source-normalized plant summary rather than guessing raw s
 - the contrast direction is higher minus lower synchrony;
 - all estimable strata share one dependence cluster;
 - an underpowered stratum is reported rather than rescued by selecting another cut-point.
+
+
+## Preflight command
+
+The frozen stages are composed by `src/iwe/cardamine_pipeline.py` and exposed through:
+
+`python scripts/run_cardamine_preflight.py <plant_timing.csv> <adult_events.csv> <plant_summaries.csv> <output_dir>`
+
+Outputs are:
+
+- `timing_exposure.csv`;
+- `outcome_smd_audit.csv`;
+- `smd_effects.csv`;
+- `preflight_status.json`.
+
+The preflight is deliberately non-promoting: it does not edit `data/extraction/direct_effects.csv`, strict-H1 adjudications, or claim status. Real rows require a separate source-verification/adjudication step after the missing adult timing object has been recovered.

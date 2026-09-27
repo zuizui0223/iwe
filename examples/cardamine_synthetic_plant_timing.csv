@@ -1,0 +1,10 @@
+year,ecotype,plant_id,doy,flowers
+2012,early,E1,110,0
+2012,early,E1,114,2
+2012,early,E2,120,3
+2012,early,E3,106,2
+2012,early,E4,135,2
+2012,late,L1,116,2
+2012,late,L2,126,2
+2012,late,L3,108,2
+2012,late,L4,140,2
