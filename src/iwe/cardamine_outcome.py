@@ -81,20 +81,23 @@ def cardamine_smd_audit(
     merged = exp.merge(
         outcomes[["year", "ecotype", "plant_id", "realized_fraction"]],
         on=["year", "ecotype", "plant_id"],
-        how="inner",
+        how="left",
         validate="one_to_one",
+        indicator=True,
     )
 
     rows: list[dict[str, object]] = []
     for (year, ecotype), group in merged.groupby(["year", "ecotype"], sort=True):
-        high = group.loc[
-            group["synchrony_group"] == "higher_synchrony", "realized_fraction"
-        ]
-        low = group.loc[
-            group["synchrony_group"] == "lower_synchrony", "realized_fraction"
-        ]
+        high_all = group.loc[group["synchrony_group"] == "higher_synchrony"]
+        low_all = group.loc[group["synchrony_group"] == "lower_synchrony"]
+        high = high_all["realized_fraction"].dropna()
+        low = low_all["realized_fraction"].dropna()
+        n_high_total = int(len(high_all))
+        n_low_total = int(len(low_all))
         n_high = int(len(high))
         n_low = int(len(low))
+        missing_high = n_high_total - n_high
+        missing_low = n_low_total - n_low
         sd_high = float(high.std(ddof=1)) if n_high >= 2 else float("nan")
         sd_low = float(low.std(ddof=1)) if n_low >= 2 else float("nan")
 
@@ -108,8 +111,12 @@ def cardamine_smd_audit(
             {
                 "year": year,
                 "ecotype": ecotype,
+                "n_higher_synchrony_total": n_high_total,
+                "n_lower_synchrony_total": n_low_total,
                 "n_higher_synchrony": n_high,
                 "n_lower_synchrony": n_low,
+                "n_higher_synchrony_missing_outcome": missing_high,
+                "n_lower_synchrony_missing_outcome": missing_low,
                 "mean_higher_synchrony": float(high.mean()) if n_high else float("nan"),
                 "mean_lower_synchrony": float(low.mean()) if n_low else float("nan"),
                 "sd_higher_synchrony": sd_high,
