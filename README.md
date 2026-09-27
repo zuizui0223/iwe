@@ -106,6 +106,15 @@ Current order is:
 
 `blocked_source_release` is explicitly allowed in this queue, but it remains prospective and contributes **zero** strict-H1 evidence until a citable final source exposes compatible timing and post-cost reproduction.
 
+
+### Cardamine preflight
+
+The top antagonist P1 route has a response-blind executable preflight. Once source-backed 2012–2014 female *Anthocharis* event dates and source-normalized plant outcomes are available, run:
+
+`python scripts/run_cardamine_preflight.py <plant_timing.csv> <adult_events.csv> <plant_summaries.csv> <output_dir>`
+
+The command writes the frozen timing exposure, explicit outcome-missingness/SMD audit, eligible year × ecotype Hedges-g rows, and a status JSON. It **never** appends those rows to `data/extraction/direct_effects.csv`; promotion still requires source verification and strict-H1 adjudication.
+
 ## Initial candidate system families
 
 The search starts from, but is not restricted to:
