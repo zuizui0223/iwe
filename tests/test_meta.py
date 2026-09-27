@@ -164,7 +164,7 @@ def test_class_contrast_with_single_cluster_class_has_no_ci():
     )
     row = class_contrasts(summary).iloc[0]
     assert row["estimate"] == pytest.approx(0.5)
-    assert row["inferential_status"] == "insufficient_dependence_clusters"
+    assert row["inferential_status"] == "insufficient_cluster_information"
     assert math.isnan(row["ci_low"])
 
 
