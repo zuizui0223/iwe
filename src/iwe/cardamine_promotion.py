@@ -229,7 +229,9 @@ def build_cardamine_promotion_packet(
         "audit": audit,
         "effects_append": effects_append,
         "adjudications_append": adjudications_append,
+        "adjudications_after": adjudications_after,
         "candidate_ready_row": pd.DataFrame([ready]),
+        "candidates_after": candidates_after,
         "completion_routes_after": routes_after,
         "manifest": manifest,
     }
