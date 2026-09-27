@@ -11,6 +11,25 @@ CARDAMINE_REAL_YEARS = {2012, 2013, 2014}
 CARDAMINE_RECORD_BASIS = "female_capture_recapture_events"
 
 
+def _integer_year_set(values: object, label: str) -> tuple[set[int], list[str]]:
+    if not isinstance(values, (list, tuple, pd.Series)) or len(values) == 0:
+        return set(), [f"{label} must be a non-empty sequence of integer years"]
+
+    years: set[int] = set()
+    errors: list[str] = []
+    for value in values:
+        try:
+            numeric = float(value)
+        except (TypeError, ValueError):
+            errors.append(f"{label} values must be integer years")
+            continue
+        if not numeric.is_integer():
+            errors.append(f"{label} values must be integer years")
+            continue
+        years.add(int(numeric))
+    return years, errors
+
+
 def validate_cardamine_adult_provenance(
     provenance: Mapping[str, object],
     adult_events: pd.DataFrame,
@@ -49,16 +68,10 @@ def validate_cardamine_adult_provenance(
     if not source_id:
         errors.append("adult provenance source_id must be non-empty")
 
-    raw_years = provenance["years"]
-    if not isinstance(raw_years, list) or not raw_years:
-        errors.append("adult provenance years must be a non-empty list")
-        declared_years: set[int] = set()
-    else:
-        try:
-            declared_years = {int(year) for year in raw_years}
-        except (TypeError, ValueError):
-            declared_years = set()
-            errors.append("adult provenance years must be integers")
+    declared_years, year_errors = _integer_year_set(
+        provenance["years"], "adult provenance years"
+    )
+    errors.extend(year_errors)
 
     synthetic = provenance["synthetic_fixture"] is True
     source_backed = provenance["source_backed"] is True
@@ -75,11 +88,10 @@ def validate_cardamine_adult_provenance(
         errors.append("adult_events must contain year and event_doy")
         return errors
 
-    try:
-        event_years = {int(year) for year in adult_events["year"].dropna().tolist()}
-    except (TypeError, ValueError):
-        event_years = set()
-        errors.append("adult_events year values must be integers")
+    event_years, event_year_errors = _integer_year_set(
+        adult_events["year"].dropna().tolist(), "adult_events year"
+    )
+    errors.extend(event_year_errors)
 
     if declared_years and event_years != declared_years:
         errors.append(
