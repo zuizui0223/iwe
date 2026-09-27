@@ -115,6 +115,18 @@ The top antagonist P1 route has a response-blind executable preflight. Once sour
 
 The command first validates an adult-timing provenance manifest, then writes the frozen timing exposure, explicit outcome-missingness/SMD audit, eligible year × ecotype Hedges-g rows, and a status JSON. Real manifests must identify Dibbinsdale female capture/recapture records for exactly 2012–2014; older MRR seasons, male records, and egg dates fail closed. It **never** appends those rows to `data/extraction/direct_effects.csv`; promotion still requires source verification and strict-H1 adjudication.
 
+
+### Cardamine promotion packet
+
+When real, source-backed 2012–2014 female flight dates become available and the Cardamine preflight yields estimable strata, `scripts/build_cardamine_promotion_packet.py` can build a **non-mutating transactional draft**. It simulates the coordinated changes required to promote IWE032:
+
+- append strict Cardamine effect rows;
+- replace `ADJ_IWE032_PENDING` with exact eligible/strict-extracted adjudications;
+- change the replication candidate to `ready`;
+- remove Cardamine from the completion queue and renumber the remaining routes.
+
+The virtual post-promotion state must pass the existing effect, adjudication, candidate and completion-route validators before any draft is emitted. The command never edits repository registries itself.
+
 ## Initial candidate system families
 
 The search starts from, but is not restricted to:
