@@ -80,3 +80,15 @@ def test_synthetic_fixture_can_use_subset_years_but_is_labeled():
         synthetic_fixture=True,
     )
     assert validate_cardamine_adult_provenance(provenance, _events((2012,))) == []
+
+
+
+def test_fractional_years_do_not_truncate_to_focal_year():
+    provenance = _provenance(years=[2012.5, 2013, 2014])
+    errors = validate_cardamine_adult_provenance(provenance, _events())
+    assert any("integer years" in error for error in errors)
+
+    events = _events()
+    events.loc[0, "year"] = 2012.5
+    errors = validate_cardamine_adult_provenance(_provenance(), events)
+    assert any("integer years" in error for error in errors)
