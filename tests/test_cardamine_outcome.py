@@ -27,14 +27,14 @@ def _summaries():
 def _exposure():
     return pd.DataFrame(
         [
-            {"year": 2012, "ecotype": "early", "plant_id": "E1", "synchrony_group": "higher_synchrony"},
-            {"year": 2012, "ecotype": "early", "plant_id": "E2", "synchrony_group": "higher_synchrony"},
-            {"year": 2012, "ecotype": "early", "plant_id": "E3", "synchrony_group": "lower_synchrony"},
-            {"year": 2012, "ecotype": "early", "plant_id": "E4", "synchrony_group": "lower_synchrony"},
-            {"year": 2012, "ecotype": "late", "plant_id": "L1", "synchrony_group": "higher_synchrony"},
-            {"year": 2012, "ecotype": "late", "plant_id": "L2", "synchrony_group": "higher_synchrony"},
-            {"year": 2012, "ecotype": "late", "plant_id": "L3", "synchrony_group": "lower_synchrony"},
-            {"year": 2012, "ecotype": "late", "plant_id": "L4", "synchrony_group": "lower_synchrony"},
+            {"year": 2012, "ecotype": "early", "plant_id": "E1", "timing_group": "core_flight"},
+            {"year": 2012, "ecotype": "early", "plant_id": "E2", "timing_group": "core_flight"},
+            {"year": 2012, "ecotype": "early", "plant_id": "E3", "timing_group": "early_refugium"},
+            {"year": 2012, "ecotype": "early", "plant_id": "E4", "timing_group": "early_refugium"},
+            {"year": 2012, "ecotype": "late", "plant_id": "L1", "timing_group": "core_flight"},
+            {"year": 2012, "ecotype": "late", "plant_id": "L2", "timing_group": "core_flight"},
+            {"year": 2012, "ecotype": "late", "plant_id": "L3", "timing_group": "late_refugium"},
+            {"year": 2012, "ecotype": "late", "plant_id": "L4", "timing_group": "late_refugium"},
         ]
     )
 
@@ -61,40 +61,49 @@ def test_invalid_outcome_bounds_fail_closed():
         cardamine_realized_fraction(x)
 
 
-def test_smd_audit_keeps_ecotypes_separate():
+def test_smd_audit_keeps_ecotypes_and_refugia_separate():
     audit = cardamine_smd_audit(_exposure(), _summaries())
     assert set(audit["ecotype"]) == {"early", "late"}
-    assert len(audit) == 2
-    assert audit["eligible_smd"].all()
+    assert set(audit["contrast"]) == {"core_vs_early", "core_vs_late"}
+    assert len(audit) == 4
+    eligible = audit.loc[audit["eligible_smd"], ["ecotype", "contrast"]]
+    assert set(map(tuple, eligible.to_records(index=False))) == {
+        ("early", "core_vs_early"),
+        ("late", "core_vs_late"),
+    }
 
 
 def test_all_estimable_strata_share_one_dependence_cluster():
     effects = cardamine_smd_effects(_exposure(), _summaries())
     assert len(effects) == 2
+    assert set(effects["contrast"]) == {"core_vs_early", "core_vs_late"}
     assert set(effects["dependence_id"]) == {DEPENDENCE_ID}
     assert set(effects["effect_family"]) == {"standardized_mean_difference"}
 
 
-def test_contrast_is_higher_minus_lower_synchrony():
-    effects = cardamine_smd_effects(_exposure(), _summaries()).set_index("ecotype")
-    assert effects.loc["early", "effect_native"] > 0
-    assert effects.loc["late", "effect_native"] < 0
+def test_contrast_is_core_flight_minus_each_refugium():
+    effects = cardamine_smd_effects(_exposure(), _summaries()).set_index(["ecotype", "contrast"])
+    assert effects.loc[("early", "core_vs_early"), "effect_native"] > 0
+    assert effects.loc[("late", "core_vs_late"), "effect_native"] < 0
 
 
-def test_small_group_is_reported_not_replaced_by_another_stratum():
+def test_small_group_is_reported_not_replaced_by_another_refugium():
     exposure = _exposure().query("plant_id != 'E4'").copy()
-    audit = cardamine_smd_audit(exposure, _summaries()).set_index("ecotype")
-    assert not bool(audit.loc["early", "eligible_smd"])
-    assert "at least two" in audit.loc["early", "blocker"]
+    audit = cardamine_smd_audit(exposure, _summaries()).set_index(["ecotype", "contrast"])
+    assert not bool(audit.loc[("early", "core_vs_early"), "eligible_smd"])
+    assert "at least two" in audit.loc[("early", "core_vs_early"), "blocker"]
     effects = cardamine_smd_effects(exposure, _summaries())
-    assert set(effects["ecotype"]) == {"late"}
+    assert set(map(tuple, effects[["ecotype", "contrast"]].to_records(index=False))) == {
+        ("late", "core_vs_late")
+    }
 
 
 
 def test_missing_outcomes_are_counted_not_silently_dropped():
     summaries = _summaries().query("plant_id != 'E4'").copy()
-    audit = cardamine_smd_audit(_exposure(), summaries).set_index("ecotype")
-    assert audit.loc["early", "n_lower_synchrony_total"] == 2
-    assert audit.loc["early", "n_lower_synchrony"] == 1
-    assert audit.loc["early", "n_lower_synchrony_missing_outcome"] == 1
-    assert not bool(audit.loc["early", "eligible_smd"])
+    audit = cardamine_smd_audit(_exposure(), summaries).set_index(["ecotype", "contrast"])
+    row = audit.loc[("early", "core_vs_early")]
+    assert row["n_low_total"] == 2
+    assert row["n_low"] == 1
+    assert row["n_low_missing_outcome"] == 1
+    assert not bool(row["eligible_smd"])
