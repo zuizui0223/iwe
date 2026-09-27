@@ -49,8 +49,10 @@ def test_cluster_robust_summary_uses_dependence_id_as_replication_unit():
     assert row["k_effects"] == 3
     assert row["m_dependence"] == 2
     assert row["df"] == 1
+    assert row["tau2"] == pytest.approx(0.0533333333, rel=1e-6)
+    assert row["method"] == "random_effects_reml_cr2_by_dependence_id"
     assert row["inferential_status"] == "ok"
-    assert math.isfinite(row["se"])
+    assert row["se"] == pytest.approx(0.2357022604)
 
 
 def test_one_dependence_cluster_never_gets_inferential_ci():
@@ -79,6 +81,7 @@ def test_one_dependence_cluster_never_gets_inferential_ci():
     row = cluster_robust_summary(df).iloc[0]
     assert row["k_effects"] == 3
     assert row["m_dependence"] == 1
+    assert row["tau2"] == pytest.approx(0.0)
     assert row["inferential_status"] == "insufficient_dependence_clusters"
     assert math.isnan(row["se"])
     assert math.isnan(row["ci_low"])
