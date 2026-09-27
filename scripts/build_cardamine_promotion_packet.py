@@ -49,8 +49,14 @@ def main() -> int:
     packet["adjudications_append"].to_csv(
         outdir / "draft_strict_adjudications_append.csv", index=False
     )
+    packet["adjudications_after"].to_csv(
+        outdir / "draft_strict_adjudications_after.csv", index=False
+    )
     packet["candidate_ready_row"].to_csv(
         outdir / "draft_candidate_ready_row.csv", index=False
+    )
+    packet["candidates_after"].to_csv(
+        outdir / "draft_replication_candidates_after.csv", index=False
     )
     packet["completion_routes_after"].to_csv(
         outdir / "draft_completion_routes_after.csv", index=False
