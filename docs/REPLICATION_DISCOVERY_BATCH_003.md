@@ -135,8 +135,8 @@ The 2015 experiment has four balanced flowering cohorts (n=10 each), contemporan
 
 Because the design is balanced, the ANOVA identity recovers the pooled within-group residual variance on the same common scale as the reported means. The strict week-1 versus week-4 contrast gives:
 
-- Hedges g = **+0.3732395638**;
-- sampling variance = **0.1873253239**;
+- Hedges g = **+0.3815303645**;
+- sampling variance = **0.1937181574**;
 - dependence cluster = `DEP_MERTENSIA_GALLAGHER_CAMPBELL_RMBL`.
 
 This raises mutualist SMD replication from one to **two independent clusters** without changing the estimand, converting a slope, or imputing variance. Mixed and antagonist still require one additional independent cluster each.
