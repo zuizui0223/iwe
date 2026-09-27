@@ -1,0 +1,10 @@
+{
+  "candidate_id": "ANT002_CARDAMINE_ANTHOCHARIS_2024",
+  "site": "Dibbinsdale Nature Reserve",
+  "sex": "female",
+  "record_basis": "female_capture_recapture_events",
+  "years": [2012],
+  "source_id": "synthetic:cardamine_preflight",
+  "source_backed": false,
+  "synthetic_fixture": true
+}
