@@ -29,9 +29,12 @@ def test_group_audit_promotes_raw_summary_not_source_label():
     # Construct values with exactly the published successful-fruit mean and
     # approximately the published SD. The test only needs the raw summary to be
     # internally valid; the source's printed label is not trusted.
-    values = [pub["successful_fruits_mean"] - pub["successful_fruits_dispersion"]] * 29
-    values += [pub["successful_fruits_mean"] + pub["successful_fruits_dispersion"]] * 29
-    values += [pub["successful_fruits_mean"]]
+    # 59 non-negative integer counts with sum=157 (mean=2.661 -> 2.66)
+    # and sum of squares=923 (sample SD=2.951 -> 2.95).
+    values = [6] * 22 + [5] * 5 + [0] * 32
+    for left, right in ((0, 1), (2, 3), (4, 5)):
+        values[left] -= 1
+        values[right] += 1
     df = pd.DataFrame({"successful": values})
 
     row, components = audit_iwe015_group(
@@ -79,4 +82,26 @@ def test_unknown_group_fails_closed():
             pd.DataFrame({"successful": [1.0, 2.0]}),
             "2014_early",
             successful_fruits_col="successful",
+        )
+
+
+def test_invalid_raw_bounds_fail_closed():
+    with pytest.raises(ValueError, match="non-negative"):
+        audit_iwe015_group(
+            pd.DataFrame({"successful": [1.0, -1.0] + [0.0] * 57}),
+            "2012_early",
+            successful_fruits_col="successful",
+        )
+
+    with pytest.raises(ValueError, match="must lie in"):
+        audit_iwe015_group(
+            pd.DataFrame(
+                {
+                    "successful": [2.66] * 59,
+                    "initiation": [1.2] + [0.9] * 58,
+                }
+            ),
+            "2012_early",
+            successful_fruits_col="successful",
+            fruit_initiation_col="initiation",
         )
