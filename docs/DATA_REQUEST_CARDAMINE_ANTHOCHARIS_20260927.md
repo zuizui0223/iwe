@@ -49,10 +49,10 @@ After receiving the adult timing object, IWE will:
 1. verify that the dates correspond to the 2012–2014 Dibbinsdale seasons used in the 2024 paper;
 2. define the adult female flight window separately for each year using a source-compatible rule;
 3. reconstruct each plant's flowering interval from the already-public repeated `Flowers` observations;
-4. commit a timing-only exposure/grouping contract;
-5. only then derive final plant reproductive outcomes.
+4. apply the already-frozen three-level onset exposure (`early_refugium`, `core_flight`, `late_refugium`);
+5. audit `core_vs_early` and `core_vs_late` separately against the already-frozen realized-reproduction outcome.
 
-If the timing distribution does not support a defensible categorical contrast for the frozen SMD family, no SMD will be manufactured.
+If the recovered dates do not provide adequate plants for either frozen direction-specific contrast, no SMD will be manufactured and no alternate cut-point will be introduced.
 
 ## Provenance to include in any reply/archive
 
