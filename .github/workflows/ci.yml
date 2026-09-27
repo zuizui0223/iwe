@@ -2,8 +2,12 @@ name: ci
 
 on:
   push:
-    branches: [main, "feat/**"]
+    branches: [main]
   pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -38,6 +42,7 @@ jobs:
           python scripts/run_cardamine_preflight.py
           examples/cardamine_synthetic_plant_timing.csv
           examples/cardamine_synthetic_adult_events.csv
+          examples/cardamine_synthetic_adult_provenance.json
           examples/cardamine_synthetic_outcomes.csv
           /tmp/iwe-cardamine-preflight
       - name: Build primary dataset

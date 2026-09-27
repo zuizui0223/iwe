@@ -100,7 +100,9 @@ The module requires a source-normalized plant summary rather than guessing raw s
 
 The frozen stages are composed by `src/iwe/cardamine_pipeline.py` and exposed through:
 
-`python scripts/run_cardamine_preflight.py <plant_timing.csv> <adult_events.csv> <plant_summaries.csv> <output_dir>`
+`python scripts/run_cardamine_preflight.py <plant_timing.csv> <adult_events.csv> <adult_provenance.json> <plant_summaries.csv> <output_dir>`
+
+Before timing is calculated, `src/iwe/cardamine_provenance.py` validates that a real adult-timing manifest names the Cardamine candidate, Dibbinsdale Nature Reserve, female capture/recapture events, and exactly the 2012–2014 focal years. This prevents accidental substitution of older Dibbinsdale MRR seasons, male dates or egg dates.
 
 Outputs are:
 

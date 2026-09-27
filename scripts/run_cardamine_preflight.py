@@ -19,17 +19,22 @@ def main() -> int:
     )
     parser.add_argument("plant_timing_csv")
     parser.add_argument("adult_events_csv")
+    parser.add_argument("adult_provenance_json")
     parser.add_argument("plant_summaries_csv")
     parser.add_argument("output_dir")
     args = parser.parse_args()
 
     plant_timing = pd.read_csv(Path(args.plant_timing_csv))
     adult_events = pd.read_csv(Path(args.adult_events_csv))
+    adult_provenance = json.loads(
+        Path(args.adult_provenance_json).read_text(encoding="utf-8")
+    )
     plant_summaries = pd.read_csv(Path(args.plant_summaries_csv))
 
     exposure, audit, effects = run_cardamine_preflight(
         plant_timing,
         adult_events,
+        adult_provenance,
         plant_summaries,
     )
 
@@ -43,6 +48,9 @@ def main() -> int:
     status = {
         "schema": "iwe_cardamine_preflight_v1",
         "candidate_id": "ANT002_CARDAMINE_ANTHOCHARIS_2024",
+        "adult_timing_source_id": adult_provenance["source_id"],
+        "adult_timing_source_backed": bool(adult_provenance["source_backed"]),
+        "synthetic_fixture": bool(adult_provenance["synthetic_fixture"]),
         "timing_exposure_rows": int(len(exposure)),
         "strata_audited": int(len(audit)),
         "eligible_smd_strata": eligible,

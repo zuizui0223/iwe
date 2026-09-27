@@ -36,9 +36,21 @@ def test_cardamine_preflight_runs_frozen_stages_in_order():
         ]
     )
 
+    provenance = {
+        "candidate_id": "ANT002_CARDAMINE_ANTHOCHARIS_2024",
+        "site": "Dibbinsdale Nature Reserve",
+        "sex": "female",
+        "record_basis": "female_capture_recapture_events",
+        "years": [2012],
+        "source_id": "synthetic:cardamine_pipeline_test",
+        "source_backed": False,
+        "synthetic_fixture": True,
+    }
+
     exposure, audit, effects = run_cardamine_preflight(
         plant_timing,
         adult_events,
+        provenance,
         summaries,
     )
 
