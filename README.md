@@ -107,6 +107,17 @@ Current order is:
 `blocked_source_release` is explicitly allowed in this queue, but it remains prospective and contributes **zero** strict-H1 evidence until a citable final source exposes compatible timing and post-cost reproduction.
 
 
+
+### Cardamine raw workbook normalization
+
+Dryad publishes six Cardamine transect workbooks (early/late ecotypes × 2012–2014). `scripts/normalize_cardamine_workbooks.py` reads the documented XLSX format (metadata row 1, headers row 2) and produces:
+
+- `plant_timing.csv` for the response-blind timing stage;
+- `plant_summaries.csv` with source-backed `max_ru` and `final_intact_ru`;
+- `raw_normalization_audit.csv` with every excluded plant and reason.
+
+The normalizer is intentionally conservative: a final outcome is accepted only when a unique row marked `d` in the source Height column contains numeric buds, flowers and seed-pods. Missing dehiscence RU is never replaced with the previous visit.
+
 ### Cardamine preflight
 
 The top antagonist P1 route has a response-blind executable preflight. Once source-backed 2012–2014 female *Anthocharis* event dates and source-normalized plant outcomes are available, run:

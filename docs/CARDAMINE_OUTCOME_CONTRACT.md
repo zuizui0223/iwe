@@ -112,3 +112,19 @@ Outputs are:
 - `preflight_status.json`.
 
 The preflight is deliberately non-promoting: it does not edit `data/extraction/direct_effects.csv`, strict-H1 adjudications, or claim status. Real rows require a separate source-verification/adjudication step after the missing adult timing object has been recovered.
+
+
+## Raw Dryad normalization
+
+Dryad documents six XLSX transect files with source metadata on row 1 and column headers on row 2. The required source columns are Plant Number, Date, Height, Flowers, Buds and Seed-pods; dehisced plants are marked `d` in Height.
+
+`src/iwe/cardamine_raw.py` freezes a conservative normalization:
+
+- `first_flowering_doy` is based only on a positive open-flower observation;
+- `max_ru` is the maximum complete pre-dehiscence `buds + flowers + seed_pods` value;
+- a plant outcome requires exactly one source dehiscence marker;
+- `final_intact_ru` is the sum of buds + flowers + seed-pods on that dehiscence row only;
+- missing RU on the dehiscence row is excluded/audited, never backfilled from the previous survey;
+- final RU exceeding the pre-dehiscence maximum fails closed.
+
+These rules are deliberately stricter than guessing undocumented spreadsheet conventions. If the real files show a different source-backed convention for intact RU at dehiscence, that convention must be documented and revised before real promotion rather than inferred after seeing SMDs.
