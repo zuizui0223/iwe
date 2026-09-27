@@ -88,3 +88,13 @@ def test_small_group_is_reported_not_replaced_by_another_stratum():
     assert "at least two" in audit.loc["early", "blocker"]
     effects = cardamine_smd_effects(exposure, _summaries())
     assert set(effects["ecotype"]) == {"late"}
+
+
+
+def test_missing_outcomes_are_counted_not_silently_dropped():
+    summaries = _summaries().query("plant_id != 'E4'").copy()
+    audit = cardamine_smd_audit(_exposure(), summaries).set_index("ecotype")
+    assert audit.loc["early", "n_lower_synchrony_total"] == 2
+    assert audit.loc["early", "n_lower_synchrony"] == 1
+    assert audit.loc["early", "n_lower_synchrony_missing_outcome"] == 1
+    assert not bool(audit.loc["early", "eligible_smd"])
