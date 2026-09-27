@@ -42,11 +42,11 @@ def test_adult_window_uses_source_compatible_tenth_to_ninetieth_percentiles():
     assert out["n_adult_events"] == 11
 
 
-def test_timing_group_is_inside_vs_outside_adult_window():
+def test_timing_group_preserves_early_core_and_late_positions():
     out = cardamine_timing_only_exposure(_plants(), _adults()).set_index("plant_id")
-    assert out.loc["L1", "synchrony_group"] == "higher_synchrony"
-    assert out.loc["E1", "synchrony_group"] == "lower_synchrony"
-    assert out.loc["L2", "synchrony_group"] == "lower_synchrony"
+    assert out.loc["L1", "timing_group"] == "core_flight"
+    assert out.loc["E1", "timing_group"] == "early_refugium"
+    assert out.loc["L2", "timing_group"] == "late_refugium"
 
 
 def test_timing_exposure_ignores_response_columns():
