@@ -38,8 +38,12 @@ def _renumber_routes(routes: pd.DataFrame) -> pd.DataFrame:
     return pd.concat(pieces, ignore_index=True)
 
 
-def _effect_id(year: object, ecotype: object) -> str:
-    return f"IWE032_{int(year)}_{str(ecotype).upper()}_SYNC_REALIZEDFRAC_SMD"
+def _effect_id(year: object, ecotype: object, contrast: object) -> str:
+    contrast_token = str(contrast).upper()
+    return (
+        f"IWE032_{int(year)}_{str(ecotype).upper()}_"
+        f"{contrast_token}_REALIZEDFRAC_SMD"
+    )
 
 
 def build_cardamine_promotion_packet(
@@ -79,12 +83,15 @@ def build_cardamine_promotion_packet(
     draft_adjudications: list[dict[str, object]] = []
     timing_source = str(adult_provenance["source_id"])
 
-    for _, row in smd.sort_values(["year", "ecotype"]).iterrows():
+    for _, row in smd.sort_values(["year", "ecotype", "contrast"]).iterrows():
         year = int(row["year"])
         ecotype = str(row["ecotype"])
-        effect_id = _effect_id(year, ecotype)
-        n_high = int(row["n_higher_synchrony"])
-        n_low = int(row["n_lower_synchrony"])
+        contrast = str(row["contrast"])
+        high_group = str(row["high_group"])
+        low_group = str(row["low_group"])
+        effect_id = _effect_id(year, ecotype, contrast)
+        n_high = int(row["n_high"])
+        n_low = int(row["n_low"])
         draft_effects.append(
             {
                 "effect_id": effect_id,
@@ -114,10 +121,10 @@ def build_cardamine_promotion_packet(
                 "specialization": "",
                 "redundancy": "",
                 "notes": (
-                    f"Frozen Cardamine contrast within {year} {ecotype}: first flowering "
-                    "inside/on the source female q10-q90 capture/recapture window is "
-                    "higher synchrony; outside is lower synchrony. Response is "
-                    "final_intact_ru/max_ru. "
+                    f"Frozen Cardamine contrast within {year} {ecotype}: {contrast}; "
+                    f"first-flowering timing group {high_group} minus {low_group}. "
+                    "The early and late phenological refugia are never pooled. "
+                    "Response is final_intact_ru/max_ru. "
                     f"Adult timing provenance={timing_source}. "
                     f"n_high={n_high}; n_low={n_low}. All rows share {DEPENDENCE_ID}."
                 ),
@@ -125,10 +132,10 @@ def build_cardamine_promotion_packet(
         )
         draft_adjudications.append(
             {
-                "adjudication_id": f"ADJ_IWE032_{year}_{ecotype.upper()}",
+                "adjudication_id": f"ADJ_IWE032_{year}_{ecotype.upper()}_{contrast.upper()}",
                 "study_id": STUDY_ID,
                 "component": (
-                    f"{year}_{ecotype}_first_flowering_vs_female_q10_q90_"
+                    f"{year}_{ecotype}_{contrast}_first_flowering_vs_female_q10_q90_"
                     "realized_fraction"
                 ),
                 "strict_h1_status": "eligible",
@@ -140,9 +147,10 @@ def build_cardamine_promotion_packet(
                 "effect_family": "standardized_mean_difference",
                 "reason": (
                     "Exposure is frozen response-blind from source-backed female "
-                    "capture/recapture timing; realized_fraction is frozen before "
-                    "adult-date recovery; this year x ecotype stratum passes the "
-                    "predeclared group-size and variance gate."
+                    "capture/recapture timing. Core flight is contrasted separately "
+                    "with early and late refugia; realized_fraction is frozen before "
+                    "adult-date recovery; this year x ecotype x direction contrast "
+                    "passes the predeclared group-size and variance gate."
                 ),
             }
         )

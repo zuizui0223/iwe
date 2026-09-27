@@ -56,4 +56,4 @@ The HA-versus-HD contrast is therefore fixed using timing information rather tha
 
 ## Analysis consequence
 
-Multiple IWE010/IWE011 effect rows can increase descriptive coverage, but they do not mechanically add independent programme clusters. CR1 uncertainty, leave-one-dependence sensitivity and H1 evaluability use the shared `DEP_PEUCEDANUM_KUDO_PROGRAM` identifier.
+Multiple IWE010/IWE011 effect rows can increase descriptive coverage, but they do not mechanically add independent programme clusters. REML+CR2 uncertainty, leave-one-dependence sensitivity and H1 evaluability use the shared `DEP_PEUCEDANUM_KUDO_PROGRAM` identifier.

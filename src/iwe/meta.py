@@ -2,11 +2,15 @@ from __future__ import annotations
 
 import math
 
+import numpy as np
 import pandas as pd
+from scipy.optimize import minimize_scalar
 from scipy.stats import t
 
 from .schema import INTERACTION_TYPES
 
+
+MIN_REFERENCE_DF = 4
 
 _CLASS_ORDER = [
     "mutualist",
@@ -62,17 +66,87 @@ def fixed_effect_summary(df: pd.DataFrame, group_col: str = "interaction_type") 
     return out
 
 
+def _reml_tau2(effects: np.ndarray, variances: np.ndarray) -> float:
+    """Estimate working-model between-effect heterogeneity by REML."""
+    if effects.size < 2:
+        return 0.0
+
+    def objective(tau2: float) -> float:
+        total_variance = variances + float(tau2)
+        weights = 1.0 / total_variance
+        weight_sum = float(weights.sum())
+        estimate = float((weights * effects).sum() / weight_sum)
+        q = float((weights * (effects - estimate) ** 2).sum())
+        return float(np.log(total_variance).sum() + math.log(weight_sum) + q)
+
+    observed_variance = float(np.var(effects, ddof=1)) if effects.size > 1 else 0.0
+    upper = max(1.0, 100.0 * observed_variance, 100.0 * float(variances.max()))
+    result = minimize_scalar(
+        objective,
+        bounds=(0.0, upper),
+        method="bounded",
+        options={"xatol": 1e-12},
+    )
+    candidate = float(result.x)
+    if objective(0.0) <= objective(candidate) + 1e-10:
+        return 0.0
+    return max(candidate, 0.0)
+
+
+def _cr2_intercept_se(
+    effects: np.ndarray,
+    variances: np.ndarray,
+    clusters: np.ndarray,
+    tau2: float,
+) -> tuple[float, float]:
+    """Return the random-effects intercept and CR2 cluster-robust SE.
+
+    The CR2 adjustment is applied in the whitened working-model space with
+    inverse-(sampling variance + tau2) weights. Within-cluster covariance is
+    otherwise left unrestricted.
+    """
+    weights = 1.0 / (variances + float(tau2))
+    weight_sum = float(weights.sum())
+    estimate = float((weights * effects).sum() / weight_sum)
+    sqrt_weights = np.sqrt(weights)
+    whitened_residuals = sqrt_weights * (effects - estimate)
+
+    meat = 0.0
+    for cluster in pd.unique(clusters):
+        index = np.flatnonzero(clusters == cluster)
+        x_cluster = sqrt_weights[index]
+        leverage = np.outer(x_cluster, x_cluster) / weight_sum
+        residual_maker = np.eye(len(index)) - leverage
+        eigenvalues, eigenvectors = np.linalg.eigh(residual_maker)
+        if float(eigenvalues.min()) <= 1e-12:
+            raise ValueError("CR2 adjustment is singular for a dependence cluster")
+        adjustment = (
+            eigenvectors
+            @ np.diag(1.0 / np.sqrt(eigenvalues))
+            @ eigenvectors.T
+        )
+        adjusted_score = float(
+            x_cluster @ (adjustment @ whitened_residuals[index])
+        )
+        meat += adjusted_score**2
+
+    variance = meat / (weight_sum**2)
+    return estimate, math.sqrt(max(float(variance), 0.0))
+
+
 def cluster_robust_summary(
     df: pd.DataFrame,
     group_col: str = "interaction_type",
     cluster_col: str = "dependence_id",
 ) -> pd.DataFrame:
-    """Inverse-variance point estimate with CR1 cluster-robust uncertainty.
+    """Random-effects REML summary with CR2 dependence-robust uncertainty.
 
-    dependence_id is the inferential replication unit. Correlation within a
-    dependence cluster is left unrestricted by the sandwich variance. With only
-    one cluster in a class, an estimate may be shown descriptively but no SE or
-    confidence interval is produced.
+    dependence_id is the inferential replication unit. REML supplies a working
+    between-effect heterogeneity variance once at least two independent
+    dependence clusters exist. CR2 then leaves within-cluster covariance
+    unrestricted. Reference inference is withheld whenever the conservative
+    cluster degrees of freedom m-1 is below MIN_REFERENCE_DF (=4), because
+    RVE has too little information for trustworthy small-sample inference.
     """
     effect_family = _single_effect_family(df)
     required = {group_col, cluster_col, "effect_oriented", "variance_native"}
@@ -89,6 +163,7 @@ def cluster_robust_summary(
                 "se",
                 "ci_low",
                 "ci_high",
+                "tau2",
                 "k_effects",
                 "m_dependence",
                 "df",
@@ -109,25 +184,29 @@ def cluster_robust_summary(
 
     rows: list[dict[str, object]] = []
     for group, part in df.groupby(group_col, sort=False):
-        weights = 1.0 / part["variance_native"].astype(float)
-        effects = part["effect_oriented"].astype(float)
-        weight_sum = float(weights.sum())
-        estimate = float((weights * effects).sum() / weight_sum)
-        residual = effects - estimate
+        effects = part["effect_oriented"].astype(float).to_numpy()
+        variances = part["variance_native"].astype(float).to_numpy()
+        clusters = part[cluster_col].astype(str).to_numpy()
+        if (variances <= 0).any() or not np.isfinite(variances).all():
+            raise ValueError("variance_native must be finite and positive")
+        if not np.isfinite(effects).all():
+            raise ValueError("effect_oriented must be finite")
 
-        score = (weights * residual).groupby(part[cluster_col]).sum()
-        m = int(score.shape[0])
+        m = int(pd.Series(clusters).nunique())
         k = int(len(part))
         df_t = m - 1
+        tau2 = _reml_tau2(effects, variances) if m >= 2 else 0.0
 
-        if m < 2:
+        weights = 1.0 / (variances + tau2)
+        estimate = float((weights * effects).sum() / weights.sum())
+
+        if df_t < MIN_REFERENCE_DF:
             se = math.nan
             ci_low = math.nan
             ci_high = math.nan
-            status = "insufficient_dependence_clusters"
+            status = "insufficient_cluster_information"
         else:
-            variance = (m / (m - 1.0)) * float((score**2).sum()) / (weight_sum**2)
-            se = math.sqrt(max(variance, 0.0))
+            estimate, se = _cr2_intercept_se(effects, variances, clusters, tau2)
             critical = float(t.ppf(0.975, df=df_t))
             ci_low = estimate - critical * se
             ci_high = estimate + critical * se
@@ -141,10 +220,11 @@ def cluster_robust_summary(
                 "se": se,
                 "ci_low": ci_low,
                 "ci_high": ci_high,
+                "tau2": tau2,
                 "k_effects": k,
                 "m_dependence": m,
                 "df": df_t,
-                "method": "inverse_variance_cr1_by_dependence_id",
+                "method": "random_effects_reml_cr2_by_dependence_id",
                 "inferential_status": status,
             }
         )
@@ -152,9 +232,8 @@ def cluster_robust_summary(
     out = pd.DataFrame(rows)
     if group_col == "interaction_type" and not out.empty:
         order = {name: i for i, name in enumerate(_CLASS_ORDER)}
-        out = out.sort_values(group_col, key=lambda s: s.map(order)).reset_index(drop=True)
+        out = out.sort_values(group_col, key=lambda series: series.map(order)).reset_index(drop=True)
     return out
-
 
 def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
     """Return preregistered pairwise class contrasts.
@@ -162,7 +241,7 @@ def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
     Contrast uncertainty combines class-level cluster-robust SEs using an
     independent-class approximation. The smaller class degrees of freedom is
     used for the t critical value. If either class lacks two dependence
-    clusters, the contrast remains descriptive and carries no CI.
+    clusters or either class falls below the reference information floor, the contrast remains descriptive and carries no CI.
     """
     if summary.empty:
         return pd.DataFrame(
@@ -218,7 +297,7 @@ def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
             ci_low = math.nan
             ci_high = math.nan
             df_t = min(left_df, right_df)
-            status = "insufficient_dependence_clusters"
+            status = "insufficient_cluster_information"
 
         rows.append(
             {

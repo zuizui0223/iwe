@@ -42,30 +42,30 @@ def test_hedges_g_rejects_invalid_group_summary():
 
 
 
-def test_hedges_g_from_mean_se_reconstructs_iwe015_2012():
-    g, variance = hedges_g_from_mean_se(
+def test_hedges_g_from_summary_reconstructs_iwe015_2012_from_sd_like_dispersion():
+    g, variance = hedges_g_from_summary(
         mean_high=2.66,
-        se_high=2.95,
+        sd_high=2.95,
         n_high=59,
         mean_low=3.91,
-        se_low=4.13,
+        sd_low=4.13,
         n_low=58,
     )
-    assert g == pytest.approx(-0.0453662495)
-    assert variance == pytest.approx(0.0337540056)
+    assert g == pytest.approx(-0.3465154178)
+    assert variance == pytest.approx(0.0342671136)
 
 
-def test_hedges_g_from_mean_se_reconstructs_iwe015_2013():
-    g, variance = hedges_g_from_mean_se(
+def test_hedges_g_from_summary_reconstructs_iwe015_2013_from_sd_like_dispersion():
+    g, variance = hedges_g_from_summary(
         mean_high=9.77,
-        se_high=6.91,
+        sd_high=6.91,
         n_high=55,
         mean_low=8.60,
-        se_low=7.01,
+        sd_low=7.01,
         n_low=55,
     )
-    assert g == pytest.approx(0.0225087081)
-    assert variance == pytest.approx(0.0358615214)
+    assert g == pytest.approx(0.1669290472)
+    assert variance == pytest.approx(0.0359881819)
 
 
 def test_hedges_g_from_mean_se_rejects_nonpositive_se():
@@ -106,19 +106,22 @@ def test_balanced_anova_reconstructs_iwe023_week1_vs_week4():
         group_means=[0.85, 1.00, 0.91, 0.69],
         n_per_group=10,
         f_statistic=1.01,
+        residual_df=36,
         high_index=0,
         low_index=3,
     )
-    assert g == pytest.approx(0.3732395638)
-    assert variance == pytest.approx(0.1873253239)
+    assert g == pytest.approx(0.3815303645)
+    assert variance == pytest.approx(0.1937181574)
 
 
 def test_balanced_anova_reconstruction_fails_closed_on_invalid_inputs():
     with pytest.raises(ValueError):
-        hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 0.0, 0, 1)
+        hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 0.0, 18, 0, 1)
     with pytest.raises(ValueError):
-        hedges_g_from_balanced_anova_means([0.8, 0.7], 1, 1.2, 0, 1)
+        hedges_g_from_balanced_anova_means([0.8, 0.7], 1, 1.2, 0, 0, 1)
     with pytest.raises(ValueError):
-        hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 1.2, 0, 0)
+        hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 1.2, 18, 0, 0)
     with pytest.raises(ValueError):
-        hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 1.2, 0, 2)
+        hedges_g_from_balanced_anova_means([0.8, 0.7], 10, 1.2, 18, 0, 2)
+    with pytest.raises(ValueError, match="residual df"):
+        hedges_g_from_balanced_anova_means([0.8, 0.7, 0.6, 0.5], 10, 1.2, 18, 0, 3)

@@ -46,14 +46,14 @@ def main() -> int:
 
     eligible = int(audit["eligible_smd"].sum()) if not audit.empty else 0
     status = {
-        "schema": "iwe_cardamine_preflight_v1",
+        "schema": "iwe_cardamine_preflight_v2",
         "candidate_id": "ANT002_CARDAMINE_ANTHOCHARIS_2024",
         "adult_timing_source_id": adult_provenance["source_id"],
         "adult_timing_source_backed": bool(adult_provenance["source_backed"]),
         "synthetic_fixture": bool(adult_provenance["synthetic_fixture"]),
         "timing_exposure_rows": int(len(exposure)),
-        "strata_audited": int(len(audit)),
-        "eligible_smd_strata": eligible,
+        "directional_contrasts_audited": int(len(audit)),
+        "eligible_smd_contrasts": eligible,
         "smd_effect_rows": int(len(effects)),
         "promoted_to_primary_extraction": False,
     }
@@ -63,7 +63,7 @@ def main() -> int:
     )
     print(
         f"Wrote Cardamine preflight outputs to {outdir}; "
-        f"eligible strata={eligible}, SMD rows={len(effects)}. "
+        f"eligible directional contrasts={eligible}, SMD rows={len(effects)}. "
         "No row is promoted to the primary extraction table automatically."
     )
     return 0

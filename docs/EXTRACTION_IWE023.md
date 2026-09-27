@@ -71,13 +71,13 @@ The relative means differ from the original seed-set means only by one common po
 For week 1 (high partner availability) versus week 4 (low partner availability):
 
 - Cohen's `d = (0.85 - 0.69) / 0.4105658978 = 0.3897060152`;
-- df for the two-group contrast = 18;
-- project small-sample correction `J = 1 - 3/(4*18 - 1) = 0.9577464789`;
-- **Hedges' g = +0.3732395638**;
-- **sampling variance = 0.1873253239**;
+- residual df of the four-group ANOVA standardizer = 36;
+- project small-sample correction `J = 1 - 3/(4*36 - 1) = 0.9790209790`;
+- **Hedges' g = +0.3815303645**;
+- **sampling variance = 0.1937181574**;
 - contrast sample size = 20.
 
-The executable reconstruction is implemented in `hedges_g_from_balanced_anova_means()` and covered by a regression test.
+The executable reconstruction is implemented in `hedges_g_from_balanced_anova_means()`. The source-reported residual df is now required explicitly and must match the balanced design; `F(3,36)` therefore keeps standardizer df=36 rather than substituting the df=18 of an isolated two-group re-estimation.
 
 ## Why this is not prohibited conversion or imputation
 
@@ -92,7 +92,7 @@ The reported ANOVA F contains the pooled within-group residual variance for the 
 
 ## Source-rounding sensitivity
 
-The source prints the relative means to two decimals and F to two decimals. Varying the non-maximum means by ±0.005 and F from 1.005 to 1.015 keeps the reconstructed Hedges g approximately within **+0.353 to +0.393**. The small positive effect is therefore not a sign artifact of reported rounding.
+The source prints the relative means to two decimals and F to two decimals. Varying the non-maximum means by ±0.005 and F from 1.005 to 1.015 keeps the reconstructed Hedges g approximately within approximately **+0.360 to +0.402**. The small positive effect is therefore not a sign artifact of reported rounding.
 
 ## Dependence
 

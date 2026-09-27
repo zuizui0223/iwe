@@ -95,7 +95,7 @@ The primary meta helper now fails closed when more than one effect family is pre
 
 This row changes the real strict-H1 dataset from zero rows to one row.
 
-It does **not** create an inferential meta-analytic result by itself. Because it contributes only one dependence cluster to the mutualist class, the dependence-aware reference summary retains the point estimate but withholds its cluster-robust SE and confidence interval as `insufficient_dependence_clusters`.
+It does **not** create an inferential meta-analytic result by itself. Because it contributes only one dependence cluster to the mutualist class, the dependence-aware reference summary retains the point estimate but withholds its robust SE and confidence interval as `insufficient_cluster_information`. The same fail-closed status applies whenever conservative cluster df is below 4.
 
 ## Data availability
 

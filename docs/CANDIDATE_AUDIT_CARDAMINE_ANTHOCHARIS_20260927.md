@@ -88,7 +88,7 @@ It may not use:
 
 The exposure grouping must therefore exist before final reproduction is consulted.
 
-If the timing data support only a continuous overlap metric rather than a source-defensible categorical contrast, the candidate remains outside the frozen SMD replication target rather than being binned post hoc.
+If the recovered source-backed female dates fail to populate either frozen core-vs-refugium contrast adequately, the candidate remains outside the SMD target. No alternate binning or pooling is introduced after response inspection.
 
 ## Outcome guardrail
 
@@ -108,7 +108,7 @@ Potential fecundity varies with plant phenotype and flowering time, so any event
 | final post-antagonist reproduction | yes |
 | raw plant response data public | yes |
 | numeric adult flight dates public/recovered | **no** |
-| frozen SMD contrast executable | **no** |
+| frozen SMD contrast executable | **yes, pending the missing female date object** |
 | candidate status | **P1 blocked_timing_linkage** |
 
 ## Why this route ranks first
@@ -135,4 +135,4 @@ The older Dibbinsdale mark–release–recapture study documents daily fieldwork
 
 No source-backed 2012–2014 female capture/recapture date list or numeric year-specific flight-window table was recovered publicly.
 
-The route therefore changes from `public_search_status = active` to `exhausted`. The next action is a minimal author/institutional data request for the adult timing object only; the already-public plant response data should not be requested or inspected further before the exposure rule is frozen.
+The public search remains exhausted. The only missing object is the source-backed 2012–2014 female capture/recapture timing table; the exposure and outcome rules are already frozen, so recovery of that object can go directly to the non-promoting preflight.

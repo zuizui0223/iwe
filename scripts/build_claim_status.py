@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from iwe.replication import replication_target_status
+from iwe.replication import MIN_INFERENTIAL_CLUSTERS_PER_CLASS, replication_target_status
 from iwe.schema import INTERACTION_TYPES
 from iwe.validation import build_primary_dataset
 
@@ -51,7 +51,7 @@ def main() -> int:
     evaluable_families = [
         family
         for family, counts in family_cluster_counts.items()
-        if all(counts[c] >= 2 for c in INTERACTION_TYPES)
+        if all(counts[c] >= MIN_INFERENTIAL_CLUSTERS_PER_CLASS for c in INTERACTION_TYPES)
     ]
 
     if real_rows.empty:
@@ -61,7 +61,7 @@ def main() -> int:
         h1_status = "evaluable"
         h1_reason = (
             "at least one common effect family spans all three interaction classes "
-            "with at least two dependence clusters per class"
+            f"with at least {MIN_INFERENTIAL_CLUSTERS_PER_CLASS} dependence clusters per class"
         )
     elif not INTERACTION_TYPES.issubset(classes):
         h1_status = "not_evaluable"
@@ -70,11 +70,11 @@ def main() -> int:
         h1_status = "not_evaluable"
         h1_reason = (
             "no single native effect family spans all three interaction classes "
-            "with at least two dependence clusters per class"
+            f"with at least {MIN_INFERENTIAL_CLUSTERS_PER_CLASS} dependence clusters per class"
         )
 
     payload = {
-        "schema": "iwe_claim_status_v4",
+        "schema": "iwe_claim_status_v5",
         "biological_evidence_rows": int(len(real_rows)),
         "biological_dependence_clusters": int(real_rows["dependence_id"].nunique()),
         "effect_families_present": sorted(set(real_rows["effect_family"].astype(str))),

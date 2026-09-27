@@ -20,12 +20,12 @@ Promotion cannot be a one-file append. A valid transition must update four linke
 
 ## Transaction simulated by the builder
 
-For every estimable year × ecotype Cardamine stratum, the builder drafts a strict Tier-A SMD effect with:
+For every estimable year × ecotype × direction Cardamine contrast, the builder drafts a strict Tier-A SMD effect with:
 
 - study: `IWE032`;
 - dependence: `DEP_CARDAMINE_DIBBINSDALE_2012_2014`;
 - timing: `seasonal_position / strict_window / ordered_by_measured_window`;
-- direction: synchrony;
+- direction: synchrony, represented separately as `core_flight - early_refugium` or `core_flight - late_refugium`;
 - outcome: `realized_reproductive_fraction`;
 - effect family: `standardized_mean_difference`.
 
@@ -78,6 +78,7 @@ The packet is not itself evidence admission. It does not:
 - change claim status;
 - merge Cardamine into the primary corpus;
 - override source verification;
-- create an SMD when no predeclared year × ecotype stratum is estimable.
+- create an SMD when no predeclared year × ecotype × direction contrast is estimable;
+- pool early and late phenological refugia into one comparator.
 
 A human/source audit of the recovered adult timing object and normalized plant outcomes is still required before applying the draft transaction.

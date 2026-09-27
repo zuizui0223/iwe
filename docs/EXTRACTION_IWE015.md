@@ -4,7 +4,7 @@ Source: Zhou J, Reynolds RJ, Zimmer EA, Dudash MR, Fenster CB. 2020. *Variable a
 
 Archived data: Dryad DOI `10.5061/dryad.6q573n5w1`.
 
-Status: **strict-H1 mixed pollinating-seed-predator evidence extracted for 2012 and 2013**.
+Status: **timing and final-outcome gates pass; quantitative strict-H1 extraction is on hold pending raw Dryad variance verification**.
 
 ## Timing design
 
@@ -40,20 +40,16 @@ This is therefore a final post-predation reproductive outcome rather than visita
 
 ## Published summaries
 
-Table 1 reports group means and standard errors.
+Table 1 labels the group dispersions as standard errors, but that label is internally inconsistent with the same table's bounded proportion outcomes. For example, fruit-initiation proportion is 0.91 ± 0.19 at n=59; an SE of 0.19 would imply an SD greater than 1 for a variable bounded to [0,1], which is impossible. The printed dispersions are therefore treated as SD-like values rather than multiplied by sqrt(n). The public Dryad record (`10.5061/dryad.6q573n5w1`) exposes four female CSVs plus the authors' analysis script for a row-level replication audit.
 
-| Year | Window | Adult plants n | Successful fruits mean | Reported SE |
+| Year | Window | Adult plants n | Successful fruits mean | Printed dispersion (source labels SE) |
 |---|---|---:|---:|---:|
 | 2012 | early / Hadena-dominant | 59 | 2.66 | 2.95 |
 | 2012 | late / co-pollinator-dominant | 58 | 3.91 | 4.13 |
 | 2013 | early / Hadena-dominant | 55 | 9.77 | 6.91 |
 | 2013 | late / co-pollinator-dominant | 55 | 8.60 | 7.01 |
 
-The source explicitly labels these quantities as mean ± SE. IWE therefore reconstructs each group standard deviation as
-
-`SD = SE * sqrt(n)`
-
-before calculating an independent-groups Hedges g.
+The source's `SE` label is not accepted mechanically because it fails a bounded-outcome consistency check elsewhere in the same table. IWE uses the printed dispersion directly as the group SD for the successful-fruit SMD and preserves the label discrepancy in the extraction receipt.
 
 ## Effect orientation
 
@@ -70,35 +66,41 @@ Therefore:
 
 Positive g means greater synchrony with the mixed pollinating seed predator is associated with greater final female reproductive performance.
 
-## 2012 effect
+## Quantitative hold
+
+The publication explicitly defines the printed dispersion as `SE=standard error`. However, Table 1 also reports bounded fruit-initiation proportions such as `0.91 ± 0.19` for `n=59`. If 0.19 were an SE, the implied SD would be `0.19*sqrt(59) > 1`, which is impossible for a variable bounded to [0,1]. The predation-rate dispersions create the same problem.
+
+This is strong evidence of a source-label or table-assembly error, but it does not by itself prove that every printed dispersion is an SD. Therefore IWE does **not** promote either the literal-SE reconstruction or the SD-like reconstruction into `direct_effects.csv` until the public Dryad female CSVs are recalculated. Candidate diagnostic values may be reported in this receipt, but they are not meta-analytic evidence.
+
+## 2012 diagnostic reconstruction
 
 Using Table 1:
 
-- high-overlap early: mean = 2.66, SE = 2.95, n = 59;
-- low-overlap late: mean = 3.91, SE = 4.13, n = 58.
+- high-overlap early: mean = 2.66, SD-like printed dispersion = 2.95, n = 59;
+- low-overlap late: mean = 3.91, SD-like printed dispersion = 4.13, n = 58.
 
-After converting SE to SD and applying the registered small-sample correction:
+Applying the registered independent-groups Hedges correction directly to those dispersions:
 
-`g = -0.0453662495`
+`g = -0.3465154178`
 
-`var(g) = 0.0337540056`.
+`var(g) = 0.0342671136`.
 
 Effect ID:
 
 `IWE015_2012_EARLY_VS_LATE_SUCCESSFRUIT_SMD`.
 
-## 2013 effect
+## 2013 diagnostic reconstruction
 
 Using Table 1:
 
-- high-overlap early: mean = 9.77, SE = 6.91, n = 55;
-- low-overlap late: mean = 8.60, SE = 7.01, n = 55.
+- high-overlap early: mean = 9.77, SD-like printed dispersion = 6.91, n = 55;
+- low-overlap late: mean = 8.60, SD-like printed dispersion = 7.01, n = 55.
 
 The reconstructed effect is:
 
-`g = +0.0225087081`
+`g = +0.1669290472`
 
-`var(g) = 0.0358615214`.
+`var(g) = 0.0359881819`.
 
 Effect ID:
 
@@ -116,12 +118,10 @@ The two rows preserve year-specific effect heterogeneity without increasing the 
 
 ## Interpretation boundary
 
-The two year effects are close to zero and have opposite signs.
-
-That pattern is compatible with the biological expectation that greater synchrony with a pollinating seed predator can have offsetting pollination benefits and seed-predation costs, but two dependent year effects do not establish H2 or a general mixed-system average.
+The two year effects have opposite signs: a moderate negative 2012 association and a smaller positive 2013 association. This is more heterogeneous than the previous near-zero reconstruction and is compatible with year-to-year shifts in the balance between pollination benefit and seed-predation cost. Because both years belong to one dependence cluster, they still do not establish H2 or a general mixed-system average.
 
 The late window also contains other effective moth pollinators, so the contrast represents the realized ecological consequence of changing overlap with *H. ectypa* in the actual pollinator community, not an isolated manipulation of *H. ectypa* presence.
 
 ## Reproducibility
 
-The repository implements `hedges_g_from_mean_se()`, which converts the source-labeled SEs to SDs and calls the registered Hedges-g calculation. Regression tests reproduce both year-specific effects and variances.
+The repository retains calculation regression tests for both possible interpretations as diagnostics, but no IWE015 effect is admitted to the strict corpus while the variance source is unresolved. The Dryad archive identity, version date, female CSV filenames and analysis script are recorded in `IWE015_DRYAD_VARIANCE_AUDIT.md`.

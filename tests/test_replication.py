@@ -79,6 +79,9 @@ def test_replication_target_completes_at_two_independent_clusters_per_class():
     out = replication_target_status(df)
     assert out["priority_classes"] == []
     assert out["status"] == "complete"
+    assert out["minimum_independent_clusters_per_class"] == 2
+    assert out["minimum_inferential_clusters_per_class"] == 5
+    assert out["interpretation"] == "replication_milestone_only_not_inferential_gate"
 
 
 def test_invalid_replication_minimum_fails():

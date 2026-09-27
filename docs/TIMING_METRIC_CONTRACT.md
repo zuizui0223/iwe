@@ -222,7 +222,7 @@ The 2012 and 2013 contrasts are therefore registered as:
 - `timing_domain = ordered_by_measured_window`;
 - `exposure_direction = synchrony`.
 
-Each effect is high focal-partner overlap (early) minus low focal-partner overlap (late). The source reports mean ± SE and n, so IWE reconstructs SD as `SE * sqrt(n)` before calculating Hedges g.
+Each effect is high focal-partner overlap (early) minus low focal-partner overlap (late). Table 1 labels the printed dispersions as SE, but the same table reports bounded proportion dispersions that cannot be standard errors at the stated sample sizes. IWE therefore treats the printed dispersions as SD-like values and records the source-label inconsistency explicitly; Dryad DOI `10.5061/dryad.6q573n5w1` exposes the underlying 2012–2013 female CSVs and analysis script for row-level replication.
 
 Both year effects share one dependence cluster, `DEP_SILENE_STELLATA_HADENA_MLBS`.
 

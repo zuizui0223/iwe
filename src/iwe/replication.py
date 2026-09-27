@@ -7,6 +7,7 @@ from .schema import INTERACTION_TYPES
 
 TARGET_EFFECT_FAMILY = "standardized_mean_difference"
 MIN_INDEPENDENT_CLUSTERS_PER_CLASS = 2
+MIN_INFERENTIAL_CLUSTERS_PER_CLASS = 5
 REPLICATION_PRIORITY = [
     "mixed_pollinating_seed_predator",
     "antagonist",
@@ -51,8 +52,10 @@ def replication_target_status(
     return {
         "effect_family": effect_family,
         "minimum_independent_clusters_per_class": minimum_clusters,
+        "minimum_inferential_clusters_per_class": MIN_INFERENTIAL_CLUSTERS_PER_CLASS,
         "current_independent_clusters_by_class": current,
         "clusters_needed_by_class": missing,
         "priority_classes": priority,
         "status": "complete" if not priority else "incomplete",
+        "interpretation": "replication_milestone_only_not_inferential_gate",
     }

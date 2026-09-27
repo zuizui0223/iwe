@@ -24,31 +24,19 @@ def test_fixed_effect_summary_uses_inverse_variance_weights():
 def test_cluster_robust_summary_uses_dependence_id_as_replication_unit():
     df = pd.DataFrame(
         [
-            {
-                "interaction_type": "mutualist",
-                "dependence_id": "DEP1",
-                "effect_oriented": 0.2,
-                "variance_native": 0.04,
-            },
-            {
-                "interaction_type": "mutualist",
-                "dependence_id": "DEP1",
-                "effect_oriented": 0.4,
-                "variance_native": 0.04,
-            },
-            {
-                "interaction_type": "mutualist",
-                "dependence_id": "DEP2",
-                "effect_oriented": 0.8,
-                "variance_native": 0.04,
-            },
+            {"interaction_type": "mutualist", "dependence_id": "DEP1", "effect_oriented": 0.2, "variance_native": 0.04},
+            {"interaction_type": "mutualist", "dependence_id": "DEP1", "effect_oriented": 0.4, "variance_native": 0.04},
+            {"interaction_type": "mutualist", "dependence_id": "DEP2", "effect_oriented": 0.5, "variance_native": 0.04},
+            {"interaction_type": "mutualist", "dependence_id": "DEP3", "effect_oriented": 0.6, "variance_native": 0.04},
+            {"interaction_type": "mutualist", "dependence_id": "DEP4", "effect_oriented": 0.7, "variance_native": 0.04},
+            {"interaction_type": "mutualist", "dependence_id": "DEP5", "effect_oriented": 0.8, "variance_native": 0.04},
         ]
     )
     row = cluster_robust_summary(df).iloc[0]
-    assert row["estimate"] == pytest.approx((0.2 + 0.4 + 0.8) / 3)
-    assert row["k_effects"] == 3
-    assert row["m_dependence"] == 2
-    assert row["df"] == 1
+    assert row["k_effects"] == 6
+    assert row["m_dependence"] == 5
+    assert row["df"] == 4
+    assert row["method"] == "random_effects_reml_cr2_by_dependence_id"
     assert row["inferential_status"] == "ok"
     assert math.isfinite(row["se"])
 
@@ -79,11 +67,28 @@ def test_one_dependence_cluster_never_gets_inferential_ci():
     row = cluster_robust_summary(df).iloc[0]
     assert row["k_effects"] == 3
     assert row["m_dependence"] == 1
-    assert row["inferential_status"] == "insufficient_dependence_clusters"
+    assert row["tau2"] == pytest.approx(0.0)
+    assert row["inferential_status"] == "insufficient_cluster_information"
     assert math.isnan(row["se"])
     assert math.isnan(row["ci_low"])
     assert math.isnan(row["ci_high"])
 
+
+
+def test_two_dependence_clusters_are_a_replication_milestone_not_inference():
+    df = pd.DataFrame(
+        [
+            {"interaction_type": "mutualist", "dependence_id": "DEP1", "effect_oriented": 0.2, "variance_native": 0.04},
+            {"interaction_type": "mutualist", "dependence_id": "DEP2", "effect_oriented": 0.8, "variance_native": 0.04},
+        ]
+    )
+    row = cluster_robust_summary(df).iloc[0]
+    assert row["m_dependence"] == 2
+    assert row["df"] == 1
+    assert row["inferential_status"] == "insufficient_cluster_information"
+    assert math.isnan(row["se"])
+    assert math.isnan(row["ci_low"])
+    assert math.isnan(row["ci_high"])
 
 def test_dependence_cluster_cannot_cross_interaction_classes():
     df = pd.DataFrame(
@@ -159,7 +164,7 @@ def test_class_contrast_with_single_cluster_class_has_no_ci():
     )
     row = class_contrasts(summary).iloc[0]
     assert row["estimate"] == pytest.approx(0.5)
-    assert row["inferential_status"] == "insufficient_dependence_clusters"
+    assert row["inferential_status"] == "insufficient_cluster_information"
     assert math.isnan(row["ci_low"])
 
 
@@ -201,4 +206,4 @@ def test_cluster_robust_summary_reports_common_effect_family():
     row = cluster_robust_summary(df).iloc[0]
     assert row["effect_family"] == "log_odds_ratio"
     assert row["estimate"] == pytest.approx(1.55)
-    assert row["inferential_status"] == "insufficient_dependence_clusters"
+    assert row["inferential_status"] == "insufficient_cluster_information"
