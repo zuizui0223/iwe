@@ -19,23 +19,30 @@ def hedges_g_from_summary(
     mean_low: float,
     sd_low: float,
     n_low: int,
+    standardizer_df: int | None = None,
 ) -> tuple[float, float]:
     """Return Hedges g and its sampling variance from two independent summaries.
 
-    The contrast is high-exposure minus low-exposure. The pooled-SD Cohen d is
-    corrected with J = 1 - 3 / (4*df - 1). Sampling variance uses the same J
-    correction applied to the conventional independent-groups variance of d.
+    The contrast is high-exposure minus low-exposure. By default the pooled SD
+    is estimated from the two contrasted groups, so the Hedges correction uses
+    n_high + n_low - 2 degrees of freedom. standardizer_df may be supplied when
+    a common residual SD is estimated from a larger source-reported model, such
+    as a balanced multi-group ANOVA. The same residual df is then used in the
+    Hedges correction and denominator-uncertainty term.
     """
     if n_high < 2 or n_low < 2:
         raise ValueError("Hedges g requires at least two observations per group")
     if sd_high <= 0 or sd_low <= 0:
         raise ValueError("Hedges g requires positive group standard deviations")
 
-    df = n_high + n_low - 2
+    pair_df = n_high + n_low - 2
+    df = pair_df if standardizer_df is None else int(standardizer_df)
+    if df < 1:
+        raise ValueError("Hedges g requires positive standardizer degrees of freedom")
     pooled_variance = (
         (n_high - 1) * float(sd_high) ** 2
         + (n_low - 1) * float(sd_low) ** 2
-    ) / df
+    ) / pair_df
     pooled_sd = math.sqrt(pooled_variance)
     d = (float(mean_high) - float(mean_low)) / pooled_sd
     correction = 1.0 - 3.0 / (4.0 * df - 1.0)
@@ -82,6 +89,7 @@ def hedges_g_from_balanced_anova_means(
     group_means: list[float] | tuple[float, ...],
     n_per_group: int,
     f_statistic: float,
+    residual_df: int,
     high_index: int,
     low_index: int,
 ) -> tuple[float, float]:
@@ -104,6 +112,12 @@ def hedges_g_from_balanced_anova_means(
         raise ValueError("balanced ANOVA reconstruction requires n_per_group >= 2")
     if not math.isfinite(float(f_statistic)) or float(f_statistic) <= 0:
         raise ValueError("balanced ANOVA reconstruction requires a positive finite F statistic")
+    expected_residual_df = len(means) * (n_per_group - 1)
+    if int(residual_df) != expected_residual_df:
+        raise ValueError(
+            "balanced ANOVA residual df is inconsistent with the reported balanced design: "
+            f"expected {expected_residual_df}, observed {residual_df}"
+        )
     if any(not math.isfinite(value) for value in means):
         raise ValueError("balanced ANOVA reconstruction requires finite group means")
     if not (0 <= high_index < len(means)) or not (0 <= low_index < len(means)):
@@ -126,4 +140,5 @@ def hedges_g_from_balanced_anova_means(
         mean_low=means[low_index],
         sd_low=pooled_sd,
         n_low=n_per_group,
+        standardizer_df=int(residual_df),
     )
