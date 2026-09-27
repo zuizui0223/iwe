@@ -64,9 +64,9 @@ Why first: this candidate already has the hardest biological pieces in public so
 
 Access state: public plant data are complete enough for the response, but the Dryad archive does not include the female capture/recapture date list used to define the adult flight window. Public retrieval has now been exhausted across the article/supplements, Dryad, indexed Dibbinsdale publications and the 2016 Liverpool thesis route.
 
-Next action: use a targeted author/institutional request for only the source-backed 2012–2014 female capture/recapture dates (or an equivalent numeric flight-window table). Once recovered, commit a timing-only synchrony grouping rule before consulting final intact-RU outcomes.
+Next action: recover only the source-backed 2012–2014 female capture/recapture dates (or an equivalent numeric flight-window table), then run the already-frozen three-level timing preflight. Core-vs-early and core-vs-late remain separate.
 
-Stop rule: no Figure 4 digitization, no egg-receipt surrogate for adult availability, no response-driven cut-points, and no use of final-fitness distributions before the exposure rule is frozen.
+Stop rule: no Figure 4 digitization, no egg-receipt surrogate for adult availability, no response-driven cut-points, no pooling of early and late refugia, and no alteration of the frozen exposure after outcome inspection.
 
 ### 2. Wen 2024 — Parnassia wightiana × florivorous beetles
 
