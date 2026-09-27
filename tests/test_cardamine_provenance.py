@@ -89,6 +89,7 @@ def test_fractional_years_do_not_truncate_to_focal_year():
     assert any("integer years" in error for error in errors)
 
     events = _events()
+    events["year"] = events["year"].astype(float)
     events.loc[0, "year"] = 2012.5
     errors = validate_cardamine_adult_provenance(_provenance(), events)
     assert any("integer years" in error for error in errors)
