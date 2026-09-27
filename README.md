@@ -53,8 +53,8 @@ Antagonists:
 - `IWE011_HA_VS_HD_FINALSET_SMD` — *Peucedanum multivittatum* × *Phaulernis fulviguttella*; high-overlap HA versus low-overlap HD; final intact-fruit set; `standardized_mean_difference = -1.1368391965`.
 
 Mixed pollinating seed predators:
-- `IWE015_2012_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — *Silene stellata* × *Hadena ectypa*; `standardized_mean_difference = -0.0453662495`.
-- `IWE015_2013_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — the same mixed system in 2013; `standardized_mean_difference = +0.0225087081`.
+- `IWE015_2012_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — *Silene stellata* × *Hadena ectypa*; `standardized_mean_difference = -0.3465154178`.
+- `IWE015_2013_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — the same mixed system in 2013; `standardized_mean_difference = +0.1669290472`.
 
 The two IWE027 rows share one dependence cluster and the two IWE015 rows share one dependence cluster. IWE023 is a second, independent mutualist SMD cluster. **Standardized mean difference is the first native effect family represented in all three preregistered interaction classes, and the mutualist class now reaches the frozen two-cluster minimum.** H1 nevertheless remains **not evaluable** because antagonist and mixed systems still have only one independent SMD cluster each; the reference gate requires at least two per class before inferential class contrasts are allowed.
 
