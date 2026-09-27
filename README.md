@@ -111,9 +111,9 @@ Current order is:
 
 The top antagonist P1 route has a response-blind executable preflight. Once source-backed 2012–2014 female *Anthocharis* event dates and source-normalized plant outcomes are available, run:
 
-`python scripts/run_cardamine_preflight.py <plant_timing.csv> <adult_events.csv> <plant_summaries.csv> <output_dir>`
+`python scripts/run_cardamine_preflight.py <plant_timing.csv> <adult_events.csv> <adult_provenance.json> <plant_summaries.csv> <output_dir>`
 
-The command writes the frozen timing exposure, explicit outcome-missingness/SMD audit, eligible year × ecotype Hedges-g rows, and a status JSON. It **never** appends those rows to `data/extraction/direct_effects.csv`; promotion still requires source verification and strict-H1 adjudication.
+The command first validates an adult-timing provenance manifest, then writes the frozen timing exposure, explicit outcome-missingness/SMD audit, eligible year × ecotype Hedges-g rows, and a status JSON. Real manifests must identify Dibbinsdale female capture/recapture records for exactly 2012–2014; older MRR seasons, male records, and egg dates fail closed. It **never** appends those rows to `data/extraction/direct_effects.csv`; promotion still requires source verification and strict-H1 adjudication.
 
 ## Initial candidate system families
 
