@@ -17,10 +17,11 @@ The empirical primary workflow must therefore use `dependence_id`, not row count
 
 For each interaction class:
 
-1. the point estimate is the inverse-variance weighted mean of the admitted strict Tier-A effects;
-2. residual score contributions are summed within `dependence_id`;
-3. uncertainty uses a CR1 cluster-robust sandwich variance;
-4. confidence intervals use a Student-t critical value with `m_dependence - 1` degrees of freedom.
+1. a REML working model estimates between-effect heterogeneity `tau2`;
+2. the point estimate uses inverse `variance_native + tau2` weights;
+3. uncertainty uses a CR2 bias-reduced cluster-robust sandwich variance with `dependence_id` as the cluster;
+4. confidence intervals use a conservative Student-t reference with `m_dependence - 1` degrees of freedom;
+5. inferential SEs/CIs are withheld whenever that conservative df is <4.
 
 The output reports both:
 
@@ -29,15 +30,17 @@ The output reports both:
 
 These quantities must never be described as interchangeable sample sizes.
 
-## One-cluster fail-closed rule
+## Low-information fail-closed rule
 
-If an interaction class has fewer than two distinct `dependence_id` values:
+A descriptive random-effects point estimate may be retained with very few clusters, but robust inference is not reported merely because a sandwich variance can be computed.
 
-- a descriptive point estimate may be retained;
-- `se`, `ci_low`, and `ci_high` are written as missing;
-- `inferential_status = insufficient_dependence_clusters`.
+Under the current conservative reference rule:
 
-Thus multiple rows from one dependence cluster cannot create a pseudo-precise confidence interval.
+- `df = m_dependence - 1`;
+- if `df < 4`, `se`, `ci_low`, and `ci_high` are written as missing;
+- `inferential_status = insufficient_cluster_information`.
+
+Therefore two independent clusters give `df=1`: they are a meaningful replication milestone but do not contain enough information for a trustworthy CRVE confidence interval. This explicitly separates **replication discovery** from **inferential evaluability**.
 
 ## Cross-class rule
 
@@ -51,7 +54,7 @@ Pairwise H1 class contrasts use class-level cluster-robust standard errors and a
 
 If either class has insufficient dependence clusters, the contrast point estimate may be retained descriptively but no inferential CI is produced.
 
-This is a first-release reference analysis, not the final publication model. A later multilevel/RVE implementation may replace it, but it must preserve the same dependence identifiers and must not revert to effect-row independence.
+This is a first-release reference analysis. A later implementation should replace the conservative `m-1` df with the coefficient-specific Satterthwaite df used by mature CR2 implementations, but it must preserve the same dependence identifiers, retain the df<4 fail-closed rule, and never revert to effect-row independence.
 
 ## Sensitivity analysis
 
@@ -64,9 +67,9 @@ It does not use publication (`study_id`) as the omission unit because one depend
 The machine-readable claim gate requires at least one **common native effect family** (or a future registered conversion scale) that has:
 
 - real strict Tier-A evidence in all three interaction classes; and
-- at least two `dependence_id` clusters in every interaction class.
+- enough independent `dependence_id` clusters in every class to reach the reference df floor.
 
-The reference workflow stratifies by `effect_family`; effects on different native scales are retained but are not numerically pooled or used for class contrasts. This minimum permits the reference cluster-robust variance to exist. It is not a claim that two clusters provide strong or publication-ready evidence.
+With the current conservative `df=m-1` rule, this means at least **five clusters per class**. The separate two-cluster target is retained only as a search/replication milestone. The reference workflow stratifies by `effect_family`; effects on different native scales are retained but are not numerically pooled or used for class contrasts.
 
 
 ## Cross-publication assignment registry
@@ -80,7 +83,7 @@ Rows marked `unresolved` cannot be assigned a required cluster prospectively; th
 
 ## Replication-first target
 
-For the current empirical build, the operational H1 target is frozen to the native `standardized_mean_difference` family with a minimum of **two independent dependence clusters per interaction class**.
+For the current empirical build, the discovery target remains the native `standardized_mean_difference` family with a minimum of **two independent dependence clusters per interaction class**. This is a search milestone, not an inferential threshold.
 
 This is stricter than merely having rows in all three classes. A new effect advances the replication target only when it introduces a previously unrepresented `dependence_id` in the target effect family.
 
@@ -91,4 +94,4 @@ Consequences:
 - a second independent mixed programme is prioritized first, then a second independent antagonist programme, then a second independent mutualist programme;
 - `src/iwe/replication.py` and the machine-readable claim status report the current and missing cluster counts.
 
-The two-cluster threshold is only a minimum evaluability gate. It is not a declaration that H1 would be publication-ready once the count reaches two.
+The two-cluster threshold is only a replication milestone. H1 is not inferentially evaluable under the reference workflow until the cluster-information rule is satisfied.
