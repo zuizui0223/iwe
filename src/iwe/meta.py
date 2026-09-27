@@ -241,7 +241,7 @@ def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
     Contrast uncertainty combines class-level cluster-robust SEs using an
     independent-class approximation. The smaller class degrees of freedom is
     used for the t critical value. If either class lacks two dependence
-    clusters, the contrast remains descriptive and carries no CI.
+    clusters or either class falls below the reference information floor, the contrast remains descriptive and carries no CI.
     """
     if summary.empty:
         return pd.DataFrame(
@@ -297,7 +297,7 @@ def class_contrasts(summary: pd.DataFrame) -> pd.DataFrame:
             ci_low = math.nan
             ci_high = math.nan
             df_t = min(left_df, right_df)
-            status = "insufficient_dependence_clusters"
+            status = "insufficient_cluster_information"
 
         rows.append(
             {
