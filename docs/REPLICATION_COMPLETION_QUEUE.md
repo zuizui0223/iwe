@@ -20,11 +20,11 @@ A route is registered only for a candidate that is already P1/P2 and blocked rat
 
 Why first: the programme architecture already contains repeated within-season adult-moth observations, marked flowering units, fruit set and mature-fruit dissections. The missing object is a date-resolved timing-to-final-fitness linkage, not an entirely new measurement domain.
 
-Access state: long-form thesis not publicly retrieved.
+Access state: **public thesis located**. University of Alberta Libraries Scholaris exposes the dissertation as DOI `10.7939/r3-fe1d-kj80`, primary file `NQ95948.pdf` (7.27 MB). The previous `longform_not_public` classification was incorrect. This execution environment currently receives 403 from the repository page/file route, but that is not evidence that the thesis is unavailable.
 
-Next action: obtain the University of Alberta dissertation or archived Onefour field tables through institutional/library or author routes.
+Next action: retrieve the Scholaris PDF directly through the public repository and inspect its tables/appendices for the exact 1999–2003 within-season adult-moth × flowering linkage and final fruit/viable-seed surface. No author contact is required.
 
-Stop rule: do not keep mining annual government summaries and do not equate annual moth density with synchrony.
+Stop rule: do not keep mining annual government summaries, do not equate annual moth density with synchrony, and do not fall back to author contact while the public repository object exists.
 
 ### 2. Rentería/Cantú — Yucca filifera × Tegeticula
 
@@ -40,11 +40,11 @@ Stop rule: never assign pooled fruits to March/April/May without source-backed p
 
 Why third: the Oikos paper measures flowering and oviposition phenology, but its field “moth activity” series is inferred from newly deposited eggs inside host flowers. Egg receipt is a realized interaction outcome and depends on host availability/preference, so it is not an independent partner-availability curve under the frozen timing gate. The published plant-side endpoint is also larval performance rather than final post-cost plant reproduction.
 
-Access state: long-form Zoologica 152 monograph is catalogue-confirmed but not publicly retrieved.
+Access state: long-form Zoologica 152 monograph is catalogue-confirmed but no public digitized copy was recovered. Bibliographic target is now exact: Sigrun Bopp (2003), *Parasitismus oder Symbiose?*, Zoologica 152, Schweizerbart, X + 140 pp., **36 tables**, ISBN `978-3-510-55039-5`. SLUB Dresden confirms the holding.
 
-Next action: inspect the monograph only for a two-part rescue: an independent focal-season adult-moth activity/availability series AND a linked final fruit/seed reproductive surface with variance.
+Next action: use library/ILL acquisition by ISBN and inspect the monograph only for a two-part rescue: an independent focal-season adult-moth activity/availability series AND a linked final fruit/seed reproductive surface with variance. This route does not require author contact.
 
-Stop rule: do not treat egg deposition as independent partner availability, do not use larval performance as plant fitness, and do not return Bopp to P1 unless both missing surfaces are source-backed.
+Stop rule: do not treat egg deposition as independent partner availability, do not use larval performance as plant fitness, do not substitute the 2004 Oikos article for the monograph, and do not return Bopp to P1 unless both missing surfaces are source-backed.
 
 ### 4. Thomas, Hoover & Busby / USGS 2022–2023 — Yucca jaegeriana × Tegeticula antithetica
 

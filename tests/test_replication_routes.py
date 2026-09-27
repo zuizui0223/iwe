@@ -124,3 +124,25 @@ def test_unreleased_project_is_monitor_only():
         pd.DataFrame([_candidate(status="blocked_source_release", priority="P2")]),
     )
     assert any("unreleased project must use monitor_only" in error for error in errors)
+
+
+def test_public_repository_pending_audit_route_is_valid():
+    route = _route(
+        source_access="repository_public_pending_audit",
+        public_search_status="exhausted",
+        unlock_type="timing_linkage",
+        next_action_type="retrieve_longform",
+    )
+    errors = validate_replication_completion_routes(
+        pd.DataFrame([route]),
+        pd.DataFrame(
+            [
+                _candidate(
+                    target_class="antagonist",
+                    status="blocked_timing_linkage",
+                    priority="P1",
+                )
+            ]
+        ),
+    )
+    assert errors == []
