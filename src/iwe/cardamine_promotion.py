@@ -171,6 +171,9 @@ def build_cardamine_promotion_packet(
         ignore_index=True,
     )
     effects_after = pd.concat([current_effects, effects_append], ignore_index=True)
+    all_effect_errors = validate_effect_rows(effects_after)
+    if all_effect_errors:
+        raise ValueError("; ".join(all_effect_errors))
     adj_errors = validate_effect_adjudications(effects_after, adjudications_after)
     if adj_errors:
         raise ValueError("; ".join(adj_errors))
