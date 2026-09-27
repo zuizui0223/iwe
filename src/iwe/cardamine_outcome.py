@@ -16,9 +16,13 @@ EXPOSURE_COLUMNS = (
     "year",
     "ecotype",
     "plant_id",
-    "synchrony_group",
+    "timing_group",
 )
-ALLOWED_GROUPS = {"higher_synchrony", "lower_synchrony"}
+ALLOWED_GROUPS = {"early_refugium", "core_flight", "late_refugium"}
+CONTRASTS = (
+    ("core_vs_early", "core_flight", "early_refugium"),
+    ("core_vs_late", "core_flight", "late_refugium"),
+)
 DEPENDENCE_ID = "DEP_CARDAMINE_DIBBINSDALE_2012_2014"
 
 
@@ -61,19 +65,20 @@ def cardamine_smd_audit(
     exposure: pd.DataFrame,
     plant_summaries: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Audit every year x ecotype stratum under the frozen high-vs-low contrast.
+    """Audit core-flight versus each phenological refugium separately.
 
-    No stratum is selected by effect direction. A stratum is mathematically
-    estimable only when both timing groups contain >=2 source-backed outcome
-    observations and both group SDs are positive.
+    Early and late escape are biologically distinct routes in the source study,
+    so they are never pooled into one lower-synchrony group. A contrast is
+    mathematically estimable only when both groups contain >=2 source-backed
+    outcome observations and both group SDs are positive.
     """
     _require_columns(exposure, EXPOSURE_COLUMNS, "exposure")
     exp = exposure.loc[:, EXPOSURE_COLUMNS].copy()
     if exp.duplicated(["year", "ecotype", "plant_id"]).any():
         raise ValueError("exposure must be unique by year x ecotype x plant_id")
-    unknown = sorted(set(exp["synchrony_group"].dropna()) - ALLOWED_GROUPS)
+    unknown = sorted(set(exp["timing_group"].dropna()) - ALLOWED_GROUPS)
     if unknown:
-        raise ValueError(f"unknown Cardamine synchrony groups: {unknown}")
+        raise ValueError(f"unknown Cardamine timing groups: {unknown}")
     if exp[list(EXPOSURE_COLUMNS)].isna().any().any():
         raise ValueError("Cardamine exposure columns must not contain missing values")
 
@@ -88,43 +93,47 @@ def cardamine_smd_audit(
 
     rows: list[dict[str, object]] = []
     for (year, ecotype), group in merged.groupby(["year", "ecotype"], sort=True):
-        high_all = group.loc[group["synchrony_group"] == "higher_synchrony"]
-        low_all = group.loc[group["synchrony_group"] == "lower_synchrony"]
-        high = high_all["realized_fraction"].dropna()
-        low = low_all["realized_fraction"].dropna()
-        n_high_total = int(len(high_all))
-        n_low_total = int(len(low_all))
-        n_high = int(len(high))
-        n_low = int(len(low))
-        missing_high = n_high_total - n_high
-        missing_low = n_low_total - n_low
-        sd_high = float(high.std(ddof=1)) if n_high >= 2 else float("nan")
-        sd_low = float(low.std(ddof=1)) if n_low >= 2 else float("nan")
+        for contrast, high_group, low_group in CONTRASTS:
+            high_all = group.loc[group["timing_group"] == high_group]
+            low_all = group.loc[group["timing_group"] == low_group]
+            high = high_all["realized_fraction"].dropna()
+            low = low_all["realized_fraction"].dropna()
+            n_high_total = int(len(high_all))
+            n_low_total = int(len(low_all))
+            n_high = int(len(high))
+            n_low = int(len(low))
+            missing_high = n_high_total - n_high
+            missing_low = n_low_total - n_low
+            sd_high = float(high.std(ddof=1)) if n_high >= 2 else float("nan")
+            sd_low = float(low.std(ddof=1)) if n_low >= 2 else float("nan")
 
-        blocker = ""
-        if n_high < 2 or n_low < 2:
-            blocker = "requires at least two outcome observations in each timing group"
-        elif sd_high <= 0 or sd_low <= 0:
-            blocker = "requires positive within-group SD in both timing groups"
+            blocker = ""
+            if n_high < 2 or n_low < 2:
+                blocker = "requires at least two outcome observations in each timing group"
+            elif sd_high <= 0 or sd_low <= 0:
+                blocker = "requires positive within-group SD in both timing groups"
 
-        rows.append(
-            {
-                "year": year,
-                "ecotype": ecotype,
-                "n_higher_synchrony_total": n_high_total,
-                "n_lower_synchrony_total": n_low_total,
-                "n_higher_synchrony": n_high,
-                "n_lower_synchrony": n_low,
-                "n_higher_synchrony_missing_outcome": missing_high,
-                "n_lower_synchrony_missing_outcome": missing_low,
-                "mean_higher_synchrony": float(high.mean()) if n_high else float("nan"),
-                "mean_lower_synchrony": float(low.mean()) if n_low else float("nan"),
-                "sd_higher_synchrony": sd_high,
-                "sd_lower_synchrony": sd_low,
-                "eligible_smd": blocker == "",
-                "blocker": blocker,
-            }
-        )
+            rows.append(
+                {
+                    "year": year,
+                    "ecotype": ecotype,
+                    "contrast": contrast,
+                    "high_group": high_group,
+                    "low_group": low_group,
+                    "n_high_total": n_high_total,
+                    "n_low_total": n_low_total,
+                    "n_high": n_high,
+                    "n_low": n_low,
+                    "n_high_missing_outcome": missing_high,
+                    "n_low_missing_outcome": missing_low,
+                    "mean_high": float(high.mean()) if n_high else float("nan"),
+                    "mean_low": float(low.mean()) if n_low else float("nan"),
+                    "sd_high": sd_high,
+                    "sd_low": sd_low,
+                    "eligible_smd": blocker == "",
+                    "blocker": blocker,
+                }
+            )
     return pd.DataFrame(rows)
 
 
@@ -132,33 +141,37 @@ def cardamine_smd_effects(
     exposure: pd.DataFrame,
     plant_summaries: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Calculate all mathematically estimable year x ecotype Cardamine SMDs.
+    """Calculate estimable core-flight versus refugium Cardamine SMDs.
 
-    The contrast is higher_synchrony minus lower_synchrony. All returned effects
-    share one dependence cluster because they arise from the same Dibbinsdale
-    2012-2014 programme.
+    The contrast is always greater onset exposure to adult females (core_flight)
+    minus one lower-exposure phenological refugium. Core-vs-early and
+    core-vs-late remain separate rows and all rows share one dependence cluster.
     """
     audit = cardamine_smd_audit(exposure, plant_summaries)
     rows: list[dict[str, object]] = []
     for _, row in audit.loc[audit["eligible_smd"]].iterrows():
         g, variance = hedges_g_from_summary(
-            mean_high=float(row["mean_higher_synchrony"]),
-            sd_high=float(row["sd_higher_synchrony"]),
-            n_high=int(row["n_higher_synchrony"]),
-            mean_low=float(row["mean_lower_synchrony"]),
-            sd_low=float(row["sd_lower_synchrony"]),
-            n_low=int(row["n_lower_synchrony"]),
+            mean_high=float(row["mean_high"]),
+            sd_high=float(row["sd_high"]),
+            n_high=int(row["n_high"]),
+            mean_low=float(row["mean_low"]),
+            sd_low=float(row["sd_low"]),
+            n_low=int(row["n_low"]),
         )
         rows.append(
             {
                 "year": row["year"],
                 "ecotype": row["ecotype"],
+                "contrast": row["contrast"],
+                "high_group": row["high_group"],
+                "low_group": row["low_group"],
                 "effect_family": "standardized_mean_difference",
                 "effect_native": g,
                 "variance_native": variance,
-                "n_higher_synchrony": int(row["n_higher_synchrony"]),
-                "n_lower_synchrony": int(row["n_lower_synchrony"]),
+                "n_high": int(row["n_high"]),
+                "n_low": int(row["n_low"]),
                 "dependence_id": DEPENDENCE_ID,
             }
         )
     return pd.DataFrame(rows)
+
