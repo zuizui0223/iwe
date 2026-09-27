@@ -80,15 +80,18 @@ def cardamine_timing_only_exposure(
     plant_observations: pd.DataFrame,
     adult_events: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Classify timing exposure without consulting a plant response variable.
+    """Classify response-blind onset exposure to the female adult-flight window.
 
-    Within each year, first flowering is higher_synchrony when it falls inside
-    the source-compatible 10th-90th percentile female adult-flight window,
-    inclusive, and lower_synchrony when it falls before or after that window.
+    The source describes two phenological refugia on opposite sides of the
+    female flight period. First flowering is therefore kept as a three-level
+    exposure rather than collapsing early and late escape into one group:
 
-    Ecotype is retained; this helper never pools ecotypes or estimates a fitness
-    effect. Any eventual SMD must be estimated only after this timing table is
-    frozen.
+    - early_refugium: first flowering before the female q10 boundary;
+    - core_flight: first flowering inside/on the female q10-q90 window;
+    - late_refugium: first flowering after the female q90 boundary.
+
+    Ecotype is retained. Downstream SMDs compare core_flight separately against
+    each refugium so biologically distinct escape routes are never pooled.
     """
     plants = first_flowering_dates(plant_observations)
     windows = adult_flight_windows(adult_events)
@@ -97,7 +100,7 @@ def cardamine_timing_only_exposure(
             adult_q10_doy=pd.Series(dtype=float),
             adult_q90_doy=pd.Series(dtype=float),
             n_adult_events=pd.Series(dtype=int),
-            synchrony_group=pd.Series(dtype=str),
+            timing_group=pd.Series(dtype=str),
         )
 
     out = plants.merge(windows, on="year", how="left", validate="many_to_one")
@@ -107,11 +110,11 @@ def cardamine_timing_only_exposure(
         )
         raise ValueError(f"missing adult timing window for plant years: {missing_years}")
 
-    inside = (
-        (out["first_flowering_doy"] >= out["adult_q10_doy"])
-        & (out["first_flowering_doy"] <= out["adult_q90_doy"])
-    )
-    out["synchrony_group"] = inside.map(
-        {True: "higher_synchrony", False: "lower_synchrony"}
-    )
+    out["timing_group"] = "core_flight"
+    out.loc[
+        out["first_flowering_doy"] < out["adult_q10_doy"], "timing_group"
+    ] = "early_refugium"
+    out.loc[
+        out["first_flowering_doy"] > out["adult_q90_doy"], "timing_group"
+    ] = "late_refugium"
     return out.sort_values(["year", "ecotype", "plant_id"]).reset_index(drop=True)
