@@ -58,3 +58,26 @@ Only after these checks may the 2012 and 2013 Hedges-g rows return to the strict
 ## Current consequence
 
 The IWE015 programme still passes the biological timing and final-reproduction gates, but contributes **zero quantitative strict-H1 effects and zero current mixed SMD dependence clusters** until raw variance verification succeeds.
+
+
+## Executable raw audit
+
+The repository now provides:
+
+`python scripts/audit_iwe015_raw_variance.py <2012_early.csv> <2012_late.csv> <2013_early.csv> <2013_late.csv> <output_dir> --successful-fruits-col <column>`
+
+Optional cross-check columns:
+
+- `--fruit-initiation-col <column>`
+- `--predation-rate-col <column>`
+
+The command writes:
+
+- `group_audit.csv` — exact n, raw mean, raw SD, raw SE, and whether the printed dispersion matches raw SD or raw SE;
+- `bounded_component_audit.csv` — optional fruit-initiation/predation checks including the distribution-free Bhatia–Davis upper bound;
+- `raw_effect_candidates.csv` — raw-data Hedges g for early minus late in 2012 and 2013, calculated directly from the individual successful-fruit values;
+- `audit_status.json` — a non-promoting machine-readable status.
+
+The raw-effect calculation never uses the Table 1 dispersion. Table 1 is used only to verify that each CSV reproduces the published experiment sample size and rounded mean before a candidate raw effect is emitted as ready.
+
+The command never edits `data/extraction/direct_effects.csv`. Re-admission remains a separate transactional step after the audit output is inspected.
