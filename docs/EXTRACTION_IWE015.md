@@ -38,22 +38,22 @@ Successful fruit number is used as the female reproductive-success measure and i
 
 This is therefore a final post-predation reproductive outcome rather than visitation, fruit initiation, egg load, or potential seed set.
 
-## Published summaries
+## Published summaries and dispersion audit
 
-Table 1 reports group means and standard errors.
+Table 1 labels its dispersion columns as mean ± SE.
 
-| Year | Window | Adult plants n | Successful fruits mean | Reported SE |
+| Year | Window | Adult plants n | Successful fruits mean | Reported ± value |
 |---|---|---:|---:|---:|
 | 2012 | early / Hadena-dominant | 59 | 2.66 | 2.95 |
 | 2012 | late / co-pollinator-dominant | 58 | 3.91 | 4.13 |
 | 2013 | early / Hadena-dominant | 55 | 9.77 | 6.91 |
 | 2013 | late / co-pollinator-dominant | 55 | 8.60 | 7.01 |
 
-The source explicitly labels these quantities as mean ± SE. IWE therefore reconstructs each group standard deviation as
+The printed SE label is internally inconsistent with the same table. For example, fruit-initiation proportion is bounded on [0,1], yet the 2012-early row reports 0.91 ± 0.19 with n=59. If 0.19 were an SE, the implied SD would be 1.46. For a [0,1] variable with mean 0.91, the maximum possible SD is sqrt(0.91 × 0.09) = 0.286, so the SE interpretation is impossible.
 
-`SD = SE * sqrt(n)`
+The table also provides an internal positive check. Treating the four fruit-initiation dispersions (0.19, 0.19, 0.10, 0.10) as SDs and combining them with the reported group means and sample sizes yields an overall SD of about 0.152, reproducing the reported Overall value 0.92 ± 0.15. The successful-fruit and predation columns show the same SD-like scale.
 
-before calculating an independent-groups Hedges g.
+IWE therefore adjudicates the Table 1 ± values as **standard deviations mislabeled as SE**, and uses them directly as SDs. The Dryad DOI remains recorded as the preferred raw-data cross-check, but the previous SE×sqrt(n) reconstruction is rejected by the source table's own bounded-variable constraints.
 
 ## Effect orientation
 
@@ -74,14 +74,14 @@ Positive g means greater synchrony with the mixed pollinating seed predator is a
 
 Using Table 1:
 
-- high-overlap early: mean = 2.66, SE = 2.95, n = 59;
-- low-overlap late: mean = 3.91, SE = 4.13, n = 58.
+- high-overlap early: mean = 2.66, SD = 2.95, n = 59;
+- low-overlap late: mean = 3.91, SD = 4.13, n = 58.
 
-After converting SE to SD and applying the registered small-sample correction:
+Applying the registered small-sample correction:
 
-`g = -0.0453662495`
+`g = -0.3465154178`
 
-`var(g) = 0.0337540056`.
+`var(g) = 0.0342671136`.
 
 Effect ID:
 
@@ -91,14 +91,14 @@ Effect ID:
 
 Using Table 1:
 
-- high-overlap early: mean = 9.77, SE = 6.91, n = 55;
-- low-overlap late: mean = 8.60, SE = 7.01, n = 55.
+- high-overlap early: mean = 9.77, SD = 6.91, n = 55;
+- low-overlap late: mean = 8.60, SD = 7.01, n = 55.
 
 The reconstructed effect is:
 
-`g = +0.0225087081`
+`g = +0.1669290472`
 
-`var(g) = 0.0358615214`.
+`var(g) = 0.0359881819`.
 
 Effect ID:
 
@@ -116,12 +116,12 @@ The two rows preserve year-specific effect heterogeneity without increasing the 
 
 ## Interpretation boundary
 
-The two year effects are close to zero and have opposite signs.
+The two year effects have opposite signs: moderately negative in 2012 and small positive in 2013.
 
-That pattern is compatible with the biological expectation that greater synchrony with a pollinating seed predator can have offsetting pollination benefits and seed-predation costs, but two dependent year effects do not establish H2 or a general mixed-system average.
+That sign reversal is compatible with the biological expectation that greater synchrony with a pollinating seed predator can shift the balance between pollination benefit and seed-predation cost across years, but two dependent year effects do not establish H2 or a general mixed-system average.
 
 The late window also contains other effective moth pollinators, so the contrast represents the realized ecological consequence of changing overlap with *H. ectypa* in the actual pollinator community, not an isolated manipulation of *H. ectypa* presence.
 
 ## Reproducibility
 
-The repository implements `hedges_g_from_mean_se()`, which converts the source-labeled SEs to SDs and calls the registered Hedges-g calculation. Regression tests reproduce both year-specific effects and variances.
+The repository uses `hedges_g_from_summary()` for IWE015 because the source-table dispersion audit identifies the reported ± values as SDs despite the printed SE label. Regression tests reproduce both corrected year-specific effects and variances.

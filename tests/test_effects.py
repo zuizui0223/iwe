@@ -42,30 +42,30 @@ def test_hedges_g_rejects_invalid_group_summary():
 
 
 
-def test_hedges_g_from_mean_se_reconstructs_iwe015_2012():
-    g, variance = hedges_g_from_mean_se(
+def test_hedges_g_from_summary_reconstructs_iwe015_2012():
+    g, variance = hedges_g_from_summary(
         mean_high=2.66,
-        se_high=2.95,
+        sd_high=2.95,
         n_high=59,
         mean_low=3.91,
-        se_low=4.13,
+        sd_low=4.13,
         n_low=58,
     )
-    assert g == pytest.approx(-0.0453662495)
-    assert variance == pytest.approx(0.0337540056)
+    assert g == pytest.approx(-0.3465154178)
+    assert variance == pytest.approx(0.0342671136)
 
 
-def test_hedges_g_from_mean_se_reconstructs_iwe015_2013():
-    g, variance = hedges_g_from_mean_se(
+def test_hedges_g_from_summary_reconstructs_iwe015_2013():
+    g, variance = hedges_g_from_summary(
         mean_high=9.77,
-        se_high=6.91,
+        sd_high=6.91,
         n_high=55,
         mean_low=8.60,
-        se_low=7.01,
+        sd_low=7.01,
         n_low=55,
     )
-    assert g == pytest.approx(0.0225087081)
-    assert variance == pytest.approx(0.0358615214)
+    assert g == pytest.approx(0.1669290472)
+    assert variance == pytest.approx(0.0359881819)
 
 
 def test_hedges_g_from_mean_se_rejects_nonpositive_se():
