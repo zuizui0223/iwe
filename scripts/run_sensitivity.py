@@ -44,6 +44,7 @@ def main() -> int:
                 "se",
                 "ci_low",
                 "ci_high",
+                "tau2",
                 "k_effects",
                 "m_dependence",
                 "df",
