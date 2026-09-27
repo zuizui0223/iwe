@@ -14,7 +14,9 @@ def _plant_timing():
             {"year": 2012, "ecotype": "early", "plant_id": "E1", "doy": 114, "flowers": 2},
             {"year": 2012, "ecotype": "early", "plant_id": "E2", "doy": 120, "flowers": 3},
             {"year": 2012, "ecotype": "early", "plant_id": "E3", "doy": 106, "flowers": 2},
-            {"year": 2012, "ecotype": "early", "plant_id": "E4", "doy": 135, "flowers": 2},
+            {"year": 2012, "ecotype": "early", "plant_id": "E4", "doy": 108, "flowers": 2},
+            {"year": 2012, "ecotype": "early", "plant_id": "E5", "doy": 135, "flowers": 2},
+            {"year": 2012, "ecotype": "early", "plant_id": "E6", "doy": 138, "flowers": 2},
         ]
     )
 
@@ -48,7 +50,9 @@ def _summaries():
             {"year": 2012, "ecotype": "early", "plant_id": "E1", "max_ru": 10, "final_intact_ru": 8},
             {"year": 2012, "ecotype": "early", "plant_id": "E2", "max_ru": 10, "final_intact_ru": 6},
             {"year": 2012, "ecotype": "early", "plant_id": "E3", "max_ru": 10, "final_intact_ru": 2},
-            {"year": 2012, "ecotype": "early", "plant_id": "E4", "max_ru": 10, "final_intact_ru": 0},
+            {"year": 2012, "ecotype": "early", "plant_id": "E4", "max_ru": 10, "final_intact_ru": 1},
+            {"year": 2012, "ecotype": "early", "plant_id": "E5", "max_ru": 10, "final_intact_ru": 7},
+            {"year": 2012, "ecotype": "early", "plant_id": "E6", "max_ru": 10, "final_intact_ru": 5},
         ]
     )
 
@@ -187,11 +191,14 @@ def test_valid_packet_is_non_mutating_but_transactionally_ready():
     packet = _packet()
     assert packet["manifest"]["transactional_validation_passed"] is True
     assert packet["manifest"]["direct_repo_mutation_performed"] is False
-    assert len(packet["effects_append"]) == 1
-    effect = packet["effects_append"].iloc[0]
-    assert effect["study_id"] == "IWE032"
-    assert effect["dependence_id"] == "DEP_CARDAMINE_DIBBINSDALE_2012_2014"
-    assert effect["sample_size"] == 4
+    assert len(packet["effects_append"]) == 2
+    assert set(packet["effects_append"]["study_id"]) == {"IWE032"}
+    assert set(packet["effects_append"]["dependence_id"]) == {
+        "DEP_CARDAMINE_DIBBINSDALE_2012_2014"
+    }
+    assert set(packet["effects_append"]["sample_size"]) == {4}
+    assert any("CORE_VS_EARLY" in value for value in packet["effects_append"]["effect_id"])
+    assert any("CORE_VS_LATE" in value for value in packet["effects_append"]["effect_id"])
     assert packet["candidate_ready_row"].iloc[0]["status"] == "ready"
     assert packet["candidate_ready_row"].iloc[0]["smd_summary_stats"] == "yes"
     assert packet["completion_routes_after"].empty
