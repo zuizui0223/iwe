@@ -33,6 +33,13 @@ jobs:
         run: python scripts/validate_replication_candidates.py
       - name: Validate replication completion routes
         run: python scripts/validate_replication_routes.py
+      - name: Run Cardamine synthetic preflight
+        run: >-
+          python scripts/run_cardamine_preflight.py
+          examples/cardamine_synthetic_plant_timing.csv
+          examples/cardamine_synthetic_adult_events.csv
+          examples/cardamine_synthetic_outcomes.csv
+          /tmp/iwe-cardamine-preflight
       - name: Build primary dataset
         run: python scripts/build_meta_dataset.py examples/synthetic_effects.csv /tmp/iwe-primary.csv
       - name: Run dependence-aware reference meta workflow
