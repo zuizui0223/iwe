@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-import pandas as pd
 from collections.abc import Mapping
+
+import pandas as pd
 
 from .cardamine_outcome import cardamine_smd_audit, cardamine_smd_effects
 from .cardamine_provenance import require_cardamine_adult_provenance
@@ -16,7 +17,7 @@ def run_cardamine_preflight(
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Run the frozen Cardamine timing -> audit -> SMD pipeline.
 
-    The three inputs stay conceptually separate:
+    The four inputs stay conceptually separate:
     - plant_observations: timing-only repeated flower observations;
     - adult_events: source-backed female capture/recapture DOYs;
     - adult_provenance: manifest fixing candidate/site/sex/record basis/years;
