@@ -4,7 +4,7 @@ Source: Zhou J, Reynolds RJ, Zimmer EA, Dudash MR, Fenster CB. 2020. *Variable a
 
 Archived data: Dryad DOI `10.5061/dryad.6q573n5w1`.
 
-Status: **strict-H1 mixed pollinating-seed-predator evidence extracted for 2012 and 2013**.
+Status: **timing and final-outcome gates pass; quantitative strict-H1 extraction is on hold pending raw Dryad variance verification**.
 
 ## Timing design
 
@@ -66,7 +66,13 @@ Therefore:
 
 Positive g means greater synchrony with the mixed pollinating seed predator is associated with greater final female reproductive performance.
 
-## 2012 effect
+## Quantitative hold
+
+The publication explicitly defines the printed dispersion as `SE=standard error`. However, Table 1 also reports bounded fruit-initiation proportions such as `0.91 ± 0.19` for `n=59`. If 0.19 were an SE, the implied SD would be `0.19*sqrt(59) > 1`, which is impossible for a variable bounded to [0,1]. The predation-rate dispersions create the same problem.
+
+This is strong evidence of a source-label or table-assembly error, but it does not by itself prove that every printed dispersion is an SD. Therefore IWE does **not** promote either the literal-SE reconstruction or the SD-like reconstruction into `direct_effects.csv` until the public Dryad female CSVs are recalculated. Candidate diagnostic values may be reported in this receipt, but they are not meta-analytic evidence.
+
+## 2012 diagnostic reconstruction
 
 Using Table 1:
 
@@ -83,7 +89,7 @@ Effect ID:
 
 `IWE015_2012_EARLY_VS_LATE_SUCCESSFRUIT_SMD`.
 
-## 2013 effect
+## 2013 diagnostic reconstruction
 
 Using Table 1:
 
@@ -118,4 +124,4 @@ The late window also contains other effective moth pollinators, so the contrast 
 
 ## Reproducibility
 
-The repository now uses `hedges_g_from_summary()` for IWE015, treating the printed Table 1 dispersions as SD-like values after the bounded-outcome consistency failure of the `SE` label. Regression tests reproduce both corrected year-specific effects and variances. The Dryad archive identity, version date, female CSV filenames and analysis script are recorded separately in the source audit.
+The repository retains calculation regression tests for both possible interpretations as diagnostics, but no IWE015 effect is admitted to the strict corpus while the variance source is unresolved. The Dryad archive identity, version date, female CSV filenames and analysis script are recorded in `IWE015_DRYAD_VARIANCE_AUDIT.md`.
