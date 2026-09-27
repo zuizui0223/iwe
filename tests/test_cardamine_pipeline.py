@@ -10,10 +10,10 @@ def test_cardamine_preflight_runs_frozen_stages_in_order():
             {"year": 2012, "ecotype": "early", "plant_id": "E1", "doy": 114, "flowers": 2},
             {"year": 2012, "ecotype": "early", "plant_id": "E2", "doy": 120, "flowers": 3},
             {"year": 2012, "ecotype": "early", "plant_id": "E3", "doy": 106, "flowers": 2},
-            {"year": 2012, "ecotype": "early", "plant_id": "E4", "doy": 135, "flowers": 2},
+            {"year": 2012, "ecotype": "early", "plant_id": "E4", "doy": 108, "flowers": 2},
             {"year": 2012, "ecotype": "late", "plant_id": "L1", "doy": 116, "flowers": 2},
             {"year": 2012, "ecotype": "late", "plant_id": "L2", "doy": 126, "flowers": 2},
-            {"year": 2012, "ecotype": "late", "plant_id": "L3", "doy": 108, "flowers": 2},
+            {"year": 2012, "ecotype": "late", "plant_id": "L3", "doy": 135, "flowers": 2},
             {"year": 2012, "ecotype": "late", "plant_id": "L4", "doy": 140, "flowers": 2},
         ]
     )
@@ -54,8 +54,8 @@ def test_cardamine_preflight_runs_frozen_stages_in_order():
         summaries,
     )
 
-    assert set(exposure["synchrony_group"]) == {"higher_synchrony", "lower_synchrony"}
-    assert len(audit) == 2
-    assert audit["eligible_smd"].all()
+    assert set(exposure["timing_group"]) == {"early_refugium", "core_flight", "late_refugium"}
+    assert len(audit) == 4
+    assert int(audit["eligible_smd"].sum()) == 2
     assert len(effects) == 2
-    assert set(effects["ecotype"]) == {"early", "late"}
+    assert set(effects["contrast"]) == {"core_vs_early", "core_vs_late"}
