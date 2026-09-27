@@ -206,4 +206,4 @@ def test_cluster_robust_summary_reports_common_effect_family():
     row = cluster_robust_summary(df).iloc[0]
     assert row["effect_family"] == "log_odds_ratio"
     assert row["estimate"] == pytest.approx(1.55)
-    assert row["inferential_status"] == "insufficient_dependence_clusters"
+    assert row["inferential_status"] == "insufficient_cluster_information"
