@@ -47,14 +47,14 @@ Mutualists:
 - `IWE029_LATE_VS_PEAK_NP_LOGOR` — *Stigmaphyllon paralias* × oil-collecting *Centris* bees; `log_odds_ratio = +1.55`.
 - `IWE027_2007_HIS_M_VS_E_SEEDSET_SMD` — *Phyllodoce aleutica* × bumblebees; high-worker-bee M window versus low-visit E window; intact natural seed set; `standardized_mean_difference = +0.8518282660`.
 - `IWE027_2007_GOS_M_VS_E_SEEDSET_SMD` — the same 2007 regional contrast at GOS; `standardized_mean_difference = +1.0038892388`.
-- `IWE023_2015_W1_VS_W4_SEEDSET_SMD` — *Mertensia ciliata* × seasonal pollinator assemblage; experimentally shifted week 1 has >5× the contemporaneous visitation of week 4; final seed set; `standardized_mean_difference = +0.3732395638`.
+- `IWE023_2015_W1_VS_W4_SEEDSET_SMD` — *Mertensia ciliata* × seasonal pollinator assemblage; experimentally shifted week 1 has >5× the contemporaneous visitation of week 4; final seed set; `standardized_mean_difference = +0.3815303645`.
 
 Antagonists:
 - `IWE011_HA_VS_HD_FINALSET_SMD` — *Peucedanum multivittatum* × *Phaulernis fulviguttella*; high-overlap HA versus low-overlap HD; final intact-fruit set; `standardized_mean_difference = -1.1368391965`.
 
 Mixed pollinating seed predators:
-- `IWE015_2012_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — *Silene stellata* × *Hadena ectypa*; `standardized_mean_difference = -0.0453662495`.
-- `IWE015_2013_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — the same mixed system in 2013; `standardized_mean_difference = +0.0225087081`.
+- `IWE015_2012_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — *Silene stellata* × *Hadena ectypa*; `standardized_mean_difference = -0.3465154178`.
+- `IWE015_2013_EARLY_VS_LATE_SUCCESSFRUIT_SMD` — the same mixed system in 2013; `standardized_mean_difference = +0.1669290472`.
 
 The two IWE027 rows share one dependence cluster and the two IWE015 rows share one dependence cluster. IWE023 is a second, independent mutualist SMD cluster. **Standardized mean difference is the first native effect family represented in all three preregistered interaction classes, and the mutualist class now reaches the frozen two-cluster minimum.** H1 nevertheless remains **not evaluable** because antagonist and mixed systems still have only one independent SMD cluster each; the reference gate requires at least two per class before inferential class contrasts are allowed.
 
@@ -88,7 +88,7 @@ Current replication-search state is:
 
 A separate **P2 prospective** mixed route is the active USGS 2022–2023 *Yucca jaegeriana × Tegeticula antithetica* study: its design directly measures moth visitation, pod production and fertile seeds, but only preliminary poster/conference summaries are currently citable and no final unit-level dataset/publication has been recovered. It is tracked as `blocked_source_release`, not counted as evidence.
 - antagonist #2: **four P1 completion routes, none ready, plus three P2 leads**. New top route: Davies & Saccheri 2024, *Cardamine pratensis × Anthocharis cardamines*. Female butterfly flight is independently measured from capture/recapture, and public Dryad ramet trajectories run from first flowering to dehiscence with final intact reproductive units; the only missing timing object is the numeric female capture/recapture date list underlying the source flight window. Existing P1 routes remain Wen et al. 2024 *Parnassia* fate data, James 1998 yucca-cheater timing-stratified final seeds, and Jordano *Astragalus–Tomares* correct-unit variance. P2: *Cirsium–Rhinocyllus* same-unit data, Pilson 2000 wrong native effect form, and Eureka 2001 squarrose-knapweed cohort final-seed surface. Cardamine is not yet extracted: Figure 4 will not be digitized, eggs will not define adult activity, and the timing-only grouping rule must be frozen before final intact-RU responses are used;
-- mutualist #2: **complete** via IWE023 (*Mertensia ciliata*). Four experimental flowering cohorts were ordered by same-season visitation; week 1 versus week 4 final seed set yields Hedges g = +0.3732395638 from published relative group means and the balanced ANOVA F statistic, with no variance imputation.
+- mutualist #2: **complete** via IWE023 (*Mertensia ciliata*). Four experimental flowering cohorts were ordered by same-season visitation; week 1 versus week 4 final seed set yields Hedges g = +0.3815303645 from published relative group means and the balanced ANOVA F(3,36), retaining residual df=36 in the standardizer correction, with no variance imputation.
 
 The next mixed and antagonist search targets must jointly provide contemporaneous partner activity, a prospectively orderable plant timing contrast, final realized plant reproduction, and SMD-compatible variance-bearing summaries.
 
