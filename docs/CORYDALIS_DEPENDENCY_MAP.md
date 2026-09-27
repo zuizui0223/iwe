@@ -61,7 +61,7 @@ If a population is confirmed to continue the Kudo Nopporo/earlier programme, it 
 
 The programme-level cluster is the unit used by:
 
-- CR1 uncertainty in `cluster_robust_summary()`;
+- REML+CR2 uncertainty in `cluster_robust_summary()`;
 - leave-one-dependence sensitivity;
 - H1 evaluability counts.
 
