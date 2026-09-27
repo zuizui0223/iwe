@@ -5,6 +5,7 @@ import pandas as pd
 
 ALLOWED_SOURCE_ACCESS = {
     "public_source_insufficient",
+    "repository_public_pending_audit",
     "longform_not_public",
     "repository_inactive",
     "thesis_public_insufficient",
