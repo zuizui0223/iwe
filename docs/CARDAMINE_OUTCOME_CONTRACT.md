@@ -44,12 +44,14 @@ After the missing female adult dates are recovered:
 
 1. build the timing-only exposure table with the already frozen q10–q90 rule;
 2. build the outcome table independently;
-3. join only by `year, ecotype, plant_id`;
+3. join only by `year, ecotype, plant_id`, retaining the full timing-exposure table so missing/censored outcomes are explicitly counted rather than silently dropped;
 4. analyze every `year × ecotype` stratum in which both `higher_synchrony` and `lower_synchrony` have at least two source-backed outcomes and positive within-group SD;
 5. do not pool early and late ecotypes before effect calculation;
 6. do not retain or drop a stratum because of effect direction, effect magnitude, p-value or biological attractiveness.
 
-The minimum of two observations per group is the mathematical minimum for an independent-group sampling variance, not a fitted power threshold.
+The audit reports, by timing group, both the number of exposed plants and the number with source-backed outcomes. Missing/censored outcomes may reduce the analyzable sample but are never converted to zero and are never hidden by an inner join.
+
+The minimum of two source-backed outcomes per group is the mathematical minimum for an independent-group sampling variance, not a fitted power threshold.
 
 ## Frozen effect
 
