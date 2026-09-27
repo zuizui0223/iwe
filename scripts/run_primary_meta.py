@@ -64,7 +64,8 @@ def main() -> int:
     print(
         f"Wrote effect-family-stratified dependence-aware reference outputs to {outdir}. "
         "No native effect families are pooled without a registered conversion; "
-        "uncertainty is CR1-clustered by dependence_id."
+        "reference inference uses REML random effects plus CR2 by dependence_id "
+        "and withholds SE/CI when conservative cluster df is below 4."
     )
     return 0
 
