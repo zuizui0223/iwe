@@ -31,14 +31,14 @@ Search terms combined variants of `phenological mismatch`, `flowering time`, `po
 <!-- BEGIN GENERATED SCREENING SNAPSHOT -->
 _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 
-**Registered publications: 31.** Current decisions: 12 include, 7 unresolved, 12 context only, 0 exclude.
+**Registered publications: 32.** Current decisions: 13 include, 7 unresolved, 12 context only, 0 exclude.
 
 | Candidate class | Include | Unresolved | Context only | Exclude | Total |
 |---|---:|---:|---:|---:|---:|
 | mutualist | 9 | 5 | 2 | 0 | 16 |
-| antagonist | 1 | 2 | 4 | 0 | 7 |
+| antagonist | 2 | 2 | 4 | 0 | 8 |
 | mixed pollinating seed predator | 2 | 0 | 6 | 0 | 8 |
-| **Total** | **12** | **7** | **12** | **0** | **31** |
+| **Total** | **13** | **7** | **12** | **0** | **32** |
 
 ### Registry snapshot
 
@@ -75,6 +75,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 | `IWE029` | mutualist | `include` | `10.1093/aob/mcaf126` | Evolutionary consequences of flowering-pollinator asynchrony: the case of a floral oil-producing plant and its oil-collecting bees |
 | `IWE030` | antagonist | `context_only` | `10.1890/0012-9658(1997)078[1624:EOPHAS]2.0.CO;2` | Effects of pollinators herbivores and seed predators on flowering phenology |
 | `IWE031` | antagonist | `context_only` | `10.1002/ecy.3854` | Timing of a plant-herbivore interaction alters plant growth and reproduction |
+| `IWE032` | antagonist | `include` | `10.1002/ece3.11330` | Flowering phenology mediates escape from a specialist butterfly seed predator |
 <!-- END GENERATED SCREENING SNAPSHOT -->
 
 `include` means the publication currently appears to satisfy the biological Tier-A screen and should proceed to quantitative extraction. It does not mean an effect size has already been recovered or that the study will survive variance/dependence checks.
@@ -170,7 +171,7 @@ Publication count therefore cannot be used as the effective sample size.
 ## Next quantitative tasks
 
 1. Add a **second independent SMD dependence cluster in each interaction class**; effect-family coverage is no longer the primary bottleneck.
-2. Prioritize an independent antagonist SMD source, because IWE011 is currently the sole antagonist SMD cluster.
+2. Prioritize IWE032 Cardamine–Anthocharis as the top antagonist completion route; its timing/outcome/SMD rules are already frozen and only the source-backed 2012–2014 female flight-date object is missing.
 3. Quantitatively adjudicate IWE014 as a possible second mixed cluster, keeping it separate from IWE015 unless source overlap is demonstrated.
 4. Recover sampling variance without automatic imputation.
 5. Admit effects only after direction can be oriented as `greater synchrony -> higher plant reproductive performance`.
