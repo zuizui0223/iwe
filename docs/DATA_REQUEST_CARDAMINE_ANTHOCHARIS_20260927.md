@@ -1,8 +1,12 @@
-# Minimal data request — Cardamine × Anthocharis adult flight dates
+# Minimal fallback data request — Cardamine × Anthocharis adult flight dates
 
 Date: 2026-09-27  
 Candidate: `ANT002_CARDAMINE_ANTHOCHARIS_2024`  
-Purpose: close the independent adult-flight timing linkage without accessing response data
+Purpose: fallback only after the identified public Figure 4 PowerPoint and Davies 2019 Ecology supplements have been inspected and shown not to contain the required 2012–2014 female timing object
+
+## Public-assets-before-request rule
+
+Before using this request, inspect the official Wiley Figure 4 PowerPoint for DOI `10.1002/ece3.11330` and Davies (2019) Ecology supporting files `ecy2612-sup-0001-AppendixS1.pdf`, `ecy2612-sup-0002-AppendixS2.pdf`, and `ecy2612-sup-0003-AppendixS3.pdf`. Accept only embedded/source numerical 2012–2014 female capture+recapture events or exact year-specific q10/q90 flight-window values. Do not digitize graphical coordinates. If those public assets supply the timing object, this request is unnecessary.
 
 ## Scientific need
 
