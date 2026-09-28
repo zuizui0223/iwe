@@ -90,13 +90,13 @@ Stop rule: do not derive an SMD from timing tests that omit final-seed group mea
 
 ### 4. Jordano 1987/1990 — Astragalus lusitanicus × Tomares ballus
 
-Why fourth: all biological gates pass, but public variance is nested at inflorescence grain while synchrony is a patch/programme contrast.
+Why fourth: the programme has same-shoot plant phenology and final ripe-fruit/seed reproduction, but the 2026-09-28 re-audit found two additional strict blockers. The published partner-side synchrony series is newly laid eggs on host shoots, not an independent adult-butterfly activity curve, and the focal synchrony comparison is one patch versus one patch.
 
-Access state: long-form thesis not publicly retrieved.
+Access state: long-form thesis not publicly retrieved. The companion life-history paper confirms a broad regional adult flight season but does not by itself supply a focal-season patch-level adult-availability series.
 
-Next action: thesis/tagged-shoot data.
+Next action: retrieve the 1987 thesis/original field archive and audit first for independent adult *T. ballus* census/activity in the focal season, then for a timing exposure with real replication that can be joined to the tagged-shoot final reproduction table.
 
-Stop rule: never use 211/77 nested inflorescences as independent SMD n and never substitute the egg-load sample size into the RSI SE.
+Stop rule: never use newly laid eggs as independent adult availability; never treat 28/13 shoots or 211/77 inflorescences as independent replicates of a one-patch-versus-one-patch timing exposure; plant/shoot SD alone is not a rescue.
 
 ### 5. Cirsium canescens × Rhinocyllus conicus
 
