@@ -30,6 +30,8 @@ Tier A therefore describes evidence provenance, not automatic eligibility for th
 
 `docs/EVIDENCE_AUDIT_STATUS.md` is the generated paper-facing audit of the full evidence funnel. It keeps publication screening (32 registered publications) separate from the broader replication-candidate ledger (50 programme/completion leads), and CI fails if its strict-effect, cluster, rejection, or completion-route counts drift from the registries.
 
+`data/registry/search_runs.csv` and `docs/SEARCH_COVERAGE_STATUS.md` separately track systematic-search completeness. The current search claim remains `targeted_only` until all required Web of Science, Scopus, dissertation/grey-literature, and citation-snowball runs are completed, exported, and deduplicated.
+
 ## Dependence
 
 Every extracted effect carries a `dependence_id`. The reference primary workflow clusters uncertainty by that identifier rather than treating effect rows as independent.
