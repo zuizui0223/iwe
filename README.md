@@ -63,7 +63,7 @@ Mixed pollinating seed predators:
 
 The two IWE027 rows share one dependence cluster and IWE023 supplies a second independent mutualist SMD cluster. The two-cluster threshold remains a **replication milestone only**. H1 is not inferentially evaluable: the reference CR2 workflow requires at least 4 conservative cluster degrees of freedom (therefore at least 5 dependence clusters per class under the current intercept-only reference) before reporting inferential SEs/CIs.
 
-Study/component admission is recorded in `data/registry/strict_h1_adjudications.csv`; screening inclusion alone does not authorize strict-H1 pooling.
+Study/component admission is recorded in `data/registry/strict_h1_adjudications.csv`; screening inclusion alone does not authorize strict-H1 pooling. Every current real `strict_window` effect must also pass `data/registry/strict_window_provenance.csv`; CI rejects egg receipt, attack, infestation, damage and seed predation as substitutes for independent partner-window evidence.
 
 ## Replication target
 
