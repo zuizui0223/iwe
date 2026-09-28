@@ -1,5 +1,7 @@
 # Replication discovery batch 002
 
+> **2026-09-28 re-audit:** the historical count below is superseded. IWE011 was withdrawn from the strict corpus because its Phaulernis window is based on oviposition/egg observations rather than an independent adult-activity series, and its one-HA-plot versus one-HD-plot SMD used plant n as if the plot-level timing exposure were independently replicated. Current antagonist SMD clusters = **0**.
+
 Date: 2026-09-24  
 Status: active discovery queue after timing-gate audit
 
