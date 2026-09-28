@@ -14,17 +14,17 @@ _Generated from the study, effect, adjudication, replication-candidate, and comp
 
 ## 2. Strict-H1 quantitative corpus
 
-The extraction registry contains **8 quantitative rows**, of which **5 rows from 4 studies and 4 dependence clusters** currently satisfy the strict Tier-A synchrony gate.
+The extraction registry contains **7 quantitative rows**, of which **4 rows from 3 studies and 3 dependence clusters** currently satisfy the strict Tier-A synchrony gate.
 
 | Interaction class | Strict rows | Strict studies | Dependence clusters | SMD rows | SMD clusters |
 |---|---:|---:|---:|---:|---:|
 | mutualist | 4 | 3 | 3 | 3 | 2 |
-| antagonist | 1 | 1 | 1 | 1 | 1 |
+| antagonist | 0 | 0 | 0 | 0 | 0 |
 | mixed pollinating seed predator | 0 | 0 | 0 | 0 | 0 |
 
-Strict rows currently use two native effect families: log_odds_ratio = 1, standardized_mean_difference = 4.
+Strict rows currently use two native effect families: log_odds_ratio = 1, standardized_mean_difference = 3.
 
-For the common standardized_mean_difference family, independent cluster counts are **2 mutualist / 1 antagonist / 0 mixed**.
+For the common standardized_mean_difference family, independent cluster counts are **2 mutualist / 0 antagonist / 0 mixed**.
 The **2-cluster threshold is a discovery milestone only**; the current reference workflow requires at least 5 dependence clusters per class before robust class-level inference is considered evaluable.
 
 **Current consequence:** no native effect family has adequate independent replication across all three interaction classes, so H1 is not currently evaluable.
@@ -41,9 +41,9 @@ The replication ledger contains **50 candidate programmes/leads**. This is a dis
 |---|---:|
 | rejected_timing | 27 |
 | rejected_other | 8 |
-| blocked_timing_linkage | 5 |
+| blocked_timing_linkage | 6 |
 | blocked_final_surface | 4 |
-| blocked_summary_stats | 2 |
+| blocked_summary_stats | 1 |
 | blocked_effect_form | 1 |
 | blocked_source_release | 1 |
 | ready | 1 |
