@@ -252,8 +252,11 @@ def render_evidence_audit_status(
             "## 5. Interpretation boundary",
             "",
             "The audit result is descriptive evidence about the **availability and "
-            "compatibility of evidence under the frozen IWE estimand**. It is not a "
-            "biological estimate that synchrony effects do or do not differ among interaction classes.",
+            "compatibility of evidence in the current targeted IWE corpus under the frozen estimand**. "
+            "The first-pass search is not yet an exhaustive systematic-review denominator, and these "
+            "counts must not be interpreted as prevalence estimates for the entire literature. "
+            "The audit is also not a biological estimate that synchrony effects do or do not differ "
+            "among interaction classes.",
             "",
             "In particular:",
             "",
@@ -266,7 +269,7 @@ def render_evidence_audit_status(
             "## 6. Paper-facing result",
             "",
             "Under a deliberately strict, prospectively defined synchrony estimand, the "
-            "current literature provides many biologically relevant studies but very few "
+            "current targeted IWE corpus contains many biologically relevant studies but very few "
             "independent, variance-bearing plant-fitness contrasts that jointly preserve "
             "partner timing, post-interaction reproduction, and dependence. The empirical "
             "result at this stage is therefore an **evidence-architecture gap**, not a supported "
