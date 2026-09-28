@@ -28,6 +28,8 @@ Tier A therefore describes evidence provenance, not automatic eligibility for th
 
 `data/registry/studies.csv` is the source of truth for screening decisions. The counts and record table in `docs/SCREENING_BATCH_001.md` are generated from that registry and CI fails if the Markdown snapshot drifts.
 
+`docs/EVIDENCE_AUDIT_STATUS.md` is the generated paper-facing audit of the full evidence funnel. It keeps publication screening (32 registered publications) separate from the broader replication-candidate ledger (50 programme/completion leads), and CI fails if its strict-effect, cluster, rejection, or completion-route counts drift from the registries.
+
 ## Dependence
 
 Every extracted effect carries a `dependence_id`. The reference primary workflow clusters uncertainty by that identifier rather than treating effect rows as independent.
