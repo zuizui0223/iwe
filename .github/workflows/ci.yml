@@ -25,6 +25,8 @@ jobs:
         run: python scripts/validate_registry.py data/registry/systems.csv
       - name: Check screening snapshot
         run: python scripts/render_screening_batch.py --check
+      - name: Check evidence audit snapshot
+        run: python scripts/render_evidence_audit_status.py --check
       - name: Validate synthetic extraction
         run: python scripts/validate_extraction.py examples/synthetic_effects.csv
       - name: Validate direct extraction
