@@ -62,11 +62,11 @@ Stop rule: do not use preliminary poster values as primary evidence and do not s
 
 Why first: this candidate already has the hardest biological pieces in public sources. Female butterfly flight season was independently measured from capture/recapture of females in Dibbinsdale Reserve, while individually labelled ramets were followed every 5–7 days from first flowering to dehiscence. Dryad exposes the plant trajectories needed to reconstruct flowering intervals, potential fecundity and final intact reproductive units.
 
-Access state: public plant data are complete enough for the response, but the Dryad archive does not include the female capture/recapture date list used to define the adult flight window. Public retrieval has now been exhausted across the article/supplements, Dryad, indexed Dibbinsdale publications and the 2016 Liverpool thesis route.
+Access state: public plant data are complete enough for the response, but the Dryad archive does not include the female capture/recapture date list used to define the adult flight window. The direct web search is exhausted, but two concrete public binary-asset routes remain uninspected because of this execution environment: the official 2024 Figure 4 PowerPoint and the three 2019 Ecology appendices (`ecy2612-sup-0001` through `0003`). The 2016 Liverpool MRR/POPAN series covers 2005–2010 and cannot substitute for 2012–2014.
 
-Next action: recover only the source-backed 2012–2014 female capture/recapture dates (or an equivalent numeric flight-window table), then run the already-frozen three-level timing preflight. Core-vs-early and core-vs-late remain separate.
+Next action: retrieve those identified public assets in a normal browser/library environment before any contact. Accept only embedded/source numerical 2012–2014 female capture+recapture dates or exact q10/q90 flight-window values. If recovered, run the already-frozen three-level timing preflight immediately; core-vs-early and core-vs-late remain separate.
 
-Stop rule: no Figure 4 digitization, no egg-receipt surrogate for adult availability, no response-driven cut-points, no pooling of early and late refugia, and no alteration of the frozen exposure after outcome inspection.
+Stop rule: no Figure 4 digitization or coordinate reading, no egg-receipt surrogate for adult availability, no substitution of 2005–2010 MRR or 2019 first-capture/emergence summaries, no response-driven cut-points, no pooling of early and late refugia, and no alteration of the frozen exposure after outcome inspection.
 
 ### 2. Wen 2024 — Parnassia wightiana × florivorous beetles
 
