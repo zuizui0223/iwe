@@ -146,3 +146,25 @@ def test_public_repository_pending_audit_route_is_valid():
         ),
     )
     assert errors == []
+
+
+def test_public_asset_runtime_blocked_route_is_valid():
+    route = _route(
+        source_access="public_asset_runtime_blocked",
+        public_search_status="exhausted",
+        unlock_type="timing_linkage",
+        next_action_type="retrieve_public_asset",
+    )
+    errors = validate_replication_completion_routes(
+        pd.DataFrame([route]),
+        pd.DataFrame(
+            [
+                _candidate(
+                    target_class="antagonist",
+                    status="blocked_timing_linkage",
+                    priority="P1",
+                )
+            ]
+        ),
+    )
+    assert errors == []
