@@ -4,12 +4,12 @@ _Generated from the study, effect, adjudication, replication-candidate, and comp
 
 ## 1. Publication screening
 
-**32 registered publications** are currently tracked: 13 include, 7 unresolved, and 12 context-only.
+**33 registered publications** are currently tracked: 13 include, 7 unresolved, and 13 context-only.
 
 | Candidate class | Registered publications |
 |---|---:|
 | mutualist | 16 |
-| antagonist | 8 |
+| antagonist | 9 |
 | mixed pollinating seed predator | 8 |
 
 ## 2. Strict-H1 quantitative corpus
