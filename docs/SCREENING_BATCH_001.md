@@ -31,14 +31,14 @@ Search terms combined variants of `phenological mismatch`, `flowering time`, `po
 <!-- BEGIN GENERATED SCREENING SNAPSHOT -->
 _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 
-**Registered publications: 33.** Current decisions: 13 include, 7 unresolved, 13 context only, 0 exclude.
+**Registered publications: 34.** Current decisions: 13 include, 7 unresolved, 14 context only, 0 exclude.
 
 | Candidate class | Include | Unresolved | Context only | Exclude | Total |
 |---|---:|---:|---:|---:|---:|
 | mutualist | 9 | 5 | 2 | 0 | 16 |
-| antagonist | 2 | 2 | 5 | 0 | 9 |
+| antagonist | 2 | 2 | 6 | 0 | 10 |
 | mixed pollinating seed predator | 2 | 0 | 6 | 0 | 8 |
-| **Total** | **13** | **7** | **13** | **0** | **33** |
+| **Total** | **13** | **7** | **14** | **0** | **34** |
 
 ### Registry snapshot
 
@@ -77,6 +77,7 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 | `IWE031` | antagonist | `context_only` | `10.1002/ecy.3854` | Timing of a plant-herbivore interaction alters plant growth and reproduction |
 | `IWE032` | antagonist | `include` | `10.1002/ece3.11330` | Flowering phenology mediates escape from a specialist butterfly seed predator |
 | `IWE033` | antagonist | `context_only` | `10.1016/j.baae.2014.05.003` | Phenological synchrony between a plant and a specialised herbivore |
+| `IWE034` | antagonist | `context_only` | `10.1002/ecy.1676` | Plant-herbivore synchrony and selection on plant flowering phenology |
 <!-- END GENERATED SCREENING SNAPSHOT -->
 
 `include` means the publication currently appears to satisfy the biological Tier-A screen and should proceed to quantitative extraction. It does not mean an effect size has already been recovered or that the study will survive variance/dependence checks.
