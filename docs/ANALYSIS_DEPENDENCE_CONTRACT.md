@@ -91,7 +91,7 @@ Consequences:
 
 - another year, site, outcome or model from an existing dependence cluster does not reduce the replication gap;
 - converting an existing programme to another effect scale does not reduce the SMD replication gap;
-- a second independent mixed programme is prioritized first, then a second independent antagonist programme, then a second independent mutualist programme;
+- mixed-system recovery remains a priority while IWE015 is on quantitative hold; the antagonist class currently has zero strict SMD clusters after the IWE011 re-audit, so it must recover a first valid antagonist cluster and then a second; mutualist already satisfies the two-cluster discovery milestone;
 - `src/iwe/replication.py` and the machine-readable claim status report the current and missing cluster counts.
 
 The two-cluster threshold is only a replication milestone. H1 is not inferentially evaluable under the reference workflow until the cluster-information rule is satisfied.
