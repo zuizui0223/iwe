@@ -110,6 +110,8 @@ Realized interaction outcomes do not satisfy it by themselves. In particular, co
 
 This is a clarification of the existing fail-closed rule, not a new estimand. It makes explicit the same logic already used when rejecting candidates whose apparent “activity” window was inferred from attack or egg receipt.
 
+For current real strict effects, this rule is additionally machine-enforced by `data/registry/strict_window_provenance.csv` and `scripts/validate_window_provenance.py`. The executable registry does not permit `egg_receipt`, `oviposition_success`, `attack`, `infestation`, `larval_occupancy`, `damage`, or `seed_predation` as strict partner-window bases.
+
 ## Directional mismatch is a separate estimand
 
 When data span both sides of matching, IWE will not force them into one linear synchrony slope. Instead, where data permit, estimate directional responses separately:
