@@ -43,9 +43,9 @@ The replication ledger contains **50 candidate programmes/leads**. This is a dis
 | rejected_other | 8 |
 | blocked_timing_linkage | 6 |
 | blocked_final_surface | 4 |
-| blocked_summary_stats | 1 |
 | blocked_effect_form | 1 |
 | blocked_source_release | 1 |
+| blocked_summary_stats | 1 |
 | ready | 1 |
 | rejected_dependence | 1 |
 
