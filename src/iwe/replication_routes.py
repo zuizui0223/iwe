@@ -5,6 +5,7 @@ import pandas as pd
 
 ALLOWED_SOURCE_ACCESS = {
     "public_source_insufficient",
+    "public_asset_runtime_blocked",
     "repository_public_pending_audit",
     "longform_not_public",
     "repository_inactive",
@@ -23,6 +24,7 @@ ALLOWED_UNLOCK_TYPES = {
 }
 ALLOWED_NEXT_ACTION_TYPES = {
     "retrieve_longform",
+    "retrieve_public_asset",
     "contact_or_archive",
     "monitor_repository",
     "search_same_programme_data",
