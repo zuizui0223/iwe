@@ -45,7 +45,7 @@ The reference workflow now uses a REML working random-effects model with CR2 dep
 
 ## Current real strict-H1 corpus
 
-The current real extraction contains five strict-H1 rows. Mixed pollinating-seed-predator timing evidence remains biologically eligible, but IWE015 is on a quantitative hold because its published dispersion label is internally inconsistent and raw Dryad recomputation has not yet been completed.
+The current real extraction contains four strict-H1 rows, all in the mutualist class. IWE015 mixed evidence remains on a quantitative hold pending raw Dryad variance verification, and the former IWE011 antagonist SMD was withdrawn on 2026-09-28 after the same independent-partner-window and exposure-unit rules were applied retrospectively.
 
 Mutualists:
 - `IWE029_LATE_VS_PEAK_NP_LOGOR` — *Stigmaphyllon paralias* × oil-collecting *Centris* bees; `log_odds_ratio = +1.55`.
@@ -54,7 +54,8 @@ Mutualists:
 - `IWE023_2015_W1_VS_W4_SEEDSET_SMD` — *Mertensia ciliata* × seasonal pollinator assemblage; experimentally shifted week 1 has >5× the contemporaneous visitation of week 4; final seed set; `standardized_mean_difference = +0.3815303645`.
 
 Antagonists:
-- `IWE011_HA_VS_HD_FINALSET_SMD` — *Peucedanum multivittatum* × *Phaulernis fulviguttella*; high-overlap HA versus low-overlap HD; final intact-fruit set; `standardized_mean_difference = -1.1368391965`.
+- no quantitative strict-H1 row currently admitted.
+- The former IWE011 HA-versus-HD SMD is retained only as a diagnostic seasonal contrast: the source window is based on oviposition/egg observations rather than an independent adult-moth activity series, and one HA plot versus one HD plot cannot use plant n as replicated timing exposure.
 
 Mixed pollinating seed predators:
 - no quantitative strict-H1 row currently admitted.
@@ -62,7 +63,7 @@ Mixed pollinating seed predators:
 
 The two IWE027 rows share one dependence cluster and IWE023 supplies a second independent mutualist SMD cluster. The two-cluster threshold remains a **replication milestone only**. H1 is not inferentially evaluable: the reference CR2 workflow requires at least 4 conservative cluster degrees of freedom (therefore at least 5 dependence clusters per class under the current intercept-only reference) before reporting inferential SEs/CIs.
 
-Study/component admission is recorded in `data/registry/strict_h1_adjudications.csv`; screening inclusion alone does not authorize strict-H1 pooling.
+Study/component admission is recorded in `data/registry/strict_h1_adjudications.csv`; screening inclusion alone does not authorize strict-H1 pooling. Every current real `strict_window` effect must also pass `data/registry/strict_window_provenance.csv`; CI rejects egg receipt, attack, infestation, damage and seed predation as substitutes for independent partner-window evidence.
 
 ## Replication target
 
@@ -71,13 +72,13 @@ The current operational priority is **not** to add more effects from already rep
 Current SMD replication state:
 
 - mutualist: **2 independent clusters — discovery milestone satisfied, not inferentially sufficient**;
-- antagonist: 1 independent cluster;
+- antagonist: **0 quantitative strict clusters after the IWE011 timing/unit re-audit**;
 - mixed pollinating seed predator: **0 quantitative clusters while IWE015 is on variance hold**.
 
 The machine-readable claim status reports both current cluster counts and remaining gaps. Search/extraction priority is frozen as:
 
 1. restore IWE015 only after raw Dryad variance verification, while continuing the second independent mixed-programme search;
-2. second independent antagonist programme;
+2. recover a first valid antagonist SMD cluster under the independent-partner-window and exposure-unit rules, then continue toward the two-cluster discovery milestone;
 3. additional independent programmes in all classes after the two-cluster discovery milestone, because two clusters do not support robust inference.
 
 Adding another year, site, or outcome inside an existing dependence cluster does not advance this replication target.
@@ -91,7 +92,7 @@ Current replication-search state is:
 - mixed #2: **two P1 archival/completion routes, none ready, plus two P2 routes**. (1) Hurlburt 2004 (*Yucca glauca × Tegeticula yuccasella*) repeatedly counted adult moths in fresh flowers during 1999–2003, followed marked clones/inflorescences to fruit set and dissected mature fruit. The PhD is now located in the public University of Alberta Scholaris repository (DOI `10.7939/r3-fe1d-kj80`, primary file `NQ95948.pdf`); the next task is direct table/appendix audit rather than author contact. (2) Rentería & Cantú 2003 / Rentería 2000 thesis (*Yucca filifera × Tegeticula yuccasella*) directly measures the same-season adult moth window, individual-plant reproductive phenology and mature viable/damaged seeds, but the 500 mature fruits are not keyed back to flowering cohort/date. P2 conditional: Bopp & Gottsberger 2004 (*Silene × Hadena*) measures flowering and oviposition phenology, but the published “moth activity” series is reconstructed from newly deposited eggs in host flowers and therefore is not an independent partner-availability curve. Bopp 2003 Zoologica 152 (ISBN `978-3-510-55039-5`, 140 pp., 36 tables) is catalogue-confirmed and should be acquired by library/ILL; it can rescue the programme only if it contains both independent adult-moth activity and linked final plant reproduction. P2 prospective: the USGS 2022–2023 *Yucca jaegeriana × Tegeticula antithetica* project has the right design but no final citable unit-level source release. Sambucus is dropped after supplement audit because no quantitative partner-activity series is present;
 
 A separate **P2 prospective** mixed route is the active USGS 2022–2023 *Yucca jaegeriana × Tegeticula antithetica* study: its design directly measures moth visitation, pod production and fertile seeds, but only preliminary poster/conference summaries are currently citable and no final unit-level dataset/publication has been recovered. It is tracked as `blocked_source_release`, not counted as evidence.
-- antagonist #2: **four P1 completion routes, none ready, plus three P2 leads**. New top route: Davies & Saccheri 2024, *Cardamine pratensis × Anthocharis cardamines*. Female butterfly flight is independently measured from capture/recapture, and public Dryad ramet trajectories run from first flowering to dehiscence with final intact reproductive units; the only missing timing object is the numeric female capture/recapture distribution underlying the source flight window. Before any contact route, IWE now explicitly targets the official Figure 4 PowerPoint and Davies 2019 Ecology Appendices S1–S3 for embedded/source-backed 2012–2014 female event or q10/q90 values; this runtime reaches those asset endpoints but cannot ingest their binary contents. Existing P1 routes remain Wen et al. 2024 *Parnassia* fate data, James 1998 yucca-cheater timing-stratified final seeds, and Jordano *Astragalus–Tomares* correct-unit variance. P2: *Cirsium–Rhinocyllus* same-unit data, Pilson 2000 wrong native effect form, and Eureka 2001 squarrose-knapweed cohort final-seed surface. The Eureka public route is now exhausted: weekly adult phenology and marked-head infestation are public, but cohort-level mature viable-seed means/variance are not; only archive recovery can unlock it. Cardamine is not yet extracted: Figure 4 will not be digitized and eggs will not define adult activity. The response-blind exposure is now frozen as three onset-timing groups—early refugium, core female flight, late refugium—and any future SMD keeps core-vs-early and core-vs-late as separate dependent effects;
+- antagonist strict-SMD recovery: **three P1 completion routes, none ready, plus four P2 leads**. New top route: Davies & Saccheri 2024, *Cardamine pratensis × Anthocharis cardamines*. Female butterfly flight is independently measured from capture/recapture, and public Dryad ramet trajectories run from first flowering to dehiscence with final intact reproductive units; the only missing timing object is the numeric female capture/recapture distribution underlying the source flight window. Before any contact route, IWE now explicitly targets the official Figure 4 PowerPoint and Davies 2019 Ecology Appendices S1–S3 for embedded/source-backed 2012–2014 female event or q10/q90 values; this runtime reaches those asset endpoints but cannot ingest their binary contents. Existing P1 routes remain Wen et al. 2024 *Parnassia* fate data and James 1998 yucca-cheater timing-stratified final seeds, alongside Cardamine as the top P1 route. *Astragalus–Tomares* is demoted to P2 after re-audit: the published synchrony series uses newly laid eggs rather than an independent adult-activity curve and the focal contrast is one patch versus one patch. Other P2 routes are *Cirsium–Rhinocyllus* same-unit data, Pilson 2000 wrong native effect form, and Eureka 2001 squarrose-knapweed cohort final-seed surface. The Eureka public route is now exhausted: weekly adult phenology and marked-head infestation are public, but cohort-level mature viable-seed means/variance are not; only archive recovery can unlock it. Cardamine is not yet extracted: Figure 4 will not be digitized and eggs will not define adult activity. The response-blind exposure is now frozen as three onset-timing groups—early refugium, core female flight, late refugium—and any future SMD keeps core-vs-early and core-vs-late as separate dependent effects;
 - mutualist #2: **complete** via IWE023 (*Mertensia ciliata*). Four experimental flowering cohorts were ordered by same-season visitation; week 1 versus week 4 final seed set yields Hedges g = +0.3815303645 from published relative group means and the balanced ANOVA F(3,36), retaining residual df=36 in the standardizer correction, with no variance imputation.
 
 The next mixed and antagonist search targets must jointly provide contemporaneous partner activity, a prospectively orderable plant timing contrast, final realized plant reproduction, and SMD-compatible variance-bearing summaries.
@@ -106,7 +107,7 @@ No candidate is promoted by qualitative direction alone, and no SMD is reconstru
 Current order is:
 
 - mixed: Hurlburt 2004 *Yucca* archival timing linkage → Rentería/Cantú *Yucca filifera* fruit provenance → Bopp 2003 conditional two-surface audit → USGS 2022–2023 *Yucca jaegeriana* source-release watch;
-- antagonist: Cardamine–Anthocharis female capture/recapture dates → Wen 2024 *Parnassia* fate table → James 1998 yucca-cheater plant-level summaries → Jordano *Tomares–Astragalus* correct-unit variance → *Cirsium–Rhinocyllus* same-unit programme data → 2001 Eureka squarrose-knapweed marked-head archive table.
+- antagonist: Cardamine–Anthocharis female capture/recapture dates → Wen 2024 *Parnassia* fate table → James 1998 yucca-cheater plant-level summaries → Jordano *Tomares–Astragalus* independent adult timing + replicated exposure rescue → *Cirsium–Rhinocyllus* same-unit programme data → 2001 Eureka squarrose-knapweed marked-head archive table.
 
 `blocked_source_release` is explicitly allowed in this queue, but it remains prospective and contributes **zero** strict-H1 evidence until a citable final source exposes compatible timing and post-cost reproduction.
 

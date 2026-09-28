@@ -1,97 +1,87 @@
-# Candidate audit — Astragalus lusitanicus × Tomares ballus
+# Candidate re-audit — Astragalus lusitanicus × Tomares ballus
 
-Date: 2026-09-24  
-Source: Jordano, Fernández Haeger & Rodríguez (1990), *Oikos* 57:250–256  
+Date: 2026-09-28  
+Primary source: Jordano, Fernández Haeger & Rodríguez (1990), *Oikos* 57:250–256  
 DOI: `10.2307/3565947`  
+Companion life-history source: Jordano, Fernández Haeger & Rodríguez (1990), *Journal of Research on the Lepidoptera* 28:112–122, DOI `10.5962/p.266691`  
 Candidate: `ANT002_TOMARES_ASTRAGALUS`  
-Decision: **retain as P1 `blocked_summary_stats`; strongest current antagonist #2 lead**
+Decision: **demote from P1 `blocked_summary_stats` to P2 `blocked_timing_linkage`**
 
-## Why this candidate is different from the earlier antagonist near-misses
+## What the focal Oikos programme actually measures
 
-This study measures the timing exposure directly in the focal season rather than inferring it from damage or borrowing a historical activity window.
+In the 1986 Sierra Morena experiment, one shoot per flowering *Astragalus lusitanicus* plant was labelled. Tagged shoots were revisited weekly and the investigators recorded:
 
-In 1986 the authors selected flowering *Astragalus lusitanicus* plants in six patches in Sierra Morena. One shoot per plant was labelled. During the flowering/oviposition season the tagged shoots were revisited weekly and the investigators recorded both:
+- developmental stage / availability of host inflorescences;
+- **newly laid *Tomares ballus* eggs**, distinguishable from older eggs;
+- final ripe-fruit production;
+- viable and aborted seeds.
 
-- inflorescence developmental stage / availability of immature inflorescences; and
-- **newly laid *Tomares ballus* eggs**, distinguishable from older eggs.
+Thus the same tagged-shoot programme genuinely contains plant phenology and final post-herbivory reproduction.
 
-At season end they recorded ripe fruits and seed outcomes. Thus the biological chain required by IWE is present in the same focal programme:
+## Why the previous timing adjudication was too permissive
 
-`partner activity timing -> host reproductive-stage availability -> final plant reproduction`.
+The published synchrony analysis compares patches 1 and 2.
 
-## The usable synchrony contrast
+The partner-side time series used to describe temporal coincidence is the appearance of **new eggs on host shoots**. That is a realized oviposition outcome: it depends jointly on adult presence, host availability and host choice.
 
-The source explicitly analyses temporal coincidence in patches 1 and 2.
+Under the frozen IWE partner-window contract, host egg receipt cannot be reused as an independent adult-butterfly availability curve.
 
-These patches are close geographically and have similar *T. ballus* egg loads, but differ in the timing of oviposition relative to immature *Astragalus* inflorescences. The paper interprets the larger reproductive effect of the butterfly in patch 1 partly through this stronger temporal synchrony.
+The companion life-history paper confirms a broad regional adult flight period in Sierra Morena—approximately late January to late April, peaking around mid-March—and describes strong phenological coupling with the host. This is useful biological context, but the current public audit has not recovered a contemporaneous quantitative adult-activity series that independently orders the focal 1986 patch-1/patch-2 host timing contrast.
 
-This satisfies the frozen IWE timing rule much more cleanly than studies in which:
+Therefore `timing_window_measured = yes` is no longer justified. The candidate is now `partial` on that gate.
 
-- plant calendar date is used without animal activity data;
-- attack itself is treated as the animal-activity curve; or
-- the animal window is imported from a different year/study.
+## Exposure-unit problem
 
-## Final reproductive endpoint
+The synchrony contrast reported in Oikos is **patch 1 versus patch 2**.
 
-The paper reports a reproductive success index (RSI) based on ripe fruit production relative to initial floral buds and also reports attacked-versus-control reproductive effects.
+The paper reports approximately:
 
-For the two patches used in the temporal-coincidence analysis, Table 1 reports approximately:
-
-| Patch | Egg-load sampling N | Egg load mean ± SE | RSI observation N | RSI mean ± SE |
+| Patch | Egg-load sampling n | Egg load mean ± SE | RSI observation n | RSI mean ± SE |
 |---|---:|---:|---:|---:|
 | 1 | 28 | 9.11 ± 0.14 | 211 | 6.65 ± 0.76 |
 | 2 | 13 | 8.92 ± 0.21 | 77 | 12.98 ± 1.82 |
 
-The direction is biologically coherent with an antagonist synchrony effect: the more temporally coupled patch has lower reproductive success.
+The large RSI sample sizes are nested inflorescence observations, not independent synchrony exposures. The 28/13 tagged shoots also do not create replicated patch-level treatment states: there is still only one higher-coincidence patch and one lower-coincidence patch in the published comparison.
 
-## Why an SMD is **not** extracted from these published numbers
+Therefore recovering a plant/shoot-level SD alone would **not** solve the inferential problem. The previous "correct-unit variance" blocker understated what is missing.
 
-The two reported sample-size columns are not interchangeable.
+## Final reproductive endpoint
 
-The egg-load N corresponds to tagged shoots/plants used to characterize the focal interaction. The RSI N is much larger and represents inflorescence-level observations nested within plants/patches.
+The final-response gate remains biologically strong.
 
-The synchrony contrast itself is between patches. Therefore an ordinary two-independent-group Hedges g using `n=211` and `n=77` would treat nested inflorescences as independent replicates of the patch-level exposure and would understate uncertainty.
+At season end the tagged-shoot programme recorded ripe fruits and seed outcomes, so the source contains direct realized reproduction after *T. ballus* herbivory.
 
-IWE will not:
+No final-response downgrade is needed.
 
-- use 211 and 77 as independent plant-level SMD sample sizes;
-- substitute the egg-load sample sizes 28 and 13 into an SE calculated from inflorescences;
-- infer a plant-level SD from the inflorescence-level SE;
-- use attacked-versus-control contrasts as a substitute for the synchrony contrast.
+## What would now unlock the candidate
 
-## What would unlock the candidate
+A strict rescue requires a long-form/thesis/archive source that establishes both:
 
-Any of the following, if source-backed at the tagged shoot/plant level, could close the final gate:
+1. **independent partner timing** — quantitative adult *T. ballus* activity/availability during the focal season, independently of eggs received by host shoots; and
+2. **compatible exposure replication** — a source-backed timing exposure that is replicated beyond one patch per synchrony state, or an individual-level overlap variable defensibly derived from independent adult timing and each tagged shoot's plant phenology.
 
-1. raw tagged-shoot records linking weekly flower-stage/egg timing to final ripe-fruit reproduction;
-2. plant/shoot-level high- versus low-synchrony means, SD/SE and n;
-3. a source-reported plant/shoot-level test statistic from which the same predeclared synchrony contrast and its sampling variance can be reconstructed without treating nested inflorescences as independent.
+That exposure must then be joined to the tagged-shoot final ripe-fruit/viable-seed response with variance.
 
-Until then:
+The 1987 Diego Jordano thesis remains the highest-value retrieval target because its abstract explicitly covers annual butterfly/plant cycles, phenological synchronization, oviposition-site selection and host reproductive success. Its full text has not been publicly recovered.
+
+## Gate status after re-audit
 
 | replication gate | status |
 |---|---|
 | independent programme | yes |
-| contemporaneous partner timing | yes |
+| independent contemporaneous partner timing | **partial / unresolved** |
 | final realized plant reproduction | yes |
-| SMD-ready summary at correct unit | **no** |
-| candidate status | **blocked_summary_stats (P1)** |
+| compatible replicated SMD surface | no |
+| candidate status | **P2 blocked_timing_linkage** |
 
-## Search consequence
+## Stop rules
 
-Antagonist #2 is no longer an unrestricted discovery problem. It now has a **one-blocker candidate**: recover the correct-unit quantitative summary for the Jordano–Fernández Haeger–Rodríguez *Astragalus–Tomares* programme.
+Do not:
 
-The 1987 Córdoba PhD thesis by Diego Jordano and companion *Tomares* life-history papers are the highest-value retrieval targets, but no plant/shoot-level final-reproduction table or raw archive has yet been recovered.
+- use newly laid eggs as independent adult availability;
+- treat patch 1 versus patch 2 as 28 versus 13 or 211 versus 77 independent timing replicates;
+- substitute a generic regional flight period for the missing focal-season quantitative partner series;
+- use attacked-versus-control reproduction as a substitute for synchrony;
+- promote from plant/shoot SD alone.
 
-
-## Archival retrieval update — 2026-09-25
-
-The 1987 Diego Jordano PhD thesis was located in Dialnet metadata:
-
-*Estudio ecológico de las relaciones entre mariposas y plantas: interacciones de Tomares ballus y Astragalus lusitanicus*, Universidad de Córdoba.
-
-The thesis abstract explicitly states that it studies annual plant and butterfly cycles, **phenological synchronization**, oviposition-site selection, and the butterfly's effect on host reproductive success across habitats. This independently confirms that the Oikos synchrony result is part of the thesis's primary empirical programme rather than a post-hoc interpretation.
-
-However, Dialnet marks the thesis full text as unavailable. No University of Córdoba/Helvia scan or raw data archive containing the plant/shoot-level final-reproduction summaries was recovered in the current search.
-
-The statistical blocker therefore remains unchanged: do not derive an SMD from the published nested inflorescence N.
+The candidate remains scientifically useful, but it is no longer a one-blocker antagonist replication route.

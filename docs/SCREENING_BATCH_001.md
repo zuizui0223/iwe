@@ -123,8 +123,8 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 - `IWE004`: seasonal Julian-date effect is timing sensitivity, not a monotonic partner-synchrony effect.
 - `IWE029`: promoted from unresolved to include after full-text adjudication. Peak and late windows are independently ordered by measured pollinator activity, and the late-versus-peak natural-pollination seed-set effect is extracted as the first real mutualist `strict_window` row.
 - `IWE028`: moved from unresolved to context-only. The study demonstrates temporal escape from a specialist seed predator, but its final seed-set result is model-derived from potential seed set plus attack-risk assumptions rather than a variance-bearing direct fitness effect.
-- `IWE010`: remains unresolved quantitatively. Its published fruit-number response is measured before intensive predation and represents pollination success; the archived workbook may permit a final intact-fruit reconstruction.
-- `IWE011`: promoted from unresolved to include. The timing-extreme HA-versus-HD contrast is independently ordered by the moth oviposition window and final intact-fruit set is directly reported; it supplies the first real antagonist `strict_window` row.
+- `IWE010`: remains unresolved. Its published fruit-number response is measured before intensive predation, and the programme's predator window is based on oviposition/egg observations rather than an independent adult-activity series; a strict rescue now requires both timing and final-outcome repair.
+- `IWE011`: remains screening `include` because it directly links seasonal plant timing to final post-predation reproduction, but its former strict HA-versus-HD SMD was **withdrawn on 2026-09-28**. The moth window is an oviposition/egg-receipt window rather than an independent adult-availability series, and one HA plot versus one HD plot cannot use plant n as independent timing-exposure replication.
 - `IWE015`: early and late experiments are explicitly ordered by *Hadena ectypa* activity and successful fruits are final fruits surviving Hadena predation. The biological strict-window gate passes, but the year-specific SMDs are currently **withheld** because Table 1's stated SE label fails an internal bounded-outcome consistency check. Public Dryad raw files must resolve the dispersion before quantitative re-admission.
 - `IWE027`: 2007 E-to-M contrasts at HIS and GOS are ordered by contemporaneously measured bumble-bee activity. Intact natural seed-set mean±SE+n reconstructs two mutualist SMD rows; 2006 is deliberately excluded because animal activity was not directly measured that year.
 
@@ -137,7 +137,7 @@ The most important unresolved records are:
 - `IWE003` — Liew & Kudo 2026: likely usable but population/year overlap with earlier Corydalis studies must be mapped.
 - `IWE007` — de Manincor et al. 2023: reproduction declines under warming, but warming alters multiple plant/pollinator traits as well as phenology; a mismatch-specific effect must be isolated.
 - `IWE008` — Wang et al. 2024: explicit pollinator–flowering peak mismatch and seed setting across an alpine community; quantitative extraction and dependence structure need full-text/data adjudication.
-- `IWE010` — Kudo & Shibata 2021: the archived reproductive workbook is needed to reconstruct a strict final-intact-fruit effect; its dependence with IWE011 is already fixed.
+- `IWE010` — Kudo & Shibata 2021: useful direct seasonal-timing evidence, but strict rescue requires an independent adult-moth activity window as well as a final post-predation response; its dependence with IWE011 is already fixed.
 - `IWE012` — Valdés & Ehrlén 2017: seed predators reverse flowering-time selection, but partner activity is not yet represented as an explicit overlap metric.
 - `IWE019` — Liu et al. 2014: direct fig/fig-wasp phenology and abortion during a poorly matched crop, but the plant-fitness estimand is not yet clean enough for Tier A.
 

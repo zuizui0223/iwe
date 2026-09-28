@@ -88,15 +88,12 @@ Thus two effect rows do not become two independent mutualist studies.
 
 Both effects are `standardized_mean_difference`.
 
-After this extraction, the SMD family contains real strict-H1 evidence for:
+At the time of the original extraction, IWE011 and IWE015 also appeared to place SMD rows in the antagonist and mixed classes. Subsequent source audits changed that status:
 
-- mutualists — IWE027;
-- antagonists — IWE011;
-- mixed pollinating seed predators — IWE015.
+- IWE015 is on quantitative hold pending raw variance verification;
+- the former IWE011 strict SMD was withdrawn on 2026-09-28 because its partner window was based on oviposition/egg observations and its one-plot-versus-one-plot exposure used plant n as if the timing exposure were independently replicated.
 
-This is the first native effect family represented in all three preregistered interaction classes.
-
-It still does not make H1 inferentially evaluable because each class currently has only one independent dependence cluster in the SMD family.
+The current strict SMD family therefore has two independent **mutualist** clusters (IWE027 and IWE023) and zero antagonist/mixed clusters. H1 is not evaluable.
 
 ## Claim boundary
 

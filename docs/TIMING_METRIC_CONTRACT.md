@@ -110,6 +110,8 @@ Realized interaction outcomes do not satisfy it by themselves. In particular, co
 
 This is a clarification of the existing fail-closed rule, not a new estimand. It makes explicit the same logic already used when rejecting candidates whose apparent “activity” window was inferred from attack or egg receipt.
 
+For current real strict effects, this rule is additionally machine-enforced by `data/registry/strict_window_provenance.csv` and `scripts/validate_window_provenance.py`. The executable registry does not permit `egg_receipt`, `oviposition_success`, `attack`, `infestation`, `larval_occupancy`, `damage`, or `seed_predation` as strict partner-window bases.
+
 ## Directional mismatch is a separate estimand
 
 When data span both sides of matching, IWE will not force them into one linear synchrony slope. Instead, where data permit, estimate directional responses separately:
@@ -188,23 +190,21 @@ Recovering the raw Julian-date slope from Dryad would make the timing-sensitivit
 
 ## IWE011 source-specific adjudication
 
-Kudo & Shibata (2025) directly records final intact-fruit production across five permanent *Peucedanum multivittatum* plots along a flowering gradient. The predator moth *Phaulernis fulviguttella* concentrates oviposition in mid- to late July.
+Kudo & Shibata (2025) directly records final intact-fruit production across five permanent *Peucedanum multivittatum* plots along a flowering gradient. However, the former strict-window adjudication is withdrawn.
 
-For the predeclared extreme contrast:
+The reported *Phaulernis fulviguttella* seasonal window is an **oviposition window**: the source records eggs deposited on host umbels and states that oviposition usually occurs in mid- to late July. Kudo & Shibata (2021) likewise describes the timing as a preliminary observation of the major oviposition period. No contemporaneous quantitative adult-moth census/trapping/activity series has been recovered from the public programme sources.
 
-- HA flowers in mid-July and represents the high predator-overlap end;
-- HD flowers in early to late August and represents the low predator-overlap end.
-
-The exposure is therefore registered as:
+Under the independence-of-partner-window rule, egg receipt cannot be recycled as adult partner availability. The source is therefore registered as:
 
 - `timing_metric_type = seasonal_position`;
-- `timing_analysis_class = strict_window`;
-- `timing_domain = ordered_by_measured_window`;
-- `exposure_direction = synchrony`.
+- `timing_analysis_class = direct_timing_sensitivity`;
+- `timing_domain = not_applicable`.
 
-The final intact-fruit-set contrast is reconstructed from published Table 1 as Hedges' `g = -1.1368391965` for high overlap minus low overlap. The negative sign means greater antagonist synchrony is associated with lower final reproductive performance.
+There is a second inferential-unit problem. The former HA-versus-HD SMD compared one permanent plot with one permanent plot while using plant observation counts (`n=177` and `n=127`) in the independent-groups sampling variance. Those plants replicate the response within a plot but do not replicate the plot-level timing exposure.
 
-This is observational across permanent plots, not an experimental manipulation of synchrony. See `EXTRACTION_IWE011.md` and `PEUCEDANUM_DEPENDENCY_MAP.md`.
+Accordingly, `IWE011_HA_VS_HD_FINALSET_SMD` is removed from the strict corpus. A future strict rescue requires both an independent focal-season adult-moth activity series and timing exposure replicated at a compatible inferential unit.
+
+See `EXTRACTION_IWE011.md` and `IWE011_TIMING_UNIT_REAUDIT_20260928.md`.
 
 ## IWE015 source-specific adjudication
 

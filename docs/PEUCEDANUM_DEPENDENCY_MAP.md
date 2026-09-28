@@ -38,22 +38,28 @@ Under the current one-level IWE dependence representation, any effect from eithe
 
 This is conservative. A future nested model could separate non-overlapping years while retaining plot/programme correlation, but the current schema cannot represent those levels simultaneously without understating dependence.
 
-## IWE010 extraction boundary
+## Current extraction boundary
 
-The published 2021 fruit-number analysis was designed to represent pollination success: fruits later damaged by the seed predator were deliberately included in the recorded fruit number.
+IWE010 and IWE011 remain a valuable direct seasonal-timing programme, but neither currently supplies a strict H1 effect.
 
-Therefore that published fruit-set coefficient is not a final post-predation reproductive outcome for strict antagonist H1.
+Two independent problems were identified in the 2026-09-28 re-audit.
 
-The archived Dryad workbook includes reproductive data and potentially permits reconstruction of intact mature fruit production for 2018–2019. Until such a reconstruction and its sampling variance are audited, IWE010 remains quantitatively unresolved for strict H1.
+First, the programme's source-defined *Phaulernis* seasonal window is based on oviposition/egg observations on host umbels rather than a contemporaneous quantitative adult-moth abundance/availability series. Egg receipt cannot satisfy the frozen independent-partner-window gate.
 
-## IWE011 extraction route
+Second, the former IWE011 HA-versus-HD SMD compared one permanent plot with one permanent plot while using plant response observations as independent group n. Response replication within a plot cannot substitute for replication of a plot-level timing exposure.
 
-IWE011 directly counts intact mature fruits after predation and reports final fruit-set means for the five plots.
+IWE010 has an additional outcome problem: its published fruit number is measured before intensive predation and deliberately includes later-predated fruits.
 
-Predator moths concentrate oviposition in mid- to late July. Plot HA flowers in mid-July and is the highest-overlap end of the measured gradient; plot HD flowers in early to late August and is the latest/lowest-overlap end.
+IWE011 does measure final intact mature fruits, but the former strict SMD has therefore been withdrawn.
 
-The HA-versus-HD contrast is therefore fixed using timing information rather than reproductive outcome values. The reconstructed effect is documented in `EXTRACTION_IWE011.md`.
+## Rescue architecture
 
-## Analysis consequence
+A future Peucedanum strict effect requires:
 
-Multiple IWE010/IWE011 effect rows can increase descriptive coverage, but they do not mechanically add independent programme clusters. REML+CR2 uncertainty, leave-one-dependence sensitivity and H1 evaluability use the shared `DEP_PEUCEDANUM_KUDO_PROGRAM` identifier.
+1. source-backed focal-season adult *P. fulviguttella* activity/availability measured independently of egg receipt/damage;
+2. a timing exposure with genuine replication at the inferential unit, for example multiple plot-years prospectively ordered relative to that adult window; and
+3. a final post-predation reproductive response summarized at that compatible structure.
+
+Any rescued quantitative effect from either publication remains in `DEP_PEUCEDANUM_KUDO_PROGRAM`.
+
+See `IWE011_TIMING_UNIT_REAUDIT_20260928.md`.

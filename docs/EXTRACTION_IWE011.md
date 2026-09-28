@@ -1,122 +1,74 @@
-# IWE011 extraction receipt — Kudo & Shibata 2025
+# IWE011 extraction receipt — withdrawn strict SMD
 
 Source: Kudo G, Shibata A. 2025. *Phenological selection mosaic of predispersal seed predation affects gender variation in an andromonoecious plant*. Journal of Ecology 113:2832–2845. DOI `10.1111/1365-2745.70130`.
 
-Dataset and reproducible code: Hokkaido University Data Repository DOI `10.14943/hu95572`.
+Dataset/code source: Hokkaido University Data Repository DOI `10.14943/hu95572`.
 
-Status: **first strict-H1 antagonist effect admitted to the IWE primary table**.
+Status: **former strict-H1 antagonist extraction withdrawn on 2026-09-28 after timing-provenance and exposure-unit re-audit**.
 
-## Phenological design
+## Biological evidence retained
 
-The five permanent plots HA, HL, HC, KD and HD occupy a local snowmelt-driven flowering gradient.
+The programme directly measures:
 
-Across 2020–2023:
+- flowering phenology across permanent *Peucedanum multivittatum* plots;
+- deposited *Phaulernis fulviguttella* eggs;
+- fruit predation;
+- final intact mature fruits.
 
-- HA flowered in mid-July;
-- HL in mid- to late July;
-- HC in late July to early August;
-- KD in early to mid-August;
-- HD in early to late August.
+The final response is therefore genuinely post-predation plant reproduction.
 
-The predator moth *Phaulernis fulviguttella* lays eggs mainly in mid- to late July. The study reports intense predation in early-flowering plots and negligible predation in late-flowering plots.
+The published HA and HD final fruit-set summaries are:
 
-For a prospectively defined extreme timing contrast, IWE uses:
-
-- HA = high predator-overlap end;
-- HD = low predator-overlap end.
-
-This contrast is fixed from flowering and predator activity timing, not from the reproductive response.
-
-## Final reproductive outcome
-
-The study directly measured developing fruits, predation damage and mature intact fruits.
-
-Final fruit-set rate is the number of intact fruits divided by the number of perfect flowers per plant.
-
-Published Table 1 reports, pooled over 2020–2023:
-
-| Plot | Timing interpretation | n | Final fruit-set mean | SD |
+| Plot | Seasonal position | n plant observations | Final fruit-set mean | SD |
 |---|---|---:|---:|---:|
-| HA | high predator overlap | 177 | 0.13 | 0.19 |
-| HD | low predator overlap | 127 | 0.40 | 0.29 |
+| HA | mid-July | 177 | 0.13 | 0.19 |
+| HD | August | 127 | 0.40 | 0.29 |
 
-These are post-predation reproductive outcomes, unlike the pre-predation fruit-number response emphasized in IWE010.
+Mechanically standardizing these response summaries gives the historical diagnostic contrast
 
-## Effect reconstruction
+`HA - HD: g = -1.1368391965, var = 0.0155963310`.
 
-IWE defines the native contrast as
+That number is no longer an admitted meta-analytic effect.
 
-`high overlap HA - low overlap HD`.
+## Timing-provenance failure
 
-The pooled standard deviation is
+The 2025 paper describes predator moths as ovipositing on host umbels, usually in mid- to late July, and records deposited eggs on plants.
 
-`s_p = sqrt(((n_HA-1)s_HA^2 + (n_HD-1)s_HD^2) / (n_HA+n_HD-2))`.
+The 2021 predecessor explicitly describes the mid- to late-July window as a **preliminary observation of the major oviposition period**.
 
-Cohen's `d` is corrected with
+Neither public paper reports a contemporaneous quantitative adult-moth census/trapping/activity series that orders plant flowering windows independently of realized egg receipt.
 
-`J = 1 - 3/(4df - 1)`
+Under the frozen IWE timing contract, eggs deposited on host plants cannot serve as the independent partner-availability curve because egg receipt depends on host availability, host choice and interaction success.
 
-to obtain Hedges' `g`.
+Thus the former `ordered_by_measured_window` classification was inconsistent with the rule later applied to Cardamine and Bopp.
 
-Using the published summaries:
+## Exposure-unit failure
 
-- pooled SD = 0.2369102996;
-- Cohen's d = -1.1396718523;
-- J = 0.9975144988;
-- Hedges' g = **-1.1368391965**.
+The former contrast was one permanent plot (HA) versus one permanent plot (HD), while its Hedges-g variance treated 177 and 127 plant observations as independent group replicates.
 
-Sampling variance is reconstructed as
+Plant observations replicate the response **within** a plot; they do not replicate the plot-level timing exposure.
 
-`Var(g) = J^2 * [(n1+n2)/(n1*n2) + d^2/(2df)]`
+Therefore the plant-level SMD sampling variance understated the uncertainty of the timing contrast and is not retained for strict H1.
 
-giving
+## Current classification
 
-`Var(g) = 0.0155963310`.
+IWE011 remains:
 
-The total number of plant observations in the two extreme groups is 304.
+- interaction class: antagonist;
+- evidence provenance: direct plant timing + final post-predation reproduction;
+- timing metric type: `seasonal_position`;
+- timing analysis class: `direct_timing_sensitivity`;
+- strict H1 status: unresolved/not currently admitted.
 
-## Executable classification
+No IWE011 row is present in `data/extraction/direct_effects.csv`.
 
-The extraction row is:
+## Rescue route
 
-`IWE011_HA_VS_HD_FINALSET_SMD`.
+A strict effect would require:
 
-Registered fields:
+1. a focal-season adult *P. fulviguttella* activity/availability series independent of egg receipt or damage; and
+2. timing exposure replicated at a compatible inferential unit, such as multiple plot-years prospectively ordered against that adult series.
 
-- `interaction_type = antagonist`;
-- `evidence_tier = A`;
-- `phenology_source = direct_activity`;
-- `timing_metric_type = seasonal_position`;
-- `timing_analysis_class = strict_window`;
-- `timing_domain = ordered_by_measured_window`;
-- `exposure_direction = synchrony`;
-- `outcome_family = final_fruit_set`;
-- `effect_family = standardized_mean_difference`;
-- `effect_native = -1.1368391965`;
-- `variance_native = 0.0155963310`.
+Any rescued effect remains in `DEP_PEUCEDANUM_KUDO_PROGRAM`.
 
-Because the exposure is already ordered from lower to greater antagonist synchrony, the oriented effect retains its negative sign.
-
-## Dependence
-
-IWE011 reuses permanent plots from the 2017–2019 IWE010 study and explicitly identifies that work as the previous study.
-
-The effect therefore uses:
-
-`DEP_PEUCEDANUM_KUDO_PROGRAM`.
-
-See `PEUCEDANUM_DEPENDENCY_MAP.md`.
-
-## Interpretation boundary
-
-The negative strict-H1 effect is directionally consistent with the antagonist hypothesis: the high-overlap plot has lower final reproductive success than the low-overlap plot.
-
-However, this is an observational population contrast. Plot identity, snowmelt environment and correlated plant traits are not experimentally held constant.
-
-Accordingly, the row is valid direct timing–fitness evidence but must not be described as a causal estimate of seed-predator synchrony by itself.
-
-## Effect-family boundary
-
-This effect is a standardized mean difference. It is not numerically pooled with the IWE029 log-odds ratio.
-
-The reference workflow now stratifies summaries by native effect family. H1 interaction-class comparisons require a common effect family or a separately registered conversion rule.
+See `IWE011_TIMING_UNIT_REAUDIT_20260928.md` and `PEUCEDANUM_DEPENDENCY_MAP.md`.

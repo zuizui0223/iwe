@@ -1,5 +1,7 @@
 # Replication discovery batch 003 — design-signature search
 
+> **2026-09-28 re-audit:** the Tomares conclusion in this historical batch is superseded. Newly laid eggs are a realized oviposition outcome, not an independent adult-activity curve, and patch 1 versus patch 2 provides only one patch per synchrony state. Tomares is now P2 `blocked_timing_linkage`, not a one-blocker P1 variance candidate. See `CANDIDATE_AUDIT_TOMARES_ASTRAGALUS.md`.
+
 Date: 2026-09-24  
 Status: full-text/design adjudication complete for first design-signature batch  
 Outcome: **no second strict SMD cluster yet**

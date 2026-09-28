@@ -60,12 +60,18 @@ The published inferential form is continuous flowering-date/selection analysis, 
 
 Decision: P2 `blocked_effect_form`. Do not create bins after seeing the response and do not convert a selection slope to SMD.
 
-## Consequence
+## Consequence — revised 2026-09-28
 
-The antagonist P1 queue is still:
+The antagonist strict corpus is now **empty** after applying the same independent-partner-window and exposure-unit rules retrospectively to IWE011.
 
-1. *Astragalus lusitanicus × Tomares ballus* — correct biological chain; needs correct-unit final-reproduction variance.
-2. James 1998 *Yucca kanabensis ×* non-pollinating yucca moth — same plants have timing + final intact/damaged seeds; needs the unpublished plant-level grouped final-seed table.
-3. *Parnassia wightiana × Nonarthra variabilis* — source-defined beetle-abundance cohorts; raw fate archive cited by the paper is currently not retrievable and published seeds/fruit exclude beetle-destroyed peduncles.
+The current P1 completion queue is:
 
-The new audits do not reduce the cluster gap, but they close several tempting false shortcuts.
+1. Cardamine–Anthocharis — plant trajectories and final intact reproduction are public; exact 2012–2014 female capture+recapture timing remains the only biological object missing, with identified public binary assets checked before contact.
+2. Parnassia–florivorous beetles — source-defined beetle-abundance cohorts and final seeds exist, but fate of beetle-destroyed marked flowers is missing from the public surface.
+3. James 1998 Yucca cheater — same plants carry flowering timing and final intact/damaged seeds; the unpublished plant-level timing-stratified final-seed summary remains missing.
+
+Tomares–Astragalus is demoted to P2. Its published focal synchrony series is newly laid eggs on host shoots, not independent adult availability, and the synchrony comparison is one patch versus one patch. Plant/shoot SD alone cannot repair that design.
+
+IWE011 is likewise no longer a strict effect: its mid- to late-July partner window is based on oviposition/egg observations, and the former HA-versus-HD SMD treated within-plot plants as timing-exposure replicates.
+
+These revisions reduce apparent evidence coverage but remove two internally inconsistent shortcuts. The antagonist target is again to recover a **first** strict SMD cluster before a second replication is sought.
