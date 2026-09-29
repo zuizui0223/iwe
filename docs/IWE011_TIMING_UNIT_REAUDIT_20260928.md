@@ -30,7 +30,7 @@ A general species flight period from external faunistic sources is not a substit
 
 Therefore the former statement that HA and HD were "ordered by the measured moth window" was too strong.
 
-## Exposure-unit audit
+## Exposure-unit interpretation
 
 The former strict effect used:
 
@@ -42,9 +42,11 @@ Published Table 1 pools plant observations across 2020–2023 and reports final 
 - HA: mean 0.13, SD 0.19, n=177 plant observations;
 - HD: mean 0.40, SD 0.29, n=127 plant observations.
 
-Those plant observations are valid response measurements, but the synchrony exposure in the former contrast is assigned at the **plot level**. One HA plot and one HD plot do not become 177 and 127 independent timing exposures.
+Those plant observations are valid **response sampling within fixed plot contexts**. They quantify uncertainty in the HA and HD response distributions, but they do not make the seasonal timing context itself 177 versus 127 times independently replicated.
 
-Consequently the former Hedges-g sampling variance used response-unit replication to stand in for exposure-unit replication. That variance is not a defensible strict meta-analytic sampling variance for a one-plot-versus-one-plot synchrony contrast.
+Under the clarified strict effect-unit contract, this grain mismatch is not a universal automatic exclusion for a descriptive fixed-context association. It instead requires the effect to be explicitly non-causal and its variance to be interpreted as within-context response sampling.
+
+IWE011 remains withdrawn for the stronger reason above: the partner window itself is not independently measured. If a valid adult-moth activity series were recovered, the fixed-plot response contrast could be reconsidered as a descriptive association with explicit unit provenance rather than being rejected solely because exposure grain and response grain differ.
 
 ## What remains scientifically useful
 
@@ -65,12 +67,9 @@ when plant-level summaries are mechanically standardized. This value is retained
 
 ## Strict rescue conditions
 
-A future strict Peucedanum effect requires both:
+A future strict Peucedanum effect first requires **independent partner timing** — focal-season adult *P. fulviguttella* abundance/availability measured by census, trapping or another activity series independent of egg receipt/damage.
 
-1. **independent partner timing** — focal-season adult *P. fulviguttella* abundance/availability measured by census, trapping or another activity series independent of egg receipt/damage; and
-2. **compatible exposure replication** — timing variation represented at an inferential unit with real replication, for example multiple plot-years prospectively ordered by the independent adult window, or another source-backed individual-level exposure that is not merely inherited from one plot.
-
-A final post-predation response must then be summarized at that same inferential structure.
+If the rescued effect remains a fixed HA-versus-HD context comparison, its plant-level variance must be registered explicitly as within-context response sampling and the claim must remain descriptive/non-causal. Multiple plot-years or another genuinely replicated timing exposure would strengthen the design and would be required for a causal/generalized timing-treatment claim, but are not imposed as a universal prerequisite for a descriptive strict association.
 
 The 2017–2019 and 2020–2023 programmes remain one dependence programme, `DEP_PEUCEDANUM_KUDO_PROGRAM`.
 
