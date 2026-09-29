@@ -94,6 +94,21 @@ The reported ANOVA F contains the pooled within-group residual variance for the 
 
 The source prints the relative means to two decimals and F to two decimals. Varying the non-maximum means by ±0.005 and F from 1.005 to 1.015 keeps the reconstructed Hedges g approximately within approximately **+0.360 to +0.402**. The small positive effect is therefore not a sign artifact of reported rounding.
 
+## Unit semantics
+
+This design aligns the exposure and response units. Plants were randomly selected each week to be returned from delayed-flowering conditions, and seed set was calculated per potted plant. Thus the flowering-time manipulation is assigned at the plant level and the final reproductive response is also plant-level.
+
+Executable unit provenance:
+
+- `design_type = experimental_individual_timing`;
+- `exposure_grain = plant`;
+- `response_grain = plant`;
+- `variance_interpretation = individual_effect_sampling`;
+- `inference_scope = experimental_manipulation`;
+- `causal_claim_allowed = yes`.
+
+This is stronger unit alignment than the observational fixed-context contrasts retained elsewhere in IWE.
+
 ## Dependence
 
 This programme is independent of IWE027 (*Phyllodoce aleutica* in Japan).
