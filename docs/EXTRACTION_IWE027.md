@@ -69,6 +69,23 @@ Using the 2007 animal-activity curve to relabel 2006 E/M plots as strict synchro
 
 The 2006 component is therefore registered as non-strict/pending rather than silently promoted.
 
+## Unit semantics
+
+The 2007 E and M treatments are **fixed 20 × 20 m plots**, while the reported seed-set summaries sample 24 randomly selected inflorescences within each plot. The resulting SMD sampling variance therefore quantifies uncertainty in the response distribution **within those fixed plot contexts**. It must not be interpreted as 24 independent replications of the seasonal timing exposure.
+
+This is admissible as a descriptive fixed-context association because partner visitation was measured independently in the focal season and the source itself compares seed set among plots. It is not an experimental estimate of a replicated timing treatment.
+
+Executable unit provenance:
+
+- `design_type = fixed_context_group_comparison`;
+- `exposure_grain = plot`;
+- `response_grain = inflorescence`;
+- `variance_interpretation = within_context_response_sampling`;
+- `inference_scope = descriptive_association`;
+- `causal_claim_allowed = no`.
+
+The HIS and GOS contrasts provide two site-specific response contrasts but remain one conservative programme-level dependence cluster.
+
 ## Dependence
 
 HIS and GOS are distinct sites, but the two extracted effects share:
