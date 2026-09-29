@@ -30,7 +30,7 @@ The companion life-history paper confirms a broad regional adult flight period i
 
 Therefore `timing_window_measured = yes` is no longer justified. The candidate is now `partial` on that gate.
 
-## Exposure-unit problem
+## Unit and variance problem
 
 The synchrony contrast reported in Oikos is **patch 1 versus patch 2**.
 
@@ -41,9 +41,11 @@ The paper reports approximately:
 | 1 | 28 | 9.11 ± 0.14 | 211 | 6.65 ± 0.76 |
 | 2 | 13 | 8.92 ± 0.21 | 77 | 12.98 ± 1.82 |
 
-The large RSI sample sizes are nested inflorescence observations, not independent synchrony exposures. The 28/13 tagged shoots also do not create replicated patch-level treatment states: there is still only one higher-coincidence patch and one lower-coincidence patch in the published comparison.
+The large RSI sample sizes are inflorescence observations nested within tagged shoots. They cannot be treated as independent plant-level response units without accounting for that nesting.
 
-Therefore recovering a plant/shoot-level SD alone would **not** solve the inferential problem. The previous "correct-unit variance" blocker understated what is missing.
+A fixed patch-1 versus patch-2 contrast could in principle be retained as a **descriptive fixed-context association** if the partner window were independently measured and the response variance were reconstructed at a defensible biological sampling unit. It would not constitute replicated patch-level timing treatment.
+
+Thus plant/shoot-level final-reproduction summaries remain useful, but they are not sufficient by themselves because the independent adult-timing gate still fails.
 
 ## Final reproductive endpoint
 
@@ -58,9 +60,9 @@ No final-response downgrade is needed.
 A strict rescue requires a long-form/thesis/archive source that establishes both:
 
 1. **independent partner timing** — quantitative adult *T. ballus* activity/availability during the focal season, independently of eggs received by host shoots; and
-2. **compatible exposure replication** — a source-backed timing exposure that is replicated beyond one patch per synchrony state, or an individual-level overlap variable defensibly derived from independent adult timing and each tagged shoot's plant phenology.
+2. **correct response-unit variance** — a tagged-shoot/plant-level final ripe-fruit or viable-seed summary, or another variance estimate that does not treat nested inflorescences as independent plants.
 
-That exposure must then be joined to the tagged-shoot final ripe-fruit/viable-seed response with variance.
+If the rescue remains a one-patch-versus-one-patch context contrast, it must be registered as descriptive/non-causal fixed-context evidence. A source-backed individual overlap variable or multiple independently varying patches would permit a stronger inference but are not required merely to describe the fixed-context association.
 
 The 1987 Diego Jordano thesis remains the highest-value retrieval target because its abstract explicitly covers annual butterfly/plant cycles, phenological synchronization, oviposition-site selection and host reproductive success. Its full text has not been publicly recovered.
 

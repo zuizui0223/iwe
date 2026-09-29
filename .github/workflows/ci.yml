@@ -39,6 +39,8 @@ jobs:
         run: python scripts/validate_adjudications.py
       - name: Validate strict partner-window provenance
         run: python scripts/validate_window_provenance.py
+      - name: Validate strict effect unit provenance
+        run: python scripts/validate_unit_provenance.py
       - name: Validate replication candidate ledger
         run: python scripts/validate_replication_candidates.py
       - name: Validate replication completion routes

@@ -8,7 +8,7 @@ Scope: retrospective application of the frozen IWE timing contract to already-ad
 The Cardamine preflight made two requirements explicit:
 
 1. the partner activity window must be measured independently of realized interaction outcomes such as eggs received by hosts, attack or damage;
-2. the sampling variance of an SMD must reflect independent units of the timing exposure, not merely repeated response observations nested inside one exposed site/plot.
+2. response sampling and replication of the timing exposure must be distinguished explicitly; nested response observations may quantify a fixed-context mean difference but must not be misdescribed as replicated timing treatments.
 
 This audit applies those same requirements retrospectively to the Peucedanum IWE011 effect and the Tomares–Astragalus candidate.
 
@@ -22,16 +22,22 @@ It therefore cannot be reused as an independent adult-availability curve that pr
 
 Acceptable strict partner-window evidence includes focal-season adult census, trapping, visitation or another direct activity series independent of the plant reproductive response.
 
-## Rule 2 — response replication is not exposure replication
+## Rule 2 — response sampling is not exposure replication
 
-If a synchrony state is assigned at plot/site level, many plants measured inside one plot replicate the response conditional on that plot; they do not create many independent realizations of the timing exposure.
+If a synchrony state is assigned at plot/site level, many plants measured inside one plot replicate the **response conditional on that fixed context**; they do not create many independent realizations of the timing treatment.
 
-An independent-groups SMD cannot therefore use plant/inflorescence n as though one high-overlap plot and one low-overlap plot were replicated treatment groups.
+This distinction changes interpretation rather than automatically invalidating every fixed-context contrast.
 
-A strict meta-analytic variance needs either:
+A strict descriptive association may retain response-level sampling variance when:
 
-- multiple independently exposed units such as prospectively ordered plot-years/sites; or
-- an individual-level timing exposure that genuinely varies among independent response units.
+- the partner window itself is independently measured;
+- the source response units are defensible biological sampling units;
+- the variance is explicitly labeled `within_context_response_sampling`; and
+- the claim is explicitly non-causal.
+
+Such an effect estimates a standardized difference between the sampled response distributions in those fixed timing contexts. It does **not** estimate uncertainty from repeated manipulation of the timing exposure.
+
+Experimental/causal timing claims require exposure and response units to align, or otherwise require genuine replication of the exposure.
 
 ## IWE011 — Peucedanum × Phaulernis
 
@@ -52,16 +58,15 @@ The former effect compared:
 
 Plant-level Table 1 summaries were standardized with `n=177` and `n=127`.
 
-This fails both retrospective rules:
+The first point is a strict-gate failure: the partner window is oviposition/egg based rather than independent adult availability.
 
-- the partner window is oviposition/egg based rather than independent adult availability;
-- the timing exposure is one plot versus one plot while the variance uses nested plant response n.
+The second point is an interpretation problem rather than a universal exclusion under the clarified unit contract: the timing exposure is one plot versus one plot while the plant-level variance samples response distributions within those plots. That variance could only support a non-causal fixed-context association, not replicated timing-treatment inference.
 
 ### Decision
 
 Withdraw `IWE011_HA_VS_HD_FINALSET_SMD` from the strict corpus.
 
-Retain the programme as direct seasonal-timing/final-fitness evidence. A future rescue requires independent focal-season adult timing and a replicated timing exposure at a compatible inferential unit.
+Retain the programme as direct seasonal-timing/final-fitness evidence. A future rescue first requires independent focal-season adult timing. If the effect remains a fixed HA-versus-HD contrast, it must carry explicit within-context response-sampling semantics and a descriptive/non-causal claim boundary; multiple independently varying plot-years would permit stronger inference.
 
 ## Tomares × Astragalus
 
@@ -82,14 +87,14 @@ The prior IWE candidate classification treated the problem as only a nested-vari
 That is insufficient:
 
 - egg receipt cannot serve as the independent partner window;
-- patch 1 versus patch 2 is one patch per synchrony state;
-- obtaining shoot-level SD does not create replication of the patch-level timing exposure.
+- the published RSI summaries use nested inflorescence observations rather than a clean plant/shoot response variance;
+- patch 1 versus patch 2 is a fixed-context contrast and therefore cannot be described as replicated timing treatment even if a correct response variance is recovered.
 
 ### Decision
 
 Demote `ANT002_TOMARES_ASTRAGALUS` from P1 `blocked_summary_stats` to P2 `blocked_timing_linkage`.
 
-Strict rescue requires both an independent adult activity series and a timing-to-final-reproduction surface with compatible exposure replication.
+Strict rescue requires both an independent adult activity series and a final-reproduction variance at a defensible tagged-shoot/plant sampling unit. If the contrast remains patch 1 versus patch 2, it must be retained as descriptive/non-causal fixed-context evidence rather than a replicated timing treatment.
 
 ## Corpus consequence
 
@@ -116,7 +121,8 @@ Promotion requires all of the following jointly:
 1. independent partner-activity timing;
 2. a prospectively defined synchrony exposure;
 3. final post-interaction plant reproduction;
-4. variance at units that replicate the exposure;
-5. dependence represented explicitly across repeated sites/years/outcomes.
+4. explicit unit provenance distinguishing exposure grain from response sampling grain;
+5. a variance interpretation compatible with that grain, with non-causal labeling for fixed-context comparisons;
+6. dependence represented explicitly across repeated sites/years/outcomes.
 
 Cardamine remains the cleanest current route because its female adult flight season is defined from capture/recapture independently of the plant response, and the response-blind exposure rule is already frozen before outcome analysis.
