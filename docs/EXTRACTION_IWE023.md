@@ -121,10 +121,10 @@ This programme-level identifier is deliberately conservative. If IWE025 or anoth
 
 ## Replication consequence
 
-The native SMD family now has:
+The current native SMD family has:
 
 - mutualist: **2 independent clusters** — IWE027 and IWE023;
-- antagonist: 1 independent cluster;
-- mixed pollinating seed predator: 1 independent cluster.
+- antagonist: **0 strict clusters** after the IWE011 timing-provenance re-audit;
+- mixed pollinating seed predator: **0 quantitative strict clusters** while IWE015 remains on raw-variance hold.
 
-Mutualist replication reaches the frozen minimum evaluability gate. H1 as a three-class comparison remains unavailable until antagonist and mixed each reach two independent SMD clusters.
+The mutualist class therefore satisfies the two-cluster **discovery milestone**, not an inferential threshold. The reference workflow still withholds robust class-level inference until the stricter cluster-information rule is satisfied, and H1 cannot be evaluated across interaction classes while antagonist and mixed strict SMD evidence are absent.
