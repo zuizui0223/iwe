@@ -81,3 +81,5 @@ The CI workflow runs this validator immediately after strict-H1 adjudication val
 ## Boundary
 
 This registry does not by itself prove causal identification, adequate spatial replication or correct effect-size variance. It only closes one specific loophole: a strict synchrony effect cannot silently use egg receipt, attack or damage as though those were independent partner activity.
+
+Within-effect sampling grain is handled separately by `STRICT_EFFECT_UNIT_PROVENANCE_CONTRACT.md` and `data/registry/strict_effect_unit_provenance.csv`. A valid partner window therefore does not automatically authorize a causal timing claim.
