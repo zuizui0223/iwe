@@ -83,6 +83,21 @@ Its dependence identifier is:
 
 All additional IWE029 effects from these peak/late samples must remain in the same dependence cluster.
 
+## Unit semantics
+
+Peak and late samples used different flowering individuals, with 90 plants initially tagged at each period and plant-level seed set entering the source binomial model. The exposure is each plant's observed flowering-period category within the focal population; it is not a randomized season treatment.
+
+Executable unit provenance:
+
+- `design_type = observational_individual_timing`;
+- `exposure_grain = plant`;
+- `response_grain = plant`;
+- `variance_interpretation = source_model_sampling`;
+- `inference_scope = descriptive_association`;
+- `causal_claim_allowed = no`.
+
+The published model SE therefore represents plant-level sampling/model uncertainty for the observed temporal contrast. It must not be described as replicated manipulation of season or pollinator abundance.
+
 ## Effect-family boundary
 
 The native model is binomial, so this coefficient is registered as `log_odds_ratio`.
