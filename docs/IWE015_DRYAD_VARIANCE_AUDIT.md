@@ -6,6 +6,8 @@ Article DOI: `10.1111/evo.13965`
 Dryad DOI: `10.5061/dryad.6q573n5w1`  
 Decision: **quantitative hold pending raw-data recomputation**
 
+Timing is **not** the blocker. Zhou et al. Figure 1 reports same-season 2012 and 2013 adult *H. ectypa* and co-pollinating moth density (moths observed per flower ×100) separately from egg density. The adult moth series provides an admissible `direct_adult_census` partner-window basis. Raw variance verification therefore remains the only quantitative gate before a draft strict re-admission can be constructed.
+
 ## Public archive verification
 
 The Dryad landing page is public and identifies a single version published 2020-03-31. It exposes the female experiment files required for a direct check of Table 1:
@@ -18,6 +20,20 @@ The Dryad landing page is public and identifies a single version published 2020-
 - `README.txt`
 
 The archive also contains the corresponding male/genotype files and `eggdat.csv`.
+
+Stable Dryad download-link file IDs are now pinned so authenticated retrieval does not require another discovery pass:
+
+| source object | Dryad file ID |
+|---|---:|
+| `2012_early_female.csv` | `278487` |
+| `2012_late_female.csv` | `278488` |
+| `2013_early_female.csv` | `278490` |
+| `2013_late_female.csv` | `278492` |
+| `data_analysis.R` | `278500` |
+| `README.txt` | `278498` |
+
+The landing page is public, while direct file-stream requests return HTTP 403 in the current runtime. This is an access-layer/authentication blocker, not source-object uncertainty.
+
 
 ## Why the published dispersion cannot be used literally
 
