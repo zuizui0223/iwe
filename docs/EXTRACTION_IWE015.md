@@ -15,9 +15,9 @@ The authors therefore ran two experiments in each year:
 - **early** — *H. ectypa*-dominant period;
 - **late** — co-pollinator-dominant period.
 
-Pollinator surveys and flower egg counts were used to confirm the seasonal change in *H. ectypa* activity.
+Pollinator surveys were conducted throughout each 2012 and 2013 flowering season. Figure 1 reports separate adult moth-density series for *H. ectypa* and co-pollinating moths, calculated as moths observed per flower ×100. These direct adult surveys confirm the early *Hadena*-dominant versus late co-pollinator-dominant windows. Flower egg counts were collected separately as an oviposition series and are **not needed** to define the strict partner window.
 
-The early/late contrast is therefore not inferred from calendar date alone. It is independently ordered by the measured activity of the focal mixed partner.
+The early/late contrast is therefore not inferred from calendar date or egg receipt alone. It is ordered by same-season direct adult moth-density evidence.
 
 ## Why this is a mixed interaction
 
@@ -40,7 +40,7 @@ This is therefore a final post-predation reproductive outcome rather than visita
 
 ## Published summaries
 
-Table 1 labels the group dispersions as standard errors, but that label is internally inconsistent with the same table's bounded proportion outcomes. For example, fruit-initiation proportion is 0.91 ± 0.19 at n=59; an SE of 0.19 would imply an SD greater than 1 for a variable bounded to [0,1], which is impossible. The printed dispersions are therefore treated as SD-like values rather than multiplied by sqrt(n). The public Dryad record (`10.5061/dryad.6q573n5w1`) exposes four female CSVs plus the authors' analysis script for a row-level replication audit.
+Table 1 labels the group dispersions as standard errors, but that label is internally inconsistent with the same table's bounded proportion outcomes. For example, fruit-initiation proportion is 0.91 ± 0.19 at n=59; an SE of 0.19 would imply an SD greater than 1 for a variable bounded to [0,1], which is impossible. The printed dispersions are numerically **SD-like**, but that observation is diagnostic only. IWE does not treat them as verified SDs in the primary corpus. The public Dryad record (`10.5061/dryad.6q573n5w1`) exposes four female CSVs plus the authors' analysis script for a row-level replication audit.
 
 | Year | Window | Adult plants n | Successful fruits mean | Printed dispersion (source labels SE) |
 |---|---|---:|---:|---:|
@@ -49,7 +49,7 @@ Table 1 labels the group dispersions as standard errors, but that label is inter
 | 2013 | early / Hadena-dominant | 55 | 9.77 | 6.91 |
 | 2013 | late / co-pollinator-dominant | 55 | 8.60 | 7.01 |
 
-The source's `SE` label is not accepted mechanically because it fails a bounded-outcome consistency check elsewhere in the same table. IWE uses the printed dispersion directly as the group SD for the successful-fruit SMD and preserves the label discrepancy in the extraction receipt.
+The source's `SE` label is not accepted mechanically because it fails a bounded-outcome consistency check elsewhere in the same table. Direct use of the printed dispersion as an SD is retained **only as a diagnostic reconstruction below**; no such diagnostic value is admitted to `direct_effects.csv` before raw verification.
 
 ## Effect orientation
 
@@ -124,4 +124,4 @@ The late window also contains other effective moth pollinators, so the contrast 
 
 ## Reproducibility
 
-The repository retains calculation regression tests for both possible interpretations as diagnostics, but no IWE015 effect is admitted to the strict corpus while the variance source is unresolved. The Dryad archive identity, version date, female CSV filenames and analysis script are recorded in `IWE015_DRYAD_VARIANCE_AUDIT.md`.
+The repository retains calculation regression tests for both possible interpretations as diagnostics, but no IWE015 effect is admitted to the strict corpus while the variance source is unresolved. A public mirror of the archived `data_analysis.R` shows that the female fitness field read from each early/late female CSV is `ft` and that relative female fitness is constructed as `rf = ft / mean(ft)`. The raw auditor therefore defaults to `ft` while still requiring the four source CSVs to reproduce Table 1 n and means. See `IWE015_DRYAD_VARIANCE_AUDIT.md` and `IWE015_TIMING_SOURCE_AUDIT_20261001.md`.
