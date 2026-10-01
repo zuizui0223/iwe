@@ -64,7 +64,9 @@ The IWE015 programme still passes the biological timing and final-reproduction g
 
 The repository now provides:
 
-`python scripts/audit_iwe015_raw_variance.py <2012_early.csv> <2012_late.csv> <2013_early.csv> <2013_late.csv> <output_dir> --successful-fruits-col <column>`
+`python scripts/audit_iwe015_raw_variance.py <2012_early.csv> <2012_late.csv> <2013_early.csv> <2013_late.csv> <output_dir>`
+
+The archived analysis script reads female reproductive fitness from column `ft` in each of the four female CSVs, so the executable audit now defaults to `--successful-fruits-col ft`. Override that flag only if the recovered source file demonstrates a different schema.
 
 Optional cross-check columns:
 
