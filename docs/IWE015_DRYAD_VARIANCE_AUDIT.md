@@ -21,6 +21,20 @@ The Dryad landing page is public and identifies a single version published 2020-
 
 The archive also contains the corresponding male/genotype files and `eggdat.csv`.
 
+Stable Dryad download-link file IDs are now pinned so authenticated retrieval does not require another discovery pass:
+
+| source object | Dryad file ID |
+|---|---:|
+| `2012_early_female.csv` | `278487` |
+| `2012_late_female.csv` | `278488` |
+| `2013_early_female.csv` | `278490` |
+| `2013_late_female.csv` | `278492` |
+| `data_analysis.R` | `278500` |
+| `README.txt` | `278498` |
+
+The landing page is public, while direct file-stream requests return HTTP 403 in the current runtime. This is an access-layer/authentication blocker, not source-object uncertainty.
+
+
 ## Why the published dispersion cannot be used literally
 
 Table 1 explicitly states `SE=standard error` and labels all entries as mean ± SE.
