@@ -86,6 +86,19 @@ A rescue therefore still requires:
 
 Multiple independent patches would strengthen causal/generalized inference but are not imposed as a universal prerequisite for descriptive strict association.
 
+## Planned IWE015 unit semantics
+
+IWE015 is currently absent from the strict corpus because its raw variance is unresolved. If raw 2012/2013 effects return, the unit semantics are predeclared as:
+
+- `design_type = observational_individual_timing`;
+- `exposure_grain = plant`;
+- `response_grain = plant`;
+- `variance_interpretation = individual_effect_sampling`;
+- `inference_scope = descriptive_association`;
+- `causal_claim_allowed = no`.
+
+The early and late experiments use distinct plants selected in the same field population. The seasonal context is observed rather than experimentally randomized, so a returning IWE015 SMD remains descriptive despite plant-level exposure/response alignment.
+
 ## CI behavior
 
 `scripts/validate_unit_provenance.py` fails when:
