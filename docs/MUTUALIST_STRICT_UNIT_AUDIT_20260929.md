@@ -49,9 +49,13 @@ This is the cleanest unit alignment in the current strict corpus.
 
 ### Quantitative note
 
-The public Dryad archive also exposes `gallagher&campbell_phenologyExperimentData.xlsx` (file-stream ID 341732), so the current ANOVA-based SMD reconstruction could in principle be upgraded to a direct raw plant-level calculation.
+The public Dryad archive exposes `gallagher&campbell_phenologyExperimentData.xlsx` (Dryad file ID `341732`). The dataset landing page confirms the 4 × 10 plant design and plant-level seed-set definition.
 
-This execution environment receives HTTP 403 for the Dryad binary download, so the current source-backed ANOVA reconstruction remains in place. The raw upgrade is optional; it is not required for validity.
+Dryad's current download layer requires authenticated file access and this execution environment receives HTTP 403 for the raw workbook bytes. Source discovery is therefore complete; raw-byte access is the only remaining blocker.
+
+IWE now includes `scripts/audit_iwe023_raw.py`. Once the workbook is available, it fails closed unless raw data reproduce weeks 1–4, n=10 per week, residual df=36, published relative means, and F≈1.01. It then reconstructs the existing all-four-week common-residual-SD SMD directly from plant-level observations and also reports a week1/week4-only SMD sensitivity.
+
+The current ANOVA reconstruction remains valid and stays primary until that raw verification succeeds.
 
 ## IWE029 — Stigmaphyllon paralias
 
