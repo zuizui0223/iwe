@@ -10,6 +10,8 @@ Status: **timing and final-outcome gates pass; quantitative strict-H1 extraction
 
 At the Mountain Lake Biological Station population, adult *Hadena ectypa* abundance peaks early in the *Silene stellata* flowering season and drops rapidly as generalist co-pollinating moths become dominant.
 
+The contemporaneous timing provenance is source-backed in the 2012–2013 experiment itself. Zhou et al. Figure 1 reports separate phenological series for **adult moth density** and egg density. The figure defines adult moth density as the number of *H. ectypa* or co-pollinating moths observed per flower ×100 in each focal year. This same-season adult series is the strict partner-window basis. The egg-density series is retained only as an oviposition/mechanism measure and is **not** used to define partner availability. Earlier 2005–2006 adult-density work (Reynolds et al. 2012) supports the system's repeatable seasonal ecology but is not needed to back-project the 2012–2013 strict window.
+
 The authors therefore ran two experiments in each year:
 
 - **early** — *H. ectypa*-dominant period;
@@ -17,7 +19,7 @@ The authors therefore ran two experiments in each year:
 
 Pollinator surveys and flower egg counts were used to confirm the seasonal change in *H. ectypa* activity.
 
-The early/late contrast is therefore not inferred from calendar date alone. It is independently ordered by the measured activity of the focal mixed partner.
+The early/late contrast is therefore not inferred from calendar date or egg receipt alone. It is independently ordered by the same-season measured adult activity of the focal mixed partner.
 
 ## Why this is a mixed interaction
 
@@ -124,4 +126,4 @@ The late window also contains other effective moth pollinators, so the contrast 
 
 ## Reproducibility
 
-The repository retains calculation regression tests for both possible interpretations as diagnostics, but no IWE015 effect is admitted to the strict corpus while the variance source is unresolved. The Dryad archive identity, version date, female CSV filenames and analysis script are recorded in `IWE015_DRYAD_VARIANCE_AUDIT.md`.
+The repository retains calculation regression tests for both possible interpretations as diagnostics, but no IWE015 effect is admitted to the strict corpus while the variance source is unresolved. Once both raw-year effects are ready, `scripts/build_iwe015_promotion_packet.py` must be used to draft re-admission atomically; it appends the effect rows together with strict adjudications, `direct_adult_census` window provenance, and plant-level descriptive unit provenance, and validates the virtual post-promotion state before any registry change. The Dryad archive identity, version date, female CSV filenames and analysis script are recorded in `IWE015_DRYAD_VARIANCE_AUDIT.md`.

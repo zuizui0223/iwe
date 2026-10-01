@@ -6,6 +6,8 @@ Article DOI: `10.1111/evo.13965`
 Dryad DOI: `10.5061/dryad.6q573n5w1`  
 Decision: **quantitative hold pending raw-data recomputation**
 
+Timing is **not** the blocker. Zhou et al. Figure 1 reports same-season 2012 and 2013 adult *H. ectypa* and co-pollinating moth density (moths observed per flower ×100) separately from egg density. The adult moth series provides an admissible `direct_adult_census` partner-window basis. Raw variance verification therefore remains the only quantitative gate before a draft strict re-admission can be constructed.
+
 ## Public archive verification
 
 The Dryad landing page is public and identifies a single version published 2020-03-31. It exposes the female experiment files required for a direct check of Table 1:
@@ -19,6 +21,20 @@ The Dryad landing page is public and identifies a single version published 2020-
 
 The archive also contains the corresponding male/genotype files and `eggdat.csv`.
 
+Stable Dryad download-link file IDs are now pinned so authenticated retrieval does not require another discovery pass:
+
+| source object | Dryad file ID |
+|---|---:|
+| `2012_early_female.csv` | `278487` |
+| `2012_late_female.csv` | `278488` |
+| `2013_early_female.csv` | `278490` |
+| `2013_late_female.csv` | `278492` |
+| `data_analysis.R` | `278500` |
+| `README.txt` | `278498` |
+
+The landing page is public, while direct file-stream requests return HTTP 403 in the current runtime. This is an access-layer/authentication blocker, not source-object uncertainty.
+
+
 ## Why the published dispersion cannot be used literally
 
 Table 1 explicitly states `SE=standard error` and labels all entries as mean ± SE.
@@ -30,6 +46,19 @@ However, the same table reports bounded outcomes that make the label internally 
 - a [0,1]-bounded proportion cannot have SD > 1.
 
 The predation-rate entries create the same contradiction. Therefore the current literal-SE reconstruction is invalid.
+
+## Independent diagnostic from the dissertation ANOVA
+
+The 2017 dissertation reports the same Table 1 values and repeats the label `SE=standard error`, so the inconsistency predates the journal typesetting stage.
+
+It also reports a significant year effect on fruit-predation rate when averaging across pollinator types: `F = 45.35`.
+
+As a **diagnostic only**, reconstructing a simple raw-scale 2×2 year × seasonal-period ANOVA from the four published predation-rate cell means and sample sizes gives:
+
+- treating the printed 0.36 / 0.35 / 0.30 / 0.24 dispersions as **SD**: year-effect `F ≈ 52.3`;
+- treating them as **SE** and expanding to `SD = SE * sqrt(n)`: year-effect `F ≈ 0.91`.
+
+The SD interpretation is therefore qualitatively compatible with the source's large year effect, whereas the literal-SE interpretation is not. However, the source does not document enough detail here to guarantee that this hand reconstruction matches the exact transformed/model specification used for the reported ANOVA. This check is **supporting evidence only** and does not authorize IWE015 re-admission without the raw Dryad recomputation.
 
 ## Why IWE does not simply relabel the values SD
 

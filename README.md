@@ -59,7 +59,7 @@ Antagonists:
 
 Mixed pollinating seed predators:
 - no quantitative strict-H1 row currently admitted.
-- IWE015 (*Silene stellata × Hadena ectypa*) remains timing/final-outcome eligible but is withheld until `docs/IWE015_DRYAD_VARIANCE_AUDIT.md` is closed.
+- IWE015 (*Silene stellata × Hadena ectypa*) remains timing/final-outcome eligible but is withheld until `docs/IWE015_DRYAD_VARIANCE_AUDIT.md` is closed. Zhou et al. Figure 1 provides same-season 2012/2013 adult *H. ectypa* and co-pollinator moth density, so the future strict window is fixed as `direct_adult_census`; egg density is explicitly not used. Any raw-data return must go through `build_iwe015_promotion_packet.py` so effects, adjudications, window provenance and unit provenance are restored atomically.
 
 The two IWE027 rows share one dependence cluster and IWE023 supplies a second independent mutualist SMD cluster. The two-cluster threshold remains a **replication milestone only**. H1 is not inferentially evaluable: the reference CR2 workflow requires at least 4 conservative cluster degrees of freedom (therefore at least 5 dependence clusters per class under the current intercept-only reference) before reporting inferential SEs/CIs.
 
