@@ -44,6 +44,8 @@ For this same outcome and these same four balanced groups, the source reports:
 
 `F(3,36) = 1.01`.
 
+A direct 2026-10-01 dissertation re-audit confirms that this is the **phenology-week-only linear model for per-plant experimental seed set**. The nearby `F(3,36)=0.79` in the dissertation is the separate soil-moisture check, not the seed-set model. See `IWE023_SOURCE_MODEL_AUDIT_20261001.md`.
+
 The figure caption independently confirms means ± SEM from ten plants per week (N=40).
 
 ## Variance reconstruction

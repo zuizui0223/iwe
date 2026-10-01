@@ -43,6 +43,46 @@ def test_raw_audit_preserves_balanced_design_and_returns_both_standardizers():
     assert row["residual_df"] == 36
 
 
+
+def _published_reconstruction_fixture(scale=1.0):
+    """Exact synthetic four-week data matching the frozen published summaries."""
+    means = {1: 0.85, 2: 1.00, 3: 0.91, 4: 0.69}
+    # Published relative means imply MS_between = 0.17025 for n=10/group.
+    # F=1.01 therefore implies MS_within below. Ten symmetric observations
+    # with five at -a and five at +a have sample variance (10/9)*a^2,
+    # so a^2 = 0.9*MS_within reproduces the source residual variance exactly.
+    ms_within = 0.17025 / 1.01
+    amplitude = math.sqrt(0.9 * ms_within)
+    rows = []
+    for week, mean in means.items():
+        for plant in range(1, 11):
+            offset = -amplitude if plant <= 5 else amplitude
+            rows.append(
+                {
+                    "plant": f"W{week}_{plant}",
+                    "week": week,
+                    "seed": scale * (mean + offset),
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def test_raw_audit_exactly_reproduces_frozen_iwe023_effect():
+    summary, effects = audit_iwe023_dataframe(
+        _published_reconstruction_fixture(),
+        week_col="week",
+        seed_set_col="seed",
+        plant_id_col="plant",
+    )
+    assert list(summary["n"]) == [10, 10, 10, 10]
+    assert summary["raw_design_ready"].all()
+    assert summary["raw_f"].iloc[0] == pytest.approx(1.01, rel=1e-12)
+    row = effects.iloc[0]
+    assert bool(row["raw_effect_ready"])
+    assert row["effect_native"] == pytest.approx(0.3815303645, rel=1e-9)
+    assert row["variance_native"] == pytest.approx(0.1937181574, rel=1e-9)
+    assert row["residual_df"] == 36
+
 def test_raw_smd_is_invariant_to_common_positive_scaling():
     _, effects1 = audit_iwe023_dataframe(
         _balanced_fixture(scale=1.0),
