@@ -59,7 +59,7 @@ Dryad publicly lists:
 - `gallagher&campbell_nonSpatialData_phenologyExperiment.pdf`;
 - the pollinator-effectiveness workbook and metadata file.
 
-The current execution environment resolves the individual workbook file stream but receives HTTP 403 when attempting to download the binary XLSX. This is a runtime access limitation, not source unavailability.
+The Dryad landing page resolves the individual workbook file stream, but direct binary retrieval returns HTTP 403 both in the current execution environment and from a GitHub Actions Ubuntu runner (tested 2026-10-01 against file stream 341732). The public source therefore exists, but automated cloud retrieval is currently blocked; raw verification requires obtaining the workbook through an interactive browser/library download or another source-authorized route.
 
 ## Executable workflow
 
