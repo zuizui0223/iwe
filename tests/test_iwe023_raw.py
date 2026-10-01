@@ -80,7 +80,7 @@ def test_wrong_group_size_fails_closed():
     assert not summary["raw_design_ready"].any()
 
 
-def test_duplicate_plant_id_fails_closed():
+def test_duplicate_plant_id_within_week_fails_closed():
     df = _balanced_fixture()
     df.loc[1, "plant"] = df.loc[0, "plant"]
     with pytest.raises(ValueError, match="unique"):
@@ -104,3 +104,17 @@ def test_week_labels_can_be_source_style_strings():
         f_tolerance=100.0,
     )
     assert list(summary["week"]) == [1, 2, 3, 4]
+
+
+def test_plant_ids_may_restart_across_weeks():
+    df = _balanced_fixture()
+    df["plant"] = df.groupby("week").cumcount() + 1
+    summary, effects = audit_iwe023_dataframe(
+        df,
+        week_col="week",
+        seed_set_col="seed",
+        plant_id_col="plant",
+        f_tolerance=100.0,
+    )
+    assert summary["raw_design_ready"].all()
+    assert bool(effects.iloc[0]["raw_effect_ready"])
