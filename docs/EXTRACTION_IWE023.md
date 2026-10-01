@@ -79,6 +79,33 @@ For week 1 (high partner availability) versus week 4 (low partner availability):
 
 The executable reconstruction is implemented in `hedges_g_from_balanced_anova_means()`. The source-reported residual df is now required explicitly and must match the balanced design; `F(3,36)` therefore keeps standardizer df=36 rather than substituting the df=18 of an isolated two-group re-estimation.
 
+## Raw-data verification route
+
+The source plant-level workbook is publicly registered in Dryad:
+
+- dataset DOI: `10.7280/D19X0D`;
+- file: `gallagher&campbell_phenologyExperimentData.xlsx`;
+- Dryad file ID: `341732`;
+- file size: 96.33 KB.
+
+Dryad's public landing page exposes the file metadata and methodology, including the balanced four-week design and plant-level definition of seed set as mature seeds per tagged flower. As of the 2026-10-01 audit, however, direct file-byte download from this execution environment returns HTTP 403; current Dryad API documentation also requires authenticated credentials for file downloads even when dataset metadata are public.
+
+The repository therefore provides a non-promoting raw audit:
+
+`python scripts/audit_iwe023_raw.py <workbook.xlsx> <output_dir> --week-col <column> --seed-set-col <column> [--plant-id-col <column>]`
+
+The audit fails closed unless the workbook reproduces:
+
+- weeks 1–4;
+- n=10 plants per week;
+- residual df=36;
+- published relative group means [0.85, 1.00, 0.91, 0.69] within rounding tolerance;
+- the published four-group F≈1.01.
+
+When those checks pass, the primary raw candidate preserves the current estimand by estimating the common within-week residual SD from **all four raw groups** and standardizing week 1 minus week 4 with residual df=36. It additionally reports a week-1/week-4-only Hedges-g sensitivity using the two contrast groups' raw SDs.
+
+The command never edits `data/extraction/direct_effects.csv`. A source-verified raw result must be compared with the current ANOVA reconstruction before any replacement is applied.
+
 ## Why this is not prohibited conversion or imputation
 
 This extraction does **not**:
