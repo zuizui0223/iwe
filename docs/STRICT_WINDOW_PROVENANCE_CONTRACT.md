@@ -64,7 +64,7 @@ After the 2026-09-28 antagonist re-audit, the current real strict corpus contain
 
 IWE011 is not registered because its former strict effect was withdrawn: the published seasonal partner window is based on oviposition/egg observations.
 
-IWE015 is not registered while its quantitative effect rows remain on raw-variance hold. If those effects return, their already-documented adult-activity provenance must be added to this registry in the same transaction.
+IWE015 is not registered while its quantitative effect rows remain on raw-variance hold. Its future provenance is nevertheless fixed: Zhou et al. Figure 1 reports same-season 2012/2013 adult *H. ectypa* and co-pollinator moth density (moths per flower ×100), so any returning IWE015 row must use `window_basis = direct_adult_census`. The separate egg-density series is not an admissible basis. `build_iwe015_promotion_packet.py` transactionally enforces this when raw effects become ready.
 
 ## CI behavior
 
