@@ -79,6 +79,8 @@ For week 1 (high partner availability) versus week 4 (low partner availability):
 
 The executable reconstruction is implemented in `hedges_g_from_balanced_anova_means()`. The source-reported residual df is now required explicitly and must match the balanced design; `F(3,36)` therefore keeps standardizer df=36 rather than substituting the df=18 of an isolated two-group re-estimation.
 
+The public Dryad deposit also contains `gallagher&campbell_phenologyExperimentData.xlsx`. `scripts/audit_iwe023_raw.py` now provides a non-promoting raw verification that preserves this same four-group residual-variance estimator. See `IWE023_RAW_RECONSTRUCTION_AUDIT.md`.
+
 ## Why this is not prohibited conversion or imputation
 
 This extraction does **not**:
