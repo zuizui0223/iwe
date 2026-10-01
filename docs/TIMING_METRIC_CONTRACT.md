@@ -208,46 +208,33 @@ See `EXTRACTION_IWE011.md` and `IWE011_TIMING_UNIT_REAUDIT_20260928.md`.
 
 ## IWE015 source-specific adjudication
 
-Zhou et al. (2020) explicitly conducts early and late experiments in two measured partner-activity windows:
+Zhou et al. (2020) explicitly conducts 2012 and 2013 early/late experiments in different pollinator-community windows.
 
-- early = *Hadena ectypa*-dominant, corresponding to the adult activity peak of the mixed pollinating seed predator;
-- late = co-pollinator-dominant, after *H. ectypa* activity drops.
+The strict partner-window provenance is **not** the egg series. Figure 1 reports separate same-season phenological series for:
 
-The final female-fitness measure is the number of successful fruits, defined as initiated fruits that escape *H. ectypa* predation.
+- adult *Hadena ectypa* moth density;
+- adult co-pollinating moth density; and
+- *H. ectypa* egg density.
 
-The 2012 and 2013 contrasts are therefore registered as:
+The figure defines adult moth density as number of moths observed per flower ×100. Thus the focal windows can be ordered prospectively using direct adult activity:
+
+- early = *H. ectypa*-dominant / greater focal-partner overlap;
+- late = co-pollinator-dominant / lower *H. ectypa* overlap.
+
+The egg-density series is a realized oviposition outcome and may support mechanism interpretation, but it is not used as the strict partner-window basis.
+
+Registered timing fields remain:
 
 - `timing_metric_type = seasonal_position`;
 - `timing_analysis_class = strict_window`;
 - `timing_domain = ordered_by_measured_window`;
 - `exposure_direction = synchrony`.
 
-Each effect is high focal-partner overlap (early) minus low focal-partner overlap (late). Table 1 labels the printed dispersions as SE, but the same table reports bounded proportion dispersions that cannot be standard errors at the stated sample sizes. IWE therefore treats the printed dispersions as SD-like values and records the source-label inconsistency explicitly; Dryad DOI `10.5061/dryad.6q573n5w1` exposes the underlying 2012–2013 female CSVs and analysis script for row-level replication.
+The 2012 and 2013 final female-fitness measure is successful fruits: initiated fruits that escape *H. ectypa* predation.
 
-Both year effects share one dependence cluster, `DEP_SILENE_STELLATA_HADENA_MLBS`.
+Quantitative promotion remains blocked only by the Table 1 dispersion inconsistency. If raw Dryad female data reproduce the experiment and supply valid year-specific SMD variances, re-admission must also add `strict_window_provenance` rows with `window_basis = direct_adult_census`; a raw-effect row cannot return without that provenance.
 
-See `EXTRACTION_IWE015.md`.
-
-## IWE023 source-specific adjudication
-
-Gallagher & Campbell (2020) experimentally shifted *Mertensia ciliata* flowering onset into four weekly cohorts in 2015 while directly observing the same-season pollinator community during each cohort.
-
-The partner-availability ordering is fixed independently of seed set:
-
-- week 1 has the higher-availability window;
-- week 4 has the lower-availability window;
-- measured visitation is more than fivefold higher in week 1 than week 4.
-
-The week-1 versus week-4 seed-set contrast is therefore registered as:
-
-- `timing_metric_type = experimental_plant_shift`;
-- `timing_analysis_class = strict_window`;
-- `timing_domain = ordered_by_measured_window`;
-- `exposure_direction = synchrony`.
-
-The order is based on contemporaneous observed visitation, not on calendar date or on the seed-set result. The final seed-set SMD is reconstructed separately from the reported balanced-group means and ANOVA residual variance.
-
-All IWE023 evidence uses `DEP_MERTENSIA_GALLAGHER_CAMPBELL_RMBL`. See `EXTRACTION_IWE023.md`.
+See `EXTRACTION_IWE015.md` and `IWE015_DRYAD_VARIANCE_AUDIT.md`.
 
 ## IWE027 source-specific adjudication
 
