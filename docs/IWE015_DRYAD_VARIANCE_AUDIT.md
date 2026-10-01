@@ -47,6 +47,19 @@ However, the same table reports bounded outcomes that make the label internally 
 
 The predation-rate entries create the same contradiction. Therefore the current literal-SE reconstruction is invalid.
 
+## Independent diagnostic from the dissertation ANOVA
+
+The 2017 dissertation reports the same Table 1 values and repeats the label `SE=standard error`, so the inconsistency predates the journal typesetting stage.
+
+It also reports a significant year effect on fruit-predation rate when averaging across pollinator types: `F = 45.35`.
+
+As a **diagnostic only**, reconstructing a simple raw-scale 2×2 year × seasonal-period ANOVA from the four published predation-rate cell means and sample sizes gives:
+
+- treating the printed 0.36 / 0.35 / 0.30 / 0.24 dispersions as **SD**: year-effect `F ≈ 52.3`;
+- treating them as **SE** and expanding to `SD = SE * sqrt(n)`: year-effect `F ≈ 0.91`.
+
+The SD interpretation is therefore qualitatively compatible with the source's large year effect, whereas the literal-SE interpretation is not. However, the source does not document enough detail here to guarantee that this hand reconstruction matches the exact transformed/model specification used for the reported ANOVA. This check is **supporting evidence only** and does not authorize IWE015 re-admission without the raw Dryad recomputation.
+
 ## Why IWE does not simply relabel the values SD
 
 The contradiction strongly suggests a source-label/table-assembly error, and the successful-fruit dispersions look numerically plausible as SDs. But that remains an inference until the archived female rows are recalculated.
