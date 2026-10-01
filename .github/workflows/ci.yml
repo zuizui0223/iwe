@@ -21,6 +21,11 @@ jobs:
         run: python -m pip install -e '.[dev]'
       - name: Unit tests
         run: pytest -q
+      - name: Temporary inspect public IWE023 Dryad workbook
+        run: |
+          curl -L --fail --retry 2 -o /tmp/iwe023.xlsx https://datadryad.org/downloads/file_stream/341732
+          python scripts/audit_iwe023_raw.py /tmp/iwe023.xlsx /tmp/iwe023-audit --inventory-only
+          cat /tmp/iwe023-audit/workbook_inventory.csv
       - name: Validate system registry
         run: python scripts/validate_registry.py data/registry/systems.csv
       - name: Check screening snapshot
