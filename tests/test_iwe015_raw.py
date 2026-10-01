@@ -5,6 +5,7 @@ import pytest
 
 from iwe.iwe015_raw import (
     PUBLISHED_IWE015,
+    SOURCE_SUCCESSFUL_FRUITS_COL,
     audit_iwe015_group,
     bounded_dispersion_check,
     printed_dispersion_match,
@@ -105,3 +106,18 @@ def test_invalid_raw_bounds_fail_closed():
             successful_fruits_col="successful",
             fruit_initiation_col="initiation",
         )
+
+
+def test_source_default_successful_fruit_column_is_ft():
+    assert SOURCE_SUCCESSFUL_FRUITS_COL == "ft"
+    pub = PUBLISHED_IWE015["2012_early"]
+    values = [6] * 22 + [5] * 5 + [0] * 32
+    for left, right in ((0, 1), (2, 3), (4, 5)):
+        values[left] -= 1
+        values[right] += 1
+    row, _ = audit_iwe015_group(
+        pd.DataFrame({"ft": values}),
+        "2012_early",
+    )
+    assert row["n_matches"] is True
+    assert row["mean_matches"] is True
