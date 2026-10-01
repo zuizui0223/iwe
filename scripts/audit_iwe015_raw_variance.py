@@ -5,7 +5,7 @@ import argparse
 import json
 from pathlib import Path
 
-from iwe.iwe015_raw import audit_iwe015_raw_files
+from iwe.iwe015_raw import SOURCE_SUCCESSFUL_FRUITS_COL, audit_iwe015_raw_files
 
 
 def main() -> int:
@@ -21,7 +21,14 @@ def main() -> int:
     parser.add_argument("female_2013_early")
     parser.add_argument("female_2013_late")
     parser.add_argument("output_dir")
-    parser.add_argument("--successful-fruits-col", required=True)
+    parser.add_argument(
+        "--successful-fruits-col",
+        default=SOURCE_SUCCESSFUL_FRUITS_COL,
+        help=(
+            "source successful-fruit/female-fitness column; defaults to ft, "
+            "the field used by the archived analysis script"
+        ),
+    )
     parser.add_argument("--fruit-initiation-col")
     parser.add_argument("--predation-rate-col")
     parser.add_argument("--rounding-tolerance", type=float, default=0.0051)
