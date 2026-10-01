@@ -8,6 +8,8 @@ import pandas as pd
 from .effects import hedges_g_from_summary
 
 
+SOURCE_SUCCESSFUL_FRUITS_COL = "ft"
+
 PUBLISHED_IWE015 = {
     "2012_early": {
         "year": 2012,
@@ -128,7 +130,7 @@ def bounded_dispersion_check(
 def audit_iwe015_group(
     df: pd.DataFrame,
     group: str,
-    successful_fruits_col: str,
+    successful_fruits_col: str = SOURCE_SUCCESSFUL_FRUITS_COL,
     fruit_initiation_col: str | None = None,
     predation_rate_col: str | None = None,
     rounding_tolerance: float = 0.0051,
