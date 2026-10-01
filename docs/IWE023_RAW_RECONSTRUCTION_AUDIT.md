@@ -35,6 +35,26 @@ For all four phenology weeks:
 
 The audit does **not** switch to a separate two-group pooled SD, because that would silently change the current effect-size estimator.
 
+## Dissertation model verification
+
+The Gallagher (2017) dissertation was re-audited directly before this raw workflow was accepted.
+
+The source defines experimental seed set per potted plant as:
+
+`number of mature seeds / number of flowers`.
+
+For the phenology manipulation, the dissertation states that seed set and seed mass were analyzed using the **per-plant mean** as responses in linear models with approximately normal residuals. For each response variable the first model tested the effect of phenology week alone.
+
+The Results then reports, specifically for seed set of experimental plants:
+
+`F(3,36) = 1.01, P = 0.4`.
+
+Table 2.2 reports the corresponding observed experimental seed-set means after division by the maximum weekly mean:
+
+`[0.85, 1.00, 0.91, 0.69]`.
+
+Thus the current published-summary reconstruction uses the correct response, the correct four phenology groups, the correct residual degrees of freedom, and a one-factor model whose ANOVA identity is compatible with recovering the common within-group residual variance. The nearby `F(3,36)=0.79` value in the dissertation refers to **soil moisture**, not seed set, and is not used by IWE.
+
 ## Published acceptance checks
 
 Before a raw candidate is marked ready, the workbook must reproduce all frozen published checks:
