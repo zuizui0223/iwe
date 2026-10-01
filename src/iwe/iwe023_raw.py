@@ -69,8 +69,13 @@ def _clean_plant_table(
     if plant_id_col is not None:
         if out[plant_id_col].isna().any():
             raise ValueError("plant ID contains missing values")
-        if out[plant_id_col].astype(str).duplicated().any():
-            raise ValueError("plant ID must be unique in the IWE023 plant-level table")
+        ids = out[plant_id_col].astype(str)
+        if pd.DataFrame({"week": out["week"], "plant_id": ids}).duplicated(
+            ["week", "plant_id"]
+        ).any():
+            raise ValueError(
+                "plant ID must be unique within phenology week in the IWE023 plant-level table"
+            )
 
     return out
 
