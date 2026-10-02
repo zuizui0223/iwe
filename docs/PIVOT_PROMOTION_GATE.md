@@ -101,9 +101,12 @@ The evidence map must retain systems in which:
 - interaction manipulation changes fitness but not flowering-time selection;
 - antagonist damage does not alter selection;
 - pollination changes non-phenological traits but not phenology;
-- timing effects exist without a defensible interaction window.
+- timing effects exist without a defensible interaction window;
+- alternative mechanisms produce similar final fitness despite very different positions relative to an antagonist window.
 
-These are not failed studies. They are necessary tests of whether the proposed window rule is selective rather than tautological.
+The *Ulex europaeus* common-garden system is a registered boundary example: long-flowering plants use temporal escape, whereas short-flowering plants can use predator satiation during the attack peak; whole-season infestation is approximately 29% versus 30%, and flowering type does not significantly change annual pod or seed production.
+
+These are not failed studies. They are necessary tests of whether the proposed window rule is selective rather than tautological. Boundary rows are not counted as programmes supporting the window-relative prediction.
 
 ### P8 — dependence and uncertainty are not relaxed
 
