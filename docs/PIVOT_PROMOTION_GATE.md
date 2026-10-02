@@ -72,7 +72,7 @@ For programmes with sufficient timing data, fit or reconstruct effects on:
 
 Then ask whether biologically relevant between-programme heterogeneity is reduced by raw partner-window alignment and whether it is reduced further by effective-window alignment.
 
-The Cardamine source now demonstrates why these are not interchangeable: the Gaussian peak for total egg exposure occurs at flowering-date z = -1.10, while the peak for active eggs capable of reaching damaging late instars occurs at z = -0.61 and has a narrower sigma (0.66 versus 0.92). An independent Portuguese Gentiana-Phengaris programme additionally shows that offspring survival varies with host bud size, bud developmental stage, and oviposition period. This replicates host-state filtering at the mechanism level but does not yet test final plant-fitness convergence.
+The Cardamine source now demonstrates why these are not interchangeable: the Gaussian peak for total egg exposure occurs at flowering-date z = -1.10, while the peak for active eggs capable of reaching damaging late instars occurs at z = -0.61 and has a narrower sigma (0.66 versus 0.92). An independent Portuguese Gentiana-Phengaris programme additionally shows that offspring survival varies with host bud size, bud developmental stage, and oviposition period, while Yucca-Tegeticula provides a taxonomically distinct filter in which resource-driven flower abortion kills all eggs in exposed flowers. These replicate host-state filtering at the mechanism level but do not yet test final plant-fitness convergence.
 
 No claim of "collapse", "convergence", or "effective-window superiority" is allowed without paired comparisons across independent programmes.
 
@@ -132,7 +132,7 @@ the broader outcome-complete rescreen shows that the apparent calendar-sign hete
 1. complete IWE002 directional reconstruction without counting it as independent from IWE001;
 2. resolve IWE015 raw variance for the mixed net-fitness anchor;
 3. recover IWE032 female-flight dates and fit its early/core/late antagonist surface, then compare raw female-flight alignment with the already reconstructed active-egg effective window;
-4. treat the Arnaldo 2014 Portuguese Gentiana-Phengaris programme as the first independent host-filter replication, and seek at least one additional taxonomically distinct programme before claiming that host filtering is a general feature of antagonist windows;
+4. host-filter mechanism breadth now has two replications beyond Cardamine (Portuguese Gentiana-Phengaris and Yucca-Tegeticula); the next gate is at least one independent programme that links a prospectively defined effective-window filter to final plant reproduction, rather than adding more mechanism-only examples;
 5. ingest and screen the Caruso non-duplicated phenology treatment-pair database when lawful file access is available;
 6. add design-matched null/boundary systems, including published cases where antagonist damage did not alter flowering-time selection.
 
