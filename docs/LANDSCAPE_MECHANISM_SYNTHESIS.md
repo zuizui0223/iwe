@@ -63,7 +63,19 @@ The paper reports Gaussian flowering-date curves for total egg load and for "act
 
 Thus host-stage filtering moves the effective antagonist peak **+0.49 flowering-date SD later** and narrows the effective window by **28.3%**. The plant does not experience every oviposition event as an equivalent future reproductive cost.
 
-This is the clearest current evidence for the decomposition `impact(t) = f(exposure(t), host_sensitivity(t))`.
+This is the clearest current quantitative evidence for the decomposition `impact(t) = f(exposure(t), host_sensitivity(t))`.
+
+### Independent host-filter replication — Arnaldo 2014
+
+A geographically independent Portuguese *Gentiana pneumonanthe–Phengaris alcon* programme follows the same causal layer without using final plant fitness to define the filter. Across 127 shoots and 837 eggs, egg deposition varies over three flight-period intervals, while offspring survival depends on flower-bud size, flower developmental stage, and oviposition period.
+
+The reported survival-model coefficients include +0.350 for bud length, -1.088 for flower developmental stage, -0.881 for period 2 versus period 1, and -0.536 for period 3 versus period 1.
+
+This does **not** imply that host filtering has the same direction in all systems. Instead it independently supports the more general mechanism:
+
+> the mapping from raw antagonist exposure to biologically effective cost is conditional on host phenological state.
+
+Because this study measures butterfly offspring performance rather than final plant reproduction, it remains mechanism-only evidence.
 
 ### Strong direct antagonist anchor — IWE032
 
