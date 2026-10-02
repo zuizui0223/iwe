@@ -28,6 +28,7 @@ TIMING_GEOMETRIES = {
     "sequential_flower_abortion_filter",
     "gaussian_effective_fitness_surface",
     "bimodal_escape_tradeoff",
+    "alternative_escape_strategies",
 }
 
 FITNESS_CHANNELS = {
@@ -62,6 +63,7 @@ LANDSCAPE_STATUSES = {
     "channel_decoupling_evidence",
     "mechanism_only",
     "context_only",
+    "boundary_evidence",
 }
 
 REQUIRED_COLUMNS = [
@@ -208,6 +210,16 @@ def validate_landscape_registry(df: pd.DataFrame) -> list[str]:
         errors.append(
             "realized_window_evidence requires a realized interaction window and final outcome: "
             + ", ".join(sorted(bad_realized_window))
+        )
+
+    boundary = df["landscape_status"].eq("boundary_evidence")
+    bad_boundary = df.loc[
+        boundary & df["outcome_finality"].ne("final"), "component_id"
+    ].astype(str)
+    if len(bad_boundary):
+        errors.append(
+            "boundary_evidence requires a final outcome: "
+            + ", ".join(sorted(bad_boundary))
         )
 
     mechanism = df["landscape_status"].eq("mechanism_only")
