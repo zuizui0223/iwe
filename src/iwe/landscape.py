@@ -50,7 +50,7 @@ LANDSCAPE_STATUSES = {
     "strong_candidate",
     "reextract_directional",
     "directional_evidence",
-    "candidate_noncausal_window",
+    "realized_window_evidence",
     "selection_shift_evidence",
     "experimental_timing_evidence",
     "channel_decoupling_evidence",
@@ -189,6 +189,21 @@ def validate_landscape_registry(df: pd.DataFrame) -> list[str]:
             + ", ".join(sorted(bad_selection_shift))
         )
 
+    realized_window = df["landscape_status"].eq("realized_window_evidence")
+    bad_realized_window = df.loc[
+        realized_window
+        & (
+            df["window_reference_class"].ne("realized_interaction_window")
+            | df["outcome_finality"].ne("final")
+        ),
+        "component_id",
+    ].astype(str)
+    if len(bad_realized_window):
+        errors.append(
+            "realized_window_evidence requires a realized interaction window and final outcome: "
+            + ", ".join(sorted(bad_realized_window))
+        )
+
     mechanism = df["landscape_status"].eq("mechanism_only")
     bad_mechanism = df.loc[
         mechanism & df["outcome_finality"].eq("final"), "component_id"
@@ -217,7 +232,7 @@ def landscape_pilot_summary(df: pd.DataFrame) -> dict[str, object]:
                 "strong_candidate",
                 "reextract_directional",
                 "directional_evidence",
-                "candidate_noncausal_window",
+                "realized_window_evidence",
                 "selection_shift_evidence",
                 "experimental_timing_evidence",
                 "channel_decoupling_evidence",
