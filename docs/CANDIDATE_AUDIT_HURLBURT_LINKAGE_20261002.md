@@ -32,6 +32,24 @@ For Onefour 1999–2003, the public synthesis reports:
 
 These quantities prove that final mature-fruit reproduction was measured with variance.
 
+## Direct check of the 2001 Alberta status report
+
+The public 2001 Alberta status report was inspected directly.
+
+Its flowering-phenology section states that Alberta Soapweed has an exceptionally long, highly asynchronous flowering season and defines the biological requirement correctly: pollinating moths must be active while flowers are receptive.
+
+For plants flowering earlier or later than average, the report explicitly attributes:
+
+- fewer pollinator visits;
+- lower pollen deposition;
+- lower potential for outcrossing.
+
+This closes the **timing -> pollination-benefit channel** as an observed source-backed pattern.
+
+However, the same paragraph says these asynchronous individuals are **expected** to have lower reproductive fitness. That wording is predictive, not a reported timing-stratified mature-fruit or viable-seed result.
+
+Therefore the 2001 report must not be used to fill the final-fitness join. It strengthens the exposure/benefit side only.
+
 ## The remaining uncertainty is now one join key
 
 The public derivative sources describe marked clones/inflorescences followed for fruit set and mature fruits dissected annually, but they do not state that the dissected mature-fruit records retain:
