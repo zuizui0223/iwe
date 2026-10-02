@@ -270,7 +270,7 @@ def render_landscape_pilot_audit(df: pd.DataFrame) -> str:
         "",
         "The pilot explicitly separates two problems that the original strict-H1 analysis combined: (1) whether timing predicts final reproduction, and (2) whether the partner window is independently identified. The landscape pivot can therefore recover antagonist and mixed timing geometry without calling egg receipt, attack, or damage an independent adult-availability curve.",
         "",
-        "The next quantitative step is not a three-class pooled meta-analysis. It is programme-level geometry reconstruction, beginning with one-sided IWE001/IWE002, the IWE015 variance audit, and the IWE032 early/core/late antagonist surface.",
+        "The next quantitative step is not a three-class pooled meta-analysis. IWE001 already yields one-sided mutualist geometry, and IWE012 now yields a source-tested antagonist selection reversal. The remaining priorities are IWE002 directional reconstruction, the IWE015 variance audit, and the IWE032 early/core/late antagonist surface.",
         "",
     ]
     return "\n".join(lines)
