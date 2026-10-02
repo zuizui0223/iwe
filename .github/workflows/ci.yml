@@ -33,6 +33,8 @@ jobs:
         run: python scripts/render_landscape_pilot_audit.py --check
       - name: Check IWE001 directional landscape
         run: python scripts/build_iwe001_directional_landscape.py --check
+      - name: Check signed selection-shift pilot
+        run: python scripts/render_selection_shift_pilot.py --check
       - name: Validate synthetic extraction
         run: python scripts/validate_extraction.py examples/synthetic_effects.csv
       - name: Validate direct extraction
