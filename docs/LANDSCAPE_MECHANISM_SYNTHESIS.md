@@ -77,6 +77,21 @@ This does **not** imply that host filtering has the same direction in all system
 
 Because this study measures butterfly offspring performance rather than final plant reproduction, it remains mechanism-only evidence.
 
+
+### Taxonomically distinct host-allocation filter — Jadeja 2017
+
+The *Yucca glauca–Tegeticula yuccasella* nursery-pollination mutualism provides a third architecture. *Yucca* flowers open sequentially, and late distal flowers become more likely to abort when already initiated basal fruits are present. Every moth egg inside an aborted flower dies.
+
+Here the host filter is not larval survival conditional on tissue age. It is a plant resource-allocation decision that removes an entire realized interaction after oviposition.
+
+Together, Cardamine, Portuguese Gentiana and Yucca show three distinct mechanisms by which host state changes the mapping from raw interaction events to effective future cost:
+
+1. developmental timing determines whether predator offspring remain active;
+2. tissue developmental state changes offspring performance;
+3. host resource allocation deletes exposed reproductive units entirely.
+
+This satisfies the branch's first taxonomic-breadth milestone for **host filtering as a mechanism**, but none of the mechanism-only replications should be counted as final plant-fitness effect sizes.
+
 ### Strong direct antagonist anchor — IWE032
 
 The same Cardamine programme also provides independently measured female butterfly flight plus plant trajectories to dehiscence and a predeclared early/core/late analysis. Recovering the numeric 2012–2014 female capture/recapture timing object would connect the highest-provenance adult-exposure axis to both temporal escape directions.
