@@ -182,11 +182,13 @@ The branch now contains two independent kinds of positive evidence.
 
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
-Taken together, the Gentiana and Gymnadenia results reject a simple calendar rule such as "antagonists favor late flowering." They instead motivate the stronger window-relative question: why does an interaction rotate the flowering-time fitness surface in different calendar directions across systems?
+A third programme, Thomsen & Sargent 2017 Lythrum salicaria, experimentally imposed meristem damage. The flowering-start gradient was -0.28 under damage and -0.03 in controls, giving an oriented damage-mediated shift of +0.25 toward earlier flowering with source-reported SE = 0.10. The same experiment found essentially no pollination-by-damage modification of flowering-time selection (three-way contrast +0.01 ± 0.12).
+
+Taken together, the Gentiana, Gymnadenia and Lythrum results reject a simple calendar rule such as "antagonists favor late flowering." They instead motivate the stronger window-relative question: why does an interaction rotate the flowering-time fitness surface in different calendar directions across systems?
 
 ### Existing large discovery universe
 
-Caruso et al. 2019 already assembled 755 directional selection-gradient records with SEs, including 139 flowering-phenology records, and constructed 487 same-trait/same-fitness treatment pairs. Their published synthesis intentionally used the absolute treatment difference |beta_i - beta_j| to quantify strength of agent-mediated selection. That makes the deposited database a high-value discovery universe for IWE's signed delta-beta question, because the published magnitude analysis discards exactly the direction information needed here.
+Caruso et al. 2019 already assembled 755 directional selection-gradient records with SEs, including 139 flowering-phenology records, and constructed 487 same-trait/same-fitness treatment pairs. Their Table 2 contains 90 flowering-phenology treatment-pair studies, including 39 supplemental-hand-pollination pairs. Their published synthesis intentionally used the absolute treatment difference |beta_i - beta_j| to quantify strength of agent-mediated selection. That makes the deposited database a high-value discovery universe for IWE's signed delta-beta question, because the published magnitude analysis discards exactly the direction information needed here.
 
 The Dryad manifest and workbook identities are verified, but current unauthenticated file-byte routes are access-limited. Until the non-duplicated workbook is lawfully ingested, Caruso is treated as a search universe rather than as new IWE quantitative evidence.
 
