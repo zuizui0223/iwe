@@ -35,6 +35,8 @@ jobs:
         run: python scripts/build_iwe001_directional_landscape.py --check
       - name: Check IWE011 plot-rank landscape
         run: python scripts/build_iwe011_plot_rank_landscape.py --check
+      - name: Check IWE032 effective cost window
+        run: python scripts/build_iwe032_effective_cost_window.py --check
       - name: Check signed selection-shift pilot
         run: python scripts/render_selection_shift_pilot.py --check
       - name: Validate synthetic extraction
