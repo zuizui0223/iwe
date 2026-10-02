@@ -30,6 +30,7 @@ TIMING_GEOMETRIES = {
     "bimodal_escape_tradeoff",
     "alternative_escape_strategies",
     "within_tree_asynchrony_feedback",
+    "accessible_redundancy_window",
 }
 
 FITNESS_CHANNELS = {
