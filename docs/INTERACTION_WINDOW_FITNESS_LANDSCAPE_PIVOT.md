@@ -122,7 +122,13 @@ Early escape and late escape are not assumed equivalent. Tests retain core-vs-ea
 
 In mixed pollinating-seed-predator systems, benefit and cost can share a partner yet have different temporal shapes. IWE014 provides a concrete boundary case: early and late flowering have similar pollination success while seed predation is higher early.
 
-The net fitness optimum can therefore shift even when the pollination-benefit channel is nearly flat. The target is the relative timing and amplitude of benefit and cost channels, not merely a quadratic term on one synchrony score.
+For interactions in which adults provide the benefit but offspring impose the cost, the two channels can also be separated by **consumer development time**. Kula 2012 shows that flowering × oviposition synchrony predicted greater predation in 2008 but lower predation in 2009 because the delay from flowering/egg deposition to larval activity was longer in 2009 and fruits matured faster.
+
+Thus the cost channel should be treated conceptually as:
+
+`effective cost window = exposure window ⊗ developmental lag × host vulnerability`.
+
+The net fitness optimum can therefore shift even when adult synchrony is unchanged or increases. The target is the relative timing, developmental phase and amplitude of benefit and cost channels, not merely a quadratic term on one synchrony score.
 
 ### G5 — calendar sign is not invariant
 
@@ -180,7 +186,7 @@ For the signed-selection module, treatment contrasts are pooled only when the tr
 
 ## Pilot result
 
-The current pilot registry contains **23 components from 21 studies and 20 dependence clusters**.
+The current pilot registry contains **24 components from 22 studies and 20 dependence clusters**.
 
 Under the original high-provenance requirement, strong final-fitness anchors are currently:
 
@@ -213,16 +219,18 @@ The branch now contains multiple complementary kinds of timing evidence.
 
 6. **Senita overlap-conditioned redundancy.** Pollinator-exclusion experiments show that co-pollinator buffering is available only when alternative partners overlap the receptive flower window. In July 1998, senita moths were between adult cohorts and open-pollinated fruit set was 0%, while pollen-supplemented flowers set 22.5 ± 6.6% fruit. In later hot seasons, flowers closed before sunrise and naturally excluded diurnal bees. This motivates a time-indexed effective-redundancy term rather than partner richness alone.
 
-7. **IWE031 host-stage sensitivity.** Timed monarch herbivory on *Asclepias fascicularis* separates when damage occurs from natural monarch availability. Early herbivory most strongly affects plant size, whereas late herbivory has the strongest effect on viable-seed production. This directly demonstrates that the reproductive impact window depends on plant stage as well as antagonist exposure.
+7. **Kula 2012 developmental phase lag.** In the same Mountain Lake *Silene–Hadena* programme, individual flowering × oviposition synchrony predicted predation in opposite directions across years: higher synchrony increased predation in 2008 (chi-square = 46.47, p < 0.0001) but decreased predation in 2009 (chi-square = 16.74, p < 0.0001). Flower/egg-to-first-larva delays were 10/5 days in 2008 versus 17/15 days in 2009, and fruit maturation was faster in 2009 (16.7 vs 21.3 days), identifying developmental phase lag as a mechanism that can reverse cost geometry.
+
+8. **IWE031 host-stage sensitivity.** Timed monarch herbivory on *Asclepias fascicularis* separates when damage occurs from natural monarch availability. Early herbivory most strongly affects plant size, whereas late herbivory has the strongest effect on viable-seed production. This directly demonstrates that the reproductive impact window depends on plant stage as well as antagonist exposure.
 
 
-8. **IWE032 host filtering of antagonist exposure.** In *Cardamine pratensis × Anthocharis cardamines*, the source-reported Gaussian peak for all eggs occurs at flowering-date z = -1.10, whereas the peak for "active" eggs capable of producing damaging late-instar larvae occurs at z = -0.61. Host-stage filtering therefore shifts the effective cost window **+0.49 SD later** and narrows its Gaussian sigma from **0.92 to 0.66** (28.3% narrower). This mechanism result is distinct from the still-blocked strict female-flight route.
+9. **IWE032 host filtering of antagonist exposure.** In *Cardamine pratensis × Anthocharis cardamines*, the source-reported Gaussian peak for all eggs occurs at flowering-date z = -1.10, whereas the peak for "active" eggs capable of producing damaging late-instar larvae occurs at z = -0.61. Host-stage filtering therefore shifts the effective cost window **+0.49 SD later** and narrows its Gaussian sigma from **0.92 to 0.66** (28.3% narrower). This mechanism result is distinct from the still-blocked strict female-flight route.
 
 
-9. **Independent host-filter replication.** Arnaldo et al. 2014 followed 127 *Gentiana pneumonanthe* shoots and 837 *Phengaris alcon* eggs in Portugal. Egg load was highest in the first third of the flight period, while offspring survival varied with flower-bud size, flower developmental stage, and oviposition period. This independently supports host-state filtering of antagonist exposure, but remains mechanism-only because final plant reproduction was not measured.
+10. **Independent host-filter replication.** Arnaldo et al. 2014 followed 127 *Gentiana pneumonanthe* shoots and 837 *Phengaris alcon* eggs in Portugal. Egg load was highest in the first third of the flight period, while offspring survival varied with flower-bud size, flower developmental stage, and oviposition period. This independently supports host-state filtering of antagonist exposure, but remains mechanism-only because final plant reproduction was not measured.
 
 
-10. **Taxonomically distinct host filtering.** In the *Yucca glauca–Tegeticula yuccasella* nursery-pollination system, resource allocation makes late-opening flowers more likely to abort when basal fruits are already present; all moth eggs in an aborted flower die. This supplies a distinct plant-allocation route by which a realized interaction can be deleted before becoming an effective future seed-predation cost. It is mechanism-only, not a final-fitness effect.
+11. **Taxonomically distinct host filtering.** In the *Yucca glauca–Tegeticula yuccasella* nursery-pollination system, resource allocation makes late-opening flowers more likely to abort when basal fruits are already present; all moth eggs in an aborted flower die. This supplies a distinct plant-allocation route by which a realized interaction can be deleted before becoming an effective future seed-predation cost. It is mechanism-only, not a final-fitness effect.
 
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
