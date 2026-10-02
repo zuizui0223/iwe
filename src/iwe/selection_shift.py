@@ -7,7 +7,7 @@ import pandas as pd
 
 
 AGENT_CLASSES = {"mutualist", "antagonist", "mixed"}
-DESIGNS = {"population_context", "factorial_manipulation", "simulated_antagonist_damage"}
+DESIGNS = {"population_context", "factorial_manipulation", "simulated_antagonist_damage", "pollination_supplementation"}
 UNCERTAINTY_STATUSES = {
     "source_interaction_test_no_delta_se",
     "effect_size_ready_independent_groups",
