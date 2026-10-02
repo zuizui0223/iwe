@@ -32,9 +32,18 @@ The derived -0.41 and -0.40 values are retained as descriptive signed shifts onl
 
 ## Mechanistic support
 
-Within predator-present populations, earlier floral development increased attack probability in both study years. The source path analysis also reports that earlier phenology reduced fitness through attack probability and predation intensity.
+Within predator-present populations, earlier floral development increased attack probability in both study years.
 
-Thus the direction reversal is not merely a between-population sign difference: within-population attack patterns are consistent with the seed predator preferentially imposing cost on earlier-flowering plants.
+| Year | Plants | Predator-present populations | Attack-model chi-square | Reported phenology estimate |
+|---|---:|---:|---:|---:|
+| 2010 | 1000 | 10 | 38.84 | +0.300 |
+| 2011 | 1099 | 11 | 38.24 | +0.968 |
+
+The source additionally reports that advancing phenology by one developmental stage, approximately one week, corresponds on average to **0.87 additional eggs per plant**. The path analysis reports that earlier phenology reduces fitness through attack probability and predation intensity.
+
+Thus the direction reversal is not merely a between-population sign difference: within-population attack patterns are consistent with the seed predator preferentially imposing a time-structured cost on earlier-flowering plants.
+
+Machine-readable mechanism statistics are retained in `data/derived/iwe012_antagonist_selection_shift.csv`.
 
 ## Claim boundary
 
