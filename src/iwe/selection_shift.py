@@ -7,10 +7,11 @@ import pandas as pd
 
 
 AGENT_CLASSES = {"mutualist", "antagonist", "mixed"}
-DESIGNS = {"population_context", "factorial_manipulation"}
+DESIGNS = {"population_context", "factorial_manipulation", "simulated_antagonist_damage"}
 UNCERTAINTY_STATUSES = {
     "source_interaction_test_no_delta_se",
     "effect_size_ready_independent_groups",
+    "effect_size_ready_source_reported_contrast",
 }
 DIRECTIONS = {"shift_to_earlier", "shift_to_later", "no_direction"}
 
@@ -99,7 +100,7 @@ def validate_selection_shift_registry(df: pd.DataFrame) -> list[str]:
 
         status = row["uncertainty_status"]
         se = row["se_canonical"]
-        if status == "effect_size_ready_independent_groups":
+        if status.startswith("effect_size_ready"):
             if pd.isna(se) or not math.isfinite(float(se)) or float(se) <= 0:
                 errors.append(
                     f"{prefix}: effect-size-ready row requires positive SE"
@@ -121,9 +122,7 @@ def selection_shift_summary(df: pd.DataFrame) -> dict[str, object]:
         raise ValueError("; ".join(errors))
 
     effect_ready = df[
-        df["uncertainty_status"].eq(
-            "effect_size_ready_independent_groups"
-        )
+        df["uncertainty_status"].astype(str).str.startswith("effect_size_ready")
     ]
     return {
         "n_rows": int(len(df)),
