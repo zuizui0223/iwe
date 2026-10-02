@@ -99,3 +99,27 @@ def test_realized_window_evidence_requires_realized_window_and_final_outcome():
     df.loc[1, "window_reference_class"] = "seasonal_position_only"
     errors = validate_landscape_registry(df)
     assert any("realized_window_evidence requires" in error for error in errors)
+
+
+def test_boundary_evidence_requires_final_outcome():
+    df = _rows()
+    df.loc[1, "landscape_status"] = "boundary_evidence"
+    assert validate_landscape_registry(df) == []
+
+    df.loc[1, "outcome_finality"] = "not_final"
+    errors = validate_landscape_registry(df)
+    assert any("boundary_evidence requires a final outcome" in error for error in errors)
+
+
+def test_boundary_evidence_is_not_counted_as_supporting_recovery():
+    df = _rows()
+    boundary = df.iloc[[1]].copy()
+    boundary["component_id"] = "BOUNDARY"
+    boundary["study_id"] = "IWE_BOUNDARY"
+    boundary["dependence_id"] = "DEP_BOUNDARY"
+    boundary["landscape_status"] = "boundary_evidence"
+    combined = pd.concat([df, boundary], ignore_index=True)
+
+    summary = landscape_pilot_summary(combined)
+    assert summary["by_landscape_status"]["boundary_evidence"] == 1
+    assert summary["recoverable_programmes_by_class"]["antagonist"] == 1
