@@ -64,21 +64,27 @@ Only the first class can by itself support a claim about independently identifie
 
 The key confirmatory comparison is not whether calendar signs differ.
 
-For programmes with sufficient timing data, fit or reconstruct effects on:
+For programmes with sufficient timing data, fit or reconstruct effects on the most resolved stage-specific coordinates the source supports:
 
 1. an absolute calendar/seasonal timing coordinate;
-2. a relative raw partner-exposure coordinate where adult activity is independently identified;
-3. an **effective interaction-window coordinate** when host-stage filtering or interaction success changes which exposure events actually contribute to final reproduction.
+2. an independently measured adult partner/service window;
+3. a realized encounter or oviposition window;
+4. a delayed consumer window after development;
+5. an **effective interaction-window coordinate** after host-stage filtering determines which exposure events can actually contribute to final reproduction.
 
-Then ask whether biologically relevant between-programme heterogeneity is reduced by raw partner-window alignment and whether it is reduced further by effective-window alignment.
+Then ask whether biologically relevant between-programme heterogeneity is reduced as the coordinate moves from calendar timing toward the biologically effective stage-specific window.
 
-The Cardamine source now demonstrates why these are not interchangeable: the Gaussian peak for total egg exposure occurs at flowering-date z = -1.10, while the peak for active eggs capable of reaching damaging late instars occurs at z = -0.61 and has a narrower sigma (0.66 versus 0.92). An independent Portuguese Gentiana-Phengaris programme additionally shows that offspring survival varies with host bud size, bud developmental stage, and oviposition period, while Yucca-Tegeticula provides a taxonomically distinct filter in which resource-driven flower abortion kills all eggs in exposed flowers. These replicate host-state filtering at the mechanism level but do not yet test final plant-fitness convergence.
+The Cardamine source demonstrates why raw exposure and effective cost are not interchangeable: the Gaussian peak for total egg exposure occurs at flowering-date z = -1.10, while the peak for active eggs capable of reaching damaging late instars occurs at z = -0.61 and has a narrower sigma (0.66 versus 0.92).
+
+Kula 2012 adds the mixed-system analogue. In *Silene stellata–Hadena ectypa*, flowering × oviposition synchrony predicts **more** predation in 2008 but **less** predation in 2009. The flower/egg-to-first-larva delays change from 10/5 d in 2008 to 17/15 d in 2009, while fruit maturation is faster in 2009 (16.7 versus 21.3 d). This makes developmental phase lag a prospective alignment variable rather than treating adult or oviposition synchrony as the final cost coordinate.
+
+An independent Portuguese Gentiana-Phengaris programme additionally shows that offspring survival varies with host bud size, bud developmental stage, and oviposition period, while Yucca-Tegeticula provides a taxonomically distinct filter in which resource-driven flower abortion kills all eggs in exposed flowers. These replicate host-state filtering at the mechanism level but do not yet test final plant-fitness convergence.
 
 No claim of "collapse", "convergence", or "effective-window superiority" is allowed without paired comparisons across independent programmes.
 
 ### P5 — effective windows cannot be defined circularly
 
-An effective interaction window may be estimated from a pre-fitness mechanistic filter such as stage-specific attack survival, successful pollen transfer, or experimentally identified host sensitivity.
+An effective interaction window may be estimated from a pre-fitness mechanistic filter such as stage-specific attack survival, successful pollen transfer, experimentally identified host sensitivity, or a measured delay distribution from adult encounter/oviposition to the damaging consumer stage.
 
 It may **not** be defined by choosing the timing transformation that maximizes the final fitness association in the same data.
 
@@ -93,6 +99,8 @@ Where benefit and cost channels can be separated, preserve:
 `W_net(tau) = B(tau) - C(tau)`.
 
 A mixed-system result is informative if the net optimum is displaced from the partner-activity maximum or if benefit and cost surfaces peak at different relative times.
+
+For stage-structured partners, the cost surface is not anchored automatically to adult activity or oviposition. Consumer developmental lag and host maturation must be preserved prospectively. A particularly strong test is a sign change in the relationship between adult/oviposition synchrony and later cost that is predicted by a measured shift in the adult-to-consumer phase lag.
 
 ### P6b — redundancy claims require temporal accessibility
 
@@ -144,7 +152,7 @@ the broader outcome-complete rescreen shows that the apparent calendar-sign hete
 1. complete IWE002 directional reconstruction without counting it as independent from IWE001;
 2. resolve IWE015 raw variance for the mixed net-fitness anchor;
 3. recover IWE032 female-flight dates and fit its early/core/late antagonist surface, then compare raw female-flight alignment with the already reconstructed active-egg effective window;
-4. Cardamine closes one prospectively defined effective-window filter to final plant reproduction through the source fitness equation. IWE031 independently demonstrates experimentally that host developmental stage changes the final viable-seed consequence of herbivory, while Geum-Byturus independently links a realized antagonist window to final plant fitness and shows an interior escape optimum at 36% second-peak flowering. Host-filter mechanism breadth also has two additional replications (Portuguese Gentiana-Phengaris and Yucca-Tegeticula). The remaining stronger gate is an **independent second programme** that explicitly separates raw exposure from a pre-fitness effective-window filter and then links that filtered window to final plant reproduction;
+4. Cardamine closes one prospectively defined exposure -> active-consumer filter -> final-reproduction chain through the source fitness equation. Kula 2012 independently shows within a mixed interaction that changing adult/oviposition-to-larva phase lag can reverse the sign of synchrony on predation, while IWE031 shows experimentally that host developmental stage changes the final viable-seed consequence of herbivory. Geum-Byturus independently links a realized antagonist window to final plant fitness and shows an interior escape optimum at 36% second-peak flowering. The remaining stronger gate is an **independent second programme** that explicitly measures raw adult/encounter timing, delayed effective consumer timing, host-state filtering and final plant reproduction at compatible units;
 5. treat the Hurlburt *Yucca glauca–Tegeticula* route as a one-key completion problem: adult timing and mature seed output are source-backed; inspect the public thesis only for a marked clone/inflorescence/flowering-date -> mature-fruit join;
 6. ingest and screen the Caruso non-duplicated phenology treatment-pair database when lawful file access is available;
 7. retain design-matched null/boundary systems and test overlap-conditioned redundancy rather than static partner richness.
