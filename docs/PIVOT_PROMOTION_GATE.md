@@ -132,7 +132,7 @@ the broader outcome-complete rescreen shows that the apparent calendar-sign hete
 1. complete IWE002 directional reconstruction without counting it as independent from IWE001;
 2. resolve IWE015 raw variance for the mixed net-fitness anchor;
 3. recover IWE032 female-flight dates and fit its early/core/late antagonist surface, then compare raw female-flight alignment with the already reconstructed active-egg effective window;
-4. host-filter mechanism breadth now has two replications beyond Cardamine (Portuguese Gentiana-Phengaris and Yucca-Tegeticula); the next gate is at least one independent programme that links a prospectively defined effective-window filter to final plant reproduction, rather than adding more mechanism-only examples;
+4. Cardamine now closes one prospectively defined effective-window filter to final plant reproduction through the source fitness equation; host-filter mechanism breadth also has two replications beyond Cardamine (Portuguese Gentiana-Phengaris and Yucca-Tegeticula). The next gate is an **independent second programme** linking a pre-fitness effective-window filter to final plant reproduction;
 5. ingest and screen the Caruso non-duplicated phenology treatment-pair database when lawful file access is available;
 6. add design-matched null/boundary systems, including published cases where antagonist damage did not alter flowering-time selection.
 
