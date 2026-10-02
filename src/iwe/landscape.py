@@ -51,15 +51,11 @@ LANDSCAPE_STATUSES = {
     "reextract_directional",
     "directional_evidence",
     "candidate_noncausal_window",
-    "candidate_seasonal_landscape",
-    "selection_shift_evidence",
-    "mixed_channel_decomposition_candidate",
-    "experimental_timing_candidate",
-    "mechanism_only",
-    "context_only",
     "selection_shift_evidence",
     "experimental_timing_evidence",
     "channel_decoupling_evidence",
+    "mechanism_only",
+    "context_only",
 }
 
 REQUIRED_COLUMNS = [
@@ -140,18 +136,57 @@ def validate_landscape_registry(df: pd.DataFrame) -> list[str]:
             + ", ".join(sorted(bad_directional))
         )
 
-    mixed_decomp = df["landscape_status"].eq(
-        "mixed_channel_decomposition_candidate"
-    )
-    bad_mixed = df.loc[
-        mixed_decomp
+    directional_evidence = df["landscape_status"].eq("directional_evidence")
+    bad_directional_evidence = df.loc[
+        directional_evidence
+        & (
+            df["window_reference_class"].ne("independent_partner_activity")
+            | df["timing_geometry"].ne("two_sided_signed_lag")
+        ),
+        "component_id",
+    ].astype(str)
+    if len(bad_directional_evidence):
+        errors.append(
+            "directional_evidence requires independent partner activity and a two-sided signed lag: "
+            + ", ".join(sorted(bad_directional_evidence))
+        )
+
+    channel_decoupling = df["landscape_status"].eq("channel_decoupling_evidence")
+    bad_channel = df.loc[
+        channel_decoupling
         & df["interaction_type"].ne("mixed_pollinating_seed_predator"),
         "component_id",
     ].astype(str)
-    if len(bad_mixed):
+    if len(bad_channel):
         errors.append(
-            "mixed_channel_decomposition_candidate must be mixed: "
-            + ", ".join(sorted(bad_mixed))
+            "channel_decoupling_evidence must be a mixed interaction: "
+            + ", ".join(sorted(bad_channel))
+        )
+
+    experimental_timing = df["landscape_status"].eq("experimental_timing_evidence")
+    bad_experimental_timing = df.loc[
+        experimental_timing
+        & (
+            df["window_reference_class"].ne("direct_interaction_manipulation")
+            | df["outcome_finality"].ne("final")
+        ),
+        "component_id",
+    ].astype(str)
+    if len(bad_experimental_timing):
+        errors.append(
+            "experimental_timing_evidence requires a direct interaction manipulation and final outcome: "
+            + ", ".join(sorted(bad_experimental_timing))
+        )
+
+    selection_shift = df["landscape_status"].eq("selection_shift_evidence")
+    bad_selection_shift = df.loc[
+        selection_shift & df["outcome_finality"].ne("final"),
+        "component_id",
+    ].astype(str)
+    if len(bad_selection_shift):
+        errors.append(
+            "selection_shift_evidence requires a final outcome: "
+            + ", ".join(sorted(bad_selection_shift))
         )
 
     mechanism = df["landscape_status"].eq("mechanism_only")
@@ -183,10 +218,6 @@ def landscape_pilot_summary(df: pd.DataFrame) -> dict[str, object]:
                 "reextract_directional",
                 "directional_evidence",
                 "candidate_noncausal_window",
-                "candidate_seasonal_landscape",
-                "selection_shift_evidence",
-                "mixed_channel_decomposition_candidate",
-                "experimental_timing_candidate",
                 "selection_shift_evidence",
                 "experimental_timing_evidence",
                 "channel_decoupling_evidence",
@@ -276,9 +307,9 @@ def render_landscape_pilot_audit(df: pd.DataFrame) -> str:
         "",
         "## Interpretation",
         "",
-        "The pilot explicitly separates two problems that the original strict-H1 analysis combined: (1) whether timing predicts final reproduction, and (2) whether the partner window is independently identified. The landscape pivot can therefore recover antagonist and mixed timing geometry without calling egg receipt, attack, or damage an independent adult-availability curve.",
+        "The pilot now separates three biological objects that the original strict-H1 analysis compressed together: (1) partner exposure or realized interaction timing, (2) host-stage sensitivity to that interaction, and (3) final reproductive fitness. This preserves strict partner-window provenance while allowing antagonist and mixed studies to contribute the temporal object they actually identify.",
         "",
-        "The next quantitative step is not a three-class pooled meta-analysis. IWE001 already yields one-sided mutualist geometry, and IWE012 now yields a source-tested antagonist selection reversal. The remaining priorities are IWE002 directional reconstruction, the IWE015 variance audit, and the IWE032 early/core/late antagonist surface.",
+        "The branch already contains directional exposure mismatch (IWE001), an antagonist-induced selection shift linked to attack (IWE012), mixed benefit-cost channel decoupling (IWE014), and experimentally isolated host-stage sensitivity (IWE031). The highest-value unresolved anchors are the IWE015 raw-variance audit and the IWE032 early/core/late antagonist surface.",
         "",
     ]
     return "\n".join(lines)
