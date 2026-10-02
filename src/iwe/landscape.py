@@ -25,6 +25,7 @@ TIMING_GEOMETRIES = {
     "early_core_late",
     "gaussian_cost_window",
     "host_stage_survival_filter",
+    "sequential_flower_abortion_filter",
 }
 
 FITNESS_CHANNELS = {
