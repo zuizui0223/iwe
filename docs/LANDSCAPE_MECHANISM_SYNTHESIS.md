@@ -91,6 +91,23 @@ Conceptually:
 
 This is not a fitted convolution in the current analysis. It is the mechanistic bookkeeping required by the source data.
 
+### Independent mixed timing gradient — Trollius–Chiastocheta
+
+The globeflower system provides an independent way to expose the same stage problem. Different *Chiastocheta* species oviposit at different flower ages, from the first day of flowering through day 7 and even after flowering.
+
+Pellmyr's cost-benefit analysis shows why timing matters. Each visit fertilizes a fixed proportion of the ovules that remain unfertilized, so marginal pollination benefit declines as the flower ages. Larval seed consumption does not decline in parallel. The estimated benefit-cost break-even occurs around **4–5 eggs per flower**, while natural annual means span **2.3–7.25 eggs per flower**.
+
+Thus moving the adult interaction later in host development lowers the marginal service component while preserving offspring cost. The stage-specific benefit-cost ratio is therefore observable in a second, independent nursery-pollination system.
+
+### Extreme annual phase lag — Glochidion–Epicephala
+
+*Glochidion lanceolarium × Epicephala lanceolaria* provides a much larger temporal scale.
+
+Adult moths pollinate and oviposit in **April–May**. Developing fruits and eggs then remain dormant from **May through December**. Fruits reactivate in **January–February**, eggs hatch, and larvae consume developing seeds. Adults eclose in mature fruit in **March–April**, just before the next flowering season.
+
+The adult service and offspring cost windows are therefore separated by roughly **eight months**. Mature intact and infested seed counts are directly reported across four populations.
+
+This system does not estimate a treatment effect of phase lag, so it is registered as `stage_structure_evidence`, not as a supporting fitness-landscape programme. Its value is generality: stage separation occurs from days (Silene) to months (Glochidion).
 
 ### Strong direct mixed anchor — IWE015
 
@@ -180,7 +197,7 @@ If attack is concentrated on one side of the flowering distribution, antagonist 
 
 In nursery-pollination systems, pollination benefit and offspring-mediated reproductive cost need not peak together or change at the same rate. When the adult provides pollination and delayed offspring consume reproductive tissues, developmental lag can move the damaging window relative to the adult service window and can even reverse the sign of an adult-synchrony effect on cost.
 
-The net optimum therefore depends on relative timing, developmental lag, host vulnerability and amplitude of the two channels, not merely on total synchrony.
+The net optimum therefore depends on relative timing, developmental lag, host vulnerability and amplitude of the two channels, not merely on total synchrony. Trollius adds a host-stage gradient in marginal benefit, while Glochidion demonstrates that adult service and larval cost can be separated by most of a year.
 
 ### G5 — endpoint choice changes the apparent window
 
