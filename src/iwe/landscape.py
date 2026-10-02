@@ -23,6 +23,7 @@ TIMING_GEOMETRIES = {
     "ordered_window",
     "interaction_timing_manipulation",
     "early_core_late",
+    "gaussian_cost_window",
 }
 
 FITNESS_CHANNELS = {
