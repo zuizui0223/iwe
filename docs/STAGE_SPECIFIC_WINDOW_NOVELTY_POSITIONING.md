@@ -55,6 +55,13 @@ Kula 2012 is especially diagnostic because the sign of the synchrony-predation r
 
 Cardamine-Anthocharis supplies an independent antagonist analogue: total egg exposure and active future-damage exposure have displaced Gaussian peaks.
 
+Two additional nursery-pollination systems broaden the stage-specific pattern without being used as final-fitness tests.
+
+- In *Trollius–Chiastocheta*, different fly species oviposit at different flower ages. Marginal pollination benefit declines for later visits because fewer unfertilized ovules remain, whereas delayed larval seed consumption persists.
+- In *Glochidion lanceolarium–Epicephala lanceolaria*, spring adult pollination/oviposition is separated from winter larval seed consumption by roughly eight months of fruit/egg dormancy.
+
+These examples make the stage distinction taxonomically and temporally broader than the original *Silene–Hadena* case, but they do not by themselves show that a stage-specific re-alignment improves statistical prediction of final plant fitness.
+
 ## Why this may be more general than nursery pollination
 
 The same structure should occur whenever:
