@@ -123,3 +123,24 @@ def test_boundary_evidence_is_not_counted_as_supporting_recovery():
     summary = landscape_pilot_summary(combined)
     assert summary["by_landscape_status"]["boundary_evidence"] == 1
     assert summary["recoverable_programmes_by_class"]["antagonist"] == 1
+
+
+def test_stage_structure_evidence_is_not_counted_as_support():
+    df = _rows()
+    stage = df.iloc[[1]].copy()
+    stage["component_id"] = "STAGE"
+    stage["study_id"] = "IWE_STAGE"
+    stage["dependence_id"] = "DEP_STAGE"
+    stage["interaction_type"] = "mixed_pollinating_seed_predator"
+    stage["window_reference_class"] = "independent_partner_activity"
+    stage["timing_geometry"] = "annual_stage_phase_lag"
+    stage["fitness_channel"] = "cost_channel"
+    stage["outcome_finality"] = "final"
+    stage["current_quant_status"] = "source_summary_evidence"
+    stage["landscape_status"] = "stage_structure_evidence"
+    combined = pd.concat([df, stage], ignore_index=True)
+
+    assert validate_landscape_registry(combined) == []
+    summary = landscape_pilot_summary(combined)
+    assert summary["by_landscape_status"]["stage_structure_evidence"] == 1
+    assert "mixed_pollinating_seed_predator" not in summary["recoverable_programmes_by_class"]
