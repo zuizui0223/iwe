@@ -64,16 +64,27 @@ Only the first class can by itself support a claim about independently identifie
 
 The key confirmatory comparison is not whether calendar signs differ.
 
-For programmes with sufficient timing data, fit or reconstruct effects on both:
+For programmes with sufficient timing data, fit or reconstruct effects on:
 
 1. an absolute calendar/seasonal timing coordinate;
-2. a relative interaction-window coordinate.
+2. a relative raw partner-exposure coordinate where adult activity is independently identified;
+3. an **effective interaction-window coordinate** when host-stage filtering or interaction success changes which exposure events actually contribute to final reproduction.
 
-Then ask whether biologically relevant between-programme heterogeneity is reduced after window alignment and whether the oriented geometry is consistent with service attraction versus cost escape.
+Then ask whether biologically relevant between-programme heterogeneity is reduced by raw partner-window alignment and whether it is reduced further by effective-window alignment.
 
-No claim of "collapse" or "convergence" is allowed without this paired comparison.
+The Cardamine source now demonstrates why these are not interchangeable: the Gaussian peak for total egg exposure occurs at flowering-date z = -1.10, while the peak for active eggs capable of reaching damaging late instars occurs at z = -0.61 and has a narrower sigma (0.66 versus 0.92).
 
-### P5 — mixed systems remain a distinct geometry test
+No claim of "collapse", "convergence", or "effective-window superiority" is allowed without paired comparisons across independent programmes.
+
+### P5 — effective windows cannot be defined circularly
+
+An effective interaction window may be estimated from a pre-fitness mechanistic filter such as stage-specific attack survival, successful pollen transfer, or experimentally identified host sensitivity.
+
+It may **not** be defined by choosing the timing transformation that maximizes the final fitness association in the same data.
+
+Whenever possible, the filter defining the effective window must be estimated independently of the final reproductive response or validated in a separate component of the study.
+
+### P6 — mixed systems remain a distinct geometry test
 
 Mixed pollinating seed predators are not forced into the mutualist or antagonist sign rule.
 
@@ -83,7 +94,7 @@ Where benefit and cost channels can be separated, preserve:
 
 A mixed-system result is informative if the net optimum is displaced from the partner-activity maximum or if benefit and cost surfaces peak at different relative times.
 
-### P6 — null and boundary systems are mandatory
+### P7 — null and boundary systems are mandatory
 
 The evidence map must retain systems in which:
 
@@ -94,7 +105,7 @@ The evidence map must retain systems in which:
 
 These are not failed studies. They are necessary tests of whether the proposed window rule is selective rather than tautological.
 
-### P7 — dependence and uncertainty are not relaxed
+### P8 — dependence and uncertainty are not relaxed
 
 Repeated years, sites, traits, or contrasts from one programme share the appropriate dependence cluster.
 
@@ -120,8 +131,9 @@ the broader outcome-complete rescreen shows that the apparent calendar-sign hete
 
 1. complete IWE002 directional reconstruction without counting it as independent from IWE001;
 2. resolve IWE015 raw variance for the mixed net-fitness anchor;
-3. recover IWE032 female-flight dates and fit its early/core/late antagonist surface;
-4. ingest and screen the Caruso non-duplicated phenology treatment-pair database when lawful file access is available;
-5. add design-matched null/boundary systems, including published cases where antagonist damage did not alter flowering-time selection.
+3. recover IWE032 female-flight dates and fit its early/core/late antagonist surface, then compare raw female-flight alignment with the already reconstructed active-egg effective window;
+4. identify at least one additional programme where a pre-fitness host-stage or interaction-success filter lets raw exposure and effective exposure be compared without defining the window from final fitness;
+5. ingest and screen the Caruso non-duplicated phenology treatment-pair database when lawful file access is available;
+6. add design-matched null/boundary systems, including published cases where antagonist damage did not alter flowering-time selection.
 
 This gate deliberately makes the hardest claim — window-relative convergence — contingent on data that have not yet been inspected under that comparison.
