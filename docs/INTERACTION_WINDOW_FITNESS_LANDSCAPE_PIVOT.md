@@ -21,6 +21,18 @@ tau = plant timing - interaction-window timing
 
 The target is the shape of W(tau), rather than a single monotonic coefficient labelled synchrony.
 
+
+The expanded audit shows that the interaction window itself has two separable temporal ingredients:
+
+- **partner exposure** — when the interacting animal is available, or when pollination/attack is realized;
+- **host sensitivity** — how strongly that same interaction changes final reproduction at the plant's current developmental stage.
+
+IWE therefore uses the empirical bookkeeping relation
+
+`impact(t) = f(exposure(t), host_sensitivity(t))`
+
+without assuming a multiplicative functional form. IWE012 and IWE031 show why both terms are needed: an antagonist can rotate flowering-time selection through concentrated attack, while experimentally identical herbivory at different plant ages has different reproductive consequences.
+
 This makes three distinctions explicit:
 
 1. side — plant earlier than, within, or later than the interaction window;
@@ -95,21 +107,21 @@ The benefit and cost curves need not peak at the same tau, so the net optimum ca
 
 For a mutualist whose reference window represents partner availability, final reproduction is expected to be lower away from the effective interaction window than within it. The two sides are estimated separately whenever data permit; symmetry is not assumed.
 
-### G2 — antagonist trough / temporal escape
+### G2 — composite antagonist impact window
 
-For an antagonist, final post-cost reproduction can be lowest in the realized or independently measured interaction window and higher in an early and/or late temporal refugium.
+For an antagonist, final post-cost reproduction can be lowest where partner exposure is high, where the plant is especially vulnerable, or where both coincide. A temporal refugium can therefore arise through escape from antagonist exposure, greater tolerance at another plant stage, or both.
 
-The estimand is therefore not merely negative synchrony. It is whether an interaction window creates a trough in the final-reproduction surface.
+The estimand is not merely negative synchrony. It is the geometry of the reproductive-cost surface and which temporal component creates it.
 
 ### G3 — directional asymmetry
 
 Early escape and late escape are not assumed equivalent. Tests retain core-vs-early and core-vs-late contrasts separately, exactly as already frozen for the Cardamine preflight.
 
-### G4 — mixed displacement or curvature
+### G4 — mixed benefit-cost phase decoupling
 
-In mixed pollinating-seed-predator systems, benefit and cost can share a partner but differ in timing or strength. The net fitness optimum may therefore occur before, within or after the partner-activity maximum and may be non-monotonic.
+In mixed pollinating-seed-predator systems, benefit and cost can share a partner yet have different temporal shapes. IWE014 provides a concrete boundary case: early and late flowering have similar pollination success while seed predation is higher early.
 
-This is a stronger formulation of the original H2 and becomes a central target rather than an optional quadratic afterthought.
+The net fitness optimum can therefore shift even when the pollination-benefit channel is nearly flat. The target is the relative timing and amplitude of benefit and cost channels, not merely a quadratic term on one synchrony score.
 
 ### G5 — calendar sign is not invariant
 
@@ -170,7 +182,7 @@ Under the broadened landscape question, while preserving reference provenance ra
 - antagonist: 4;
 - mixed: 2.
 
-This does not make the three-class meta-analysis inferentially ready. It shows that the main loss of antagonist evidence came from asking for independent adult availability, not from an absence of timing-fitness biology.
+This does not make the three-class meta-analysis inferentially ready. It shows that the original design asked every study to identify the same temporal object even though the literature measures complementary parts of the mechanism: partner exposure, realized attack, host-stage sensitivity, and benefit-cost channel timing.
 
 ### First quantitative results on the pivot
 
@@ -179,6 +191,11 @@ The branch now contains two independent kinds of positive evidence.
 1. **IWE001 directional mismatch.** On the plant-earlier side of the Corydalis-Bombus mismatch axis, larger plant lead is associated with lower natural seed set at all three sites: NFP r = -0.578 (n = 11), TOEF r = -0.833 (n = 8), and JOZ r = -0.952 (n = 4). The partner-earlier side is too sparse for the registered Fisher-z variance. All sites remain one dependence cluster.
 
 2. **IWE012 selection reversal.** In Gentiana pneumonanthe populations without Phengaris alcon, flowering-time selection favors earlier flowering, whereas predator-present populations favor later flowering. The descriptive source-mean shifts are -0.41 in 2010 and -0.40 in 2011 on the canonical earlier-flowering axis; the source Predation x Phenology tests are p < 0.001 in both years. No variance for the derived mean difference is invented.
+
+
+3. **IWE014 mixed channel decoupling.** In *Silene vulgaris*, early and late plants have similar pollination success but early plants experience greater seed predation. This identifies a mixed-system cost curve that changes seasonally without a matching change in the benefit channel; it remains source-summary evidence because no independent adult-*Hadena* activity curve or variance-bearing early/late net-fitness contrast is available.
+
+4. **IWE031 host-stage sensitivity.** Timed monarch herbivory on *Asclepias fascicularis* separates when damage occurs from natural monarch availability. Early herbivory most strongly affects plant size, whereas late herbivory has the strongest effect on viable-seed production. This directly demonstrates that the reproductive impact window depends on plant stage as well as antagonist exposure.
 
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
