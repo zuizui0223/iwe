@@ -15,7 +15,7 @@ The experiment imposed monarch larval herbivory at three plant ages plus an unda
 - late: monarchs added to 88-day-old plants;
 - none: no monarchs added.
 
-This is not a reconstruction of the natural monarch activity window. It is a direct manipulation of **when the same antagonistic interaction occurs**.
+This is not a reconstruction of the natural monarch activity window. It is a direct manipulation of **when the same antagonistic interaction occurs**. The study also measures realized percentage foliage removal in each timing group, so the treatment effect includes any plant-stage dependence in realized damage as part of the causal pathway rather than assuming damage intensity is identical across dates.
 
 ## Reproductive result
 
@@ -30,7 +30,7 @@ The fruiting figure defines the reproductive endpoint as the number of seeds ger
 
 IWE031 isolates a dimension that the original synchrony formulation did not represent:
 
-> equal biological interaction types can have different fitness consequences solely because the host is at a different developmental stage.
+> experimentally shifting the timing of the same plant–herbivore interaction across host developmental stages changes its downstream reproductive consequence.
 
 Therefore an antagonist “interaction window” is not determined only by when the antagonist is available.
 
@@ -42,7 +42,9 @@ Conceptually, the reproductive impact at time `t` should be treated as a functio
 
 without assuming that the function is multiplicative.
 
-IWE031 primarily identifies the second term.
+IWE031 gives independent experimental support for the second term and links it to final viable-seed production. It therefore replicates the **host-stage-sensitivity → final reproduction** part of the Cardamine mechanism in a taxonomically and experimentally distinct system.
+
+It does not, however, separate a natural adult-exposure curve from an effective host-filtered cost window. It cannot by itself close the stronger raw-exposure → effective-window → final-fitness alignment gate.
 
 ## Quantitative boundary
 
