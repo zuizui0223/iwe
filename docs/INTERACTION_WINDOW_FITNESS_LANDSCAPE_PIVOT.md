@@ -22,16 +22,17 @@ tau = plant timing - interaction-window timing
 The target is the shape of W(tau), rather than a single monotonic coefficient labelled synchrony.
 
 
-The expanded audit shows that the interaction window itself has two separable temporal ingredients:
+The expanded audit shows that the interaction window itself has three separable temporal ingredients:
 
-- **partner exposure** — when the interacting animal is available, or when pollination/attack is realized;
-- **host sensitivity** — how strongly that same interaction changes final reproduction at the plant's current developmental stage.
+- **partner exposure** — when the focal interacting animal is available, or when pollination/attack is realized;
+- **host sensitivity** — how strongly that same interaction changes final reproduction at the plant's current developmental stage;
+- **accessible redundancy** — which alternative partners are actually active and able to use receptive flowers at that same time.
 
 IWE therefore uses the empirical bookkeeping relation
 
-`impact(t) = f(exposure(t), host_sensitivity(t))`
+`impact(t) = f(exposure(t), host_sensitivity(t), accessible_redundancy(t))`
 
-without assuming a multiplicative functional form. IWE012 and IWE031 show why both terms are needed: an antagonist can rotate flowering-time selection through concentrated attack, while experimentally identical herbivory at different plant ages has different reproductive consequences.
+without assuming a multiplicative functional form. IWE012 and IWE031 show why exposure and sensitivity must be separated, while the senita-cactus programme shows why partner richness cannot be treated as time-invariant redundancy: a moth cohort gap produced zero open-pollinated fruit set when alternative pollinators were temporally inaccessible.
 
 This makes three distinctions explicit:
 
@@ -129,6 +130,17 @@ Interaction class is not expected to predict a universal early-versus-late calen
 
 Signed selection-gradient contrasts are therefore retained rather than converted to absolute magnitudes.
 
+### G6 — redundancy is overlap-conditioned
+
+Alternative partners buffer mismatch only when they are active and can access receptive flowers at the relevant time.
+
+Define the time-indexed quantity conceptually as:
+
+`R_eff(t) = sum_j I(partner_j active at t AND able to access receptive flowers at t)`.
+
+This is not a fixed richness count. Senita cactus provides the motivating test: diurnal bee co-pollinators become ineffective when flowers close before sunrise, and a gap between senita-moth cohorts in July 1998 coincided with 0% open-pollinated fruit set despite the broader pollinator community.
+
+
 ## Evidence hierarchy and claim boundary
 
 The pivot separates geometry evidence from causal window identification.
@@ -168,7 +180,7 @@ For the signed-selection module, treatment contrasts are pooled only when the tr
 
 ## Pilot result
 
-The current pilot registry contains 17 components from 16 studies and 15 dependence clusters.
+The current pilot registry contains **23 components from 21 studies and 20 dependence clusters**.
 
 Under the original high-provenance requirement, strong final-fitness anchors are currently:
 
@@ -178,11 +190,11 @@ Under the original high-provenance requirement, strong final-fitness anchors are
 
 Under the broadened landscape question, while preserving reference provenance rather than pooling it away, the pilot has recoverable programme clusters in:
 
-- mutualist: 4;
-- antagonist: 4;
-- mixed: 2.
+- mutualist: **4**;
+- antagonist: **5**;
+- mixed: **2**.
 
-This does not make the three-class meta-analysis inferentially ready. It shows that the original design asked every study to identify the same temporal object even though the literature measures complementary parts of the mechanism: partner exposure, realized attack, host-stage sensitivity, and benefit-cost channel timing.
+This does not make the three-class meta-analysis inferentially ready. Boundary and mechanism-only rows are deliberately excluded from those programme counts. The result instead shows that the original design asked every study to identify the same temporal object even though the literature measures complementary parts of the mechanism: partner exposure, realized attack, host-stage sensitivity, accessible redundancy, and benefit-cost channel timing.
 
 ### First quantitative results on the pivot
 
@@ -197,16 +209,20 @@ The branch now contains multiple complementary kinds of timing evidence.
 
 4. **IWE014 mixed channel decoupling.** In *Silene vulgaris*, early and late plants have similar pollination success but early plants experience greater seed predation. This identifies a mixed-system cost curve that changes seasonally without a matching change in the benefit channel; it remains source-summary evidence because no independent adult-*Hadena* activity curve or variance-bearing early/late net-fitness contrast is available.
 
-5. **IWE031 host-stage sensitivity.** Timed monarch herbivory on *Asclepias fascicularis* separates when damage occurs from natural monarch availability. Early herbivory most strongly affects plant size, whereas late herbivory has the strongest effect on viable-seed production. This directly demonstrates that the reproductive impact window depends on plant stage as well as antagonist exposure.
+5. **Althoff 2005 mixed benefit window.** In *Yucca filamentosa × Tegeticula cassandra*, peak flowering date predicts lower pollinator abundance in both years (path coefficients -0.37 in 2001 and -0.27 in 2002), while pollinator abundance predicts higher relative fruit set (+0.60 and +0.48). This independently identifies the service side of a mixed interaction window, but fruit set precedes larval seed consumption and therefore remains a benefit-channel mechanism rather than net mixed fitness.
+
+6. **Senita overlap-conditioned redundancy.** Pollinator-exclusion experiments show that co-pollinator buffering is available only when alternative partners overlap the receptive flower window. In July 1998, senita moths were between adult cohorts and open-pollinated fruit set was 0%, while pollen-supplemented flowers set 22.5 ± 6.6% fruit. In later hot seasons, flowers closed before sunrise and naturally excluded diurnal bees. This motivates a time-indexed effective-redundancy term rather than partner richness alone.
+
+7. **IWE031 host-stage sensitivity.** Timed monarch herbivory on *Asclepias fascicularis* separates when damage occurs from natural monarch availability. Early herbivory most strongly affects plant size, whereas late herbivory has the strongest effect on viable-seed production. This directly demonstrates that the reproductive impact window depends on plant stage as well as antagonist exposure.
 
 
-6. **IWE032 host filtering of antagonist exposure.** In *Cardamine pratensis × Anthocharis cardamines*, the source-reported Gaussian peak for all eggs occurs at flowering-date z = -1.10, whereas the peak for "active" eggs capable of producing damaging late-instar larvae occurs at z = -0.61. Host-stage filtering therefore shifts the effective cost window **+0.49 SD later** and narrows its Gaussian sigma from **0.92 to 0.66** (28.3% narrower). This mechanism result is distinct from the still-blocked strict female-flight route.
+8. **IWE032 host filtering of antagonist exposure.** In *Cardamine pratensis × Anthocharis cardamines*, the source-reported Gaussian peak for all eggs occurs at flowering-date z = -1.10, whereas the peak for "active" eggs capable of producing damaging late-instar larvae occurs at z = -0.61. Host-stage filtering therefore shifts the effective cost window **+0.49 SD later** and narrows its Gaussian sigma from **0.92 to 0.66** (28.3% narrower). This mechanism result is distinct from the still-blocked strict female-flight route.
 
 
-7. **Independent host-filter replication.** Arnaldo et al. 2014 followed 127 *Gentiana pneumonanthe* shoots and 837 *Phengaris alcon* eggs in Portugal. Egg load was highest in the first third of the flight period, while offspring survival varied with flower-bud size, flower developmental stage, and oviposition period. This independently supports host-state filtering of antagonist exposure, but remains mechanism-only because final plant reproduction was not measured.
+9. **Independent host-filter replication.** Arnaldo et al. 2014 followed 127 *Gentiana pneumonanthe* shoots and 837 *Phengaris alcon* eggs in Portugal. Egg load was highest in the first third of the flight period, while offspring survival varied with flower-bud size, flower developmental stage, and oviposition period. This independently supports host-state filtering of antagonist exposure, but remains mechanism-only because final plant reproduction was not measured.
 
 
-8. **Taxonomically distinct host filtering.** In the *Yucca glauca–Tegeticula yuccasella* nursery-pollination system, resource allocation makes late-opening flowers more likely to abort when basal fruits are already present; all moth eggs in an aborted flower die. This supplies a distinct plant-allocation route by which a realized interaction can be deleted before becoming an effective future seed-predation cost. It is mechanism-only, not a final-fitness effect.
+10. **Taxonomically distinct host filtering.** In the *Yucca glauca–Tegeticula yuccasella* nursery-pollination system, resource allocation makes late-opening flowers more likely to abort when basal fruits are already present; all moth eggs in an aborted flower die. This supplies a distinct plant-allocation route by which a realized interaction can be deleted before becoming an effective future seed-predation cost. It is mechanism-only, not a final-fitness effect.
 
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
