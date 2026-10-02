@@ -32,6 +32,7 @@ TIMING_GEOMETRIES = {
     "within_tree_asynchrony_feedback",
     "accessible_redundancy_window",
     "developmental_phase_lag_reversal",
+    "flower_age_benefit_cost_gradient",
 }
 
 FITNESS_CHANNELS = {
