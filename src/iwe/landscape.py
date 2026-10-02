@@ -29,6 +29,7 @@ TIMING_GEOMETRIES = {
     "gaussian_effective_fitness_surface",
     "bimodal_escape_tradeoff",
     "alternative_escape_strategies",
+    "within_tree_asynchrony_feedback",
 }
 
 FITNESS_CHANNELS = {
