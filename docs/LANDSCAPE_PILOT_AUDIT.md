@@ -35,10 +35,11 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 | candidate_noncausal_window | 1 |
 | candidate_seasonal_landscape | 1 |
 | context_only | 2 |
+| directional_evidence | 1 |
 | experimental_timing_candidate | 1 |
 | mechanism_only | 1 |
 | mixed_channel_decomposition_candidate | 1 |
-| reextract_directional | 2 |
+| reextract_directional | 1 |
 | strong_candidate | 5 |
 
 ## High-provenance anchors
