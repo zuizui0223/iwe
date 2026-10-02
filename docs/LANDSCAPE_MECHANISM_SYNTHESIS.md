@@ -52,9 +52,24 @@ The benefit and cost channels therefore do not share one temporal response.
 
 Early and late experiments are independently ordered by *Hadena ectypa* activity and successful fruits are post-predation final reproduction. Once the raw variance audit is closed, this is the strongest route for connecting partner exposure to a mixed net-fitness outcome.
 
+### Host filtering of antagonist exposure — IWE032
+
+*Cardamine pratensis × Anthocharis cardamines* supplies a direct quantitative demonstration that raw exposure and effective fitness cost can occupy different temporal windows.
+
+The paper reports Gaussian flowering-date curves for total egg load and for "active" egg load, where active eggs are laid early enough after flowering to produce damaging late-instar larvae:
+
+- total-egg peak: z = -1.10, sigma = 0.92;
+- active-egg peak: z = -0.61, sigma = 0.66.
+
+Thus host-stage filtering moves the effective antagonist peak **+0.49 flowering-date SD later** and narrows the effective window by **28.3%**. The plant does not experience every oviposition event as an equivalent future reproductive cost.
+
+This is the clearest current evidence for the decomposition `impact(t) = f(exposure(t), host_sensitivity(t))`.
+
 ### Strong direct antagonist anchor — IWE032
 
-Cardamine provides independently measured female butterfly flight plus plant trajectories to dehiscence and a predeclared early/core/late analysis. Recovering the 2012–2014 female timing object would connect the strong-provenance exposure axis to both temporal escape directions.
+The same Cardamine programme also provides independently measured female butterfly flight plus plant trajectories to dehiscence and a predeclared early/core/late analysis. Recovering the numeric 2012–2014 female capture/recapture timing object would connect the highest-provenance adult-exposure axis to both temporal escape directions.
+
+The active-egg result above does **not** substitute for that missing adult-flight object; the two components remain separately registered.
 
 ## Revised hypotheses
 
