@@ -32,7 +32,7 @@ def _rows() -> pd.DataFrame:
                 "fitness_channel": "net_reproduction",
                 "outcome_finality": "final",
                 "current_quant_status": "pending",
-                "landscape_status": "candidate_noncausal_window",
+                "landscape_status": "realized_window_evidence",
                 "dependence_id": "DEP_B",
                 "notes": "descriptive realized window",
             },
