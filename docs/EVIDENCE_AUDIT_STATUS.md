@@ -33,16 +33,16 @@ The **2-cluster threshold is a discovery milestone only**; the current reference
 
 The replication ledger contains **50 candidate programmes/leads**. This is a discovery/completion ledger, not a count of unique screened publications.
 
-- **36 (72.0%)** are rejected under the frozen contracts.
-- **13 (26.0%)** remain biologically relevant but blocked by a specific missing timing/outcome/variance/source object.
+- **38 (76.0%)** are rejected under the frozen contracts.
+- **11 (22.0%)** remain biologically relevant but blocked by a specific missing timing/outcome/variance/source object.
 - **1 (2.0%)** are ready.
 
 | Candidate status | Count |
 |---|---:|
 | rejected_timing | 27 |
-| rejected_other | 8 |
+| rejected_other | 10 |
 | blocked_timing_linkage | 6 |
-| blocked_final_surface | 4 |
+| blocked_final_surface | 2 |
 | blocked_effect_form | 1 |
 | blocked_source_release | 1 |
 | blocked_summary_stats | 1 |
