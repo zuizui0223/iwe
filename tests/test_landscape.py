@@ -67,3 +67,25 @@ def test_invalid_registry_fails_before_summary():
     df.loc[0, "interaction_type"] = "unknown"
     with pytest.raises(ValueError):
         landscape_pilot_summary(df)
+
+
+def test_channel_decoupling_is_reserved_for_mixed_interactions():
+    df = _rows()
+    df.loc[1, "landscape_status"] = "channel_decoupling_evidence"
+    errors = validate_landscape_registry(df)
+    assert any("channel_decoupling_evidence must be a mixed interaction" in error for error in errors)
+
+
+def test_experimental_timing_requires_direct_manipulation_and_final_outcome():
+    df = _rows()
+    df.loc[1, "landscape_status"] = "experimental_timing_evidence"
+    errors = validate_landscape_registry(df)
+    assert any("experimental_timing_evidence requires" in error for error in errors)
+
+
+def test_selection_shift_requires_final_outcome():
+    df = _rows()
+    df.loc[1, "landscape_status"] = "selection_shift_evidence"
+    df.loc[1, "outcome_finality"] = "not_final"
+    errors = validate_landscape_registry(df)
+    assert any("selection_shift_evidence requires a final outcome" in error for error in errors)
