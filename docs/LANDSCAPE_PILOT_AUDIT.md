@@ -32,12 +32,12 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 
 | Status | Components |
 |---|---:|
-| realized_window_evidence | 1 |
 | channel_decoupling_evidence | 1 |
 | context_only | 2 |
 | directional_evidence | 1 |
 | experimental_timing_evidence | 1 |
 | mechanism_only | 1 |
+| realized_window_evidence | 1 |
 | reextract_directional | 1 |
 | selection_shift_evidence | 1 |
 | strong_candidate | 5 |
