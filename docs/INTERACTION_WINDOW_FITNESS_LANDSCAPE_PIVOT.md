@@ -168,7 +168,7 @@ For the signed-selection module, treatment contrasts are pooled only when the tr
 
 ## Pilot result
 
-The current pilot registry contains 15 components from 14 screened studies and 13 dependence clusters.
+The current pilot registry contains 16 components from 15 studies and 14 dependence clusters.
 
 Under the original high-provenance requirement, strong final-fitness anchors are currently:
 
@@ -201,6 +201,9 @@ The branch now contains multiple complementary kinds of timing evidence.
 
 
 6. **IWE032 host filtering of antagonist exposure.** In *Cardamine pratensis × Anthocharis cardamines*, the source-reported Gaussian peak for all eggs occurs at flowering-date z = -1.10, whereas the peak for "active" eggs capable of producing damaging late-instar larvae occurs at z = -0.61. Host-stage filtering therefore shifts the effective cost window **+0.49 SD later** and narrows its Gaussian sigma from **0.92 to 0.66** (28.3% narrower). This mechanism result is distinct from the still-blocked strict female-flight route.
+
+
+7. **Independent host-filter replication.** Arnaldo et al. 2014 followed 127 *Gentiana pneumonanthe* shoots and 837 *Phengaris alcon* eggs in Portugal. Egg load was highest in the first third of the flight period, while offspring survival varied with flower-bud size, flower developmental stage, and oviposition period. This independently supports host-state filtering of antagonist exposure, but remains mechanism-only because final plant reproduction was not measured.
 
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
