@@ -32,7 +32,7 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 
 | Status | Components |
 |---|---:|
-| candidate_noncausal_window | 1 |
+| realized_window_evidence | 1 |
 | channel_decoupling_evidence | 1 |
 | context_only | 2 |
 | directional_evidence | 1 |
@@ -74,4 +74,4 @@ These counts include strong anchors plus directional re-extraction, realized-win
 
 The pilot now separates three biological objects that the original strict-H1 analysis compressed together: (1) partner exposure or realized interaction timing, (2) host-stage sensitivity to that interaction, and (3) final reproductive fitness. This preserves strict partner-window provenance while allowing antagonist and mixed studies to contribute the temporal object they actually identify.
 
-The branch already contains directional exposure mismatch (IWE001), an antagonist-induced selection shift linked to attack (IWE012), mixed benefit-cost channel decoupling (IWE014), and experimentally isolated host-stage sensitivity (IWE031). The highest-value unresolved anchors are the IWE015 raw-variance audit and the IWE032 early/core/late antagonist surface.
+The branch now contains directional exposure mismatch (IWE001), a plot-level realized antagonist cost surface without plant-level pseudoreplication (IWE011), an antagonist-induced selection shift linked to attack (IWE012), mixed benefit-cost channel decoupling (IWE014), and experimentally isolated host-stage sensitivity (IWE031). The highest-value unresolved anchors are the IWE015 raw-variance audit and the IWE032 early/core/late antagonist surface.
