@@ -24,6 +24,7 @@ TIMING_GEOMETRIES = {
     "interaction_timing_manipulation",
     "early_core_late",
     "gaussian_cost_window",
+    "host_stage_survival_filter",
 }
 
 FITNESS_CHANNELS = {
