@@ -27,6 +27,7 @@ TIMING_GEOMETRIES = {
     "host_stage_survival_filter",
     "sequential_flower_abortion_filter",
     "gaussian_effective_fitness_surface",
+    "bimodal_escape_tradeoff",
 }
 
 FITNESS_CHANNELS = {
