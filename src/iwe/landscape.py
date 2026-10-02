@@ -38,6 +38,7 @@ OUTCOME_FINALITY = {"final", "not_final"}
 QUANT_STATUSES = {
     "extracted",
     "native_extracted",
+    "directional_extracted",
     "pending",
     "variance_hold",
     "blocked_timing_linkage",
@@ -46,6 +47,7 @@ QUANT_STATUSES = {
 LANDSCAPE_STATUSES = {
     "strong_candidate",
     "reextract_directional",
+    "directional_evidence",
     "candidate_noncausal_window",
     "candidate_seasonal_landscape",
     "mixed_channel_decomposition_candidate",
@@ -173,6 +175,7 @@ def landscape_pilot_summary(df: pd.DataFrame) -> dict[str, object]:
             {
                 "strong_candidate",
                 "reextract_directional",
+                "directional_evidence",
                 "candidate_noncausal_window",
                 "candidate_seasonal_landscape",
                 "mixed_channel_decomposition_candidate",
