@@ -31,6 +31,7 @@ TIMING_GEOMETRIES = {
     "alternative_escape_strategies",
     "within_tree_asynchrony_feedback",
     "accessible_redundancy_window",
+    "developmental_phase_lag_reversal",
 }
 
 FITNESS_CHANNELS = {
