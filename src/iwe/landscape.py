@@ -42,6 +42,8 @@ QUANT_STATUSES = {
     "pending",
     "variance_hold",
     "blocked_timing_linkage",
+    "statistical_evidence",
+    "source_summary_evidence",
 }
 
 LANDSCAPE_STATUSES = {
@@ -55,6 +57,9 @@ LANDSCAPE_STATUSES = {
     "experimental_timing_candidate",
     "mechanism_only",
     "context_only",
+    "selection_shift_evidence",
+    "experimental_timing_evidence",
+    "channel_decoupling_evidence",
 }
 
 REQUIRED_COLUMNS = [
@@ -182,6 +187,9 @@ def landscape_pilot_summary(df: pd.DataFrame) -> dict[str, object]:
                 "selection_shift_evidence",
                 "mixed_channel_decomposition_candidate",
                 "experimental_timing_candidate",
+                "selection_shift_evidence",
+                "experimental_timing_evidence",
+                "channel_decoupling_evidence",
             }
         )
     ]
