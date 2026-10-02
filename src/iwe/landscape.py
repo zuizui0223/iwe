@@ -50,6 +50,7 @@ LANDSCAPE_STATUSES = {
     "directional_evidence",
     "candidate_noncausal_window",
     "candidate_seasonal_landscape",
+    "selection_shift_evidence",
     "mixed_channel_decomposition_candidate",
     "experimental_timing_candidate",
     "mechanism_only",
@@ -178,6 +179,7 @@ def landscape_pilot_summary(df: pd.DataFrame) -> dict[str, object]:
                 "directional_evidence",
                 "candidate_noncausal_window",
                 "candidate_seasonal_landscape",
+                "selection_shift_evidence",
                 "mixed_channel_decomposition_candidate",
                 "experimental_timing_candidate",
             }
