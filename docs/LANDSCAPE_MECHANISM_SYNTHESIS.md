@@ -11,16 +11,17 @@ The first pivot formulation defined a fitness landscape over relative timing:
 
 The expanded audit shows that a single “partner window” is still too simple.
 
-Observed fitness consequences can arise from two separable temporal components:
+Observed fitness consequences can arise from three separable temporal components:
 
-1. **partner exposure** — when the interacting animal is available or when realized attack/pollination occurs;
-2. **host sensitivity** — how much the same interaction changes final plant fitness at a given plant stage.
+1. **partner exposure** — when the focal interacting animal is available or when realized attack/pollination occurs;
+2. **host sensitivity** — how much the same interaction changes final plant fitness at a given plant stage;
+3. **accessible redundancy** — which alternative partners are simultaneously active and able to access receptive plant structures.
 
 We therefore treat the realized timing effect as:
 
-`impact(t) = f(exposure(t), host_sensitivity(t))`
+`impact(t) = f(exposure(t), host_sensitivity(t), accessible_redundancy(t))`
 
-This is a bookkeeping decomposition, not a claim that the two quantities multiply.
+This is a bookkeeping decomposition, not a claim that the quantities multiply.
 
 ## Evidence already present in IWE
 
@@ -47,6 +48,29 @@ The study therefore independently links **host-stage sensitivity to final reprod
 Early and late *Silene vulgaris* plants have similar pollination success but different seed-predation costs, with higher predation early.
 
 The benefit and cost channels therefore do not share one temporal response.
+
+### Independent mixed service window — Althoff 2005
+
+In *Yucca filamentosa × Tegeticula cassandra*, adult pollinator activity was measured through the same flowering seasons as plant phenology and relative fruit set.
+
+The source path analysis is replicated across years:
+
+- peak flowering date -> pollinator/day = **-0.37** in 2001 and **-0.27** in 2002;
+- pollinator/day -> relative fruit set = **+0.60** in 2001 and **+0.48** in 2002.
+
+Thus later flowering moves plants away from the effective pollinator-service window and reduces the positive channel of the mixed interaction. Because relative fruit set precedes larval seed consumption, this is benefit-channel evidence rather than net mixed fitness.
+
+### Accessible redundancy — senita cactus
+
+The *Lophocereus schottii–Upiga virescens* programme shows why alternative-pollinator richness cannot be treated as a fixed buffer.
+
+Pollinator-exclusion experiments show that senita moths and diurnal bees can both contribute under some flowering conditions, but their effective availability is time dependent. In hot late seasons, flowers close before sunrise and physically exclude diurnal bees. In July 1998, senita moths were between adult cohorts; open-pollinated flowers produced **0% fruit**, while pollen-supplemented flowers produced **22.5 +/- 6.6%**.
+
+This motivates:
+
+`R_eff(t) = sum_j I(partner_j active at t AND able to access receptive flowers at t)`.
+
+The mechanism is stronger than generic partner redundancy: a community can contain alternative pollinators yet have zero effective redundancy at the focal plant window.
 
 ### Strong direct mixed anchor — IWE015
 
@@ -140,6 +164,11 @@ In nursery-pollination systems, pollination benefit and offspring-mediated repro
 
 Timing effects on plant size, fruit initiation, viable seeds, and final post-predation reproduction are not interchangeable. Primary inference should privilege final reproduction while intermediate endpoints diagnose mechanism.
 
+### G6 — redundancy is a temporal overlap property
+
+Mismatch buffering depends on alternative partners whose activity windows actually overlap the receptive plant window. Partner richness alone is insufficient when alternative partners are inactive, developmentally unavailable, or physically excluded by the plant's daily flowering schedule.
+
+
 ## Consequence for analysis
 
 The project should not attempt one universal meta-analytic coefficient yet.
@@ -150,6 +179,7 @@ The next empirical product is a **mechanism-resolved evidence map plus homologou
 - predator-presence × flowering-time selection shifts;
 - controlled early/mid/late interaction-timing contrasts;
 - mixed benefit and cost channels kept separate before deriving net reproduction;
+- time-indexed accessible redundancy kept separate from static partner richness;
 - strict independent-partner-window effects retained as the highest-provenance subset.
 
 This framing preserves the original causal discipline while using the antagonist and mixed literature for the biological quantities it actually measures.
