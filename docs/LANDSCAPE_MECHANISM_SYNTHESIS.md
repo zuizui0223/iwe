@@ -96,6 +96,14 @@ Together, Cardamine, Portuguese Gentiana and Yucca show three distinct mechanism
 
 This satisfies the branch's first taxonomic-breadth milestone for **host filtering as a mechanism**, but none of the mechanism-only replications should be counted as final plant-fitness effect sizes.
 
+### Independent antagonist escape tradeoff — Sercu 2020
+
+A separate *Geum urbanum–Byturus ochraceus* programme shows that temporal escape need not drive plants toward an extreme calendar date. Predation occurred almost exclusively during the first flowering peak, while later flowers had intrinsically lower seed output. Among predated plants, final total seed mass was therefore maximized at an intermediate strategy: about **36% of flowers in the second flowering peak**.
+
+The flower-level model also shows why the optimum is internal. In unpredated plants, seed mass declined by **0.0027 g per day** (SE 0.0002), while predation reduced early-flower seed mass by **0.11 g** (SE 0.025) and weakened the seasonal decline through a positive predation × date interaction of **0.0013 g per day** (SE 0.00027). Plants exposed to more predation subsequently shifted more flowering into the second peak in the following year (95% credible interval for the lagged slope 0.00043–0.01526).
+
+This is registered as a realized interaction window rather than independently measured adult beetle availability. It independently links antagonist-window escape to final plant fitness and demonstrates a key boundary condition: **escape itself can have a cost, producing an interior temporal optimum rather than “later is always better.”**
+
 ### Strong direct antagonist anchor — IWE032
 
 The same Cardamine programme also provides independently measured female butterfly flight plus plant trajectories to dehiscence and a predeclared early/core/late analysis. Recovering the numeric 2012–2014 female capture/recapture timing object would connect the highest-provenance adult-exposure axis to both temporal escape directions.
