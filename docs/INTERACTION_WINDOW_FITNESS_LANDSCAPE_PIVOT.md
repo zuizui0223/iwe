@@ -186,7 +186,7 @@ For the signed-selection module, treatment contrasts are pooled only when the tr
 
 ## Pilot result
 
-The current pilot registry contains **24 components from 22 studies and 20 dependence clusters**.
+The current pilot registry contains **26 components from 24 studies and 22 dependence clusters**.
 
 Under the original high-provenance requirement, strong final-fitness anchors are currently:
 
@@ -221,16 +221,20 @@ The branch now contains multiple complementary kinds of timing evidence.
 
 7. **Kula 2012 developmental phase lag.** In the same Mountain Lake *Silene–Hadena* programme, individual flowering × oviposition synchrony predicted predation in opposite directions across years: higher synchrony increased predation in 2008 (chi-square = 46.47, p < 0.0001) but decreased predation in 2009 (chi-square = 16.74, p < 0.0001). Flower/egg-to-first-larva delays were 10/5 days in 2008 versus 17/15 days in 2009, and fruit maturation was faster in 2009 (16.7 vs 21.3 days), identifying developmental phase lag as a mechanism that can reverse cost geometry.
 
-8. **IWE031 host-stage sensitivity.** Timed monarch herbivory on *Asclepias fascicularis* separates when damage occurs from natural monarch availability. Early herbivory most strongly affects plant size, whereas late herbivory has the strongest effect on viable-seed production. This directly demonstrates that the reproductive impact window depends on plant stage as well as antagonist exposure.
+8. **Trollius–Chiastocheta flower-age gradient.** Different pollinating seed-predator species oviposit from flower day 1 through day 7 or later. Because each visit fertilizes a fraction of the ovules still unfertilized, marginal adult pollination benefit declines with flower age while delayed larval seed cost persists. The classic cost-benefit analysis places equality around 4–5 eggs/flower, while natural annual means span 2.3–7.25.
+
+9. **Glochidion–Epicephala annual phase structure.** Adult moths pollinate and oviposit in April–May, host fruits and moth eggs remain dormant May–December, and larvae hatch and consume seeds in January–February. Adult service and offspring cost are therefore separated by roughly eight months. This is registered as stage-structure evidence rather than a timing-effect programme.
+
+10. **IWE031 host-stage sensitivity.** Timed monarch herbivory on *Asclepias fascicularis* separates when damage occurs from natural monarch availability. Early herbivory most strongly affects plant size, whereas late herbivory has the strongest effect on viable-seed production. This directly demonstrates that the reproductive impact window depends on plant stage as well as antagonist exposure.
 
 
-9. **IWE032 host filtering of antagonist exposure.** In *Cardamine pratensis × Anthocharis cardamines*, the source-reported Gaussian peak for all eggs occurs at flowering-date z = -1.10, whereas the peak for "active" eggs capable of producing damaging late-instar larvae occurs at z = -0.61. Host-stage filtering therefore shifts the effective cost window **+0.49 SD later** and narrows its Gaussian sigma from **0.92 to 0.66** (28.3% narrower). This mechanism result is distinct from the still-blocked strict female-flight route.
+11. **IWE032 host filtering of antagonist exposure.** In *Cardamine pratensis × Anthocharis cardamines*, the source-reported Gaussian peak for all eggs occurs at flowering-date z = -1.10, whereas the peak for "active" eggs capable of producing damaging late-instar larvae occurs at z = -0.61. Host-stage filtering therefore shifts the effective cost window **+0.49 SD later** and narrows its Gaussian sigma from **0.92 to 0.66** (28.3% narrower). This mechanism result is distinct from the still-blocked strict female-flight route.
 
 
-10. **Independent host-filter replication.** Arnaldo et al. 2014 followed 127 *Gentiana pneumonanthe* shoots and 837 *Phengaris alcon* eggs in Portugal. Egg load was highest in the first third of the flight period, while offspring survival varied with flower-bud size, flower developmental stage, and oviposition period. This independently supports host-state filtering of antagonist exposure, but remains mechanism-only because final plant reproduction was not measured.
+12. **Independent host-filter replication.** Arnaldo et al. 2014 followed 127 *Gentiana pneumonanthe* shoots and 837 *Phengaris alcon* eggs in Portugal. Egg load was highest in the first third of the flight period, while offspring survival varied with flower-bud size, flower developmental stage, and oviposition period. This independently supports host-state filtering of antagonist exposure, but remains mechanism-only because final plant reproduction was not measured.
 
 
-11. **Taxonomically distinct host filtering.** In the *Yucca glauca–Tegeticula yuccasella* nursery-pollination system, resource allocation makes late-opening flowers more likely to abort when basal fruits are already present; all moth eggs in an aborted flower die. This supplies a distinct plant-allocation route by which a realized interaction can be deleted before becoming an effective future seed-predation cost. It is mechanism-only, not a final-fitness effect.
+13. **Taxonomically distinct host filtering.** In the *Yucca glauca–Tegeticula yuccasella* nursery-pollination system, resource allocation makes late-opening flowers more likely to abort when basal fruits are already present; all moth eggs in an aborted flower die. This supplies a distinct plant-allocation route by which a realized interaction can be deleted before becoming an effective future seed-predation cost. It is mechanism-only, not a final-fitness effect.
 
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
