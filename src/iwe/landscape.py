@@ -34,6 +34,7 @@ TIMING_GEOMETRIES = {
     "developmental_phase_lag_reversal",
     "flower_age_benefit_cost_gradient",
     "annual_stage_phase_lag",
+    "selective_oviposition_abortion_filter",
 }
 
 FITNESS_CHANNELS = {
