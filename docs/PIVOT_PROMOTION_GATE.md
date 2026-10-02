@@ -94,6 +94,15 @@ Where benefit and cost channels can be separated, preserve:
 
 A mixed-system result is informative if the net optimum is displaced from the partner-activity maximum or if benefit and cost surfaces peak at different relative times.
 
+### P6b — redundancy claims require temporal accessibility
+
+A redundancy-buffer claim cannot use partner richness alone.
+
+When alternative partners are proposed to buffer mismatch, the relevant quantity is their effective overlap with the receptive plant window. Senita cactus is the motivating boundary: diurnal bee co-pollinators are unavailable when flowers close before sunrise, and a gap between senita-moth cohorts coincides with zero open-pollinated fruit set despite the broader pollinator community.
+
+Redundancy evidence is therefore classified separately from the core raw-window/effective-window convergence test and is not counted as proof of that convergence.
+
+
 ### P7 — null and boundary systems are mandatory
 
 The evidence map must retain systems in which:
@@ -136,7 +145,8 @@ the broader outcome-complete rescreen shows that the apparent calendar-sign hete
 2. resolve IWE015 raw variance for the mixed net-fitness anchor;
 3. recover IWE032 female-flight dates and fit its early/core/late antagonist surface, then compare raw female-flight alignment with the already reconstructed active-egg effective window;
 4. Cardamine closes one prospectively defined effective-window filter to final plant reproduction through the source fitness equation. IWE031 independently demonstrates experimentally that host developmental stage changes the final viable-seed consequence of herbivory, while Geum-Byturus independently links a realized antagonist window to final plant fitness and shows an interior escape optimum at 36% second-peak flowering. Host-filter mechanism breadth also has two additional replications (Portuguese Gentiana-Phengaris and Yucca-Tegeticula). The remaining stronger gate is an **independent second programme** that explicitly separates raw exposure from a pre-fitness effective-window filter and then links that filtered window to final plant reproduction;
-5. ingest and screen the Caruso non-duplicated phenology treatment-pair database when lawful file access is available;
-6. add design-matched null/boundary systems, including published cases where antagonist damage did not alter flowering-time selection.
+5. treat the Hurlburt *Yucca glauca–Tegeticula* route as a one-key completion problem: adult timing and mature seed output are source-backed; inspect the public thesis only for a marked clone/inflorescence/flowering-date -> mature-fruit join;
+6. ingest and screen the Caruso non-duplicated phenology treatment-pair database when lawful file access is available;
+7. retain design-matched null/boundary systems and test overlap-conditioned redundancy rather than static partner richness.
 
 This gate deliberately makes the hardest claim — window-relative convergence — contingent on data that have not yet been inspected under that comparison.
