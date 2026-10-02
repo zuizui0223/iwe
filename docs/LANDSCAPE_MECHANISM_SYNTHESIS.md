@@ -72,6 +72,26 @@ This motivates:
 
 The mechanism is stronger than generic partner redundancy: a community can contain alternative pollinators yet have zero effective redundancy at the focal plant window.
 
+### Developmental phase lag separates adult benefit from offspring cost — Kula 2012
+
+The 2008–2009 *Silene stellata–Hadena ectypa* experiment provides a direct within-system test of why adult synchrony cannot stand in for the later seed-predation window.
+
+Individual plant flowering was combined with the seasonal oviposition curve to calculate synchrony. Synchrony did not alter initiated fruit set in either year, but its relationship with flower/fruit predation reversed:
+
+- 2008: higher synchrony -> higher predation, chi-square = **46.47**, p < 0.0001;
+- 2009: higher synchrony -> lower predation, chi-square = **16.74**, p < 0.0001.
+
+The phase relationship changed sharply. First flowering and first egg preceded first larval observation by only **10 and 5 days** in 2008, compared with **17 and 15 days** in 2009. Fruit maturation was also faster in 2009 (**16.7 ± 0.40 d** versus **21.3 ± 0.28 d**).
+
+Thus plants highly synchronized with adult oviposition in 2009 could mature and harden fruits before large larvae became abundant. The adult/oviposition window and the damaging larval window are therefore temporally distinct biological objects.
+
+Conceptually:
+
+`effective cost window = exposure window ⊗ consumer developmental lag × host vulnerability`.
+
+This is not a fitted convolution in the current analysis. It is the mechanistic bookkeeping required by the source data.
+
+
 ### Strong direct mixed anchor — IWE015
 
 Early and late experiments are independently ordered by *Hadena ectypa* activity and successful fruits are post-predation final reproduction. Once the raw variance audit is closed, this is the strongest route for connecting partner exposure to a mixed net-fitness outcome.
@@ -158,7 +178,9 @@ If attack is concentrated on one side of the flowering distribution, antagonist 
 
 ### G4 — mixed benefit and cost channels can be phase-decoupled
 
-In nursery-pollination systems, pollination benefit and offspring-mediated reproductive cost need not peak together or change at the same rate. The net optimum depends on their relative timing and amplitude, not merely on total synchrony.
+In nursery-pollination systems, pollination benefit and offspring-mediated reproductive cost need not peak together or change at the same rate. When the adult provides pollination and delayed offspring consume reproductive tissues, developmental lag can move the damaging window relative to the adult service window and can even reverse the sign of an adult-synchrony effect on cost.
+
+The net optimum therefore depends on relative timing, developmental lag, host vulnerability and amplitude of the two channels, not merely on total synchrony.
 
 ### G5 — endpoint choice changes the apparent window
 
