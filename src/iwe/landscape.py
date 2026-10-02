@@ -26,6 +26,7 @@ TIMING_GEOMETRIES = {
     "gaussian_cost_window",
     "host_stage_survival_filter",
     "sequential_flower_abortion_filter",
+    "gaussian_effective_fitness_surface",
 }
 
 FITNESS_CHANNELS = {
@@ -47,6 +48,7 @@ QUANT_STATUSES = {
     "blocked_timing_linkage",
     "statistical_evidence",
     "source_summary_evidence",
+    "source_model_reconstructed",
 }
 
 LANDSCAPE_STATUSES = {
