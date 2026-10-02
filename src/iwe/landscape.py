@@ -33,6 +33,7 @@ TIMING_GEOMETRIES = {
     "accessible_redundancy_window",
     "developmental_phase_lag_reversal",
     "flower_age_benefit_cost_gradient",
+    "annual_stage_phase_lag",
 }
 
 FITNESS_CHANNELS = {
@@ -68,6 +69,7 @@ LANDSCAPE_STATUSES = {
     "mechanism_only",
     "context_only",
     "boundary_evidence",
+    "stage_structure_evidence",
 }
 
 REQUIRED_COLUMNS = [
