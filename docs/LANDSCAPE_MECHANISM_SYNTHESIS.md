@@ -38,9 +38,9 @@ This shows that a time-structured antagonist cost can rotate or reverse the net 
 
 ### Host-stage vulnerability — IWE031
 
-Timed monarch herbivory shows that the same antagonist interaction has endpoint-specific effects depending on plant age: late herbivory is most damaging to viable-seed production even though early herbivory most strongly affects plant size.
+Timed monarch herbivory experimentally shifts the same antagonist interaction among 60-, 74-, and 88-day-old milkweed plants. Late herbivory is most damaging to viable-seed production even though early herbivory most strongly affects plant size.
 
-This identifies host sensitivity independently of a natural partner activity curve.
+The study therefore independently links **host-stage sensitivity to final reproduction** under direct interaction-timing manipulation. Because realized foliage removal is itself measured and can vary along the treatment pathway, this is not interpreted as equal damage applied at three dates. It identifies the causal effect of interaction timing without reconstructing a natural partner activity curve.
 
 ### Mixed benefit-cost decoupling — IWE014
 
