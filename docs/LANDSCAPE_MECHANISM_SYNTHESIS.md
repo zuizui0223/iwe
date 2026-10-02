@@ -65,6 +65,10 @@ Thus host-stage filtering moves the effective antagonist peak **+0.49 flowering-
 
 This is the clearest current quantitative evidence for the decomposition `impact(t) = f(exposure(t), host_sensitivity(t))`.
 
+The source also closes the chain to final plant reproduction. Using its own Equation 1, observed intact-RU fractions, fifth-instar survival `L = 0.22`, and phenotype-specific active-egg Gaussians, the predicted fitness trough occurs at the effective cost-window center. Relative to the no-active-larva baseline, the reconstructed trough is **29.98% lower for high-fecundity ramets** and **13.72% lower for medium-fecundity ramets**.
+
+This is the first IWE programme where a host filter defined before final fitness is quantitatively propagated to final reproduction.
+
 ### Independent host-filter replication — Arnaldo 2014
 
 A geographically independent Portuguese *Gentiana pneumonanthe–Phengaris alcon* programme follows the same causal layer without using final plant fitness to define the filter. Across 127 shoots and 837 eggs, egg deposition varies over three flight-period intervals, while offspring survival depends on flower-bud size, flower developmental stage, and oviposition period.
