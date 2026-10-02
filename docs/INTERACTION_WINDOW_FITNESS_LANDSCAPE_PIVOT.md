@@ -168,7 +168,7 @@ For the signed-selection module, treatment contrasts are pooled only when the tr
 
 ## Pilot result
 
-The initial registry contains 14 components from 14 screened studies and 13 dependence clusters.
+The current pilot registry contains 15 components from 14 screened studies and 13 dependence clusters.
 
 Under the original high-provenance requirement, strong final-fitness anchors are currently:
 
@@ -186,7 +186,7 @@ This does not make the three-class meta-analysis inferentially ready. It shows t
 
 ### First quantitative results on the pivot
 
-The branch now contains two independent kinds of positive evidence.
+The branch now contains multiple complementary kinds of timing evidence.
 
 1. **IWE001 directional mismatch.** On the plant-earlier side of the Corydalis-Bombus mismatch axis, larger plant lead is associated with lower natural seed set at all three sites: NFP r = -0.578 (n = 11), TOEF r = -0.833 (n = 8), and JOZ r = -0.952 (n = 4). The partner-earlier side is too sparse for the registered Fisher-z variance. All sites remain one dependence cluster.
 
@@ -198,6 +198,9 @@ The branch now contains two independent kinds of positive evidence.
 4. **IWE014 mixed channel decoupling.** In *Silene vulgaris*, early and late plants have similar pollination success but early plants experience greater seed predation. This identifies a mixed-system cost curve that changes seasonally without a matching change in the benefit channel; it remains source-summary evidence because no independent adult-*Hadena* activity curve or variance-bearing early/late net-fitness contrast is available.
 
 5. **IWE031 host-stage sensitivity.** Timed monarch herbivory on *Asclepias fascicularis* separates when damage occurs from natural monarch availability. Early herbivory most strongly affects plant size, whereas late herbivory has the strongest effect on viable-seed production. This directly demonstrates that the reproductive impact window depends on plant stage as well as antagonist exposure.
+
+
+6. **IWE032 host filtering of antagonist exposure.** In *Cardamine pratensis × Anthocharis cardamines*, the source-reported Gaussian peak for all eggs occurs at flowering-date z = -1.10, whereas the peak for "active" eggs capable of producing damaging late-instar larvae occurs at z = -0.61. Host-stage filtering therefore shifts the effective cost window **+0.49 SD later** and narrows its Gaussian sigma from **0.92 to 0.66** (28.3% narrower). This mechanism result is distinct from the still-blocked strict female-flight route.
 
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
