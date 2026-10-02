@@ -104,6 +104,14 @@ The flower-level model also shows why the optimum is internal. In unpredated pla
 
 This is registered as a realized interaction window rather than independently measured adult beetle availability. It independently links antagonist-window escape to final plant fitness and demonstrates a key boundary condition: **escape itself can have a cost, producing an interior temporal optimum rather than “later is always better.”**
 
+### Boundary: temporal escape is not the only avoidance route — Atlan 2010
+
+A common-garden *Ulex europaeus* system provides a deliberately retained boundary case. Long-flowering plants placed more reproduction before the main seed-predation peak, whereas short-flowering plants reproduced during the peak but partly reduced attack through density-dependent predator satiation.
+
+Despite those contrasting routes, whole-season pod infestation was approximately **29% in long-flowering plants and 30% in short-flowering plants**, and maternal flowering type did not significantly alter annual pod or seed production.
+
+This prevents a timing-only version of G2. Moving away from an antagonist window can be advantageous, but its final-fitness value depends on whether plants possess alternative avoidance mechanisms such as predator satiation. Window position therefore needs ecological moderators, not just a universal distance-from-enemy rule.
+
 ### Strong direct antagonist anchor — IWE032
 
 The same Cardamine programme also provides independently measured female butterfly flight plus plant trajectories to dehiscence and a predeclared early/core/late analysis. Recovering the numeric 2012–2014 female capture/recapture timing object would connect the highest-provenance adult-exposure axis to both temporal escape directions.
