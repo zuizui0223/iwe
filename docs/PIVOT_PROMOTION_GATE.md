@@ -80,7 +80,7 @@ Kula 2012 adds the mixed-system analogue. In *Silene stellata–Hadena ectypa*, 
 
 An independent Portuguese Gentiana-Phengaris programme additionally shows that offspring survival varies with host bud size, bud developmental stage, and oviposition period, while Yucca-Tegeticula provides a taxonomically distinct filter in which resource-driven flower abortion kills all eggs in exposed flowers. These replicate host-state filtering at the mechanism level but do not yet test final plant-fitness convergence.
 
-No claim of "collapse", "convergence", or "effective-window superiority" is allowed without paired comparisons across independent programmes.
+The architecture of stage separation is now replicated across independent mixed systems, but predictive superiority is not. No claim of "collapse", "convergence", or "effective-window superiority" is allowed without paired comparisons in which phase or stage alignment varies and final plant fitness is observed.
 
 ### P5 — effective windows cannot be defined circularly
 
@@ -152,7 +152,7 @@ the broader outcome-complete rescreen shows that the apparent calendar-sign hete
 1. complete IWE002 directional reconstruction without counting it as independent from IWE001;
 2. resolve IWE015 raw variance for the mixed net-fitness anchor;
 3. recover IWE032 female-flight dates and fit its early/core/late antagonist surface, then compare raw female-flight alignment with the already reconstructed active-egg effective window;
-4. Cardamine closes one prospectively defined exposure -> active-consumer filter -> final-reproduction chain through the source fitness equation. Kula 2012 independently shows within a mixed interaction that changing adult/oviposition-to-larva phase lag can reverse the sign of synchrony on predation, while IWE031 shows experimentally that host developmental stage changes the final viable-seed consequence of herbivory. Geum-Byturus independently links a realized antagonist window to final plant fitness and shows an interior escape optimum at 36% second-peak flowering. The remaining stronger gate is an **independent second programme** that explicitly measures raw adult/encounter timing, delayed effective consumer timing, host-state filtering and final plant reproduction at compatible units;
+4. The **stage chain itself is now independently replicated**. Cardamine closes exposure -> active-consumer filtering -> final reproduction; Glochidion-Epicephala independently documents adult pollination/oviposition -> ~8 months of egg/fruit dormancy -> larval seed consumption -> mature seed fate; and Trollius-Chiastocheta shows that changing flower age alters the marginal adult-benefit/larval-cost ratio. Kula 2012 additionally shows that year-to-year change in adult/oviposition-to-larva phase relation can reverse the sign of synchrony on predation. The remaining stronger gate is therefore narrower: an **independent programme in which the phase lag itself varies naturally or experimentally and that variation is linked to final post-cost plant reproduction**;
 5. treat the Hurlburt *Yucca glauca–Tegeticula* route as a one-key completion problem: adult timing and mature seed output are source-backed; inspect the public thesis only for a marked clone/inflorescence/flowering-date -> mature-fruit join;
 6. ingest and screen the Caruso non-duplicated phenology treatment-pair database when lawful file access is available;
 7. retain design-matched null/boundary systems and test overlap-conditioned redundancy rather than static partner richness.
