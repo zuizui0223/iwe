@@ -27,6 +27,24 @@ This makes three distinctions explicit:
 2. interaction role — mutualist, antagonist, or mixed;
 3. reference provenance — what biological observation defines the interaction window.
 
+## Two linked estimands
+
+The pivot now has two complementary quantitative objects.
+
+### A. Window-relative fitness geometry
+
+When a partner or realized-interaction window is identifiable, estimate the shape of W(tau). This is the mechanistically preferred coordinate because calendar-date signs can reverse among systems.
+
+### B. Signed interaction-induced selection shift
+
+When studies estimate flowering-time selection under contrasted interaction environments, retain the signed change in the directional selection gradient:
+
+delta_beta_agent = beta_agent_context - beta_reference_context.
+
+For comparability, the pilot orients this to a canonical flowering-time coordinate in which positive means a shift toward earlier flowering and negative means a shift toward later flowering.
+
+The signed-selection module does not pretend that calendar early/late is itself a universal mechanism. Its role is diagnostic: it tests whether interactions rotate the seasonal fitness surface and whether apparent sign heterogeneity can be explained by each system's position relative to its interaction window.
+
 ## Window-reference classes
 
 Landscape evidence is never pooled across these classes without an explicit sensitivity model.
@@ -93,6 +111,12 @@ In mixed pollinating-seed-predator systems, benefit and cost can share a partner
 
 This is a stronger formulation of the original H2 and becomes a central target rather than an optional quadratic afterthought.
 
+### G5 — calendar sign is not invariant
+
+Interaction class is not expected to predict a universal early-versus-late calendar direction. The same antagonist class can favor later flowering in one system and earlier flowering in another. The general prediction is instead window-relative: antagonistic interactions can favor temporal escape from the effective cost window, while mutualistic interactions can favor movement toward an effective service window.
+
+Signed selection-gradient contrasts are therefore retained rather than converted to absolute magnitudes.
+
 ## Evidence hierarchy and claim boundary
 
 The pivot separates geometry evidence from causal window identification.
@@ -128,6 +152,8 @@ Preferred order:
 
 The existing CR2 minimum-information rule remains in force for robust class-level meta-analytic inference.
 
+For the signed-selection module, treatment contrasts are pooled only when the trait coordinate, agent contrast, fitness interpretation and uncertainty are compatible. Published absolute differences are never back-converted into signed effects. Contrasts lacking covariance or a source-reported interaction test remain evidence-map results rather than pooled estimates.
+
 ## Pilot result
 
 The initial registry contains 14 components from 14 screened studies and 13 dependence clusters.
@@ -145,6 +171,24 @@ Under the broadened landscape question, while preserving reference provenance ra
 - mixed: 2.
 
 This does not make the three-class meta-analysis inferentially ready. It shows that the main loss of antagonist evidence came from asking for independent adult availability, not from an absence of timing-fitness biology.
+
+### First quantitative results on the pivot
+
+The branch now contains two independent kinds of positive evidence.
+
+1. **IWE001 directional mismatch.** On the plant-earlier side of the Corydalis-Bombus mismatch axis, larger plant lead is associated with lower natural seed set at all three sites: NFP r = -0.578 (n = 11), TOEF r = -0.833 (n = 8), and JOZ r = -0.952 (n = 4). The partner-earlier side is too sparse for the registered Fisher-z variance. All sites remain one dependence cluster.
+
+2. **IWE012 selection reversal.** In Gentiana pneumonanthe populations without Phengaris alcon, flowering-time selection favors earlier flowering, whereas predator-present populations favor later flowering. The descriptive source-mean shifts are -0.41 in 2010 and -0.40 in 2011 on the canonical earlier-flowering axis; the source Predation x Phenology tests are p < 0.001 in both years. No variance for the derived mean difference is invented.
+
+A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
+
+Taken together, the Gentiana and Gymnadenia results reject a simple calendar rule such as "antagonists favor late flowering." They instead motivate the stronger window-relative question: why does an interaction rotate the flowering-time fitness surface in different calendar directions across systems?
+
+### Existing large discovery universe
+
+Caruso et al. 2019 already assembled 755 directional selection-gradient records with SEs, including 139 flowering-phenology records, and constructed 487 same-trait/same-fitness treatment pairs. Their published synthesis intentionally used the absolute treatment difference |beta_i - beta_j| to quantify strength of agent-mediated selection. That makes the deposited database a high-value discovery universe for IWE's signed delta-beta question, because the published magnitude analysis discards exactly the direction information needed here.
+
+The Dryad manifest and workbook identities are verified, but current unauthenticated file-byte routes are access-limited. Until the non-duplicated workbook is lawfully ingested, Caruso is treated as a search universe rather than as new IWE quantitative evidence.
 
 ## Success criterion
 
