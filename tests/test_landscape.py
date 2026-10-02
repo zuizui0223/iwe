@@ -89,3 +89,13 @@ def test_selection_shift_requires_final_outcome():
     df.loc[1, "outcome_finality"] = "not_final"
     errors = validate_landscape_registry(df)
     assert any("selection_shift_evidence requires a final outcome" in error for error in errors)
+
+
+def test_realized_window_evidence_requires_realized_window_and_final_outcome():
+    df = _rows()
+    df.loc[1, "landscape_status"] = "realized_window_evidence"
+    assert validate_landscape_registry(df) == []
+
+    df.loc[1, "window_reference_class"] = "seasonal_position_only"
+    errors = validate_landscape_registry(df)
+    assert any("realized_window_evidence requires" in error for error in errors)
