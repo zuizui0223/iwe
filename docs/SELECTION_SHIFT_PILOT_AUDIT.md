@@ -4,31 +4,31 @@ _Generated from data/registry/selection_shift_components.csv._
 
 ## Scope
 
-- Rows: **7**
-- Studies: **3**
-- Dependence clusters: **3**
+- Rows: **11**
+- Studies: **4**
+- Dependence clusters: **4**
 - Effect-size-ready rows: **5**
 - Effect-size-ready clusters: **2**
 
-All effects are oriented to one canonical coordinate: **positive = the interaction shifts selection toward earlier flowering**; negative = toward later flowering.
+All effects are oriented within their focal phenology coordinate: **positive = the interaction shifts selection toward an earlier date**; negative = toward a later date. Flowering start and flowering end remain distinct traits and are not pooled merely because their signs share this orientation.
 
 ## Agent classes
 
 | Agent class | Rows |
 |---|---:|
 | antagonist | 5 |
-| mutualist | 2 |
+| mutualist | 6 |
 
 ## Direction
 
 | Direction | Rows |
 |---|---:|
-| shift_to_earlier | 3 |
-| shift_to_later | 4 |
+| shift_to_earlier | 5 |
+| shift_to_later | 6 |
 
 ## Biological readout
 
-The pilot falsifies a simple calendar-direction rule for antagonists. In the Gentiana-Phengaris context, predator presence shifts flowering selection toward later flowering in both years. In the Gymnadenia factorial experiment, floral herbivores shift selection toward earlier flowering, while pollinators shift it toward later flowering. A separate Lythrum simulated-herbivory experiment independently shifts selection toward earlier flowering.
+The pilot falsifies a simple calendar-direction rule for antagonists. In the Gentiana-Phengaris context, predator presence shifts flowering selection toward later flowering in both years. In the Gymnadenia factorial experiment, floral herbivores shift selection toward earlier flowering, while pollinators shift it toward later flowering. A separate Lythrum simulated-herbivory experiment independently shifts selection toward earlier flowering. Arabidopsis lyrata adds an independent mutualist programme: pollinators alter both flowering-start and flowering-end selection, with a source-supported reversal of selection on flowering end in 2003.
 
 Thus interaction role alone does not predict the sign of selection on calendar flowering date. The window-relative hypothesis is stronger: antagonists may favor temporal escape on whichever side of their effective interaction window is available, while mutualists can favor movement toward their effective service window.
 
