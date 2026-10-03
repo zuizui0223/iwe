@@ -29,11 +29,15 @@ A conceptual benefit surface is:
 
 B_i = integral P_i(t) A(t) dt.
 
-For a mixed interaction, let O(t) denote oviposition/exposure, K(l) the distribution of delays from exposure to damaging consumer activity, and V_i(t) host vulnerability at the later time.
+For a mixed interaction, let O(t) denote oviposition/exposure, K(l) the distribution of delays from exposure to damaging consumer activity, and H_i(t | history) the host retention/vulnerability state at the later time.
+
+The explicit dependence on interaction history matters because the host filter can itself be altered by the interaction. Rheum-Bradysia provides the motivating case: oviposition changes IAA dynamics and lowers fruit abortion before larvae hatch.
+
+Let Q_i(s) describe consumer targeting of reproductive units at exposure time. This is needed because consumers can preferentially select units likely to survive a later host filter, as in Lathyrus-Bruchus.
 
 A conceptual offspring-mediated cost is:
 
-C_i = integral P_i(s) O(s) [ integral K(l) V_i(s+l) dl ] ds.
+C_i = integral P_i(s) O(s) Q_i(s) [ integral K(l) H_i(s+l | history) dl ] ds.
 
 The net reproductive consequence is some source-appropriate function:
 
@@ -97,6 +101,25 @@ Senita cactus shows that alternative pollinators can be present in the community
 
 Thus mismatch buffering should be modeled against R_eff(t), not species richness.
 
+### P6 — host filtering is endogenous to the interaction
+
+A developmental filter is not necessarily a fixed plant property.
+
+Two opposite feedbacks are already present in the corpus:
+
+- *Lathyrus–Bruchus*: the seed predator uses phenology/position and other cues to target fruits with lower future abortion probability, partly bypassing the host filter;
+- *Rheum–Bradysia*: oviposition strongly reduces fruit abortion and changes IAA dynamics before larvae hatch, consistent with partner-induced modification of the host filter.
+
+Therefore host retention/vulnerability should be represented as conditional on interaction history, not only on calendar time or plant stage.
+
+### P7 — mechanistic alignment need not predict final plant fitness
+
+Posledovich 2015 directly manipulates host stage at oviposition and developmental temperature. Those variables strongly affect herbivore performance, yet the probability that the first host outgrows the larva and forms mature seedpods depends only on host species identity.
+
+Likewise, the 21-year *Lathyrus* series shows that spring climate changes which flowering phenologies experience seed predation, but year-to-year changes in the phenology–seed-predation covariance do not explain flowering-time selection on intact-seed fitness.
+
+Thus the confirmatory target is not whether stage alignment affects some intermediate process. It is whether stage alignment improves explanation of **final plant fitness**.
+
 ## Relation to the original IWE classes
 
 ### Mutualists
@@ -127,7 +150,7 @@ The strongest dataset has all of the following at a shared biological unit:
 5. host tissue maturation/vulnerability;
 6. final post-cost reproduction.
 
-A direct test would estimate whether between-year or between-population changes in the phase difference between adult service and effective cost windows predict changes in final fitness geometry.
+A direct test would estimate whether between-year, between-population or experimental changes in the phase difference between adult service and effective cost windows predict changes in final fitness geometry, and whether that prediction improves on calendar timing and adult-only timing. Nulls such as Posledovich 2015 and the long-term Lathyrus result must be retained in that comparison.
 
 ## Claim boundary
 
@@ -135,4 +158,4 @@ This model is a structured synthesis of measured quantities already present in t
 
 It is not yet an inferential claim that window realignment universally reduces heterogeneity.
 
-Promotion still requires independent programmes with paired raw-adult and effective-cost windows linked to final reproduction.
+Promotion still requires independent programmes in which stage/phase alignment varies and is linked to final reproduction. Independent examples showing stage structure alone, host-filter manipulation, or herbivore-performance effects are supporting mechanism evidence, not substitutes for that test.
