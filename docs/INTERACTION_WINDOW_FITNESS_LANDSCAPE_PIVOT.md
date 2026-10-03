@@ -206,7 +206,7 @@ For the signed-selection module, treatment contrasts are pooled only when the tr
 
 ## Pilot result
 
-The current pilot registry contains **29 components from 27 studies and 25 dependence clusters**.
+The current pilot registry contains **30 components from 28 studies and 26 dependence clusters**.
 
 Under the original high-provenance requirement, strong final-fitness anchors are currently:
 
@@ -218,7 +218,7 @@ Under the broadened landscape question, while preserving reference provenance ra
 
 - mutualist: **4**;
 - antagonist: **5**;
-- mixed: **2**.
+- mixed: **3**.
 
 This does not make the three-class meta-analysis inferentially ready. Boundary and mechanism-only rows are deliberately excluded from those programme counts. The result instead shows that the original design asked every study to identify the same temporal object even though the literature measures complementary parts of the mechanism: partner exposure, realized attack, host-stage sensitivity, accessible redundancy, and benefit-cost channel timing.
 
@@ -262,6 +262,8 @@ The branch now contains multiple complementary kinds of timing evidence.
 
 16. **Rheum–Bradysia partner-modified host filter.** Oviposition strongly reduces fruit abortion (F = 287.24, p < 0.001) and elevates IAA before larvae hatch (oviposition F = 355.97; oviposition × day F = 140.82; both p < 0.001), while flowering sequence does not explain oviposition or abortion. The interacting partner can therefore modify the host filter itself.
 
+17. **Dianthus–Hadena realized mixed final fitness.** Individual flowering onset is linked to fruit set, secondary larval predation and final relative reproductive success, defined as the percentage of flowers producing unattacked fruits with mature dispersal-ready seeds. Final success declines across the season in both 2001 (**−0.037 ± 0.009 SE**) and 2003 (**−0.076 ± 0.030 SE**), while the component benefit/cost geometry differs between years. This is realized-window evidence, not independent adult-Hadena timing.
+
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
 A third programme, Thomsen & Sargent 2017 Lythrum salicaria, experimentally imposed meristem damage. The flowering-start gradient was -0.28 under damage and -0.03 in controls, giving an oriented damage-mediated shift of +0.25 toward earlier flowering with source-reported SE = 0.10. The same experiment found essentially no pollination-by-damage modification of flowering-time selection (three-way contrast +0.01 ± 0.12).
@@ -280,7 +282,7 @@ Keep this pivot only if it achieves at least one of the following without relaxi
 
 - recovers directional or two-sided fitness geometry from multiple independent programmes;
 - gives antagonist studies a legitimate temporal-escape estimand without pretending egg/attack timing is independent adult availability;
-- yields at least two independent mixed programmes with separable benefit/cost or net-fitness timing;
+- yields at least two independent mixed programmes with separable benefit/cost or net-fitness timing — **met in the broadened landscape evidence** (IWE014, Dianthus-Hadena, and the independent IWE015 programme), while only IWE015 currently has the high-provenance independent-adult window;
 - demonstrates a reproducible evidence-architecture result showing that identifiable landscape geometry differs by interaction role and reference provenance.
 
 If none of these are achieved, this branch remains an exploratory diagnosis and main is not rewritten retrospectively.
