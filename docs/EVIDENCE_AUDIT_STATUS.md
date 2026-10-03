@@ -4,13 +4,13 @@ _Generated from the study, effect, adjudication, replication-candidate, and comp
 
 ## 1. Publication screening
 
-**32 registered publications** are currently tracked: 13 include, 7 unresolved, and 12 context-only.
+**34 registered publications** are currently tracked: 13 include, 7 unresolved, and 14 context-only.
 
 | Candidate class | Registered publications |
 |---|---:|
 | mutualist | 16 |
 | antagonist | 8 |
-| mixed pollinating seed predator | 8 |
+| mixed pollinating seed predator | 10 |
 
 ## 2. Strict-H1 quantitative corpus
 
@@ -31,16 +31,16 @@ The **2-cluster threshold is a discovery milestone only**; the current reference
 
 ## 3. Replication-candidate audit
 
-The replication ledger contains **50 candidate programmes/leads**. This is a discovery/completion ledger, not a count of unique screened publications.
+The replication ledger contains **52 candidate programmes/leads**. This is a discovery/completion ledger, not a count of unique screened publications.
 
-- **36 (72.0%)** are rejected under the frozen contracts.
-- **13 (26.0%)** remain biologically relevant but blocked by a specific missing timing/outcome/variance/source object.
-- **1 (2.0%)** are ready.
+- **38 (73.1%)** are rejected under the frozen contracts.
+- **13 (25.0%)** remain biologically relevant but blocked by a specific missing timing/outcome/variance/source object.
+- **1 (1.9%)** are ready.
 
 | Candidate status | Count |
 |---|---:|
-| rejected_timing | 27 |
-| rejected_other | 8 |
+| rejected_timing | 28 |
+| rejected_other | 9 |
 | blocked_timing_linkage | 6 |
 | blocked_final_surface | 4 |
 | blocked_effect_form | 1 |
@@ -49,7 +49,7 @@ The replication ledger contains **50 candidate programmes/leads**. This is a dis
 | ready | 1 |
 | rejected_dependence | 1 |
 
-The dominant rejection is the **timing contract**: 27 of 50 candidate leads (54.0%) fail because partner activity is absent, imported from another season/study, or inferred from realized attack/egg receipt rather than measured independently.
+The dominant rejection is the **timing contract**: 28 of 52 candidate leads (53.8%) fail because partner activity is absent, imported from another season/study, or inferred from realized attack/egg receipt rather than measured independently.
 
 ## 4. Completion-route audit
 
