@@ -37,6 +37,7 @@ TIMING_GEOMETRIES = {
     "selective_oviposition_abortion_filter",
     "phenology_temperature_developmental_race",
     "resource_tracking_inertia",
+    "oviposition_interval_fate_contrast",
     "partner_manipulated_host_filter",
 }
 
