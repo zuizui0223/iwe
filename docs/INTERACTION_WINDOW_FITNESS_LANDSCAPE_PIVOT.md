@@ -48,7 +48,17 @@ The pivot now has two complementary quantitative objects.
 
 When a partner or realized-interaction window is identifiable, estimate the shape of W(tau). This is the mechanistically preferred coordinate because calendar-date signs can reverse among systems.
 
-### B. Signed interaction-induced selection shift
+### B. Temporal signal propagation
+
+When a study observes more than one stage of the interaction chain, retain whether the timing signal is preserved, shifted/filtered, sign-reversed, erased, buffered, or fails to track the downstream stage.
+
+The causal chain is represented as:
+
+`T0 plant/partner timing -> T1 encounter/service/oviposition -> T2 effective consumer/service stage -> T3 final plant fitness`.
+
+This is not a common effect-size family. It is an evidence architecture that records where timing information changes before the final endpoint. The companion machine-readable registry is `data/registry/temporal_signal_components.csv`.
+
+### C. Signed interaction-induced selection shift
 
 When studies estimate flowering-time selection under contrasted interaction environments, retain the signed change in the directional selection gradient:
 
@@ -57,6 +67,8 @@ delta_beta_agent = beta_agent_context - beta_reference_context.
 For comparability, the pilot orients this to a canonical flowering-time coordinate in which positive means a shift toward earlier flowering and negative means a shift toward later flowering.
 
 The signed-selection module does not pretend that calendar early/late is itself a universal mechanism. Its role is diagnostic: it tests whether interactions rotate the seasonal fitness surface and whether apparent sign heterogeneity can be explained by each system's position relative to its interaction window.
+
+The propagation module asks a different question: whether that temporal signal survives to later biological stages. This distinction is required because the current corpus contains direct examples of preservation, filtering, reversal, erasure, buffering, and tracking inertia.
 
 ## Window-reference classes
 
@@ -208,7 +220,7 @@ For the signed-selection module, treatment contrasts are pooled only when the tr
 
 ## Pilot result
 
-The current pilot registry contains **32 components from 29 studies and 27 dependence clusters**.
+The current pilot registry contains **34 components from 31 studies and 29 dependence clusters**.
 
 Under the original high-provenance requirement, strong final-fitness anchors are currently:
 
@@ -219,10 +231,10 @@ Under the original high-provenance requirement, strong final-fitness anchors are
 Under the broadened landscape question, while preserving reference provenance rather than pooling it away, the pilot has recoverable programme clusters in:
 
 - mutualist: **4**;
-- antagonist: **6**;
+- antagonist: **7**;
 - mixed: **3**.
 
-This does not make the three-class meta-analysis inferentially ready. Boundary and mechanism-only rows are deliberately excluded from those programme counts. The result instead shows that the original design asked every study to identify the same temporal object even though the literature measures complementary parts of the mechanism: partner exposure, realized attack, host-stage sensitivity, accessible redundancy, and benefit-cost channel timing.
+This does not make the three-class meta-analysis inferentially ready. Boundary and mechanism-only rows are deliberately excluded from those programme counts. The result instead shows that the original design asked every study to identify the same temporal object even though the literature measures different causal stages. The temporal signal-propagation audit now makes this explicit: timing effects can survive, shift, reverse, disappear, be buffered, or fail to track a moving resource before plant fitness is measured.
 
 ### First quantitative results on the pivot
 
