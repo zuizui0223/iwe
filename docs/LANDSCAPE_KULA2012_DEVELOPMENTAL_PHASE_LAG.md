@@ -120,6 +120,41 @@ They are nevertheless important for interpreting the opposite-sign 2012/2013 dia
 
 No cross-year causal identity is assumed; this is a mechanistic precedent, not a post hoc explanation of the later data.
 
+## Attempted closure to final successful fruit — not recoverable from the public summaries
+
+The Chapter 3 methods were re-audited against the dissertation PDF itself.
+
+Every newly opened focal flower was individually marked, and at the end of the season all flowers and fruits were collected by plant and marking period and assessed in the laboratory. The source therefore **did record a successful-fruit state** at the underlying flower level.
+
+However, the published Chapter 3 summaries expose only two plant/marking-period proportions:
+
+1. **initiated fruit set** = fruits initiated / total flowers, where initiated fruits include both fruits with seeds and fruits later eaten by *H. ectypa*, but exclude unpollinated flowers and flowers eaten before fruit initiation;
+2. **predation** = flowers eaten + fruits eaten / total flowers, excluding unpollinated flowers and successful fruits.
+
+Those two aggregates do not identify the successful-fruit proportion.
+
+In particular,
+
+`initiated fruit set - predation`
+
+is **not valid**, because predation contains both:
+
+- eaten fruits, which are included in initiated fruit set; and
+- eaten flowers, which are not included in initiated fruit set.
+
+The dissertation tables and Appendix A provide synchrony, initiated fruit set, predation, flowering dates and maturation timing, but do not publish the separate eaten-flower versus eaten-fruit counts needed to recover successful fruits.
+
+Therefore no final post-cost fruit metric is reconstructed from Chapter 3.
+
+The exact unlock would be the underlying flower-level fate table or a source-backed summary that separates:
+
+- unpollinated flowers;
+- flowers eaten before fruit initiation;
+- fruits eaten after initiation;
+- successful mature fruits.
+
+Until such an object is recovered, the phase-safety-margin result remains a **cost-channel mechanism**, not a final-fitness effect.
+
 ## Claim boundary
 
 This component is not a strict mixed net-fitness effect:
