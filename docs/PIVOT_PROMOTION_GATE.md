@@ -80,7 +80,7 @@ Kula 2012 adds the mixed-system analogue. In *Silene stellata–Hadena ectypa*, 
 
 An independent Portuguese Gentiana-Phengaris programme additionally shows that offspring survival varies with host bud size, bud developmental stage, and oviposition period, while Yucca-Tegeticula provides a taxonomically distinct filter in which resource-driven flower abortion kills all eggs in exposed flowers. These replicate host-state filtering at the mechanism level but do not yet test final plant-fitness convergence.
 
-The architecture of stage separation is now replicated across independent mixed systems, but predictive superiority is not. No claim of "collapse", "convergence", or "effective-window superiority" is allowed without paired comparisons in which phase or stage alignment varies and final plant fitness is observed.
+The architecture of stage separation is now replicated across independent mixed systems, but predictive superiority is not. Posledovich 2015 is a direct boundary: experimental stage matching and temperature change herbivore performance, yet the mature-seedpod escape endpoint depends only on host species. The 21-year Lathyrus series likewise shows climate-driven movement in the phenology–seed-predation relationship without a corresponding effect of that covariance on flowering-time selection. No claim of "collapse", "convergence", or "effective-window superiority" is allowed without paired comparisons in which phase or stage alignment varies and final plant fitness is observed.
 
 ### P5 — effective windows cannot be defined circularly
 
@@ -89,6 +89,8 @@ An effective interaction window may be estimated from a pre-fitness mechanistic 
 It may **not** be defined by choosing the timing transformation that maximizes the final fitness association in the same data.
 
 Whenever possible, the filter defining the effective window must be estimated independently of the final reproductive response or validated in a separate component of the study.
+
+The filter itself may be interaction-dependent. Lathyrus-Bruchus shows antagonist targeting of fruits likely to survive abortion, whereas Rheum-Bradysia shows oviposition-associated physiological modification that reduces abortion before larvae hatch. Effective-window definitions must preserve these feedbacks rather than treating host vulnerability as a fixed calendar function.
 
 ### P6 — mixed systems remain a distinct geometry test
 
@@ -119,9 +121,11 @@ The evidence map must retain systems in which:
 - antagonist damage does not alter selection;
 - pollination changes non-phenological traits but not phenology;
 - timing effects exist without a defensible interaction window;
-- alternative mechanisms produce similar final fitness despite very different positions relative to an antagonist window.
+- alternative mechanisms produce similar final fitness despite very different positions relative to an antagonist window;
+- stage matching strongly affects consumer performance but not the final plant reproductive endpoint;
+- climate or other drivers move the phenology–interaction relationship without moving the resulting plant selection gradient.
 
-The *Ulex europaeus* common-garden system is a registered boundary example: long-flowering plants use temporal escape, whereas short-flowering plants can use predator satiation during the attack peak; whole-season infestation is approximately 29% versus 30%, and flowering type does not significantly change annual pod or seed production.
+Registered boundaries now include *Ulex europaeus* (temporal escape vs predator satiation), Posledovich 2015 (developmental matching affects larvae but not mature-seedpod escape), and the 21-year *Lathyrus* series (climate changes phenology–seed-predation covariance without changing selection through that pathway).
 
 These are not failed studies. They are necessary tests of whether the proposed window rule is selective rather than tautological. Boundary rows are not counted as programmes supporting the window-relative prediction.
 
@@ -152,7 +156,7 @@ the broader outcome-complete rescreen shows that the apparent calendar-sign hete
 1. complete IWE002 directional reconstruction without counting it as independent from IWE001;
 2. resolve IWE015 raw variance for the mixed net-fitness anchor;
 3. recover IWE032 female-flight dates and fit its early/core/late antagonist surface, then compare raw female-flight alignment with the already reconstructed active-egg effective window;
-4. The **stage chain itself is now independently replicated**. Cardamine closes exposure -> active-consumer filtering -> final reproduction; Glochidion-Epicephala independently documents adult pollination/oviposition -> ~8 months of egg/fruit dormancy -> larval seed consumption -> mature seed fate; and Trollius-Chiastocheta shows that changing flower age alters the marginal adult-benefit/larval-cost ratio. Kula 2012 additionally shows that year-to-year change in adult/oviposition-to-larva phase relation can reverse the sign of synchrony on predation. The remaining stronger gate is therefore narrower: an **independent programme in which the phase lag itself varies naturally or experimentally and that variation is linked to final post-cost plant reproduction**;
+4. The **stage chain itself is now independently replicated**, and direct nulls are registered. Cardamine closes exposure -> active-consumer filtering -> final reproduction; Glochidion-Epicephala documents an ~8-month adult-service to larval-cost separation; Trollius-Chiastocheta links flower age to the marginal benefit/cost balance; Kula 2012 shows phase-lag-associated sign reversal in predation. But Posledovich 2015 and the long-term Lathyrus analysis show that stage/timing effects need not propagate to final plant selection. The remaining stronger gate is therefore narrower: an **independent programme in which phase lag varies and predicts final post-cost plant reproduction better than calendar/adult-only timing**;
 5. treat the Hurlburt *Yucca glauca–Tegeticula* route as a one-key completion problem: adult timing and mature seed output are source-backed; inspect the public thesis only for a marked clone/inflorescence/flowering-date -> mature-fruit join;
 6. ingest and screen the Caruso non-duplicated phenology treatment-pair database when lawful file access is available;
 7. retain design-matched null/boundary systems and test overlap-conditioned redundancy rather than static partner richness.
