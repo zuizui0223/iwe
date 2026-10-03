@@ -132,6 +132,23 @@ def validate_phase_alignment_registry(df: pd.DataFrame) -> list[str]:
             + ", ".join(sorted(bad_paired_positive))
         )
 
+    host_final = df["status"].eq("host_sensitivity_final")
+    bad_host_final = df.loc[
+        host_final
+        & (
+            df["raw_or_adult_timing"].ne("yes")
+            | df["prefinal_host_filter"].ne("yes")
+            | df["phase_alignment_varies"].ne("yes")
+            | df["final_plant_endpoint"].ne("yes")
+        ),
+        "candidate_id",
+    ].astype(str)
+    if len(bad_host_final):
+        errors.append(
+            "host_sensitivity_final requires raw/adult timing, pre-final filter, phase variation, and final endpoint: "
+            + ", ".join(sorted(bad_host_final))
+        )
+
     near = df["status"].eq("near_confirmatory")
     bad_near = df.loc[
         near
@@ -238,6 +255,8 @@ def render_phase_alignment_gate(df: pd.DataFrame) -> str:
             "IWE032 Cardamine now already contains a positive stage-specific phase-to-final-fate contrast; its remaining blocker is only the numeric 2012–2014 female-flight coordinate needed for the paired adult-vs-stage comparison. Hurlburt 2004 Yucca remains the second near-confirmatory route, blocked by the mature-fruit join key.",
             "",
             "Parkinsonia-Penthobruchus now provides an independent positive paired realized diagnostic: among seven matched region-season rows, annual ground-pod egg density correlates only moderately with final seed predation (r=0.476), stage-matched egg density after the vulnerable pod pulse improves the association (r=0.596), and filtering that stage-matched exposure by observed parasitism and hatch raises it to r=0.938; leave-one-out RMSE falls from 12.3 to 11.0 to 4.6 percentage points. Because the exposure is realized oviposition rather than independent adult timing, and the filter is consumer/parasitoid survival rather than a host-specific phase coordinate, this remains non-confirmatory.",
+            "",
+            "Aucuba-Asphondylia adds a stronger experimental host-window-to-final-fate test: adult emergence is monitored directly, attack timing is manipulated within the adult season, and complete gall induction that eliminates seed production drops from 80.9% before the host tissue window closes to 8.8% after it closes. It still lacks a same-unit predictive comparison of adult/calendar timing against the tissue-stage coordinate.",
             "",
             "The registry also retains complete nulls. Posledovich 2015 shows that manipulated stage matching and temperature alter herbivore performance without altering the mature-seedpod escape endpoint beyond host-species effects. The long-term Lathyrus programme shows that climate-driven changes in phenology–seed-predation covariance do not explain flowering-time selection on intact-seed fitness.",
             "",
