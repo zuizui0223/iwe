@@ -9,6 +9,7 @@ _Generated from data/registry/phase_alignment_candidates.csv; do not edit counts
 - Confirmatory-ready positive or null comparisons: **0**
 - Near-confirmatory blocked routes: **2**
 - Registered direct null/boundary comparisons: **2**
+- Positive paired realized comparisons (non-confirmatory): **1**
 
 A programme is confirmatory_ready only when it has source-backed raw/adult timing, effective consumer timing, a pre-final host filter, variation in phase alignment, a final plant endpoint, and a paired simpler-vs-stage-specific timing comparison.
 
@@ -16,7 +17,7 @@ A programme is confirmatory_ready only when it has source-backed raw/adult timin
 
 - Final plant endpoint present: **8 / 10**
 - Phase/alignment varies: **9 / 10**
-- Paired simpler-vs-stage comparison available: **2 / 10**
+- Paired simpler-vs-stage comparison available: **3 / 10**
 - Paired comparison explicitly blocked by one recoverable object: **2 / 10**
 
 ## Candidate states
@@ -27,7 +28,7 @@ A programme is confirmatory_ready only when it has source-backed raw/adult timin
 | PHA_KULA2012 | mixed_pollinating_seed_predator | partial | yes | yes | yes | no | partial | mechanism_only | final post-cost plant reproduction absent in Chapter 3 |
 | PHA_POSLEDOVICH2015 | antagonist | yes | yes | yes | yes | yes | yes | boundary_null | none; retained as null |
 | PHA_LATHYRUS_LONGTERM | antagonist | partial | no | yes | yes | yes | yes | boundary_null | delayed consumer-stage timing not measured as a phase coordinate |
-| PHA_PARKINSONIA | antagonist | partial | partial | partial | yes | yes | no | final_tracking_evidence | no paired calendar/adult-only vs stage-specific comparison |
+| PHA_PARKINSONIA | antagonist | partial | partial | partial | yes | yes | yes | paired_realized_positive | realized oviposition rather than independent adult timing; pre-final filter is parasitism/hatch rather than a host-specific phase coordinate |
 | PHA_DIANTHUS | mixed_pollinating_seed_predator | no | partial | partial | yes | yes | no | final_landscape_no_alignment | independent adult timing and explicit delayed-stage coordinate absent |
 | PHA_GLOCHIDION | mixed_pollinating_seed_predator | yes | yes | yes | no | yes | no | stage_structure | phase lag does not vary as a tested predictor |
 | PHA_TROLLIUS | mixed_pollinating_seed_predator | partial | yes | partial | yes | partial | no | mechanism_only | no variance-bearing final plant-fitness comparison across stage-timing classes |
@@ -40,6 +41,8 @@ There is currently **no positive confirmatory-ready programme** showing that a s
 
 IWE032 Cardamine now already contains a positive stage-specific phase-to-final-fate contrast; its remaining blocker is only the numeric 2012–2014 female-flight coordinate needed for the paired adult-vs-stage comparison. Hurlburt 2004 Yucca remains the second near-confirmatory route, blocked by the mature-fruit join key.
 
+Parkinsonia-Penthobruchus now provides an independent positive paired realized diagnostic: among seven matched region-season rows, annual ground-pod egg density correlates only moderately with final seed predation (r=0.476), stage-matched egg density after the vulnerable pod pulse improves the association (r=0.596), and filtering that stage-matched exposure by observed parasitism and hatch raises it to r=0.938; leave-one-out RMSE falls from 12.3 to 11.0 to 4.6 percentage points. Because the exposure is realized oviposition rather than independent adult timing, and the filter is consumer/parasitoid survival rather than a host-specific phase coordinate, this remains non-confirmatory.
+
 The registry also retains complete nulls. Posledovich 2015 shows that manipulated stage matching and temperature alter herbivore performance without altering the mature-seedpod escape endpoint beyond host-species effects. The long-term Lathyrus programme shows that climate-driven changes in phenology–seed-predation covariance do not explain flowering-time selection on intact-seed fitness.
 
-Accordingly, stage-specific timing remains a mechanistically supported hypothesis with positive final-seed-loss examples, but **predictive superiority over simpler timing coordinates remains open**.
+Accordingly, stage-specific timing now has a positive paired realized comparison as well as final-seed-loss examples, but **predictive superiority over simpler adult/calendar timing under the full confirmatory contract remains open**.
