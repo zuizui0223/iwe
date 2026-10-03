@@ -95,3 +95,39 @@ def test_invalid_status_fails_before_summary():
     df.loc[0, "status"] = "wishful_thinking"
     with pytest.raises(ValueError):
         phase_alignment_summary(df)
+
+
+def test_paired_realized_positive_requires_phase_final_and_paired_comparison():
+    df = _rows().iloc[[0]].copy()
+    df.loc[:, "candidate_id"] = "PAIRED"
+    df.loc[:, "study_id"] = "STUDY_PAIRED"
+    df.loc[:, "dependence_id"] = "DEP_PAIRED"
+    df.loc[:, "raw_or_adult_timing"] = "partial"
+    df.loc[:, "effective_consumer_timing"] = "partial"
+    df.loc[:, "prefinal_host_filter"] = "partial"
+    df.loc[:, "status"] = "paired_realized_positive"
+    df.loc[:, "blocker"] = "realized exposure; not adult timing"
+
+    assert validate_phase_alignment_registry(df) == []
+
+    df.loc[:, "paired_simpler_vs_stage_comparison"] = "no"
+    errors = validate_phase_alignment_registry(df)
+    assert any("paired_realized_positive requires" in error for error in errors)
+
+
+def test_summary_counts_nonconfirmatory_positive_pair_separately():
+    df = _rows()
+    paired = df.iloc[[0]].copy()
+    paired.loc[:, "candidate_id"] = "PAIRED"
+    paired.loc[:, "study_id"] = "STUDY_PAIRED"
+    paired.loc[:, "dependence_id"] = "DEP_PAIRED"
+    paired.loc[:, "raw_or_adult_timing"] = "partial"
+    paired.loc[:, "effective_consumer_timing"] = "partial"
+    paired.loc[:, "prefinal_host_filter"] = "partial"
+    paired.loc[:, "status"] = "paired_realized_positive"
+    paired.loc[:, "blocker"] = "realized exposure; not adult timing"
+
+    combined = pd.concat([df, paired], ignore_index=True)
+    summary = phase_alignment_summary(combined)
+    assert summary["confirmatory_ready"] == 1
+    assert summary["paired_realized_positive"] == 1
