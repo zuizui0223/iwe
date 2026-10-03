@@ -29,7 +29,7 @@ A conceptual benefit surface is:
 
 B_i = integral P_i(t) A(t) dt.
 
-For a mixed interaction, let O(t) denote oviposition/exposure, K(l) the distribution of delays from exposure to damaging consumer activity, and H_i(t | history) the host retention/vulnerability state at the later time.
+For a mixed interaction, let O(t) denote oviposition/exposure, K(l) the distribution of delays from exposure to damaging consumer activity, S_i(s,l) the probability that an exposure survives non-host conversion filters to become a damaging consumer (for example egg hatch or parasitoid escape), and H_i(t | history) the host retention/vulnerability state at the later time.
 
 The explicit dependence on interaction history matters because the host filter can itself be altered by the interaction. Rheum-Bradysia provides the motivating case: oviposition changes IAA dynamics and lowers fruit abortion before larvae hatch.
 
@@ -37,7 +37,7 @@ Let Q_i(s) describe consumer targeting of reproductive units at exposure time. T
 
 A conceptual offspring-mediated cost is:
 
-C_i = integral P_i(s) O(s) Q_i(s) [ integral K(l) H_i(s+l | history) dl ] ds.
+C_i = integral P_i(s) O(s) Q_i(s) [ integral K(l) S_i(s,l) H_i(s+l | history) dl ] ds.
 
 The net reproductive consequence is some source-appropriate function:
 
@@ -129,6 +129,20 @@ Likewise, the 21-year *Lathyrus* series shows that spring climate changes which 
 
 Thus the confirmatory target is not whether stage alignment affects some intermediate process. It is whether stage alignment improves explanation of **final plant fitness**.
 
+### P8 — post-exposure conversion filters can sharpen effective windows
+
+A realized egg or attack event is not automatically a future damaging consumer.
+
+In Parkinsonia-Penthobruchus, the same seven region-season units show a monotonic descriptive improvement from annual ground-pod egg density to stage-matched egg density to stage-matched egg density filtered by observed parasitism and hatch:
+
+- Pearson r with final seed predation: 0.476 -> 0.596 -> 0.938;
+- leave-one-out RMSE: 12.31 -> 11.02 -> 4.58 percentage points.
+
+This is a useful positive paired diagnostic, but not a confirmatory test: adult timing is absent, n=7, and parasitism/hatch are mechanistically close to final seed destruction.
+
+Accordingly, S_i can be used only when it is defined from pre-final biological processes and frozen independently of the final response. A filter cannot be tuned or selected because it maximizes agreement with final fitness.
+
+
 ## Relation to the original IWE classes
 
 ### Mutualists
@@ -156,8 +170,9 @@ The strongest dataset has all of the following at a shared biological unit:
 2. adult focal-partner activity;
 3. oviposition/exposure timing;
 4. delayed consumer activity or stage-specific survival;
-5. host tissue maturation/vulnerability;
-6. final post-cost reproduction.
+5. non-host post-exposure conversion/survival processes such as hatch or parasitism, when biologically relevant;
+6. host tissue maturation/vulnerability;
+7. final post-cost reproduction.
 
 A direct test would estimate whether between-year, between-population or experimental changes in the phase difference between adult service and effective cost windows predict changes in final fitness geometry, and whether that prediction improves on calendar timing and adult-only timing. Nulls such as Posledovich 2015 and the long-term Lathyrus result must be retained in that comparison.
 
