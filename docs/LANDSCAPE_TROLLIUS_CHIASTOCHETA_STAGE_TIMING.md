@@ -79,6 +79,28 @@ It complements Kula 2012 in two ways.
 
 Both show that a single synchrony score can erase the stage relation that determines the benefit-cost balance.
 
+## Attempted population-level phase-composition test — closed
+
+Suchan et al. 2015 (DOI `10.1002/ece3.1544`) initially looked like a route to connect species-specific oviposition timing to final plant seed output across eight *T. europaeus* populations.
+
+That route does **not** survive source audit.
+
+The 2009–2011 population table records only **Chiastocheta presence/absence**, not the identity or relative abundance of early- versus late-ovipositing *Chiastocheta* species. Pollinator observations identify *Chiastocheta* as a group rather than resolving the timing guild by species.
+
+More importantly, the study's reported "net seed set" is not a direct count of post-larval mature seeds. It is calculated as pre-predation seed set multiplied by a previously published egg-density cost function:
+
+`net seed set = seed set × (1 - 0.66 × x^0.26)`,
+
+where `x` is egg density per carpel.
+
+Therefore the 8-population dataset cannot be used to test:
+
+`early-vs-late Chiastocheta composition -> observed final plant seed output`.
+
+Doing so would require both a source-backed species/timing composition for each population-year and directly observed post-predation seed fate. Neither is present in the 2015 dataset.
+
+This route is closed rather than left as an open completion target.
+
 ## Claim boundary
 
 This component is mechanism evidence, not a strict mixed final-fitness effect.
