@@ -1,0 +1,10 @@
+stage,contrast_or_predictor,response,effect_or_test,interpretation,source
+oviposition_choice,fruit_age,new_oviposition_droplets,F=34.65; p<0.001,older fruits receive more cheater oviposition,JAMES1998_CH4
+oviposition_choice,isolation,new_oviposition_droplets,F=18.37; p<0.001,non-isolated fruits receive more oviposition,JAMES1998_CH4
+oviposition_choice,fruit_age_x_isolation,new_oviposition_droplets,F=8.20; p=0.004,timing and spatial access interact,JAMES1998_CH4
+observational_exposure,flowering_date,nights_with_new_oviposition_droplets,beta=0.21; t=3.49; p=0.001,flowering date carries a seasonal cheater-exposure signal,JAMES1998_CH4
+observational_exposure,flowering_date,ovipositions_per_fruit,B=1.05; t=3.52; p<0.001,later flowering predicts more accumulated oviposition,JAMES1998_CH4
+realized_consumer,flowering_date_plus_isolation_plus_fruit_number,nonpollinator_larvae_number,n=359; model_r2=0.000,the upstream timing signal is absent at realized larval load,JAMES1998_CH4
+consumer_survival,fruit_age_at_oviposition,larval_survival_12d,Wald=36.19; p<0.0001,host stage strongly changes cheater survival,JAMES1998_CH3
+consumer_survival,fruit_age_at_oviposition,larval_survival_28d,Wald=4.50; p=0.039,host-stage effect persists later in development,JAMES1998_CH3
+consumer_competition,pollinator_larval_age_at_cheater_oviposition,cheater_survival_29d,Wald=7.14; p=0.008,downstream interspecific competition changes realized cheater survival,JAMES1998_CH3
