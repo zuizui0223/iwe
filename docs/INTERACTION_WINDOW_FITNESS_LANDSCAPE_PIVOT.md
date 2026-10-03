@@ -114,6 +114,8 @@ For an antagonist, final post-cost reproduction can be lowest where partner expo
 
 The estimand is not merely negative synchrony. It is the geometry of the reproductive-cost surface and which temporal component creates it.
 
+The relevant temporal failure can occur before consumer development as well. In *Parkinsonia–Penthobruchus*, realized oviposition fails to track the brief peak of mature seed availability; egg density drops as pods mature, limiting final annual seed loss despite an established specialist seed predator.
+
 ### G3 — directional asymmetry
 
 Early escape and late escape are not assumed equivalent. Tests retain core-vs-early and core-vs-late contrasts separately, exactly as already frozen for the Cardamine preflight.
@@ -206,7 +208,7 @@ For the signed-selection module, treatment contrasts are pooled only when the tr
 
 ## Pilot result
 
-The current pilot registry contains **30 components from 28 studies and 26 dependence clusters**.
+The current pilot registry contains **31 components from 29 studies and 27 dependence clusters**.
 
 Under the original high-provenance requirement, strong final-fitness anchors are currently:
 
@@ -217,7 +219,7 @@ Under the original high-provenance requirement, strong final-fitness anchors are
 Under the broadened landscape question, while preserving reference provenance rather than pooling it away, the pilot has recoverable programme clusters in:
 
 - mutualist: **4**;
-- antagonist: **5**;
+- antagonist: **6**;
 - mixed: **3**.
 
 This does not make the three-class meta-analysis inferentially ready. Boundary and mechanism-only rows are deliberately excluded from those programme counts. The result instead shows that the original design asked every study to identify the same temporal object even though the literature measures complementary parts of the mechanism: partner exposure, realized attack, host-stage sensitivity, accessible redundancy, and benefit-cost channel timing.
@@ -263,6 +265,8 @@ The branch now contains multiple complementary kinds of timing evidence.
 16. **Rheum–Bradysia partner-modified host filter.** Oviposition strongly reduces fruit abortion (F = 287.24, p < 0.001) and elevates IAA before larvae hatch (oviposition F = 355.97; oviposition × day F = 140.82; both p < 0.001), while flowering sequence does not explain oviposition or abortion. The interacting partner can therefore modify the host filter itself.
 
 17. **Dianthus–Hadena realized mixed final fitness.** Individual flowering onset is linked to fruit set, secondary larval predation and final relative reproductive success, defined as the percentage of flowers producing unattacked fruits with mature dispersal-ready seeds. Final success declines across the season in both 2001 (**−0.037 ± 0.009 SE**) and 2003 (**−0.076 ± 0.030 SE**), while the component benefit/cost geometry differs between years. This is realized-window evidence, not independent adult-Hadena timing.
+
+18. **Parkinsonia–Penthobruchus temporal tracking inertia.** Repeated seed-phenology and oviposition surveys show that pod maturation is relatively synchronous and occurs about six weeks before pod drop, while egg density consistently declines at maturation rather than peaking with seed availability. Mean annual seed predation remains **2–30%** despite **0.55–3.2 eggs per seed**; even after removing direct immature-stage mortality in the model, observed egg densities imply only **5–56%** predation. This independently links realized temporal tracking failure to final seed loss.
 
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
