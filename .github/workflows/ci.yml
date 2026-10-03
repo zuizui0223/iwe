@@ -31,6 +31,8 @@ jobs:
         run: python scripts/render_search_coverage_status.py --check
       - name: Check landscape pilot audit
         run: python scripts/render_landscape_pilot_audit.py --check
+      - name: Check phase-alignment confirmatory gate
+        run: python scripts/render_phase_alignment_gate.py --check
       - name: Check IWE001 directional landscape
         run: python scripts/build_iwe001_directional_landscape.py --check
       - name: Check IWE011 plot-rank landscape
