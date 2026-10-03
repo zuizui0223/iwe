@@ -61,6 +61,35 @@ A more complete conceptual mapping is:
 
 This expression is bookkeeping, not a fitted multiplicative model.
 
+## 21-year follow-up: timing covariance moves, selection does not follow
+
+Valdés & Ehrlén 2021 subsequently analyzed 21 years of *L. vernus* phenology, seed predation and intact-seed fitness in the same study system.
+
+The relationship between flowering time and seed predation varies strongly among years.
+
+Spring temperature changes that relationship:
+
+- March temperature × individual first flowering date on seed predation: **+0.174 ± 0.082 SE, p = 0.033**;
+- April temperature × first flowering date: **−0.159 ± 0.067 SE, p = 0.017**.
+
+The sign can therefore shift between years: some climatic combinations concentrate seed predation on earlier plants, others on later plants.
+
+Seed predation itself strongly reduces intact-seed fitness.
+
+Yet the among-year change in the phenology–seed-predation relationship does **not** explain among-year flowering-time selection:
+
+- FFD × yearly covariance(FDD, seed predation): **−0.033**, 95% CI **−0.101 to +0.037**;
+- FFD × yearly mean seed predation: **+0.003**, 95% CI **−0.072 to +0.078**.
+
+This is a strong long-term boundary for the stage-specific model:
+
+> a moving interaction window can change who is attacked without necessarily changing the net selection gradient on flowering time.
+
+Final fitness integrates additional pathways, including direct phenology effects, resource state, pollination and other antagonists.
+
+The long-term coefficients are stored in
+`data/source_reconstructions/valdes2021_lathyrus_longterm_boundary.csv`.
+
 ## Claim boundary
 
 Phenology is only one of several cues used by *B. atomarius*, and the study does not isolate a pure timing effect or manipulate the egg-to-seed developmental lag.
