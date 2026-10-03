@@ -39,6 +39,8 @@ jobs:
         run: python scripts/build_iwe011_plot_rank_landscape.py --check
       - name: Check Kula phase-safety margin
         run: python scripts/build_kula2012_phase_margin.py --check
+      - name: Check Parkinsonia paired stage diagnostic
+        run: python scripts/build_vanklinken2008_paired_stage_diagnostic.py --check
       - name: Check IWE032 effective cost window
         run: python scripts/build_iwe032_effective_cost_window.py --check
       - name: Check IWE032 effective fitness surface
