@@ -34,13 +34,14 @@ A programme is confirmatory_ready only when it has source-backed raw/adult timin
 | PHA_TROLLIUS | mixed_pollinating_seed_predator | partial | yes | partial | yes | partial | no | mechanism_only | no variance-bearing final plant-fitness comparison across stage-timing classes |
 | PHA_IWE031 | antagonist | yes | partial | yes | yes | yes | no | host_sensitivity_final | not a delayed phase-lag design and no natural adult-window comparator |
 | PHA_HURLBURT2004 | mixed_pollinating_seed_predator | yes | partial | partial | yes | yes | blocked | near_confirmatory | mature-fruit records not yet source-linked to marked flowering date/cohort |
+| PHA_IMAI2006 | antagonist | yes | yes | yes | yes | yes | no | host_sensitivity_final | no paired adult/calendar-vs-host-tissue predictive comparison on the same experimental fruits |
 | PHA_AUCUBA_IMAI | antagonist | yes | yes | yes | yes | yes | no | host_sensitivity_final | no paired adult/calendar-only vs tissue-stage predictive comparison |
 
 ## Interpretation
 
 There is currently **no positive confirmatory-ready programme** showing that a stage-specific coordinate predicts final plant fitness better than a simpler calendar or adult-only coordinate.
 
-IWE032 Cardamine now already contains a positive stage-specific phase-to-final-fate contrast; its remaining blocker is only the numeric 2012–2014 female-flight coordinate needed for the paired adult-vs-stage comparison. Hurlburt 2004 Yucca remains the second near-confirmatory route, blocked by the mature-fruit join key.
+IWE032 Cardamine already contains a positive stage-specific phase-to-final-fate contrast; its remaining blocker is the numeric 2012–2014 female-flight coordinate needed for the paired adult-vs-stage comparison. Hurlburt 2004 Yucca remains the second near-confirmatory route, blocked by the mature-fruit join key. Aucuba-Asphondylia independently provides direct adult monitoring, experimental oviposition timing, a mechanistically defined host-tissue window, and final seed-producing versus gall fate, but lacks the paired simpler-vs-tissue-stage predictive comparison.
 
 Parkinsonia-Penthobruchus now provides an independent positive paired realized diagnostic: among seven matched region-season rows, annual ground-pod egg density correlates only moderately with final seed predation (r=0.476), stage-matched egg density after the vulnerable pod pulse improves the association (r=0.596), and filtering that stage-matched exposure by observed parasitism and hatch raises it to r=0.938; leave-one-out RMSE falls from 12.3 to 11.0 to 4.6 percentage points. Because the exposure is realized oviposition rather than independent adult timing, and the filter is consumer/parasitoid survival rather than a host-specific phase coordinate, this remains non-confirmatory.
 
