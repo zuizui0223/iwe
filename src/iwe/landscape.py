@@ -39,6 +39,7 @@ TIMING_GEOMETRIES = {
     "resource_tracking_inertia",
     "oviposition_interval_fate_contrast",
     "partner_manipulated_host_filter",
+    "timing_signal_erasure",
 }
 
 FITNESS_CHANNELS = {
