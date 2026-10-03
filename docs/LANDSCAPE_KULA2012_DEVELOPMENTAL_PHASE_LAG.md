@@ -1,0 +1,169 @@
+# Kula 2012 — developmental phase lag reverses the cost of synchrony
+
+Date: 2026-10-02  
+Programme: *Silene stellata × Hadena ectypa*, Mountain Lake Biological Station  
+Source: Abigail A. Rogers Kula 2012 PhD dissertation, Chapter 3  
+Repository: University of Maryland DRUM, handle `1903/12597`  
+Landscape role: mixed-system mechanism showing that adult/oviposition synchrony and larval cost synchrony can have opposite geometry.
+
+## Design
+
+Chapter 3 followed individual *S. stellata* plants through the 2008 and 2009 flowering seasons.
+
+The programme measured through each season:
+
+- adult *H. ectypa* visitation;
+- co-pollinator visitation;
+- individual plant flowering;
+- *H. ectypa* oviposition;
+- larval density;
+- initiated fruit set;
+- flower and fruit predation.
+
+New flowers on focal plants were marked repeatedly, allowing individual flowering distributions to be combined with the population oviposition curve.
+
+The source synchrony score is:
+
+`Synchrony_i = sum_t proportion_of_plant_i_flowers_open_t × eggs_per_flower_t`.
+
+This is a realized oviposition-window metric, not an independent adult-availability score.
+
+## The key result: the sign reverses between years
+
+Synchrony had no detectable effect on initiated fruit set in either year:
+
+- 2008: chi-square = 2.33, p = 0.1271;
+- 2009: chi-square = 2.21, p = 0.137.
+
+But synchrony strongly predicted flower/fruit predation in **opposite directions**:
+
+- **2008:** higher synchrony -> higher predation, chi-square = **46.47**, p < 0.0001;
+- **2009:** higher synchrony -> lower predation, chi-square = **16.74**, p < 0.0001.
+
+Mean synchrony was about twice as high in 2009:
+
+- 2008: 0.16 ± 0.01 SE;
+- 2009: 0.32 ± 0.03 SE.
+
+Mean predation was:
+
+- 2008: 0.34 ± 0.03 SE;
+- 2009: 0.46 ± 0.04 SE.
+
+The reversal therefore cannot be summarized as a universal positive or negative effect of adult/oviposition synchrony.
+
+## Developmental phase lag explains the reversal
+
+Flowering and oviposition shifted by more than a week between years, but larval activity began and peaked at nearly the same calendar time.
+
+Relative to first larval observation:
+
+- in 2008, first flowering preceded larvae by **10 d** and first egg by only **5 d**;
+- in 2009, first flowering preceded larvae by **17 d** and first egg by **15 d**.
+
+Fruit development was also faster in 2009:
+
+- 2008 mean maturation interval: **21.3 ± 0.28 d**;
+- 2009: **16.7 ± 0.40 d**.
+
+The dissertation's mechanistic interpretation is therefore temporal:
+
+- in 2008, plants most synchronized with oviposition remained close to peak larval activity and suffered more predation;
+- in 2009, highly synchronized plants had enough developmental lead for fruits to mature and harden before large larvae became abundant, so they suffered less predation.
+
+The same adult/oviposition overlap can therefore map to opposite plant costs depending on the delay between interaction stages.
+
+## Derived phase-safety margin
+
+The source summaries permit one response-independent descriptive coordinate:
+
+`phase safety margin = days from first flowering to first larval observation - mean fruit maturation interval`.
+
+This asks whether the host can, in principle, complete fruit maturation before the first damaging larval stage appears.
+
+Using only source-reported timing values:
+
+| Year | Flower -> first larva | Fruit maturation | Phase safety margin | Synchrony -> predation |
+|---|---:|---:|---:|---|
+| 2008 | 10 d | 21.3 d | **-11.3 d** | positive |
+| 2009 | 17 d | 16.7 d | **+0.3 d** | negative |
+
+The coordinate crosses zero in the same year that the synchrony-predation relationship changes sign.
+
+This is not a two-point statistical test and is not used to claim a threshold law. It is a prospective mechanistic coordinate generated without fitting to final fitness: negative values mean the first larvae appear while the earliest fruits are still within their mean maturation interval; non-negative values mean those fruits can reach maturation before the first larval observation.
+
+The derivation is executable in
+`scripts/build_kula2012_phase_margin.py` and outputs
+`data/derived/kula2012_phase_safety_margin.csv`.
+
+## General mechanism
+
+For interactions with delayed consumer stages, the effective cost window is not the adult or oviposition window itself.
+
+Conceptually:
+
+`effective_cost_window = exposure_window ⊗ consumer_developmental_lag × host_vulnerability`.
+
+The convolution symbol is bookkeeping, not a fitted kernel in this analysis.
+
+This yields a more precise version of the landscape hypothesis:
+
+> adult synchrony predicts benefit only through the adult service stage; offspring-mediated cost is shifted by development time and by how host tissue vulnerability changes before consumers begin feeding.
+
+This mechanism connects the mixed Silene-Hadena result to the Cardamine-Anthocharis active-egg filter: in both systems, the realized damaging window is displaced from raw interaction timing by consumer development and host state.
+
+## Relation to IWE015
+
+The 2008-2009 Chapter 3 data belong to the same Mountain Lake *S. stellata-H. ectypa* research programme as later IWE015 work and therefore do **not** create an independent mixed dependence cluster.
+
+They are nevertheless important for interpreting the opposite-sign 2012/2013 diagnostic IWE015 effects: interannual changes in developmental phase relations provide a source-backed mechanism by which greater focal-partner overlap can change sign in net reproductive consequences.
+
+No cross-year causal identity is assumed; this is a mechanistic precedent, not a post hoc explanation of the later data.
+
+## Attempted closure to final successful fruit — not recoverable from the public summaries
+
+The Chapter 3 methods were re-audited against the dissertation PDF itself.
+
+Every newly opened focal flower was individually marked, and at the end of the season all flowers and fruits were collected by plant and marking period and assessed in the laboratory. The source therefore **did record a successful-fruit state** at the underlying flower level.
+
+However, the published Chapter 3 summaries expose only two plant/marking-period proportions:
+
+1. **initiated fruit set** = fruits initiated / total flowers, where initiated fruits include both fruits with seeds and fruits later eaten by *H. ectypa*, but exclude unpollinated flowers and flowers eaten before fruit initiation;
+2. **predation** = flowers eaten + fruits eaten / total flowers, excluding unpollinated flowers and successful fruits.
+
+Those two aggregates do not identify the successful-fruit proportion.
+
+In particular,
+
+`initiated fruit set - predation`
+
+is **not valid**, because predation contains both:
+
+- eaten fruits, which are included in initiated fruit set; and
+- eaten flowers, which are not included in initiated fruit set.
+
+The dissertation tables and Appendix A provide synchrony, initiated fruit set, predation, flowering dates and maturation timing, but do not publish the separate eaten-flower versus eaten-fruit counts needed to recover successful fruits.
+
+Therefore no final post-cost fruit metric is reconstructed from Chapter 3.
+
+The exact unlock would be the underlying flower-level fate table or a source-backed summary that separates:
+
+- unpollinated flowers;
+- flowers eaten before fruit initiation;
+- fruits eaten after initiation;
+- successful mature fruits.
+
+Until such an object is recovered, the phase-safety-margin result remains a **cost-channel mechanism**, not a final-fitness effect.
+
+## Claim boundary
+
+This component is not a strict mixed net-fitness effect:
+
+- synchrony is based on egg receipt/oviposition rather than independent adult activity;
+- initiated fruit set is a benefit-channel intermediate;
+- predation is a cost channel rather than final viable-seed production.
+
+It is registered as `mechanism_only` and shares the Mountain Lake dependence cluster.
+
+Source-backed values are stored in
+`data/source_reconstructions/kula2012_silene_phase_lag.csv`.

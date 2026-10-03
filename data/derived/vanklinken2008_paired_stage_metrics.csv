@@ -1,0 +1,4 @@
+coordinate,n_region_seasons,pearson_r,spearman_r,loo_rmse_pp,loo_mae_pp
+annual_ground_egg_density,7,0.4762529941,0.5714285714,12.3121077849,10.5200174021
+stage_matched_egg_density,7,0.5964140926,0.5714285714,11.0162880546,9.5542365956
+filtered_stage_exposure,7,0.9378943315,0.9285714286,4.5795128833,3.9095939368
