@@ -146,6 +146,26 @@ Define the time-indexed quantity conceptually as:
 
 This is not a fixed richness count. Senita cactus provides the motivating test: diurnal bee co-pollinators become ineffective when flowers close before sunrise, and a gap between senita-moth cohorts in July 1998 coincided with 0% open-pollinated fruit set despite the broader pollinator community.
 
+### G7 — host filters are interaction-dependent
+
+The host developmental filter that maps exposure into future reproductive cost need not be fixed.
+
+In *Lathyrus–Bruchus*, the antagonist uses fruit phenology, position and additional cues to concentrate eggs on fruits with low future abortion probability, partly circumventing the filter.
+
+In *Rheum–Bradysia*, oviposition itself lowers fruit abortion and changes IAA dynamics before larvae hatch, indicating that the interaction can modify the filter.
+
+Effective-window inference must therefore distinguish plant-intrinsic filtering from consumer targeting and partner-induced host modification.
+
+### G8 — mechanistic stage matching is not sufficient for final-fitness prediction
+
+Stage alignment can strongly affect consumer performance without predicting the final plant endpoint.
+
+Posledovich 2015 experimentally changes host phenological stage at oviposition and developmental temperature. Those variables alter larval performance, but the probability that the host outgrows the larva and forms mature seedpods depends only on host species.
+
+Likewise, in the 21-year *Lathyrus* series, spring climate changes which flowering phenologies suffer seed predation, yet year-to-year variation in the flowering-date–seed-predation covariance does not explain flowering-time selection on intact-seed fitness.
+
+The confirmatory target is therefore final reproductive geometry, not mechanism alone.
+
 
 ## Evidence hierarchy and claim boundary
 
@@ -186,7 +206,7 @@ For the signed-selection module, treatment contrasts are pooled only when the tr
 
 ## Pilot result
 
-The current pilot registry contains **26 components from 24 studies and 22 dependence clusters**.
+The current pilot registry contains **29 components from 27 studies and 25 dependence clusters**.
 
 Under the original high-provenance requirement, strong final-fitness anchors are currently:
 
@@ -235,6 +255,12 @@ The branch now contains multiple complementary kinds of timing evidence.
 
 
 13. **Taxonomically distinct host filtering.** In the *Yucca glauca–Tegeticula yuccasella* nursery-pollination system, resource allocation makes late-opening flowers more likely to abort when basal fruits are already present; all moth eggs in an aborted flower die. This supplies a distinct plant-allocation route by which a realized interaction can be deleted before becoming an effective future seed-predation cost. It is mechanism-only, not a final-fitness effect.
+
+14. **Lathyrus host-filter offense and long-term null.** *Bruchus atomarius* preferentially oviposits on fruits with lower future abortion probability; observed selective oviposition yields more developed beetles than a random allocation (2.84 ± 0.14 vs 2.02 ± 0.11) and reduces average intact-seed output relative to random oviposition. Over 21 years, spring temperatures alter which flowering phenologies suffer seed predation, but the yearly covariance between flowering date and seed predation does not explain flowering-time selection (estimate -0.033, 95% CI -0.101 to +0.037).
+
+15. **Posledovich 2015 developmental-race boundary.** Host stage at oviposition and temperature strongly affect *Anthocharis cardamines* larval performance, but the probability that the attacked plant outgrows the larva and forms mature seedpods depends only on host species identity. This directly falsifies the assumption that better stage alignment must improve prediction of the final plant endpoint.
+
+16. **Rheum–Bradysia partner-modified host filter.** Oviposition strongly reduces fruit abortion (F = 287.24, p < 0.001) and elevates IAA before larvae hatch (oviposition F = 355.97; oviposition × day F = 140.82; both p < 0.001), while flowering sequence does not explain oviposition or abortion. The interacting partner can therefore modify the host filter itself.
 
 A separate factorial source, Sletvold et al. 2015 Gymnadenia conopsea, provides an important sign check. Reconstructed from Ecological Archives Table A2, pollinators shift selection toward later flowering (canonical estimates -0.1558 and -0.1600 depending on herbivory context), whereas floral herbivores shift selection toward earlier flowering (+0.0982 and +0.0940 depending on pollination context). These four contrasts have reconstructable SEs because the treatment groups are independent.
 
