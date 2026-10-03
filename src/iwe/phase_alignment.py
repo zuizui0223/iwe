@@ -13,6 +13,7 @@ PHASE_ALIGNMENT_STATUSES = {
     "mechanism_only",
     "boundary_null",
     "final_tracking_evidence",
+    "paired_realized_positive",
     "final_landscape_no_alignment",
     "stage_structure",
     "host_sensitivity_final",
@@ -115,6 +116,22 @@ def validate_phase_alignment_registry(df: pd.DataFrame) -> list[str]:
             + ", ".join(sorted(bad_boundary))
         )
 
+    paired_positive = df["status"].eq("paired_realized_positive")
+    bad_paired_positive = df.loc[
+        paired_positive
+        & (
+            df["phase_alignment_varies"].ne("yes")
+            | df["final_plant_endpoint"].ne("yes")
+            | df["paired_simpler_vs_stage_comparison"].ne("yes")
+        ),
+        "candidate_id",
+    ].astype(str)
+    if len(bad_paired_positive):
+        errors.append(
+            "paired_realized_positive requires phase variation, final endpoint, and paired comparison: "
+            + ", ".join(sorted(bad_paired_positive))
+        )
+
     near = df["status"].eq("near_confirmatory")
     bad_near = df.loc[
         near
@@ -147,6 +164,7 @@ def phase_alignment_summary(df: pd.DataFrame) -> dict[str, object]:
         "confirmatory_ready": int(df["status"].eq("confirmatory_ready").sum()),
         "near_confirmatory": int(df["status"].eq("near_confirmatory").sum()),
         "boundary_null": int(df["status"].eq("boundary_null").sum()),
+        "paired_realized_positive": int(df["status"].eq("paired_realized_positive").sum()),
         "final_endpoint_yes": int(df["final_plant_endpoint"].eq("yes").sum()),
         "phase_varies_yes": int(df["phase_alignment_varies"].eq("yes").sum()),
         "paired_comparison_yes": int(
@@ -173,6 +191,7 @@ def render_phase_alignment_gate(df: pd.DataFrame) -> str:
         f"- Confirmatory-ready positive or null comparisons: **{summary['confirmatory_ready']}**",
         f"- Near-confirmatory blocked routes: **{summary['near_confirmatory']}**",
         f"- Registered direct null/boundary comparisons: **{summary['boundary_null']}**",
+        f"- Positive paired realized comparisons (non-confirmatory): **{summary['paired_realized_positive']}**",
         "",
         "A programme is confirmatory_ready only when it has source-backed raw/adult timing, effective consumer timing, a pre-final host filter, variation in phase alignment, a final plant endpoint, and a paired simpler-vs-stage-specific timing comparison.",
         "",
@@ -218,9 +237,11 @@ def render_phase_alignment_gate(df: pd.DataFrame) -> str:
             "",
             "IWE032 Cardamine now already contains a positive stage-specific phase-to-final-fate contrast; its remaining blocker is only the numeric 2012–2014 female-flight coordinate needed for the paired adult-vs-stage comparison. Hurlburt 2004 Yucca remains the second near-confirmatory route, blocked by the mature-fruit join key.",
             "",
+            "Parkinsonia-Penthobruchus now provides an independent positive paired realized diagnostic: among seven matched region-season rows, annual ground-pod egg density correlates only moderately with final seed predation (r=0.476), stage-matched egg density after the vulnerable pod pulse improves the association (r=0.596), and filtering that stage-matched exposure by observed parasitism and hatch raises it to r=0.938; leave-one-out RMSE falls from 12.3 to 11.0 to 4.6 percentage points. Because the exposure is realized oviposition rather than independent adult timing, and the filter is consumer/parasitoid survival rather than a host-specific phase coordinate, this remains non-confirmatory.",
+            "",
             "The registry also retains complete nulls. Posledovich 2015 shows that manipulated stage matching and temperature alter herbivore performance without altering the mature-seedpod escape endpoint beyond host-species effects. The long-term Lathyrus programme shows that climate-driven changes in phenology–seed-predation covariance do not explain flowering-time selection on intact-seed fitness.",
             "",
-            "Accordingly, stage-specific timing remains a mechanistically supported hypothesis with positive final-seed-loss examples, but **predictive superiority over simpler timing coordinates remains open**.",
+            "Accordingly, stage-specific timing now has a positive paired realized comparison as well as final-seed-loss examples, but **predictive superiority over simpler adult/calendar timing under the full confirmatory contract remains open**.",
             "",
         ]
     )
