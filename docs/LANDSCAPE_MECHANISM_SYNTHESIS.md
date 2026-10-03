@@ -157,6 +157,24 @@ Together, Cardamine, Portuguese Gentiana and Yucca show three distinct mechanism
 
 This satisfies the branch's first taxonomic-breadth milestone for **host filtering as a mechanism**, but none of the mechanism-only replications should be counted as final plant-fitness effect sizes.
 
+### Host filters can be anticipated or manipulated
+
+Two additional systems show that host filtering is not necessarily an exogenous plant-only layer.
+
+In *Lathyrus vernus–Bruchus atomarius*, late/distal fruits are more likely to abort, but females preferentially oviposit on fruits with lower future abortion probability. The observed selective pattern produces more developed beetles than a random allocation scenario (**2.84 ± 0.14 vs 2.02 ± 0.11**) and lowers average intact-seed output relative to random oviposition.
+
+In *Rheum nobile–Bradysia*, the feedback goes further: oviposition itself strongly reduces fruit abortion (**F = 287.24, p < 0.001**) and elevates IAA before larvae hatch (**oviposition F = 355.97; oviposition × day F = 140.82; both p < 0.001**). Flowering sequence does not explain the abortion or oviposition patterns.
+
+The effective host filter can therefore be predicted, circumvented or physiologically modified by the interacting animal.
+
+### Boundary: stage matching can matter to the consumer but not the plant endpoint
+
+Posledovich 2015 experimentally varies host phenological stage at oviposition and temperature during development. These manipulations alter larval performance and the developmental race, but the probability that the initial host outgrows the larva and forms mature seedpods depends only on host species identity.
+
+The 21-year *Lathyrus* series supplies a natural long-term analogue. Spring temperature changes the sign and strength of the flowering-phenology–seed-predation relationship, but the yearly covariance between flowering date and seed predation does not explain flowering-time selection on intact-seed fitness (**estimate -0.033, 95% CI -0.101 to +0.037**).
+
+These are mandatory nulls against turning a mechanistically sensible stage coordinate into an automatic final-fitness predictor.
+
 ### Independent antagonist escape tradeoff — Sercu 2020
 
 A separate *Geum urbanum–Byturus ochraceus* programme shows that temporal escape need not drive plants toward an extreme calendar date. Predation occurred almost exclusively during the first flowering peak, while later flowers had intrinsically lower seed output. Among predated plants, final total seed mass was therefore maximized at an intermediate strategy: about **36% of flowers in the second flowering peak**.
@@ -201,11 +219,22 @@ The net optimum therefore depends on relative timing, developmental lag, host vu
 
 ### G5 — endpoint choice changes the apparent window
 
-Timing effects on plant size, fruit initiation, viable seeds, and final post-predation reproduction are not interchangeable. Primary inference should privilege final reproduction while intermediate endpoints diagnose mechanism.
+Timing effects on plant size, fruit initiation, consumer performance, mature seedpods, viable seeds, and final post-predation reproduction are not interchangeable. Primary inference should privilege final reproduction while intermediate endpoints diagnose mechanism.
+
+A stage coordinate that improves prediction of larval performance does not automatically improve prediction of plant fitness.
 
 ### G6 — redundancy is a temporal overlap property
 
 Mismatch buffering depends on alternative partners whose activity windows actually overlap the receptive plant window. Partner richness alone is insufficient when alternative partners are inactive, developmentally unavailable, or physically excluded by the plant's daily flowering schedule.
+
+### G7 — host filters are interaction-dependent
+
+Host retention and vulnerability can change in response to consumer targeting or partner-induced physiological modification. Effective-window reconstruction should therefore preserve whether the filter is:
+
+- plant-intrinsic;
+- predicted/circumvented by the antagonist;
+- modified by the interaction itself.
+
 
 
 ## Consequence for analysis
