@@ -40,6 +40,7 @@ TIMING_GEOMETRIES = {
     "oviposition_interval_fate_contrast",
     "partner_manipulated_host_filter",
     "timing_signal_erasure",
+    "host_tissue_window_experiment",
 }
 
 FITNESS_CHANNELS = {
