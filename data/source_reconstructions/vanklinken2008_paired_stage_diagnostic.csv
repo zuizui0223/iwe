@@ -1,0 +1,8 @@
+region_season,annual_ground_egg_density,stage_matched_egg_density,egg_parasitism_pct,egg_hatch_pct,observed_seed_predation_pct,source
+VRD_2000_01,0.84,0.51,69.8,100.0,4.3,"van_Klinken_Flack_2008_Table2_Table5"
+VRD_2001_02,0.20,0.17,65.1,94.7,2.0,"van_Klinken_Flack_2008_Table2_Table5"
+Barkly_2001_02,1.26,1.87,38.2,79.4,17.6,"van_Klinken_Flack_2008_Table2_Table5"
+Barkly_2002_03,1.78,1.94,25.7,100.0,27.5,"van_Klinken_Flack_2008_Table2_Table5"
+Central_Qld_2001_02,2.10,1.88,50.3,61.8,5.3,"van_Klinken_Flack_2008_Table2_Table5"
+Central_Qld_2002_03,2.40,1.26,32.1,93.6,22.0,"van_Klinken_Flack_2008_Table2_Table5"
+Central_Australia_2001_02,1.27,1.44,10.5,94.9,28.4,"van_Klinken_Flack_2008_Table2_Table5"
