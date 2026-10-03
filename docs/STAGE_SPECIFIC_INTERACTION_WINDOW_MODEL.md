@@ -72,7 +72,16 @@ In the Kula programme:
 - 2008 flower/egg to first larva = 10/5 d; fruit maturation = 21.3 d;
 - 2009 flower/egg to first larva = 17/15 d; fruit maturation = 16.7 d.
 
-The observed synchrony-predation sign reverses accordingly.
+A response-independent **phase safety margin** can therefore be defined as:
+
+`M = (flower -> first larva delay) - fruit maturation interval`.
+
+This gives:
+
+- 2008: **M = -11.3 d**;
+- 2009: **M = +0.3 d**.
+
+The coordinate crosses zero in the same year that the synchrony-predation sign changes from positive to negative. With only two years, this is a mechanistic prediction and not an inferred threshold law.
 
 ### P3 — climate can alter interaction outcome without changing adult overlap
 
