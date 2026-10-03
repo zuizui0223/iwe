@@ -36,6 +36,7 @@ TIMING_GEOMETRIES = {
     "annual_stage_phase_lag",
     "selective_oviposition_abortion_filter",
     "phenology_temperature_developmental_race",
+    "resource_tracking_inertia",
     "partner_manipulated_host_filter",
 }
 
