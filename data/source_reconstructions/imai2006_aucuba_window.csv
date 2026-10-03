@@ -1,0 +1,17 @@
+quantity,value,uncertainty_or_test,source
+adult_emergence_monitoring,15_May_to_3_Aug_daily,1999 field monitoring,Imai_Ohsaki_2006
+adult_emergence_season_1999,nearly_20_days,clear peak period,Imai_Ohsaki_2006
+experimental_release_window_2005,3_June_to_23_June,one female per infructescence at 2-7 d intervals,Imai_Ohsaki_2006
+experimental_females_total,21,"9 shrub A; 5 shrub B; 7 shrub C",Imai_Ohsaki_2006
+young_fruits_total,247,78 died before December sampling,Imai_Ohsaki_2006
+adult_emergence_before_15_June,345_of_428,83%,Imai_Ohsaki_2006
+gall_success_before_15_June,55_of_68,80.9%,Imai_Ohsaki_2006
+gall_success_after_15_June,3_of_34,8.8%,Imai_Ohsaki_2006
+adult_release_date_slope_on_gall_success,-0.24,SE=0.06; LR_chisq=28.65; p<0.00001,Imai_Ohsaki_2006
+larval_chambers_complete_gall,2.86,SD=1.46,Imai_Ohsaki_2006
+larval_chambers_incomplete_gall,1.43,SD=0.77,Imai_Ohsaki_2006
+complete_vs_incomplete_chambers_test,31.8,Welch_F_df1_71.89_p<0.0001,Imai_Ohsaki_2006
+egg_to_hatch_lag,7_to_10_days,source states unpublished system estimate,Imai_Ohsaki_2006
+complete_gall_seed_fate,seed_production_impossible,embryo sac degenerates,Imai_Ohsaki_2006
+window_opening_filter,hard_endocarp,early fruits block oviposition until endocarp fragments,Imai_Ohsaki_2009
+window_closing_filter,integument_loss,late fruits lose reactive tissue needed for gall induction,Imai_Ohsaki_2006
