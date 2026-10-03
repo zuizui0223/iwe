@@ -216,7 +216,7 @@ def render_phase_alignment_gate(df: pd.DataFrame) -> str:
             "",
             "There is currently **no positive confirmatory-ready programme** showing that a stage-specific coordinate predicts final plant fitness better than a simpler calendar or adult-only coordinate.",
             "",
-            "The closest recoverable routes are IWE032 Cardamine (numeric 2012–2014 female-flight timing) and Hurlburt 2004 Yucca (mature-fruit join key). Both already contain the other biological layers needed for a paired comparison.",
+            "IWE032 Cardamine now already contains a positive stage-specific phase-to-final-fate contrast; its remaining blocker is only the numeric 2012–2014 female-flight coordinate needed for the paired adult-vs-stage comparison. Hurlburt 2004 Yucca remains the second near-confirmatory route, blocked by the mature-fruit join key.",
             "",
             "The registry also retains complete nulls. Posledovich 2015 shows that manipulated stage matching and temperature alter herbivore performance without altering the mature-seedpod escape endpoint beyond host-species effects. The long-term Lathyrus programme shows that climate-driven changes in phenology–seed-predation covariance do not explain flowering-time selection on intact-seed fitness.",
             "",
