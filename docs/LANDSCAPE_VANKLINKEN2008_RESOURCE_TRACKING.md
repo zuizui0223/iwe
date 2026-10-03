@@ -45,6 +45,49 @@ This is temporal tracking inertia at the stage that matters to final seed loss.
 
 The beetle population tracks broad between-region and between-year differences better than sharp within-season resource peaks, but fails to match the short pulse of maximal seed availability.
 
+## Paired simpler-versus-stage diagnostic
+
+The source tables permit a limited but fully source-backed comparison across **seven matched region-season combinations**.
+
+To avoid changing pod location across predictors, the simple comparator uses the **annual mean egg density on ground pods** from Table 2.
+
+The stage-specific comparator uses the egg density measured on ground-pod samples collected at the first survey at least 40 days after peak pod fall, the same late-season sampling frame used for observed seed predation in Table 5.
+
+A third coordinate applies only pre-final biological filters measured in that same source:
+
+`filtered stage exposure = stage-matched egg density × (1 - egg parasitism) × egg hatch`.
+
+No final seed-predation value enters this coordinate.
+
+The resulting descriptive performance is:
+
+| Coordinate | Pearson r with observed seed predation | Spearman rho | LOO RMSE (percentage points) | LOO MAE |
+|---|---:|---:|---:|---:|
+| Annual ground-pod egg density | **0.476** | 0.571 | **12.31** | 10.52 |
+| Stage-matched egg density | **0.596** | 0.571 | **11.02** | 9.55 |
+| Filtered stage exposure | **0.938** | 0.929 | **4.58** | 3.91 |
+
+Thus, in this small matched set, moving from an annual exposure average toward a stage-matched and biologically filtered exposure substantially improves association and leave-one-out prediction of final seed predation.
+
+This is the first independent IWE programme with an explicit **simpler-coordinate versus stage/filter-coordinate diagnostic** pointing in the predicted direction.
+
+It is deliberately not called confirmatory for three reasons:
+
+1. **n = 7** region-season combinations;
+2. the exposure is realized oviposition on seeds, not an independently measured adult-flight or adult-abundance window;
+3. the strongest coordinate incorporates egg parasitism and hatch, which are mechanistically close to seed consumption and are not a host-specific developmental filter.
+
+The diagnostic is therefore registered as `paired_realized_positive`, not `confirmatory_ready`.
+
+The reconstruction is executable in
+`scripts/build_vanklinken2008_paired_stage_diagnostic.py`,
+with source rows in
+`data/source_reconstructions/vanklinken2008_paired_stage_diagnostic.csv`
+and generated outputs in
+`data/derived/vanklinken2008_paired_stage_rows.csv`
+and
+`data/derived/vanklinken2008_paired_stage_metrics.csv`.
+
 ## General implication
 
 The result provides an independent final-reproduction analogue of the stage-specific window logic:
