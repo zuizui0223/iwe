@@ -1,0 +1,12 @@
+quantity,effect_or_value,uncertainty_or_test,source
+fruit_abortion_oviposition_effect,reduced_with_oviposition,F=287.24; p<0.001,Song_et_al_2016_Table2
+fruit_abortion_year_effect,present,F=33.26; p<0.001,Song_et_al_2016_Table2
+fruit_abortion_oviposition_by_year,present,F=30.23; p<0.001,Song_et_al_2016_Table2
+IAA_oviposition_effect,higher_in_oviposited_fruits,F=355.97; p<0.001,Song_et_al_2016_Table4
+IAA_day_effect,declines_during_development,F=681.54; p<0.001,Song_et_al_2016_Table4
+IAA_oviposition_by_day,present,F=140.82; p<0.001,Song_et_al_2016_Table4
+temporal_flower_sequence_on_fruit_set,no_effect,F=1.61; p=0.16,Song_et_al_2016
+temporal_flower_sequence_on_abortion,no_effect,F=1.30; p=0.27,Song_et_al_2016
+temporal_flower_sequence_on_oviposition,no_effect,F=1.35; p=0.25,Song_et_al_2016
+fruit_abortion_vs_temporal_oviposition_correlation,-0.15,p=0.23,Song_et_al_2016
+larval_hatching,late_August_or_early_September,IAA samples contained eggs but not larvae through mid-August,Song_et_al_2016
