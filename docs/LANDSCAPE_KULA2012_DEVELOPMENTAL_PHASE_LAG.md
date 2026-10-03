@@ -73,6 +73,29 @@ The dissertation's mechanistic interpretation is therefore temporal:
 
 The same adult/oviposition overlap can therefore map to opposite plant costs depending on the delay between interaction stages.
 
+## Derived phase-safety margin
+
+The source summaries permit one response-independent descriptive coordinate:
+
+`phase safety margin = days from first flowering to first larval observation - mean fruit maturation interval`.
+
+This asks whether the host can, in principle, complete fruit maturation before the first damaging larval stage appears.
+
+Using only source-reported timing values:
+
+| Year | Flower -> first larva | Fruit maturation | Phase safety margin | Synchrony -> predation |
+|---|---:|---:|---:|---|
+| 2008 | 10 d | 21.3 d | **-11.3 d** | positive |
+| 2009 | 17 d | 16.7 d | **+0.3 d** | negative |
+
+The coordinate crosses zero in the same year that the synchrony-predation relationship changes sign.
+
+This is not a two-point statistical test and is not used to claim a threshold law. It is a prospective mechanistic coordinate generated without fitting to final fitness: negative values mean the first larvae appear while the earliest fruits are still within their mean maturation interval; non-negative values mean those fruits can reach maturation before the first larval observation.
+
+The derivation is executable in
+`scripts/build_kula2012_phase_margin.py` and outputs
+`data/derived/kula2012_phase_safety_margin.csv`.
+
 ## General mechanism
 
 For interactions with delayed consumer stages, the effective cost window is not the adult or oviposition window itself.
