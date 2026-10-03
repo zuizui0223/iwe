@@ -131,3 +131,17 @@ def test_summary_counts_nonconfirmatory_positive_pair_separately():
     summary = phase_alignment_summary(combined)
     assert summary["confirmatory_ready"] == 1
     assert summary["paired_realized_positive"] == 1
+
+
+def test_host_sensitivity_final_requires_filter_phase_and_final_endpoint():
+    df = _rows().iloc[[0]].copy()
+    df.loc[:, "candidate_id"] = "HOST_FINAL"
+    df.loc[:, "study_id"] = "STUDY_HOST_FINAL"
+    df.loc[:, "dependence_id"] = "DEP_HOST_FINAL"
+    df.loc[:, "status"] = "host_sensitivity_final"
+    df.loc[:, "paired_simpler_vs_stage_comparison"] = "no"
+    assert validate_phase_alignment_registry(df) == []
+
+    df.loc[:, "prefinal_host_filter"] = "partial"
+    errors = validate_phase_alignment_registry(df)
+    assert any("host_sensitivity_final requires" in error for error in errors)
