@@ -65,6 +65,8 @@ def test_summary_counts_dependence_and_final_studies():
     assert summary["n_dependence_clusters"] == 2
     assert summary["final_links"] == 2
     assert summary["final_studies"] == 1
+    assert summary["final_transformations_by_class"]["mutualist"]["preserved"] == 1
+    assert summary["final_transformations_by_class"]["mutualist"]["shifted_filtered"] == 1
 
 
 def test_duplicate_propagation_id_fails():
