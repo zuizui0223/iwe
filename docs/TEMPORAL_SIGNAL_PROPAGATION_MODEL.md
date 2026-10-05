@@ -67,6 +67,39 @@ The consumer does not track the moving resource closely enough for potential exp
 
 Example: *Parkinsonia–Penthobruchus*. Egg density declines at pod maturation rather than peaking with seed availability, and realized seed predation remains modest relative to potential.
 
+## Causal-depth hypothesis
+
+The expanded ledger suggests a more general biological hypothesis than a mutualist-versus-antagonist sign contrast:
+
+> **Temporal information is most likely to survive when the measured interaction stage is causally close to plant reproduction; every additional developmental, behavioral or compensatory layer creates an opportunity to shift, reverse, erase or buffer the signal.**
+
+The current targeted pilot provides a deliberately descriptive contrast.
+
+All four independently measured mutualist service-window chains that reach final plant fitness are currently classified as `preserved`:
+
+- IWE001 *Corydalis–Bombus*;
+- IWE023 *Mertensia* experimental flowering cohorts;
+- IWE027 *Phyllodoce–Bombus*;
+- IWE029 *Stigmaphyllon–Centris*.
+
+These chains are comparatively shallow:
+
+`partner service availability -> pollination -> mature seed`.
+
+By contrast, antagonist and mixed systems often insert additional causal stages:
+
+`adult / oviposition timing -> consumer development -> host filtering / targeting -> damage -> compensation / alternative pathways -> final fitness`.
+
+The current antagonist/mixed final links therefore occupy multiple transformation states rather than one preserved state.
+
+This pattern must **not** be interpreted as a literature-wide class frequency. The pilot was assembled for IWE rather than sampled to estimate transformation prevalence, and interaction class is correlated with which causal stages researchers typically measure.
+
+The confirmatory version of the hypothesis is architectural rather than taxonomic:
+
+> within comparable datasets, adding biologically required downstream stage information should improve final-fitness prediction when those stages genuinely transform exposure, but should not improve prediction when the extra stage is irrelevant.
+
+Parkinsonia supplies the first positive paired diagnostic under this logic; Posledovich and long-term Lathyrus supply mandatory nulls.
+
 ## Why this helps explain the original IWE bottleneck
 
 Different literatures sample different links in the chain.
@@ -188,5 +221,7 @@ Only after several independent programmes expose homologous stage-to-stage links
 A defensible current synthesis is:
 
 > Phenological effects are not transmitted unchanged from interaction timing to fitness. Across the current IWE corpus, temporal signals can be preserved, filtered, reversed, erased or buffered as they pass through interaction stages; the key empirical problem is therefore to identify where in the causal chain timing information is converted into final reproductive consequences.
+
+The pilot further motivates a **causal-depth hypothesis**: timing information appears easiest to preserve in shallow service-to-fitness chains and most contingent when delayed consumers, host filters or alternative pathways intervene. That contrast is currently hypothesis-generating rather than a prevalence estimate.
 
 This is broader than the original mutualist/antagonist/mixed sign comparison while remaining testable and source-provenance aware.
