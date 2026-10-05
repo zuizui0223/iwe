@@ -71,6 +71,11 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
 
     final = df[df["final_fitness_reached"].eq("yes")]
 
+    final_transformations_by_class = {
+        interaction_type: dict(Counter(group["transformation"]))
+        for interaction_type, group in final.groupby("interaction_type")
+    }
+
     return {
         "n_links": int(len(df)),
         "n_studies": int(df["study_id"].nunique()),
@@ -81,6 +86,7 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
         "final_links": int(len(final)),
         "final_studies": int(final["study_id"].nunique()),
         "final_by_transformation": dict(Counter(final["transformation"])),
+        "final_transformations_by_class": final_transformations_by_class,
     }
 
 
@@ -129,9 +135,39 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
         "|---|---:|",
         *rows(summary["final_by_transformation"]),
         "",
+        "## Final-link transformations by interaction class",
+        "",
+        "This matrix is descriptive for the targeted pilot corpus. It is not a literature-wide prevalence estimate.",
+        "",
+        "| Interaction type | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        *[
+            "| "
+            + interaction_type
+            + " | "
+            + " | ".join(
+                str(summary["final_transformations_by_class"].get(interaction_type, {}).get(state, 0))
+                for state in [
+                    "preserved",
+                    "shifted_filtered",
+                    "sign_reversed",
+                    "erased",
+                    "buffered",
+                    "tracking_inertia",
+                    "preserved_net_changed_mechanism",
+                ]
+            )
+            + " |"
+            for interaction_type in [
+                "mutualist",
+                "antagonist",
+                "mixed_pollinating_seed_predator",
+            ]
+        ],
+        "",
         "## Interpretation",
         "",
-        "The current pilot falsifies the idea that a phenological effect can be represented by one invariant synchrony coefficient carried unchanged from encounter to fitness. Source-backed timing signals are observed to persist, reverse sign, be shifted by host/consumer filtering, disappear before the next consumer stage, be buffered by alternative ecological routes, or fail to track moving resources.",
+        "The current pilot falsifies the idea that a phenological effect can be represented by one invariant synchrony coefficient carried unchanged from encounter to fitness. Source-backed timing signals are observed to persist, reverse sign, be shifted by host/consumer filtering, disappear before the next consumer stage, be buffered by alternative ecological routes, or fail to track moving resources. In the current targeted set, all four mutualist service-window links that reach final plant fitness are classified as preserved, whereas antagonist and mixed links occupy multiple transformation states. This class pattern is a hypothesis-generating contrast, not a prevalence estimate.",
         "",
         "Positive downstream propagation is not confined to Cardamine. Aucuba provides a direct timing manipulation in which complete gall induction that prevents seed production falls from 80.9% before 15 June to 8.8% after the host tissue window closes. Cardamine adds ecotype-level phase-to-final-fate alignment, while Kula provides an independent mixed-system mechanistic sign reversal as a response-independent phase-safety margin crosses zero; Kula stops at predation rather than final plant fitness.",
         "",
