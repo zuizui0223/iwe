@@ -11,37 +11,42 @@ EXPECTED = {
     "annual_ground_egg_density": {
         "pearson_r": 0.4762529941,
         "spearman_r": 0.5714285714,
-        "loo_rmse_pp": 12.3121077849,
-        "loo_mae_pp": 10.5200174021,
+        "leave_one_region_out_rmse_pp": 20.5841932718,
+        "leave_one_region_out_mae_pp": 19.0385930653,
     },
     "stage_matched_egg_density": {
         "pearson_r": 0.5964140926,
         "spearman_r": 0.5714285714,
-        "loo_rmse_pp": 11.0162880546,
-        "loo_mae_pp": 9.5542365956,
+        "leave_one_region_out_rmse_pp": 19.9286407547,
+        "leave_one_region_out_mae_pp": 16.0994007182,
     },
     "filtered_stage_exposure": {
         "pearson_r": 0.9378943315,
         "spearman_r": 0.9285714286,
-        "loo_rmse_pp": 4.5795128833,
-        "loo_mae_pp": 3.9095939368,
+        "leave_one_region_out_rmse_pp": 4.9243281848,
+        "leave_one_region_out_mae_pp": 4.7808172933,
     },
 }
 
 
-def _loo_predictions(x: np.ndarray, y: np.ndarray) -> np.ndarray:
+def _leave_one_region_out_predictions(
+    x: np.ndarray,
+    y: np.ndarray,
+    region: np.ndarray,
+) -> np.ndarray:
     predictions = np.empty_like(y, dtype=float)
-    for held_out in range(len(y)):
-        mask = np.ones(len(y), dtype=bool)
-        mask[held_out] = False
-        design = np.column_stack([np.ones(mask.sum()), x[mask]])
-        beta, *_ = np.linalg.lstsq(design, y[mask], rcond=None)
-        predictions[held_out] = beta[0] + beta[1] * x[held_out]
+    for held_out_region in np.unique(region):
+        test = region == held_out_region
+        train = ~test
+        design = np.column_stack([np.ones(train.sum()), x[train]])
+        beta, *_ = np.linalg.lstsq(design, y[train], rcond=None)
+        predictions[test] = beta[0] + beta[1] * x[test]
     return predictions
 
 
 def build_paired_diagnostic(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     required = {
+        "region",
         "region_season",
         "annual_ground_egg_density",
         "stage_matched_egg_density",
@@ -64,6 +69,7 @@ def build_paired_diagnostic(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFram
     )
 
     y = out["observed_seed_predation_pct"].to_numpy(dtype=float)
+    region = out["region"].astype(str).to_numpy()
     rows: list[dict[str, float | int | str]] = []
 
     for coordinate in [
@@ -74,7 +80,7 @@ def build_paired_diagnostic(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFram
         x = out[coordinate].to_numpy(dtype=float)
         pearson = float(pd.Series(x).corr(pd.Series(y), method="pearson"))
         spearman = float(pd.Series(x).corr(pd.Series(y), method="spearman"))
-        pred = _loo_predictions(x, y)
+        pred = _leave_one_region_out_predictions(x, y, region)
         rmse = float(np.sqrt(np.mean((pred - y) ** 2)))
         mae = float(np.mean(np.abs(pred - y)))
 
@@ -82,8 +88,8 @@ def build_paired_diagnostic(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFram
         observed = {
             "pearson_r": pearson,
             "spearman_r": spearman,
-            "loo_rmse_pp": rmse,
-            "loo_mae_pp": mae,
+            "leave_one_region_out_rmse_pp": rmse,
+            "leave_one_region_out_mae_pp": mae,
         }
         for metric, value in observed.items():
             if not np.isclose(
@@ -101,10 +107,11 @@ def build_paired_diagnostic(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFram
             {
                 "coordinate": coordinate,
                 "n_region_seasons": int(len(out)),
+                "n_regions": int(out["region"].nunique()),
                 "pearson_r": pearson,
                 "spearman_r": spearman,
-                "loo_rmse_pp": rmse,
-                "loo_mae_pp": mae,
+                "leave_one_region_out_rmse_pp": rmse,
+                "leave_one_region_out_mae_pp": mae,
             }
         )
 
