@@ -50,6 +50,18 @@ def validate_phase_alignment_registry(df: pd.DataFrame) -> list[str]:
         )
         errors.append(f"duplicate candidate_id values: {', '.join(duplicates)}")
 
+    duplicate_programme = df.duplicated(subset=["study_id", "dependence_id"], keep=False)
+    if duplicate_programme.any():
+        pairs = sorted(
+            {
+                f"{row.study_id}/{row.dependence_id}"
+                for row in df.loc[duplicate_programme, ["study_id", "dependence_id"]].itertuples(index=False)
+            }
+        )
+        errors.append(
+            "duplicate phase-alignment programme rows: " + ", ".join(pairs)
+        )
+
     invalid_interactions = sorted(
         set(df["interaction_type"].dropna().astype(str)) - INTERACTION_TYPES
     )
