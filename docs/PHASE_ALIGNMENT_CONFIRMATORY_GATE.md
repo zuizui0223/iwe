@@ -34,7 +34,6 @@ A programme is confirmatory_ready only when it has source-backed raw/adult timin
 | PHA_TROLLIUS | mixed_pollinating_seed_predator | partial | yes | partial | yes | partial | no | mechanism_only | no variance-bearing final plant-fitness comparison across stage-timing classes |
 | PHA_IWE031 | antagonist | yes | partial | yes | yes | yes | no | host_sensitivity_final | not a delayed phase-lag design and no natural adult-window comparator |
 | PHA_HURLBURT2004 | mixed_pollinating_seed_predator | yes | partial | partial | yes | yes | blocked | near_confirmatory | mature-fruit records not yet source-linked to marked flowering date/cohort |
-| PHA_IMAI2006 | antagonist | yes | yes | yes | yes | yes | no | host_sensitivity_final | no paired adult/calendar-vs-host-tissue predictive comparison on the same experimental fruits |
 | PHA_AUCUBA_IMAI | antagonist | yes | yes | yes | yes | yes | no | host_sensitivity_final | no paired adult/calendar-only vs tissue-stage predictive comparison |
 
 ## Interpretation
