@@ -61,19 +61,19 @@ No final seed-predation value enters this coordinate.
 
 The resulting descriptive performance is:
 
-| Coordinate | Pearson r with observed seed predation | Spearman rho | LOO RMSE (percentage points) | LOO MAE |
+| Coordinate | Pearson r with observed seed predation | Spearman rho | Leave-one-region-out RMSE (pp) | Leave-one-region-out MAE |
 |---|---:|---:|---:|---:|
-| Annual ground-pod egg density | **0.476** | 0.571 | **12.31** | 10.52 |
-| Stage-matched egg density | **0.596** | 0.571 | **11.02** | 9.55 |
-| Filtered stage exposure | **0.938** | 0.929 | **4.58** | 3.91 |
+| Annual ground-pod egg density | **0.476** | 0.571 | **20.58** | 19.04 |
+| Stage-matched egg density | **0.596** | 0.571 | **19.93** | 16.10 |
+| Filtered stage exposure | **0.938** | 0.929 | **4.92** | 4.78 |
 
-Thus, in this small matched set, moving from an annual exposure average toward a stage-matched and biologically filtered exposure substantially improves association and leave-one-out prediction of final seed predation.
+Thus, in this small matched set, moving from an annual exposure average toward a stage-matched and biologically filtered exposure substantially improves association and **leave-one-region-out** prediction of final seed predation. Region blocking is required because VRD, Barkly and Central Queensland each contribute two seasons; row-wise leave-one-out would leak the same region into training and test sets.
 
 This is the first independent IWE programme with an explicit **simpler-coordinate versus stage/filter-coordinate diagnostic** pointing in the predicted direction.
 
 It is deliberately not called confirmatory for three reasons:
 
-1. **n = 7** region-season combinations;
+1. **n = 7** region-season combinations from only **4 regions**;
 2. the exposure is realized oviposition on seeds, not an independently measured adult-flight or adult-abundance window;
 3. the strongest coordinate incorporates egg parasitism and hatch, which are mechanistically close to seed consumption and are not a host-specific developmental filter.
 
