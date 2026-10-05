@@ -145,3 +145,13 @@ def test_host_sensitivity_final_requires_filter_phase_and_final_endpoint():
     df.loc[:, "prefinal_host_filter"] = "partial"
     errors = validate_phase_alignment_registry(df)
     assert any("host_sensitivity_final requires" in error for error in errors)
+
+
+def test_duplicate_study_dependence_phase_rows_fail():
+    df = _rows()
+    duplicate = df.iloc[[0]].copy()
+    duplicate.loc[:, "candidate_id"] = "READY_DUPLICATE"
+    combined = pd.concat([df, duplicate], ignore_index=True)
+
+    errors = validate_phase_alignment_registry(combined)
+    assert any("duplicate phase-alignment programme rows" in error for error in errors)
