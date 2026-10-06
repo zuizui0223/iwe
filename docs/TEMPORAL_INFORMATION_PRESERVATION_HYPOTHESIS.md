@@ -70,8 +70,9 @@ The mandatory exception is Posledovich 2015: host stage and temperature alter he
 Among eight final-fitness links whose upstream reference is `realized_interaction_window` or `seasonal_position_only`:
 
 - exact preservation: **1/8**;
-- direction retention including `preserved_net_changed_mechanism`: **2/8**;
-- the remaining links are shifted/filtered, reversed, erased, buffered or tracking-inertial.
+- one shifted/filtered Cardamine link changes window position/width and is explicitly **direction-incomparable**;
+- among the remaining seven direction-comparable links, direction retention including `preserved_net_changed_mechanism` is **2/7**;
+- the remaining links are reversed, erased, buffered or tracking-inertial.
 
 This group includes Peucedanum, Cardamine raw egg exposure, long-term Lathyrus, Ulex, Parkinsonia, Dianthus and Trollius buffering.
 
@@ -79,10 +80,7 @@ This group includes Peucedanum, Cardamine raw egg exposure, long-term Lathyrus, 
 
 Cardamine contributes two final-fitness propagation links to the realized-interaction class.
 
-Dropping either one does not remove the descriptive contrast:
-
-- realized/seasonal direction retention becomes **1/7** or **2/7**;
-- prospective direction retention remains **8/9**.
+The shifted/filtered total-egg -> active-egg Cardamine link is direction-incomparable and is not counted as a directional failure. Dropping the second, direction-comparable Cardamine phase-to-fate link changes realized/seasonal direction retention from **2/7 to 1/6**; prospective direction retention remains **8/11**.
 
 No formal p-value is used because the corpus is targeted, reference provenance is confounded with biological system and interaction class, and propagation links are not guaranteed to be independent sampling units.
 
@@ -93,9 +91,9 @@ The provenance pattern is not solely a mutualist-versus-antagonist contrast.
 After restricting to antagonists and collapsing all final-fitness links within each dependence cluster:
 
 - prospective timing references: **4/6 antagonist programmes all direction-retaining**, 1 mixed (Gols 2025), 1 none-retaining;
-- realized/seasonal references: **0/5 all-retaining**, 1 mixed (Cardamine), 4 none-retaining.
+- realized/seasonal references: after excluding direction-incomparable links from the binary retention summary, **1/5 all-retaining**, 0 mixed, 4 none-retaining.
 
-This removes the mutualist-class contribution—including the Mertensia buffer—and the duplicated Cardamine link count. The added Gols programme prevents the prospective antagonist set from looking artificially homogeneous: one plant species preserves the timing effect and another buffers it within the same experiment. The comparison remains descriptive because the antagonist programmes differ in endpoint, design and biological system.
+This removes the mutualist-class contribution—including the Mertensia buffer—and collapses repeated Cardamine links while refusing to treat a shifted window as a directional failure. The added Gols programme prevents the prospective antagonist set from looking artificially homogeneous: one plant species preserves the timing effect and another buffers it within the same experiment. The comparison remains descriptive because the antagonist programmes differ in endpoint, design and biological system.
 
 ## Biological interpretation
 
@@ -143,6 +141,8 @@ It is:
 ### TIP1 — prospective stage references preserve direction more often
 
 Timing defined independently of final outcomes, especially at a source-backed service/susceptibility stage, should more often retain its direction to final fitness than calendar or outcome-entangled timing proxies.
+
+This prediction is **not identified by the current descriptive contrast**, because independent adult monitoring, direct timing manipulations, biological systems and endpoints are unevenly distributed among provenance classes.
 
 ### TIP2 — additional biological transformations create more opportunities for information loss
 
