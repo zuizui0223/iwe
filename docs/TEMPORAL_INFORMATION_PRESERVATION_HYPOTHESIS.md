@@ -48,15 +48,17 @@ Timing is considered prospective here when it is based on either:
 
 Among nine final-fitness links with these references:
 
-- independent partner activity: **5/5 exact preserved**;
+- independent partner activity: **4/5 exact preserved**, **1/5 buffered**;
 - direct timing manipulation: **3/4 preserved**, **1/4 erased**.
 
 Combined:
 
-- exact preservation: **8/9**;
-- direction retention: **8/9**.
+- exact preservation: **7/9**;
+- direction retention under the conservative transformation coding: **7/9**.
 
-The retained examples include mutualist service windows as well as antagonists such as Aucuba, Wu wheat-midge, Wise wheat-midge and experimentally timed *Asclepias–monarch* herbivory. Thus preservation is not unique to mutualism.
+The new prospective buffer is IWE023 *Mertensia ciliata*. Total visitation falls by more than fivefold across the experimental flowering cohorts, but later cohorts receive a higher proportion of more-effective bumblebee visits and seed set does not differ significantly across weeks (F(3,36)=1.01). The frozen week-1 versus week-4 SMD remains positive, but the source-level causal signal is classified as buffered rather than preserved.
+
+The retained examples include mutualist service windows as well as antagonists such as Aucuba, Wu wheat-midge, Wise wheat-midge and experimentally timed *Asclepias–monarch* herbivory. Thus preservation is not unique to mutualism, while Mertensia supplies a prospective mutualist counterexample in which changing pollinator composition buffers a large visitation decline before final seed set.
 
 The mandatory exception is Posledovich 2015: host stage and temperature alter herbivore performance, but the mature-seedpod escape endpoint is erased with respect to those predictors.
 
@@ -87,10 +89,10 @@ The provenance pattern is not solely a mutualist-versus-antagonist contrast.
 
 After restricting to antagonists and collapsing all final-fitness links within each dependence cluster:
 
-- prospective timing references: **4/5 programmes all direction-retaining**, 0 mixed, 1 none-retaining;
+- prospective timing references: **4/5 antagonist programmes all direction-retaining**, 0 mixed, 1 none-retaining;
 - realized/seasonal references: **0/5 all-retaining**, 1 mixed (Cardamine), 4 none-retaining.
 
-This removes the mutualist imbalance and the duplicated Cardamine link count. It remains descriptive because the antagonist programmes differ in endpoint, design and biological system.
+This removes both the mutualist-class contribution—including the newly recognized Mertensia buffer—and the duplicated Cardamine link count. It remains descriptive because the antagonist programmes differ in endpoint, design and biological system.
 
 ## Biological interpretation
 
@@ -98,7 +100,9 @@ The diagnostic suggests that the important distinction may not be mutualist vers
 
 A stronger candidate principle is:
 
-> **Temporal effects are most likely to survive to final fitness when timing is measured prospectively at, or close to, the biological stage that actually delivers service or damage.**
+> **Temporal effects are more likely—but not guaranteed—to survive to final fitness when timing is measured prospectively at, or close to, the biological stage that actually delivers service or damage.**
+
+Mertensia makes the qualification essential: even a prospectively measured visitation window can be buffered when partner identity/effectiveness changes within the same season.
 
 Upstream calendar timing, realized attack proxies and coarse seasonal position leave more intervening biological opportunities for the signal to be rewritten.
 
@@ -161,7 +165,7 @@ This is exactly the current `confirmatory_ready` gate.
 
 The hypothesis should be weakened or rejected if:
 
-1. systematic expansion of the corpus causes prospectively defined final-fitness links to show transformation/loss as often as lower-provenance links;
+1. systematic expansion of the corpus causes prospectively defined final-fitness links to show transformation/loss as often as lower-provenance links; the Mertensia buffer is already one such counterexample and must remain in the denominator;
 2. paired within-programme comparisons repeatedly show no predictive improvement from effective-stage alignment;
 3. the provenance contrast disappears after dependence-aware programme-level aggregation;
 4. transformation state is explained by study design or endpoint selection rather than biological causal position.
