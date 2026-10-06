@@ -84,14 +84,14 @@ This contrast is not an inferential prevalence estimate: the corpus is targeted,
 
 To reduce confounding by interaction class and repeated links, final-fitness links are also collapsed to one retention state per dependence cluster within antagonists.
 
-| Antagonist timing provenance | Programmes | All final links retain direction | Mixed retention | No final link retains direction |
+| Antagonist timing provenance | Programmes | All direction-comparable final links retain direction | Mixed retention | No direction-comparable final link retains direction |
 |---|---:|---:|---:|---:|
 | prospective | 6 | 4 | 1 | 1 |
 | realized_or_seasonal | 5 | 1 | 0 | 4 |
 
 Within antagonists alone, prospective timing references yield **4/6 programmes with all direction-comparable final links retained**, 1 mixed, and 1 none-retained. Once direction-incomparable links are excluded from this binary summary, realized/seasonal references yield **1/5 all-retained**, 0 mixed, and 4 none-retained.
 
-This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links. It remains descriptive rather than inferential because the targeted programmes differ in endpoint and study design.
+This programme-level sensitivity removes the mutualist-class imbalance and collapses repeated links, while remaining descriptive rather than inferential.
 
 ## Antagonist-only exact-reference sensitivity
 
