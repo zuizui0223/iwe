@@ -101,8 +101,8 @@ The prospective category still mixes observational adult monitoring with direct 
 |---|---:|---:|---:|---:|
 | independent_partner_activity | 1 | 1 | 0 | 0 |
 | direct_interaction_manipulation | 5 | 3 | 1 | 1 |
-| realized_interaction_window | 4 | 1 | 0 | 3 |
-| seasonal_position_only | 1 | 0 | 0 | 1 |
+| realized_interaction_window | 5 | 1 | 0 | 4 |
+| seasonal_position_only | 0 | 0 | 0 | 0 |
 
 This split makes the design confounding explicit: independent adult monitoring and direct timing manipulations should not be interpreted as one biological causal-depth treatment. The table is a diagnostic for where confirmatory matched-design evidence is still missing.
 
