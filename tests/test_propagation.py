@@ -15,6 +15,7 @@ def _rows() -> pd.DataFrame:
                 "to_stage": "final_seed",
                 "transformation": "preserved",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "DEP_A",
                 "window_reference_class": "independent_partner_activity",
                 "evidence_note": "final link",
@@ -27,6 +28,7 @@ def _rows() -> pd.DataFrame:
                 "to_stage": "larval_load",
                 "transformation": "erased",
                 "final_fitness_reached": "no",
+                "direction_comparable": "yes",
                 "dependence_id": "DEP_B",
                 "window_reference_class": "realized_interaction_window",
                 "evidence_note": "signal disappears before final fitness",
@@ -93,6 +95,7 @@ def test_summary_separates_final_transformations_by_reference_provenance():
                 "to_stage": "final_seed",
                 "transformation": "preserved",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "D1",
                 "window_reference_class": "independent_partner_activity",
                 "evidence_note": "prospective",
@@ -105,6 +108,7 @@ def test_summary_separates_final_transformations_by_reference_provenance():
                 "to_stage": "final_seed",
                 "transformation": "erased",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "D2",
                 "window_reference_class": "direct_interaction_manipulation",
                 "evidence_note": "prospective null",
@@ -117,6 +121,7 @@ def test_summary_separates_final_transformations_by_reference_provenance():
                 "to_stage": "final_seed",
                 "transformation": "preserved_net_changed_mechanism",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "D3",
                 "window_reference_class": "realized_interaction_window",
                 "evidence_note": "realized reference",
@@ -129,6 +134,7 @@ def test_summary_separates_final_transformations_by_reference_provenance():
                 "to_stage": "final_seed",
                 "transformation": "buffered",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "D4",
                 "window_reference_class": "seasonal_position_only",
                 "evidence_note": "seasonal reference",
@@ -138,9 +144,11 @@ def test_summary_separates_final_transformations_by_reference_provenance():
     summary = propagation_summary(df)
     assert summary["prospective_final_links"] == 2
     assert summary["prospective_exact_preserved"] == 1
+    assert summary["prospective_direction_comparable_links"] == 2
     assert summary["prospective_direction_retaining"] == 1
     assert summary["realized_or_seasonal_final_links"] == 2
     assert summary["realized_or_seasonal_exact_preserved"] == 0
+    assert summary["realized_or_seasonal_direction_comparable_links"] == 2
     assert summary["realized_or_seasonal_direction_retaining"] == 1
     assert (
         summary["final_transformations_by_reference"]["independent_partner_activity"]["preserved"]
@@ -159,6 +167,7 @@ def test_antagonist_programme_sensitivity_collapses_duplicate_links():
                 "to_stage": "final",
                 "transformation": "preserved",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "DP1",
                 "window_reference_class": "independent_partner_activity",
                 "evidence_note": "prospective retained",
@@ -171,6 +180,7 @@ def test_antagonist_programme_sensitivity_collapses_duplicate_links():
                 "to_stage": "final",
                 "transformation": "erased",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "DP2",
                 "window_reference_class": "direct_interaction_manipulation",
                 "evidence_note": "prospective null",
@@ -183,6 +193,7 @@ def test_antagonist_programme_sensitivity_collapses_duplicate_links():
                 "to_stage": "effective",
                 "transformation": "shifted_filtered",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "DR1",
                 "window_reference_class": "realized_interaction_window",
                 "evidence_note": "same programme first link",
@@ -195,6 +206,7 @@ def test_antagonist_programme_sensitivity_collapses_duplicate_links():
                 "to_stage": "final",
                 "transformation": "preserved",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "DR1",
                 "window_reference_class": "realized_interaction_window",
                 "evidence_note": "same programme second link",
@@ -207,6 +219,7 @@ def test_antagonist_programme_sensitivity_collapses_duplicate_links():
                 "to_stage": "final",
                 "transformation": "buffered",
                 "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
                 "dependence_id": "DR2",
                 "window_reference_class": "seasonal_position_only",
                 "evidence_note": "realized none retained",
@@ -238,3 +251,46 @@ def test_iwe023_is_frozen_as_buffered_not_preserved():
     note = str(row.iloc[0]["evidence_note"]).lower()
     assert "fivefold" in note or "5-fold" in note
     assert "buffer" in note
+
+
+def test_direction_incomparable_link_is_not_counted_as_directional_failure():
+    df = pd.DataFrame(
+        [
+            {
+                "propagation_id": "C1",
+                "study_id": "S1",
+                "interaction_type": "antagonist",
+                "from_stage": "raw_egg_window",
+                "to_stage": "active_egg_window",
+                "transformation": "shifted_filtered",
+                "final_fitness_reached": "yes",
+                "direction_comparable": "no",
+                "dependence_id": "D1",
+                "window_reference_class": "realized_interaction_window",
+                "evidence_note": "window center/width changes; sign is not a comparable quantity",
+            },
+            {
+                "propagation_id": "C2",
+                "study_id": "S1",
+                "interaction_type": "antagonist",
+                "from_stage": "phase_margin",
+                "to_stage": "final_fate",
+                "transformation": "preserved",
+                "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
+                "dependence_id": "D1",
+                "window_reference_class": "realized_interaction_window",
+                "evidence_note": "comparable direction",
+            },
+        ]
+    )
+    summary = propagation_summary(df)
+    assert summary["realized_or_seasonal_final_links"] == 2
+    assert summary["realized_or_seasonal_direction_comparable_links"] == 1
+    assert summary["realized_or_seasonal_direction_retaining"] == 1
+    assert summary["antagonist_retention_by_provenance"]["realized_or_seasonal"] == {
+        "n": 1,
+        "all_retained": 1,
+        "mixed": 0,
+        "none_retained": 0,
+    }
