@@ -89,9 +89,7 @@ To reduce confounding by interaction class and repeated links, final-fitness lin
 | prospective | 6 | 4 | 1 | 1 |
 | realized_or_seasonal | 5 | 1 | 0 | 4 |
 
-Within antagonists alone, prospective timing references yield **4/6 programmes with all direction-comparable final links retained**, 1 mixed, and 1 none-retained. Once direction-incomparable links are excluded from this binary summary, realized/seasonal references yield **1/5 all-retained**, 0 mixed, and 4 none-retained.
-
-This programme-level sensitivity removes the mutualist-class imbalance and collapses repeated links, while remaining descriptive rather than inferential.
+Within antagonists alone, prospective timing references yield **4/6 programmes with all direction-comparable final links retained**, 1 mixed, and 1 none-retained. Once direction-incomparable links are excluded from this binary summary, realized/seasonal references yield **1/5 all-retained**, 0 mixed, and 4 none-retained. This programme-level sensitivity removes the mutualist-class imbalance and collapses repeated links, while remaining descriptive rather than inferential.
 
 ## Antagonist-only exact-reference sensitivity
 
