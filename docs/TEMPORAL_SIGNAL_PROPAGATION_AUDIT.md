@@ -4,10 +4,10 @@ _Generated from data/registry/temporal_signal_components.csv; do not edit counts
 
 ## Scope
 
-- Registered propagation links: **20**
-- Studies: **19**
-- Dependence clusters: **19**
-- Links reaching a final plant-fitness endpoint: **17** from **16 studies**
+- Registered propagation links: **22**
+- Studies: **20**
+- Dependence clusters: **20**
+- Links reaching a final plant-fitness endpoint: **19** from **17 studies**
 
 A propagation link is not an effect size. It records whether a source-backed timing signal is preserved, transformed, reversed, erased, buffered, or fails to track a downstream stage. Multiple links from one programme retain one dependence cluster.
 
@@ -15,9 +15,9 @@ A propagation link is not an effect size. It records whether a source-backed tim
 
 | Transformation | Links |
 |---|---:|
-| buffered | 4 |
+| buffered | 5 |
 | erased | 3 |
-| preserved | 7 |
+| preserved | 9 |
 | preserved_net_changed_mechanism | 1 |
 | shifted_filtered | 1 |
 | sign_reversed | 2 |
@@ -27,7 +27,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 
 | Interaction type | Links |
 |---|---:|
-| antagonist | 12 |
+| antagonist | 14 |
 | mixed_pollinating_seed_predator | 4 |
 | mutualist | 4 |
 
@@ -35,7 +35,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 
 | Window-reference class | Links |
 |---|---:|
-| direct_interaction_manipulation | 4 |
+| direct_interaction_manipulation | 6 |
 | independent_partner_activity | 5 |
 | realized_interaction_window | 9 |
 | seasonal_position_only | 2 |
@@ -44,9 +44,9 @@ A propagation link is not an effect size. It records whether a source-backed tim
 
 | Transformation | Links |
 |---|---:|
-| buffered | 3 |
+| buffered | 4 |
 | erased | 2 |
-| preserved | 8 |
+| preserved | 9 |
 | preserved_net_changed_mechanism | 1 |
 | shifted_filtered | 1 |
 | sign_reversed | 1 |
@@ -59,7 +59,7 @@ This matrix is descriptive for the targeted pilot corpus. It is not a literature
 | Interaction type | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | mutualist | 3 | 0 | 0 | 0 | 1 | 0 | 0 |
-| antagonist | 5 | 1 | 1 | 2 | 1 | 1 | 0 |
+| antagonist | 6 | 1 | 1 | 2 | 2 | 1 | 0 |
 | mixed_pollinating_seed_predator | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
 
 ## Final-link transformations by timing-reference provenance
@@ -69,13 +69,13 @@ This table is descriptive at the propagation-link level. IWE032 contributes two 
 | Timing reference | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | independent_partner_activity | 4 | 0 | 0 | 0 | 1 | 0 | 0 |
-| direct_interaction_manipulation | 3 | 0 | 0 | 1 | 0 | 0 | 0 |
+| direct_interaction_manipulation | 4 | 0 | 0 | 1 | 1 | 0 | 0 |
 | realized_interaction_window | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 | seasonal_position_only | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 
-Prospectively defined timing references (independent partner activity or direct timing manipulation) retain the signal direction in **7/9** final-fitness links (7/9 are exact preserved). Realized-interaction or seasonal-position references retain direction in **2/8** links (1/8 exact preserved).
+Prospectively defined timing references (independent partner activity or direct timing manipulation) retain the signal direction in **8/11** final-fitness links (8/11 are exact preserved). Realized-interaction or seasonal-position references retain direction in **2/8** links (1/8 exact preserved).
 
-The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 7/9.
+The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 8/11.
 
 This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.
 
@@ -85,10 +85,10 @@ To reduce confounding by interaction class and repeated links, final-fitness lin
 
 | Antagonist timing provenance | Programmes | All final links retain direction | Mixed retention | No final link retains direction |
 |---|---:|---:|---:|---:|
-| prospective | 5 | 4 | 0 | 1 |
+| prospective | 6 | 4 | 1 | 1 |
 | realized_or_seasonal | 5 | 0 | 1 | 4 |
 
-Within antagonists alone, prospective timing references yield **4/5 programmes with all final links direction-retaining** and 1/5 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained.
+Within antagonists alone, prospective timing references yield **4/6 programmes with all final links direction-retaining**, 1/6 mixed (Gols 2025: one host species preserved, one buffered), and 1/6 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained.
 
 This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links. It remains descriptive rather than inferential because the targeted programmes differ in endpoint and study design.
 
@@ -98,6 +98,6 @@ The current pilot falsifies the idea that a phenological effect can be represent
 
 Positive downstream propagation is not confined to Cardamine. Aucuba provides a direct timing manipulation in which complete gall induction that prevents seed production falls from 80.9% before 15 June to 8.8% after the host tissue window closes. Wise 2015 independently preserves experimentally shifted adult wheat-midge exposure timing to final seed damage/yield loss, while Wu 2015 links independently monitored adult occurrence × susceptible ear emergence to final yield loss across >400 cultivars. Cardamine adds ecotype-level phase-to-final-fate alignment, while Kula provides an independent mixed-system mechanistic sign reversal as a response-independent phase-safety margin crosses zero; Kula stops at predation rather than final plant fitness.
 
-Equally important are explicit nulls and buffers. Mertensia shows a prospective mutualist signal that is buffered: total visitation falls more than fivefold, but a shift toward more effective bumblebee visits leaves no significant seed-set difference across flowering weeks. James shows a flowering-time signal at oviposition that disappears by realized cheater larval load. Posledovich shows host-stage matching that affects herbivore performance but not the mature-seedpod escape endpoint. Long-term Lathyrus shows a moving phenology-predation covariance that does not explain flowering-time selection on intact-seed fitness. Hemborg–Després Trollius shows a different transformation: early flowers on multi-flowered plants receive more oviposition and higher relative predation, yet the additional reproductive units buffer that cost so multi-flowered plants finish with higher annual seed output.
+Equally important are explicit nulls and buffers. Mertensia shows a prospective mutualist signal that is buffered: total visitation falls more than fivefold, but a shift toward more effective bumblebee visits leaves no significant seed-set difference across flowering weeks. Gols 2025 gives an independent prospective antagonist stress test within one experiment: herbivory timing is buffered before integrated reproductive potential in Sinapis arvensis but preserved in Brassica nigra. James shows a flowering-time signal at oviposition that disappears by realized cheater larval load. Posledovich shows host-stage matching that affects herbivore performance but not the mature-seedpod escape endpoint. Long-term Lathyrus shows a moving phenology-predation covariance that does not explain flowering-time selection on intact-seed fitness. Hemborg–Després Trollius shows a different transformation: early flowers on multi-flowered plants receive more oviposition and higher relative predation, yet the additional reproductive units buffer that cost so multi-flowered plants finish with higher annual seed output.
 
 The confirmatory target is therefore signal propagation to final plant fitness, not the mere existence of a biologically plausible stage-specific timing mechanism.
