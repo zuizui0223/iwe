@@ -4,10 +4,10 @@ _Generated from data/registry/temporal_signal_components.csv; do not edit counts
 
 ## Scope
 
-- Registered propagation links: **18**
-- Studies: **17**
-- Dependence clusters: **17**
-- Links reaching a final plant-fitness endpoint: **15** from **14 studies**
+- Registered propagation links: **19**
+- Studies: **18**
+- Dependence clusters: **18**
+- Links reaching a final plant-fitness endpoint: **16** from **15 studies**
 
 A propagation link is not an effect size. It records whether a source-backed timing signal is preserved, transformed, reversed, erased, buffered, or fails to track a downstream stage. Multiple links from one programme retain one dependence cluster.
 
@@ -17,7 +17,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 |---|---:|
 | buffered | 3 |
 | erased | 3 |
-| preserved | 7 |
+| preserved | 8 |
 | preserved_net_changed_mechanism | 1 |
 | shifted_filtered | 1 |
 | sign_reversed | 2 |
@@ -27,7 +27,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 
 | Interaction type | Links |
 |---|---:|
-| antagonist | 10 |
+| antagonist | 11 |
 | mixed_pollinating_seed_predator | 4 |
 | mutualist | 4 |
 
@@ -36,7 +36,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 | Window-reference class | Links |
 |---|---:|
 | direct_interaction_manipulation | 3 |
-| independent_partner_activity | 4 |
+| independent_partner_activity | 5 |
 | realized_interaction_window | 9 |
 | seasonal_position_only | 2 |
 
@@ -46,7 +46,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 |---|---:|
 | buffered | 2 |
 | erased | 2 |
-| preserved | 7 |
+| preserved | 8 |
 | preserved_net_changed_mechanism | 1 |
 | shifted_filtered | 1 |
 | sign_reversed | 1 |
@@ -59,7 +59,7 @@ This matrix is descriptive for the targeted pilot corpus. It is not a literature
 | Interaction type | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | mutualist | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
-| antagonist | 3 | 1 | 1 | 2 | 1 | 1 | 0 |
+| antagonist | 4 | 1 | 1 | 2 | 1 | 1 | 0 |
 | mixed_pollinating_seed_predator | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
 
 ## Interpretation
