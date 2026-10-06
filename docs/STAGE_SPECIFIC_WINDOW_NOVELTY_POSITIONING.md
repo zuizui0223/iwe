@@ -53,7 +53,19 @@ Therefore IWE must **not** claim novelty for any of the following:
 The candidate extension is narrower: IWE asks how **temporal phase relations among those already-recognized stages** are propagated to plant fitness, and whether an upstream timing signal is preserved, shifted, reversed, erased or buffered as it moves through the stage chain.
 
 
-### 5. Buffering of phenological mismatch
+### 5. Timing accuracy versus fitness consequence
+
+The distinction between a temporal match and its fitness value also has clear antecedents.
+
+CaraDonna et al. 2021 (*Ecology Letters*, DOI `10.1111/ele.13623`) emphasizes the temporal dimension of plant–animal mutualistic interactions, including how phenological overlap constrains interaction formation while abundance, traits and interaction flexibility determine what interactions actually occur.
+
+Torstenson & Shaw 2025 (*Oikos*, DOI `10.1111/oik.10862`) goes further conceptually by distinguishing **cue accuracy** (how close behavior is to optimal timing) from **cue efficacy** (the fitness achieved by using that cue). Thus the general statement that "better timing does not necessarily imply better fitness" is also not novel to IWE.
+
+IWE must therefore not claim novelty for separating a timing metric from a fitness consequence in the abstract.
+
+The candidate contribution is more specific: tracking the **directional fate of a source-defined timing signal through named biological stages**, with explicit transformation states and a final-fitness endpoint.
+
+### 6. Buffering of phenological mismatch
 
 Weir & Phillimore 2024 (*Global Change Biology*, DOI `10.1111/gcb.17294`) explicitly argues that mismatch costs are often buffered and synthesizes three broad forms:
 
@@ -69,7 +81,7 @@ The candidate extension is narrower and different: buffering is treated as one p
 
 ## What the IWE pivot adds
 
-The candidate synthesis is not simply "benefits and costs both exist," nor is it the already-established idea that interaction sign can change ontogenetically.
+The candidate synthesis is not simply "benefits and costs both exist," nor is it the already-established idea that interaction sign can change ontogenetically or that timing quality and fitness consequence can differ.
 
 It combines three temporal questions that remain distinct from stage-structured mutualism theory:
 
@@ -131,6 +143,8 @@ Before a manuscript claims a conceptual first, a systematic citation search arou
 - stage-specific phenological mismatch;
 - delayed interaction effects;
 - adult-larval phase relationships;
+- cue accuracy versus cue efficacy;
+- temporal dynamics of interaction networks;
 - ontogenetic antagonism-mutualism coupling;
 - stage-structured mutualism;
 - temporal propagation / information loss across life-history stages
