@@ -75,6 +75,8 @@ This table is descriptive at the propagation-link level. IWE032 contributes two 
 
 Prospectively defined timing references (independent partner activity or direct timing manipulation) retain the signal direction in **7/8** final-fitness links (7/8 are exact preserved). Realized-interaction or seasonal-position references retain direction in **2/8** links (1/8 exact preserved).
 
+The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 7/8.
+
 This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.
 
 ## Interpretation
