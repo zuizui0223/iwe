@@ -4,9 +4,9 @@ _Generated from data/registry/landscape_components.csv; do not edit counts by ha
 
 ## Pilot scope
 
-- Components: **35**
-- Studies: **32**
-- Dependence clusters: **30**
+- Components: **36**
+- Studies: **33**
+- Dependence clusters: **31**
 
 This is a deliberately small re-audit of already-screened IWE programmes. It is not a systematic-review denominator.
 
@@ -14,7 +14,7 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 
 | Interaction type | Components |
 |---|---:|
-| antagonist | 18 |
+| antagonist | 19 |
 | mixed_pollinating_seed_predator | 11 |
 | mutualist | 6 |
 
@@ -24,7 +24,7 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 |---|---:|
 | direct_interaction_manipulation | 4 |
 | historical_partner_window | 1 |
-| independent_partner_activity | 9 |
+| independent_partner_activity | 10 |
 | realized_interaction_window | 17 |
 | seasonal_position_only | 4 |
 
@@ -42,7 +42,7 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 | reextract_directional | 1 |
 | selection_shift_evidence | 1 |
 | stage_structure_evidence | 2 |
-| strong_candidate | 5 |
+| strong_candidate | 6 |
 
 ## High-provenance anchors
 
@@ -50,7 +50,7 @@ Only strong_candidate rows combine a final reproductive outcome with an independ
 
 | Interaction type | Strong candidates |
 |---|---:|
-| antagonist | 1 |
+| antagonist | 2 |
 | mixed_pollinating_seed_predator | 1 |
 | mutualist | 3 |
 
@@ -58,7 +58,7 @@ Only strong_candidate rows combine a final reproductive outcome with an independ
 
 | Interaction type | Components with independent partner activity |
 |---|---:|
-| antagonist | 1 |
+| antagonist | 2 |
 | mixed_pollinating_seed_predator | 3 |
 | mutualist | 5 |
 
@@ -68,7 +68,7 @@ These counts include strong anchors plus directional re-extraction, realized-win
 
 | Interaction type | Distinct dependence clusters |
 |---|---:|
-| antagonist | 8 |
+| antagonist | 9 |
 | mixed_pollinating_seed_predator | 3 |
 | mutualist | 4 |
 
@@ -76,4 +76,4 @@ These counts include strong anchors plus directional re-extraction, realized-win
 
 The landscape registry now separates upstream temporal exposure, stage-specific transformation, and final reproductive outcome while preserving the provenance of every timing reference. A companion temporal signal-propagation registry records whether source-backed timing signals are preserved, shifted/filtered, reversed, erased, buffered, or fail to track a downstream stage.
 
-Current broadened support comes from 4 mutualist, 8 antagonist, and 3 mixed dependence clusters; mechanism-only, boundary, and stage-structure rows are excluded from those counts. Recent antagonist evidence includes an Aucuba host-tissue-window experiment in which complete gall induction that destroys seed production falls from 80.9% before 15 June to 8.8% after the susceptible fruit stage closes, and Wise 2015 where experimentally delaying adult wheat-midge exposure beyond spike emergence reduces final seed damage/yield loss. Cardamine supplies positive phase-to-final-fate evidence, Parkinsonia a paired realized stage/filter diagnostic, while James, Posledovich, and long-term Lathyrus retain explicit downstream signal-loss/null cases. Mixed evidence includes Dianthus final post-predation fitness, Silene-Hadena phase reversal, Yucca service-window effects, senita overlap-conditioned redundancy, Trollius flower-age benefit-cost shifts, and Glochidion annual-scale stage separation. The confirmatory question remains whether a prospectively defined effective-stage coordinate predicts final plant fitness better than calendar or upstream timing in independent programmes.
+Current broadened support comes from 4 mutualist, 9 antagonist, and 3 mixed dependence clusters; mechanism-only, boundary, and stage-structure rows are excluded from those counts. High-provenance antagonist coverage now includes Wu 2015, where independently monitored adult wheat-midge occurrence is aligned to an experimentally identified susceptible ear-emergence stage and predicts final yield loss across >400 cultivars. Direct experimental timing evidence includes Aucuba, where complete gall induction that destroys seed production falls from 80.9% before 15 June to 8.8% after the susceptible fruit stage closes, and Wise 2015, where delaying adult wheat-midge exposure beyond spike emergence reduces final seed damage/yield loss. Cardamine supplies positive phase-to-final-fate evidence, Parkinsonia a paired realized stage/filter diagnostic, while James, Posledovich, and long-term Lathyrus retain explicit downstream signal-loss/null cases. Mixed evidence includes Dianthus final post-predation fitness, Silene-Hadena phase reversal, Yucca service-window effects, senita overlap-conditioned redundancy, Trollius flower-age benefit-cost shifts, and Glochidion annual-scale stage separation. The confirmatory question remains whether a prospectively defined effective-stage coordinate predicts final plant fitness better than calendar or upstream timing in independent programmes.
