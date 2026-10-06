@@ -293,7 +293,7 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
         f"**{summary['realized_or_seasonal_direction_retaining']}/{summary['realized_or_seasonal_final_links']}** links "
         f"({summary['realized_or_seasonal_exact_preserved']}/{summary['realized_or_seasonal_final_links']} exact preserved).",
         "",
-        "The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 7/8.",
+        "The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 8/9.",
         "",
         "This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.",
         "",
@@ -318,7 +318,7 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
             for provenance in ("prospective", "realized_or_seasonal")
         ],
         "",
-        "Within antagonists alone, prospective timing references yield **3/4 programmes with all final links direction-retaining** and 1/4 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained. This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links, while remaining descriptive rather than inferential.",
+        "Within antagonists alone, prospective timing references yield **4/5 programmes with all final links direction-retaining** and 1/5 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained. This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links, while remaining descriptive rather than inferential.",
         "",
         "## Interpretation",
         "",
