@@ -37,6 +37,20 @@ Pollinating seed-predator work explicitly recognizes that adults provide pollina
 
 The classic literature asks when the balance is mutualistic versus antagonistic, and later studies quantify spatial, annual and community context.
 
+### 5. Buffering of phenological mismatch
+
+Weir & Phillimore 2024 (*Global Change Biology*, DOI `10.1111/gcb.17294`) explicitly argues that mismatch costs are often buffered and synthesizes three broad forms:
+
+- mechanisms that reduce asynchrony;
+- mechanisms that reduce the cost of being asynchronous;
+- mechanisms that damp performance variance at higher organizational levels.
+
+This is a direct conceptual precursor for IWE's `buffered` transformation state.
+
+IWE therefore must **not** claim that buffering, compensation, or ecological resilience to mismatch is novel.
+
+The candidate extension is narrower and different: buffering is treated as one possible fate of temporal information alongside preservation, stage filtering, sign reversal, erasure and tracking failure, and those transformations are mapped between source-defined causal stages.
+
 ## What the IWE pivot adds
 
 The candidate synthesis is not simply "benefits and costs both exist."
@@ -83,9 +97,15 @@ The targeted literature check recovered work on:
 - conflicting selection by pollinators and antagonists;
 - nursery-pollination cost-benefit balance.
 
-It did **not** yet recover a general cross-system synthesis that treats adult service and delayed offspring cost as separate temporal windows and tests whether their phase difference predicts plant fitness.
+It did **not** yet recover a general cross-system synthesis that jointly:
 
-That absence is a search result, not proof of novelty.
+- treats adult service and delayed offspring cost as separate temporal windows;
+- records whether timing information is preserved, filtered, reversed, erased or buffered between causal stages;
+- compares whether prospectively defined timing references are more likely to retain their direction to final fitness than calendar or outcome-entangled timing references.
+
+Weir & Phillimore 2024 covers the buffering subset of this problem, so any novelty claim must explicitly distinguish transformation-state tracking from buffering per se.
+
+That absence is a targeted-search result, not proof of novelty.
 
 Before a manuscript claims a conceptual first, a systematic citation search around:
 
@@ -101,6 +121,6 @@ must be completed.
 
 A defensible current formulation is:
 
-> We extend phenological mismatch and developmental-race perspectives by distinguishing stage-specific interaction windows within the same biotic partner, allowing adult service and delayed offspring cost to be temporally decoupled.
+> We extend phenological mismatch, developmental-race and buffering perspectives by tracking whether source-defined timing information is preserved or transformed across interaction stages, while distinguishing stage-specific adult service and delayed offspring cost within the same biotic partner.
 
 Avoid "first framework" or "first demonstration" until the dedicated novelty search is complete.
