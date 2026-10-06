@@ -146,3 +146,85 @@ def test_summary_separates_final_transformations_by_reference_provenance():
         summary["final_transformations_by_reference"]["independent_partner_activity"]["preserved"]
         == 1
     )
+
+
+def test_antagonist_programme_sensitivity_collapses_duplicate_links():
+    df = pd.DataFrame(
+        [
+            {
+                "propagation_id": "AP1",
+                "study_id": "A1",
+                "interaction_type": "antagonist",
+                "from_stage": "adult",
+                "to_stage": "final",
+                "transformation": "preserved",
+                "final_fitness_reached": "yes",
+                "dependence_id": "DP1",
+                "window_reference_class": "independent_partner_activity",
+                "evidence_note": "prospective retained",
+            },
+            {
+                "propagation_id": "AP2",
+                "study_id": "A2",
+                "interaction_type": "antagonist",
+                "from_stage": "timed",
+                "to_stage": "final",
+                "transformation": "erased",
+                "final_fitness_reached": "yes",
+                "dependence_id": "DP2",
+                "window_reference_class": "direct_interaction_manipulation",
+                "evidence_note": "prospective null",
+            },
+            {
+                "propagation_id": "AR1",
+                "study_id": "A3",
+                "interaction_type": "antagonist",
+                "from_stage": "egg",
+                "to_stage": "effective",
+                "transformation": "shifted_filtered",
+                "final_fitness_reached": "yes",
+                "dependence_id": "DR1",
+                "window_reference_class": "realized_interaction_window",
+                "evidence_note": "same programme first link",
+            },
+            {
+                "propagation_id": "AR2",
+                "study_id": "A3",
+                "interaction_type": "antagonist",
+                "from_stage": "phase",
+                "to_stage": "final",
+                "transformation": "preserved",
+                "final_fitness_reached": "yes",
+                "dependence_id": "DR1",
+                "window_reference_class": "realized_interaction_window",
+                "evidence_note": "same programme second link",
+            },
+            {
+                "propagation_id": "AR3",
+                "study_id": "A4",
+                "interaction_type": "antagonist",
+                "from_stage": "season",
+                "to_stage": "final",
+                "transformation": "buffered",
+                "final_fitness_reached": "yes",
+                "dependence_id": "DR2",
+                "window_reference_class": "seasonal_position_only",
+                "evidence_note": "realized none retained",
+            },
+        ]
+    )
+    summary = propagation_summary(df)
+    assert summary["final_programmes"] == 4
+    assert summary["antagonist_programmes"] == 4
+    assert summary["antagonist_retention_by_provenance"]["prospective"] == {
+        "n": 2,
+        "all_retained": 1,
+        "mixed": 0,
+        "none_retained": 1,
+    }
+    assert summary["antagonist_retention_by_provenance"]["realized_or_seasonal"] == {
+        "n": 2,
+        "all_retained": 0,
+        "mixed": 1,
+        "none_retained": 1,
+    }
