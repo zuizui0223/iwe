@@ -79,6 +79,19 @@ The descriptive contrast is not driven by the duplicated Cardamine dependence cl
 
 This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.
 
+## Antagonist-only dependence-cluster sensitivity
+
+To reduce confounding by interaction class and repeated links, final-fitness links are also collapsed to one retention state per dependence cluster within antagonists.
+
+| Antagonist timing provenance | Programmes | All final links retain direction | Mixed retention | No final link retains direction |
+|---|---:|---:|---:|---:|
+| prospective | 4 | 3 | 0 | 1 |
+| realized_or_seasonal | 5 | 0 | 1 | 4 |
+
+Within antagonists alone, prospective timing references yield **3/4 programmes with all final links direction-retaining** and 1/4 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained.
+
+This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links. It remains descriptive rather than inferential because the targeted programmes differ in endpoint and study design.
+
 ## Interpretation
 
 The current pilot falsifies the idea that a phenological effect can be represented by one invariant synchrony coefficient carried unchanged from encounter to fitness. Source-backed timing signals are observed to persist, reverse sign, be shifted by host/consumer filtering, disappear before the next consumer stage, be buffered by alternative ecological routes, or fail to track moving resources. In the current targeted set, all four mutualist service-window links that reach final plant fitness are classified as preserved, whereas antagonist and mixed links occupy multiple transformation states. This class pattern is a hypothesis-generating contrast, not a prevalence estimate.
