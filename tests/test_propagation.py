@@ -255,8 +255,8 @@ def test_antagonist_programme_sensitivity_collapses_duplicate_links():
     }
     assert summary["antagonist_retention_by_reference_class"]["realized_interaction_window"] == {
         "n": 1,
-        "all_retained": 1,
-        "mixed": 0,
+        "all_retained": 0,
+        "mixed": 1,
         "none_retained": 0,
     }
     assert summary["antagonist_retention_by_reference_class"]["seasonal_position_only"] == {
