@@ -62,6 +62,21 @@ This matrix is descriptive for the targeted pilot corpus. It is not a literature
 | antagonist | 4 | 1 | 1 | 2 | 1 | 1 | 0 |
 | mixed_pollinating_seed_predator | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
 
+## Final-link transformations by timing-reference provenance
+
+This table is descriptive at the propagation-link level. IWE032 contributes two final-fitness links to the realized-interaction class, so these rows are not treated as independent studies.
+
+| Timing reference | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| independent_partner_activity | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
+| direct_interaction_manipulation | 2 | 0 | 0 | 1 | 0 | 0 | 0 |
+| realized_interaction_window | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| seasonal_position_only | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+
+Prospectively defined timing references (independent partner activity or direct timing manipulation) retain the signal direction in **7/8** final-fitness links (7/8 are exact preserved). Realized-interaction or seasonal-position references retain direction in **2/8** links (1/8 exact preserved).
+
+This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.
+
 ## Interpretation
 
 The current pilot falsifies the idea that a phenological effect can be represented by one invariant synchrony coefficient carried unchanged from encounter to fitness. Source-backed timing signals are observed to persist, reverse sign, be shifted by host/consumer filtering, disappear before the next consumer stage, be buffered by alternative ecological routes, or fail to track moving resources. In the current targeted set, all four mutualist service-window links that reach final plant fitness are classified as preserved, whereas antagonist and mixed links occupy multiple transformation states. This class pattern is a hypothesis-generating contrast, not a prevalence estimate.
