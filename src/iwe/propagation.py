@@ -19,6 +19,7 @@ TRANSFORMATIONS = {
 }
 
 FINAL_FITNESS_REACHED = {"yes", "no"}
+DIRECTION_COMPARABLE = {"yes", "no"}
 
 REQUIRED_COLUMNS = [
     "propagation_id",
@@ -28,6 +29,7 @@ REQUIRED_COLUMNS = [
     "to_stage",
     "transformation",
     "final_fitness_reached",
+    "direction_comparable",
     "dependence_id",
     "window_reference_class",
     "evidence_note",
@@ -50,6 +52,7 @@ def validate_propagation_registry(df: pd.DataFrame) -> list[str]:
         "interaction_type": INTERACTION_TYPES,
         "transformation": TRANSFORMATIONS,
         "final_fitness_reached": FINAL_FITNESS_REACHED,
+        "direction_comparable": DIRECTION_COMPARABLE,
         "window_reference_class": WINDOW_REFERENCE_CLASSES,
     }
     for column, allowed in checks.items():
@@ -91,12 +94,22 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
         )
     ]
     direction_retaining = {"preserved", "preserved_net_changed_mechanism"}
+    final_direction_comparable = final[final["direction_comparable"].eq("yes")]
+    prospective_direction_comparable = prospective_reference[
+        prospective_reference["direction_comparable"].eq("yes")
+    ]
+    realized_or_seasonal_direction_comparable = realized_or_seasonal_reference[
+        realized_or_seasonal_reference["direction_comparable"].eq("yes")
+    ]
 
     programme_rows: list[dict[str, object]] = []
     for dependence_id, group in final.groupby("dependence_id"):
         interaction_types = set(group["interaction_type"].astype(str))
         reference_classes = set(group["window_reference_class"].astype(str))
-        transformations = list(group["transformation"].astype(str))
+        direction_group = group[group["direction_comparable"].eq("yes")]
+        if direction_group.empty:
+            continue
+        transformations = list(direction_group["transformation"].astype(str))
         retained = [state in direction_retaining for state in transformations]
 
         if reference_classes.issubset(
@@ -160,19 +173,26 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
         "final_by_transformation": dict(Counter(final["transformation"])),
         "final_transformations_by_class": final_transformations_by_class,
         "final_transformations_by_reference": final_transformations_by_reference,
+        "final_direction_comparable_links": int(len(final_direction_comparable)),
         "prospective_final_links": int(len(prospective_reference)),
         "prospective_exact_preserved": int(
             prospective_reference["transformation"].eq("preserved").sum()
         ),
+        "prospective_direction_comparable_links": int(
+            len(prospective_direction_comparable)
+        ),
         "prospective_direction_retaining": int(
-            prospective_reference["transformation"].isin(direction_retaining).sum()
+            prospective_direction_comparable["transformation"].isin(direction_retaining).sum()
         ),
         "realized_or_seasonal_final_links": int(len(realized_or_seasonal_reference)),
         "realized_or_seasonal_exact_preserved": int(
             realized_or_seasonal_reference["transformation"].eq("preserved").sum()
         ),
+        "realized_or_seasonal_direction_comparable_links": int(
+            len(realized_or_seasonal_direction_comparable)
+        ),
         "realized_or_seasonal_direction_retaining": int(
-            realized_or_seasonal_reference["transformation"].isin(direction_retaining).sum()
+            realized_or_seasonal_direction_comparable["transformation"].isin(direction_retaining).sum()
         ),
         "final_programmes": int(len(programme_df)),
         "antagonist_programmes": int(len(antagonist_programmes)),
@@ -198,6 +218,7 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
         f"- Dependence clusters: **{summary['n_dependence_clusters']}**",
         f"- Links reaching a final plant-fitness endpoint: **{summary['final_links']}** "
         f"from **{summary['final_studies']} studies**",
+        f"- Final-fitness links with a directly comparable upstream/downstream direction: **{summary['final_direction_comparable_links']}**",
         "",
         "A propagation link is not an effect size. It records whether a source-backed timing signal is preserved, transformed, reversed, erased, buffered, or fails to track a downstream stage. Multiple links from one programme retain one dependence cluster.",
         "",
@@ -286,12 +307,14 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
             ]
         ],
         "",
-        "Prospectively defined timing references (independent partner activity or direct timing manipulation) retain the signal direction in "
-        f"**{summary['prospective_direction_retaining']}/{summary['prospective_final_links']}** final-fitness links "
-        f"({summary['prospective_exact_preserved']}/{summary['prospective_final_links']} are exact preserved). "
-        "Realized-interaction or seasonal-position references retain direction in "
-        f"**{summary['realized_or_seasonal_direction_retaining']}/{summary['realized_or_seasonal_final_links']}** links "
-        f"({summary['realized_or_seasonal_exact_preserved']}/{summary['realized_or_seasonal_final_links']} exact preserved).",
+        "Prospectively defined timing references (independent partner activity or direct timing manipulation) are exact preserved in "
+        f"**{summary['prospective_exact_preserved']}/{summary['prospective_final_links']}** final-fitness links. "
+        "Among links whose upstream/downstream direction is directly comparable, they retain direction in "
+        f"**{summary['prospective_direction_retaining']}/{summary['prospective_direction_comparable_links']}**. "
+        "Realized-interaction or seasonal-position references are exact preserved in "
+        f"**{summary['realized_or_seasonal_exact_preserved']}/{summary['realized_or_seasonal_final_links']}** links; "
+        "among direction-comparable links they retain direction in "
+        f"**{summary['realized_or_seasonal_direction_retaining']}/{summary['realized_or_seasonal_direction_comparable_links']}**.",
         "",
         "The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 7/9.",
         "",
@@ -301,7 +324,7 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
         "",
         "To reduce confounding by interaction class and repeated links, final-fitness links are also collapsed to one retention state per dependence cluster within antagonists.",
         "",
-        "| Antagonist timing provenance | Programmes | All final links retain direction | Mixed retention | No final link retains direction |",
+        "| Antagonist timing provenance | Programmes | All direction-comparable final links retain direction | Mixed retention | No direction-comparable final link retains direction |",
         "|---|---:|---:|---:|---:|",
         *[
             "| "
@@ -318,7 +341,7 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
             for provenance in ("prospective", "realized_or_seasonal")
         ],
         "",
-        "Within antagonists alone, prospective timing references yield **4/5 programmes with all final links direction-retaining** and 1/5 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained. This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links, while remaining descriptive rather than inferential.",
+        "Within antagonists alone, prospective timing references yield **4/5 programmes with all direction-comparable final links retained** and 1/5 with none. Once the direction-incomparable Cardamine filter link is excluded from this binary summary, realized/seasonal references yield **1/5 all-retained** (Cardamine) and 4/5 none-retained. This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links, while remaining descriptive rather than inferential.",
         "",
         "## Interpretation",
         "",
