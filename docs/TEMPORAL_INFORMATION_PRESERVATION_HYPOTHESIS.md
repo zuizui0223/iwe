@@ -37,7 +37,7 @@ These states are not effect sizes and are not ordinal scores.
 
 Restrict the temporal signal-propagation ledger to links reaching a final plant-fitness endpoint.
 
-There are currently **16 final-fitness links from 15 studies**.
+There are currently **17 final-fitness links from 16 studies**.
 
 ### Prospectively defined timing references
 
@@ -46,17 +46,17 @@ Timing is considered prospective here when it is based on either:
 - `independent_partner_activity`; or
 - `direct_interaction_manipulation`.
 
-Among eight final-fitness links with these references:
+Among nine final-fitness links with these references:
 
 - independent partner activity: **5/5 exact preserved**;
-- direct timing manipulation: **2/3 preserved**, **1/3 erased**.
+- direct timing manipulation: **3/4 preserved**, **1/4 erased**.
 
 Combined:
 
-- exact preservation: **7/8**;
-- direction retention: **7/8**.
+- exact preservation: **8/9**;
+- direction retention: **8/9**.
 
-The retained examples include mutualist service windows as well as antagonists such as Aucuba, Wu wheat-midge and Wise wheat-midge. Thus preservation is not unique to mutualism.
+The retained examples include mutualist service windows as well as antagonists such as Aucuba, Wu wheat-midge, Wise wheat-midge and experimentally timed *Asclepias–monarch* herbivory. Thus preservation is not unique to mutualism.
 
 The mandatory exception is Posledovich 2015: host stage and temperature alter herbivore performance, but the mature-seedpod escape endpoint is erased with respect to those predictors.
 
@@ -77,9 +77,20 @@ Cardamine contributes two final-fitness propagation links to the realized-intera
 Dropping either one does not remove the descriptive contrast:
 
 - realized/seasonal direction retention becomes **1/7** or **2/7**;
-- prospective direction retention remains **7/8**.
+- prospective direction retention remains **8/9**.
 
 No formal p-value is used because the corpus is targeted, reference provenance is confounded with biological system and interaction class, and propagation links are not guaranteed to be independent sampling units.
+
+### Antagonist-only programme-level sensitivity
+
+The provenance pattern is not solely a mutualist-versus-antagonist contrast.
+
+After restricting to antagonists and collapsing all final-fitness links within each dependence cluster:
+
+- prospective timing references: **4/5 programmes all direction-retaining**, 0 mixed, 1 none-retaining;
+- realized/seasonal references: **0/5 all-retaining**, 1 mixed (Cardamine), 4 none-retaining.
+
+This removes the mutualist imbalance and the duplicated Cardamine link count. It remains descriptive because the antagonist programmes differ in endpoint, design and biological system.
 
 ## Biological interpretation
 
