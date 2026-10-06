@@ -341,7 +341,17 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
             for provenance in ("prospective", "realized_or_seasonal")
         ],
         "",
-        "Within antagonists alone, prospective timing references yield **4/5 programmes with all direction-comparable final links retained** and 1/5 with none. Once the direction-incomparable Cardamine filter link is excluded from this binary summary, realized/seasonal references yield **1/5 all-retained** (Cardamine) and 4/5 none-retained. This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links, while remaining descriptive rather than inferential.",
+        "Within antagonists alone, prospective timing references yield "
+        f"**{summary['antagonist_retention_by_provenance']['prospective']['all_retained']}/"
+        f"{summary['antagonist_retention_by_provenance']['prospective']['n']} programmes with all direction-comparable final links retained**, "
+        f"{summary['antagonist_retention_by_provenance']['prospective']['mixed']} mixed, and "
+        f"{summary['antagonist_retention_by_provenance']['prospective']['none_retained']} none-retained. "
+        "Once direction-incomparable links are excluded from this binary summary, realized/seasonal references yield "
+        f"**{summary['antagonist_retention_by_provenance']['realized_or_seasonal']['all_retained']}/"
+        f"{summary['antagonist_retention_by_provenance']['realized_or_seasonal']['n']} all-retained**, "
+        f"{summary['antagonist_retention_by_provenance']['realized_or_seasonal']['mixed']} mixed, and "
+        f"{summary['antagonist_retention_by_provenance']['realized_or_seasonal']['none_retained']} none-retained. "
+        "This programme-level sensitivity removes the mutualist-class imbalance and collapses repeated links, while remaining descriptive rather than inferential.",
         "",
         "## Interpretation",
         "",
