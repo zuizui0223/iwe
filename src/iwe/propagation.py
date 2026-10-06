@@ -161,6 +161,35 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
             "none_retained": int(counts.get("none_retained", 0)),
         }
 
+    antagonist_retention_by_reference_class: dict[str, dict[str, int]] = {}
+    for reference_class in (
+        "independent_partner_activity",
+        "direct_interaction_manipulation",
+        "realized_interaction_window",
+        "seasonal_position_only",
+    ):
+        part = final[
+            final["interaction_type"].eq("antagonist")
+            & final["window_reference_class"].eq(reference_class)
+            & final["direction_comparable"].eq("yes")
+        ]
+        programme_states: list[str] = []
+        for _, group in part.groupby("dependence_id"):
+            retained = group["transformation"].isin(direction_retaining)
+            if retained.all():
+                programme_states.append("all_retained")
+            elif retained.any():
+                programme_states.append("mixed")
+            else:
+                programme_states.append("none_retained")
+        counts = Counter(programme_states)
+        antagonist_retention_by_reference_class[reference_class] = {
+            "n": int(len(programme_states)),
+            "all_retained": int(counts.get("all_retained", 0)),
+            "mixed": int(counts.get("mixed", 0)),
+            "none_retained": int(counts.get("none_retained", 0)),
+        }
+
     return {
         "n_links": int(len(df)),
         "n_studies": int(df["study_id"].nunique()),
@@ -197,6 +226,7 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
         "final_programmes": int(len(programme_df)),
         "antagonist_programmes": int(len(antagonist_programmes)),
         "antagonist_retention_by_provenance": antagonist_retention_by_provenance,
+        "antagonist_retention_by_reference_class": antagonist_retention_by_reference_class,
     }
 
 
@@ -316,9 +346,12 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
         "among direction-comparable links they retain direction in "
         f"**{summary['realized_or_seasonal_direction_retaining']}/{summary['realized_or_seasonal_direction_comparable_links']}**.",
         "",
-        "The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 8/11.",
+        "The shifted-filtered IWE032 total-egg -> active-egg link is explicitly marked direction-incomparable and is not counted as a directional failure. The second IWE032 link is direction-comparable; removing it changes realized/seasonal direction retention from "
+        f"{summary['realized_or_seasonal_direction_retaining']}/{summary['realized_or_seasonal_direction_comparable_links']} "
+        "to 1/6, while the prospective group remains "
+        f"{summary['prospective_direction_retaining']}/{summary['prospective_direction_comparable_links']}.",
         "",
-        "This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.",
+        "This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class, endpoint, causal depth and study design are confounded, and some programmes contribute more than one propagation link. It motivates—but does not identify—a causal-depth hypothesis. In particular, the prospective category mixes independent adult monitoring with direct experimental timing manipulation.",
         "",
         "## Antagonist-only dependence-cluster sensitivity",
         "",
@@ -352,6 +385,34 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
         f"{summary['antagonist_retention_by_provenance']['realized_or_seasonal']['mixed']} mixed, and "
         f"{summary['antagonist_retention_by_provenance']['realized_or_seasonal']['none_retained']} none-retained. "
         "This programme-level sensitivity removes the mutualist-class imbalance and collapses repeated links, while remaining descriptive rather than inferential.",
+        "",
+        "## Antagonist-only exact-reference sensitivity",
+        "",
+        "The prospective category still mixes observational adult monitoring with direct timing experiments. The same antagonist links are therefore split by their exact timing-reference class.",
+        "",
+        "| Antagonist reference class | Programmes | All retained | Mixed | None retained |",
+        "|---|---:|---:|---:|---:|",
+        *[
+            "| "
+            + reference_class
+            + " | "
+            + str(summary["antagonist_retention_by_reference_class"][reference_class]["n"])
+            + " | "
+            + str(summary["antagonist_retention_by_reference_class"][reference_class]["all_retained"])
+            + " | "
+            + str(summary["antagonist_retention_by_reference_class"][reference_class]["mixed"])
+            + " | "
+            + str(summary["antagonist_retention_by_reference_class"][reference_class]["none_retained"])
+            + " |"
+            for reference_class in (
+                "independent_partner_activity",
+                "direct_interaction_manipulation",
+                "realized_interaction_window",
+                "seasonal_position_only",
+            )
+        ],
+        "",
+        "This split makes the design confounding explicit: independent adult monitoring and direct timing manipulations should not be interpreted as one biological causal-depth treatment. The table is a diagnostic for where confirmatory matched-design evidence is still missing.",
         "",
         "## Interpretation",
         "",
