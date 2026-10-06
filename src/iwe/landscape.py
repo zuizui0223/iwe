@@ -41,6 +41,7 @@ TIMING_GEOMETRIES = {
     "partner_manipulated_host_filter",
     "timing_signal_erasure",
     "host_tissue_window_experiment",
+    "adult_host_stage_niche_overlap",
 }
 
 FITNESS_CHANNELS = {
