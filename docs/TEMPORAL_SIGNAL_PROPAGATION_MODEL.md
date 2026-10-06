@@ -75,16 +75,18 @@ The expanded ledger suggests a more general biological hypothesis than a mutuali
 
 The current targeted pilot provides a deliberately descriptive contrast.
 
-All four independently measured mutualist service-window chains that reach final plant fitness are currently classified as `preserved`:
+The four mutualist service-window chains that reach final plant fitness are not homogeneous:
 
-- IWE001 *Corydalis–Bombus*;
-- IWE023 *Mertensia* experimental flowering cohorts;
-- IWE027 *Phyllodoce–Bombus*;
-- IWE029 *Stigmaphyllon–Centris*.
+- IWE001 *Corydalis–Bombus*: `preserved`;
+- IWE023 *Mertensia*: `buffered` — visitation falls more than fivefold, but pollinator composition/effectiveness changes and seed set does not differ significantly across four flowering weeks;
+- IWE027 *Phyllodoce–Bombus*: `preserved`;
+- IWE029 *Stigmaphyllon–Centris*: `preserved`.
 
 These chains are comparatively shallow:
 
 `partner service availability -> pollination -> mature seed`.
+
+Mertensia is important because even this shallow architecture can buffer a large timing signal before final seed set.
 
 By contrast, antagonist and mixed systems often insert additional causal stages:
 
@@ -92,15 +94,17 @@ By contrast, antagonist and mixed systems often insert additional causal stages:
 
 The current antagonist/mixed final links therefore occupy multiple transformation states rather than one preserved state.
 
-A provenance-based diagnostic now sharpens this observation without adding a new post hoc biological coding. Among final-fitness links:
+A provenance-based diagnostic sharpens this observation without treating transformation states as effect sizes. Among final-fitness links:
 
-- timing defined prospectively from independent partner activity or direct timing manipulation retains direction in **7/8** links;
-- realized-interaction or seasonal-position references retain direction in **2/8** links;
-- exact `preserved` states are **7/8** versus **1/8**, respectively.
+- prospectively defined references (independent partner activity or direct timing manipulation) are exact `preserved` in **8/11** links and retain direction in **8/11** direction-comparable links;
+- realized-interaction or seasonal-position references are exact `preserved` in **1/8** links and retain direction in **2/7** direction-comparable links;
+- the shifted/filtered Cardamine total-egg -> active-egg link is not a sign comparison and is excluded from the directional denominator.
 
-The realized/seasonal side contains two Cardamine links from one dependence cluster; removing either leaves direction retention at 1/7 or 2/7, so the descriptive contrast does not depend on that duplicate.
+The direction-comparable antagonist programmes retain the same qualitative pattern after dependence-cluster aggregation: prospective references have 4/6 all-retained programmes, 1 mixed and 1 none-retained; realized/seasonal references have 1/5 all-retained and 4 none-retained.
 
-This pattern must **not** be interpreted as a literature-wide class frequency or formal treatment effect. The pilot was assembled for IWE rather than sampled to estimate transformation prevalence; interaction class, endpoint choice and timing-reference provenance are confounded; and propagation links are not guaranteed independent.
+However, this does **not** identify biological causal depth. “Prospective” combines independent adult monitoring with direct timing experiments. Splitting antagonist programmes by exact timing reference gives 1/1 all-retained for independent adult monitoring and 3/5 all-retained, 1 mixed, 1 none-retained for direct timing manipulation. Study design, endpoint choice, interaction class and causal position remain confounded.
+
+The pattern must therefore **not** be interpreted as a literature-wide frequency or a formal causal effect of provenance. It is a diagnostic that motivates matched-design tests.
 
 The confirmatory version of the hypothesis is architectural rather than taxonomic:
 
@@ -243,6 +247,6 @@ A defensible current synthesis is:
 
 > Phenological effects are not transmitted unchanged from interaction timing to fitness. Across the current IWE corpus, temporal signals can be preserved, filtered, reversed, erased or buffered as they pass through interaction stages; the key empirical problem is therefore to identify where in the causal chain timing information is converted into final reproductive consequences.
 
-The pilot further motivates a **temporal information preservation / causal-depth hypothesis**: timing information appears most stable when the reference is defined prospectively at or near the biologically effective interaction stage, and increasingly contingent when delayed consumers, host filters, consumer targeting or alternative pathways intervene. The current 7/8 versus 2/8 provenance contrast is diagnostic only; the decisive test remains a within-programme paired comparison at final fitness.
+The pilot further motivates a **temporal information preservation / causal-depth hypothesis**: timing information may be more stable when the reference is defined prospectively at or near the biologically effective interaction stage, and increasingly contingent when delayed consumers, host filters, consumer targeting or alternative pathways intervene. In the current targeted corpus, exact preservation is 8/11 for prospective references versus 1/8 for realized/seasonal references, while direction retention among direction-comparable links is 8/11 versus 2/7. These contrasts are confounded by study design and system; the decisive test remains a within-programme paired comparison at final fitness.
 
 This is broader than the original mutualist/antagonist/mixed sign comparison while remaining testable and source-provenance aware.
