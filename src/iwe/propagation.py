@@ -75,6 +75,22 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
         interaction_type: dict(Counter(group["transformation"]))
         for interaction_type, group in final.groupby("interaction_type")
     }
+    final_transformations_by_reference = {
+        reference_class: dict(Counter(group["transformation"]))
+        for reference_class, group in final.groupby("window_reference_class")
+    }
+
+    prospective_reference = final[
+        final["window_reference_class"].isin(
+            {"independent_partner_activity", "direct_interaction_manipulation"}
+        )
+    ]
+    realized_or_seasonal_reference = final[
+        final["window_reference_class"].isin(
+            {"realized_interaction_window", "seasonal_position_only"}
+        )
+    ]
+    direction_retaining = {"preserved", "preserved_net_changed_mechanism"}
 
     return {
         "n_links": int(len(df)),
@@ -87,6 +103,21 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
         "final_studies": int(final["study_id"].nunique()),
         "final_by_transformation": dict(Counter(final["transformation"])),
         "final_transformations_by_class": final_transformations_by_class,
+        "final_transformations_by_reference": final_transformations_by_reference,
+        "prospective_final_links": int(len(prospective_reference)),
+        "prospective_exact_preserved": int(
+            prospective_reference["transformation"].eq("preserved").sum()
+        ),
+        "prospective_direction_retaining": int(
+            prospective_reference["transformation"].isin(direction_retaining).sum()
+        ),
+        "realized_or_seasonal_final_links": int(len(realized_or_seasonal_reference)),
+        "realized_or_seasonal_exact_preserved": int(
+            realized_or_seasonal_reference["transformation"].eq("preserved").sum()
+        ),
+        "realized_or_seasonal_direction_retaining": int(
+            realized_or_seasonal_reference["transformation"].isin(direction_retaining).sum()
+        ),
     }
 
 
@@ -164,6 +195,46 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
                 "mixed_pollinating_seed_predator",
             ]
         ],
+        "",
+        "## Final-link transformations by timing-reference provenance",
+        "",
+        "This table is descriptive at the propagation-link level. IWE032 contributes two final-fitness links to the realized-interaction class, so these rows are not treated as independent studies.",
+        "",
+        "| Timing reference | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
+        *[
+            "| "
+            + reference_class
+            + " | "
+            + " | ".join(
+                str(summary["final_transformations_by_reference"].get(reference_class, {}).get(state, 0))
+                for state in [
+                    "preserved",
+                    "shifted_filtered",
+                    "sign_reversed",
+                    "erased",
+                    "buffered",
+                    "tracking_inertia",
+                    "preserved_net_changed_mechanism",
+                ]
+            )
+            + " |"
+            for reference_class in [
+                "independent_partner_activity",
+                "direct_interaction_manipulation",
+                "realized_interaction_window",
+                "seasonal_position_only",
+            ]
+        ],
+        "",
+        "Prospectively defined timing references (independent partner activity or direct timing manipulation) retain the signal direction in "
+        f"**{summary['prospective_direction_retaining']}/{summary['prospective_final_links']}** final-fitness links "
+        f"({summary['prospective_exact_preserved']}/{summary['prospective_final_links']} are exact preserved). "
+        "Realized-interaction or seasonal-position references retain direction in "
+        f"**{summary['realized_or_seasonal_direction_retaining']}/{summary['realized_or_seasonal_final_links']}** links "
+        f"({summary['realized_or_seasonal_exact_preserved']}/{summary['realized_or_seasonal_final_links']} exact preserved).",
+        "",
+        "This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.",
         "",
         "## Interpretation",
         "",
