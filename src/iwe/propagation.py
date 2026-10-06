@@ -92,6 +92,62 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
     ]
     direction_retaining = {"preserved", "preserved_net_changed_mechanism"}
 
+    programme_rows: list[dict[str, object]] = []
+    for dependence_id, group in final.groupby("dependence_id"):
+        interaction_types = set(group["interaction_type"].astype(str))
+        reference_classes = set(group["window_reference_class"].astype(str))
+        transformations = list(group["transformation"].astype(str))
+        retained = [state in direction_retaining for state in transformations]
+
+        if reference_classes.issubset(
+            {"independent_partner_activity", "direct_interaction_manipulation"}
+        ):
+            provenance = "prospective"
+        elif reference_classes.issubset(
+            {"realized_interaction_window", "seasonal_position_only"}
+        ):
+            provenance = "realized_or_seasonal"
+        else:
+            provenance = "mixed_reference"
+
+        if all(retained):
+            retention_state = "all_retained"
+        elif any(retained):
+            retention_state = "mixed"
+        else:
+            retention_state = "none_retained"
+
+        programme_rows.append(
+            {
+                "dependence_id": str(dependence_id),
+                "interaction_type": (
+                    next(iter(interaction_types))
+                    if len(interaction_types) == 1
+                    else "mixed_interaction_class"
+                ),
+                "provenance": provenance,
+                "retention_state": retention_state,
+            }
+        )
+
+    programme_df = pd.DataFrame(programme_rows)
+    antagonist_programmes = programme_df[
+        programme_df["interaction_type"].eq("antagonist")
+    ]
+
+    antagonist_retention_by_provenance: dict[str, dict[str, int]] = {}
+    for provenance in ("prospective", "realized_or_seasonal"):
+        part = antagonist_programmes[
+            antagonist_programmes["provenance"].eq(provenance)
+        ]
+        counts = Counter(part["retention_state"])
+        antagonist_retention_by_provenance[provenance] = {
+            "n": int(len(part)),
+            "all_retained": int(counts.get("all_retained", 0)),
+            "mixed": int(counts.get("mixed", 0)),
+            "none_retained": int(counts.get("none_retained", 0)),
+        }
+
     return {
         "n_links": int(len(df)),
         "n_studies": int(df["study_id"].nunique()),
@@ -118,6 +174,9 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
         "realized_or_seasonal_direction_retaining": int(
             realized_or_seasonal_reference["transformation"].isin(direction_retaining).sum()
         ),
+        "final_programmes": int(len(programme_df)),
+        "antagonist_programmes": int(len(antagonist_programmes)),
+        "antagonist_retention_by_provenance": antagonist_retention_by_provenance,
     }
 
 
@@ -237,6 +296,29 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
         "The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 7/8.",
         "",
         "This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.",
+        "",
+        "## Antagonist-only dependence-cluster sensitivity",
+        "",
+        "To reduce confounding by interaction class and repeated links, final-fitness links are also collapsed to one retention state per dependence cluster within antagonists.",
+        "",
+        "| Antagonist timing provenance | Programmes | All final links retain direction | Mixed retention | No final link retains direction |",
+        "|---|---:|---:|---:|---:|",
+        *[
+            "| "
+            + provenance
+            + " | "
+            + str(summary["antagonist_retention_by_provenance"][provenance]["n"])
+            + " | "
+            + str(summary["antagonist_retention_by_provenance"][provenance]["all_retained"])
+            + " | "
+            + str(summary["antagonist_retention_by_provenance"][provenance]["mixed"])
+            + " | "
+            + str(summary["antagonist_retention_by_provenance"][provenance]["none_retained"])
+            + " |"
+            for provenance in ("prospective", "realized_or_seasonal")
+        ],
+        "",
+        "Within antagonists alone, prospective timing references yield **3/4 programmes with all final links direction-retaining** and 1/4 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained. This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links, while remaining descriptive rather than inferential.",
         "",
         "## Interpretation",
         "",
