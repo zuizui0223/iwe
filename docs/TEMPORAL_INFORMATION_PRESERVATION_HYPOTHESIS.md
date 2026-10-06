@@ -54,7 +54,7 @@ Among eleven final-fitness links with these references:
 Combined:
 
 - exact preservation: **8/11**;
-- direction retention under the conservative transformation coding: **8/11**.
+- direction retention among direction-comparable links: **8/11**.
 
 The prospective exceptions are biologically informative rather than treated as noise.
 
@@ -101,11 +101,13 @@ The diagnostic suggests that the important distinction may not be mutualist vers
 
 A stronger candidate principle is:
 
-> **Temporal effects are more likely—but not guaranteed—to survive to final fitness when timing is measured prospectively at, or close to, the biological stage that actually delivers service or damage.**
+> **Temporal effects may be more likely to survive to final fitness when timing is defined prospectively at, or close to, the biological stage that actually delivers service or damage.**
+
+The current corpus cannot identify that mechanism from provenance alone. “Prospective” mixes independent adult monitoring with direct experimental timing manipulation, so stronger retention could partly reflect design quality, intervention control or endpoint choice rather than biological causal proximity.
 
 Mertensia and Gols make the qualification essential: even prospectively defined timing can be buffered by changes in partner effectiveness or by compensatory host responses, and closely related hosts can differ in whether the signal reaches final reproduction.
 
-Upstream calendar timing, realized attack proxies and coarse seasonal position leave more intervening biological opportunities for the signal to be rewritten.
+Upstream calendar timing, realized attack proxies and coarse seasonal position also leave more intervening biological opportunities for the signal to be rewritten, but that causal-depth interpretation remains a hypothesis to be tested with matched designs.
 
 Those transformations already have distinct empirical mechanisms in IWE:
 
@@ -138,9 +140,9 @@ It is:
 
 ## Predictions
 
-### TIP1 — prospective stage references preserve direction more often
+### TIP1 — prospective effective-stage references preserve direction more often, conditional on design
 
-Timing defined independently of final outcomes, especially at a source-backed service/susceptibility stage, should more often retain its direction to final fitness than calendar or outcome-entangled timing proxies.
+Timing defined independently of final outcomes, especially at a source-backed service/susceptibility stage, should more often retain its direction to final fitness than calendar or outcome-entangled timing proxies **when study design and endpoint depth are comparable**.
 
 This prediction is **not identified by the current descriptive contrast**, because independent adult monitoring, direct timing manipulations, biological systems and endpoints are unevenly distributed among provenance classes.
 
