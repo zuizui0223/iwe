@@ -4,10 +4,10 @@ _Generated from data/registry/temporal_signal_components.csv; do not edit counts
 
 ## Scope
 
-- Registered propagation links: **19**
-- Studies: **18**
-- Dependence clusters: **18**
-- Links reaching a final plant-fitness endpoint: **16** from **15 studies**
+- Registered propagation links: **20**
+- Studies: **19**
+- Dependence clusters: **19**
+- Links reaching a final plant-fitness endpoint: **17** from **16 studies**
 
 A propagation link is not an effect size. It records whether a source-backed timing signal is preserved, transformed, reversed, erased, buffered, or fails to track a downstream stage. Multiple links from one programme retain one dependence cluster.
 
@@ -17,7 +17,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 |---|---:|
 | buffered | 3 |
 | erased | 3 |
-| preserved | 8 |
+| preserved | 9 |
 | preserved_net_changed_mechanism | 1 |
 | shifted_filtered | 1 |
 | sign_reversed | 2 |
@@ -27,7 +27,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 
 | Interaction type | Links |
 |---|---:|
-| antagonist | 11 |
+| antagonist | 12 |
 | mixed_pollinating_seed_predator | 4 |
 | mutualist | 4 |
 
@@ -35,7 +35,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 
 | Window-reference class | Links |
 |---|---:|
-| direct_interaction_manipulation | 3 |
+| direct_interaction_manipulation | 4 |
 | independent_partner_activity | 5 |
 | realized_interaction_window | 9 |
 | seasonal_position_only | 2 |
@@ -59,7 +59,7 @@ This matrix is descriptive for the targeted pilot corpus. It is not a literature
 | Interaction type | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | mutualist | 4 | 0 | 0 | 0 | 0 | 0 | 0 |
-| antagonist | 4 | 1 | 1 | 2 | 1 | 1 | 0 |
+| antagonist | 5 | 1 | 1 | 2 | 1 | 1 | 0 |
 | mixed_pollinating_seed_predator | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
 
 ## Final-link transformations by timing-reference provenance
@@ -69,13 +69,13 @@ This table is descriptive at the propagation-link level. IWE032 contributes two 
 | Timing reference | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | independent_partner_activity | 5 | 0 | 0 | 0 | 0 | 0 | 0 |
-| direct_interaction_manipulation | 2 | 0 | 0 | 1 | 0 | 0 | 0 |
+| direct_interaction_manipulation | 3 | 0 | 0 | 1 | 0 | 0 | 0 |
 | realized_interaction_window | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 | seasonal_position_only | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 
-Prospectively defined timing references (independent partner activity or direct timing manipulation) retain the signal direction in **7/8** final-fitness links (7/8 are exact preserved). Realized-interaction or seasonal-position references retain direction in **2/8** links (1/8 exact preserved).
+Prospectively defined timing references (independent partner activity or direct timing manipulation) retain the signal direction in **8/9** final-fitness links (8/9 are exact preserved). Realized-interaction or seasonal-position references retain direction in **2/8** links (1/8 exact preserved).
 
-The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 7/8.
+The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 8/9.
 
 This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.
 
@@ -85,10 +85,10 @@ To reduce confounding by interaction class and repeated links, final-fitness lin
 
 | Antagonist timing provenance | Programmes | All final links retain direction | Mixed retention | No final link retains direction |
 |---|---:|---:|---:|---:|
-| prospective | 4 | 3 | 0 | 1 |
+| prospective | 5 | 4 | 0 | 1 |
 | realized_or_seasonal | 5 | 0 | 1 | 4 |
 
-Within antagonists alone, prospective timing references yield **3/4 programmes with all final links direction-retaining** and 1/4 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained.
+Within antagonists alone, prospective timing references yield **4/5 programmes with all final links direction-retaining** and 1/5 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained.
 
 This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links. It remains descriptive rather than inferential because the targeted programmes differ in endpoint and study design.
 
