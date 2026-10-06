@@ -228,3 +228,13 @@ def test_antagonist_programme_sensitivity_collapses_duplicate_links():
         "mixed": 1,
         "none_retained": 1,
     }
+
+
+def test_iwe023_is_frozen_as_buffered_not_preserved():
+    registry = pd.read_csv("data/registry/temporal_signal_components.csv")
+    row = registry.loc[registry["propagation_id"].eq("SIG_IWE023_SERVICE_FINAL")]
+    assert len(row) == 1
+    assert row.iloc[0]["transformation"] == "buffered"
+    note = str(row.iloc[0]["evidence_note"]).lower()
+    assert "fivefold" in note or "5-fold" in note
+    assert "buffer" in note
