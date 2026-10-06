@@ -80,3 +80,69 @@ def test_summary_rejects_invalid_registry():
     df.loc[0, "final_fitness_reached"] = "maybe"
     with pytest.raises(ValueError):
         propagation_summary(df)
+
+
+def test_summary_separates_final_transformations_by_reference_provenance():
+    df = pd.DataFrame(
+        [
+            {
+                "propagation_id": "P1",
+                "study_id": "S1",
+                "interaction_type": "mutualist",
+                "from_stage": "adult_service",
+                "to_stage": "final_seed",
+                "transformation": "preserved",
+                "final_fitness_reached": "yes",
+                "dependence_id": "D1",
+                "window_reference_class": "independent_partner_activity",
+                "evidence_note": "prospective",
+            },
+            {
+                "propagation_id": "P2",
+                "study_id": "S2",
+                "interaction_type": "antagonist",
+                "from_stage": "timed_damage",
+                "to_stage": "final_seed",
+                "transformation": "erased",
+                "final_fitness_reached": "yes",
+                "dependence_id": "D2",
+                "window_reference_class": "direct_interaction_manipulation",
+                "evidence_note": "prospective null",
+            },
+            {
+                "propagation_id": "P3",
+                "study_id": "S3",
+                "interaction_type": "mixed_pollinating_seed_predator",
+                "from_stage": "calendar",
+                "to_stage": "final_seed",
+                "transformation": "preserved_net_changed_mechanism",
+                "final_fitness_reached": "yes",
+                "dependence_id": "D3",
+                "window_reference_class": "realized_interaction_window",
+                "evidence_note": "realized reference",
+            },
+            {
+                "propagation_id": "P4",
+                "study_id": "S4",
+                "interaction_type": "antagonist",
+                "from_stage": "season",
+                "to_stage": "final_seed",
+                "transformation": "buffered",
+                "final_fitness_reached": "yes",
+                "dependence_id": "D4",
+                "window_reference_class": "seasonal_position_only",
+                "evidence_note": "seasonal reference",
+            },
+        ]
+    )
+    summary = propagation_summary(df)
+    assert summary["prospective_final_links"] == 2
+    assert summary["prospective_exact_preserved"] == 1
+    assert summary["prospective_direction_retaining"] == 1
+    assert summary["realized_or_seasonal_final_links"] == 2
+    assert summary["realized_or_seasonal_exact_preserved"] == 0
+    assert summary["realized_or_seasonal_direction_retaining"] == 1
+    assert (
+        summary["final_transformations_by_reference"]["independent_partner_activity"]["preserved"]
+        == 1
+    )
