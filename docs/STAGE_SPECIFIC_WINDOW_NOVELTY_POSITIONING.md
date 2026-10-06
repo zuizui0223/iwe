@@ -65,6 +65,24 @@ IWE must therefore not claim novelty for separating a timing metric from a fitne
 
 The candidate contribution is more specific: tracking the **directional fate of a source-defined timing signal through named biological stages**, with explicit transformation states and a final-fitness endpoint.
 
+### 5b. Macro-scale failure of a common mismatch–fitness curve
+
+Kharouba et al. 2023 (*Ecology Letters*, DOI `10.1111/ele.14185`) is the closest quantitative macro-scale precedent.
+
+Across 26 terrestrial antagonistic consumer-resource interactions, they did **not** recover the canonical general prediction that fitness peaks at exact synchrony. Their hierarchical quadratic effect was near zero (beta2 = -1.7 × 10^-4 standardized fitness/day; 90% CI -5.0 × 10^-4 to +8.0 × 10^-5), 13/26 interactions showed no support, only 4/26 showed the predicted quadratic peak, and 7/26 showed a supporting linear relationship.
+
+Crucially, they already identify a likely measurement problem: a common relative-timing metric in calendar days may be insufficient, and biologically informed overlap, lifespan and life-stage coordinates may be more useful.
+
+IWE therefore must **not** claim novelty for arguing that a common calendar mismatch metric can fail or that life-stage-aware timing may be preferable.
+
+The candidate extension is empirical and process-resolved:
+
+> rather than asking only whether one relative-timing coordinate predicts fitness, IWE records how a source-defined timing signal changes as it propagates through encounter, oviposition, delayed consumer stages, host filtering and final plant reproduction.
+
+The relevant difference is therefore **cross-stage signal fate**, not merely a different mismatch metric.
+
+See `docs/KHAROUBA2023_PROPAGATION_POSITIONING.md`.
+
 ### 6. Buffering of phenological mismatch
 
 Weir & Phillimore 2024 (*Global Change Biology*, DOI `10.1111/gcb.17294`) explicitly argues that mismatch costs are often buffered and synthesizes three broad forms:
@@ -81,7 +99,7 @@ The candidate extension is narrower and different: buffering is treated as one p
 
 ## What the IWE pivot adds
 
-The candidate synthesis is not simply "benefits and costs both exist," nor is it the already-established idea that interaction sign can change ontogenetically or that timing quality and fitness consequence can differ.
+The candidate synthesis is not simply "benefits and costs both exist," nor is it the already-established idea that interaction sign can change ontogenetically, that timing quality and fitness consequence can differ, or that a common calendar-day mismatch metric has weak generality.
 
 It combines three temporal questions that remain distinct from stage-structured mutualism theory:
 
@@ -155,6 +173,6 @@ must be completed.
 
 A defensible current formulation is:
 
-> Building on stage-structured mutualism, phenological mismatch, developmental-race and buffering theory, we track how source-defined temporal information is transformed across interaction stages and ask whether its direction survives to final plant fitness.
+> Previous syntheses show that a common relative-timing metric has weak and heterogeneous links to fitness. Building on stage-structured mutualism, developmental-race and buffering theory, we track how source-defined temporal information is transformed across interaction stages and ask whether its direction survives to final plant fitness.
 
 Avoid "first framework" or "first demonstration" until the dedicated novelty search is complete.
