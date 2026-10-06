@@ -4,8 +4,8 @@ _Generated from data/registry/phase_alignment_candidates.csv; do not edit counts
 
 ## Current gate
 
-- Candidate programmes/components: **11**
-- Dependence clusters: **11**
+- Candidate programmes/components: **12**
+- Dependence clusters: **12**
 - Confirmatory-ready positive or null comparisons: **0**
 - Near-confirmatory blocked routes: **2**
 - Registered direct null/boundary comparisons: **2**
@@ -15,10 +15,10 @@ A programme is confirmatory_ready only when it has source-backed raw/adult timin
 
 ## Evidence coverage
 
-- Final plant endpoint present: **9 / 11**
-- Phase/alignment varies: **10 / 11**
-- Paired simpler-vs-stage comparison available: **3 / 11**
-- Paired comparison explicitly blocked by one recoverable object: **2 / 11**
+- Final plant endpoint present: **10 / 12**
+- Phase/alignment varies: **11 / 12**
+- Paired simpler-vs-stage comparison available: **3 / 12**
+- Paired comparison explicitly blocked by one recoverable object: **2 / 12**
 
 ## Candidate states
 
@@ -35,6 +35,7 @@ A programme is confirmatory_ready only when it has source-backed raw/adult timin
 | PHA_IWE031 | antagonist | yes | partial | yes | yes | yes | no | host_sensitivity_final | not a delayed phase-lag design and no natural adult-window comparator |
 | PHA_HURLBURT2004 | mixed_pollinating_seed_predator | yes | partial | partial | yes | yes | blocked | near_confirmatory | mature-fruit records not yet source-linked to marked flowering date/cohort |
 | PHA_AUCUBA_IMAI | antagonist | yes | yes | yes | yes | yes | no | host_sensitivity_final | host tissue calibration and final-fate experiment are not measured on the same units |
+| PHA_WISE2015_WHEAT_MIDGE | antagonist | yes | partial | yes | yes | yes | no | host_sensitivity_final | no paired calendar/adult-only versus stage-specific predictive comparison; public abstract lacks full timing-group table |
 
 ## Interpretation
 
@@ -44,7 +45,7 @@ IWE032 Cardamine already contains a positive stage-specific phase-to-final-fate 
 
 Parkinsonia-Penthobruchus now provides an independent positive paired realized diagnostic: among seven matched region-season rows, annual ground-pod egg density correlates only moderately with final seed predation (r=0.476), stage-matched egg density after the vulnerable pod pulse improves the association (r=0.596), and filtering that stage-matched exposure by observed parasitism and hatch raises it to r=0.938; leave-one-region-out RMSE falls from 20.6 to 19.9 to 4.9 percentage points. Region blocking is required because VRD, Barkly and Central Queensland each contribute repeated seasons. Because the exposure is realized oviposition rather than independent adult timing, and the filter is consumer/parasitoid survival rather than a host-specific phase coordinate, this remains non-confirmatory.
 
-Aucuba-Asphondylia adds a stronger experimental host-window-to-final-fate test: adult emergence is monitored directly, attack timing is manipulated within the adult season, and complete gall induction that eliminates seed production drops from 80.9% before the host tissue window closes to 8.8% after it closes. It still lacks a same-unit predictive comparison of adult/calendar timing against the tissue-stage coordinate.
+Aucuba-Asphondylia adds a stronger experimental host-window-to-final-fate test: adult emergence is monitored directly, attack timing is manipulated within the adult season, and complete gall induction that eliminates seed production drops from 80.9% before the host tissue window closes to 8.8% after it closes. Wise 2015 independently shifts adult wheat-midge exposure across spike development and shows lower final seed damage/yield loss with later exposure. Both are positive stage-to-final tests, but neither supplies the paired simpler-vs-stage predictive comparison required for confirmatory_ready.
 
 The registry also retains complete nulls. Posledovich 2015 shows that manipulated stage matching and temperature alter herbivore performance without altering the mature-seedpod escape endpoint beyond host-species effects. The long-term Lathyrus programme shows that climate-driven changes in phenology–seed-predation covariance do not explain flowering-time selection on intact-seed fitness.
 
