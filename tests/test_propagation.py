@@ -241,6 +241,30 @@ def test_antagonist_programme_sensitivity_collapses_duplicate_links():
         "mixed": 1,
         "none_retained": 1,
     }
+    assert summary["antagonist_retention_by_reference_class"]["independent_partner_activity"] == {
+        "n": 1,
+        "all_retained": 1,
+        "mixed": 0,
+        "none_retained": 0,
+    }
+    assert summary["antagonist_retention_by_reference_class"]["direct_interaction_manipulation"] == {
+        "n": 1,
+        "all_retained": 0,
+        "mixed": 0,
+        "none_retained": 1,
+    }
+    assert summary["antagonist_retention_by_reference_class"]["realized_interaction_window"] == {
+        "n": 1,
+        "all_retained": 1,
+        "mixed": 0,
+        "none_retained": 0,
+    }
+    assert summary["antagonist_retention_by_reference_class"]["seasonal_position_only"] == {
+        "n": 1,
+        "all_retained": 0,
+        "mixed": 0,
+        "none_retained": 1,
+    }
 
 
 def test_iwe023_is_frozen_as_buffered_not_preserved():
