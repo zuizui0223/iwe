@@ -37,6 +37,22 @@ Pollinating seed-predator work explicitly recognizes that adults provide pollina
 
 The classic literature asks when the balance is mutualistic versus antagonistic, and later studies quantify spatial, annual and community context.
 
+### 4b. Stage-structured mutualism and ontogenetic antagonism–mutualism coupling
+
+Ke & Nakazawa 2018 (Oikos, DOI `10.1111/oik.04702`) already develops a general theory of **ontogenetic antagonism–mutualism coupling**: interaction type can change across consumer life stages, with pollinating insects explicitly used as an example in which juveniles are herbivores/antagonists and adults are pollinators/mutualists.
+
+Nakazawa 2020 (Oikos, DOI `10.1111/oik.06653`) broadens this into a stage-structured mutualism perspective and explicitly notes that pollinating insects can be antagonistic as larvae and mutualistic as adults, with inter-stage partner sharing potentially common.
+
+Therefore IWE must **not** claim novelty for any of the following:
+
+- recognizing that one animal lineage can be antagonistic and mutualistic at different life stages;
+- coupling larval herbivory with adult pollination;
+- introducing stage structure into mutualism theory;
+- arguing generically that ontogenetic niche shifts can affect community dynamics.
+
+The candidate extension is narrower: IWE asks how **temporal phase relations among those already-recognized stages** are propagated to plant fitness, and whether an upstream timing signal is preserved, shifted, reversed, erased or buffered as it moves through the stage chain.
+
+
 ### 5. Buffering of phenological mismatch
 
 Weir & Phillimore 2024 (*Global Change Biology*, DOI `10.1111/gcb.17294`) explicitly argues that mismatch costs are often buffered and synthesizes three broad forms:
@@ -53,13 +69,13 @@ The candidate extension is narrower and different: buffering is treated as one p
 
 ## What the IWE pivot adds
 
-The candidate synthesis is not simply "benefits and costs both exist."
+The candidate synthesis is not simply "benefits and costs both exist," nor is it the already-established idea that interaction sign can change ontogenetically.
 
-It combines three observations that are usually treated separately:
+It combines three temporal questions that remain distinct from stage-structured mutualism theory:
 
-1. **stage identity:** adult and offspring stages of one partner lineage have opposite plant effects;
-2. **phase lag:** the cost stage is delayed relative to the service/oviposition stage;
-3. **host-state filtering:** plant tissues mature, harden, abort or otherwise change vulnerability during that delay.
+1. **phase relation:** how far apart in time are adult service/encounter, oviposition and delayed consumer stages relative to plant development?
+2. **transformation:** is the upstream timing signal preserved, shifted, reversed, erased or buffered before final reproduction?
+3. **filter feedback:** does host state merely filter exposure, or is that filter anticipated/circumvented/modified by the interacting animal?
 
 This creates a stage-specific temporal geometry:
 
@@ -99,7 +115,8 @@ The targeted literature check recovered work on:
 
 It did **not** yet recover a general cross-system synthesis that jointly:
 
-- treats adult service and delayed offspring cost as separate temporal windows;
+- starts from the already-established stage-structured interaction architecture;
+- treats the **phase relation** among adult service, oviposition, delayed consumer action and host development as an explicit temporal object;
 - records whether timing information is preserved, filtered, reversed, erased or buffered between causal stages;
 - compares whether prospectively defined timing references are more likely to retain their direction to final fitness than calendar or outcome-entangled timing references.
 
@@ -113,7 +130,10 @@ Before a manuscript claims a conceptual first, a systematic citation search arou
 - nursery pollination phenology;
 - stage-specific phenological mismatch;
 - delayed interaction effects;
-- adult-larval phase relationships
+- adult-larval phase relationships;
+- ontogenetic antagonism-mutualism coupling;
+- stage-structured mutualism;
+- temporal propagation / information loss across life-history stages
 
 must be completed.
 
@@ -121,6 +141,6 @@ must be completed.
 
 A defensible current formulation is:
 
-> We extend phenological mismatch, developmental-race and buffering perspectives by tracking whether source-defined timing information is preserved or transformed across interaction stages, while distinguishing stage-specific adult service and delayed offspring cost within the same biotic partner.
+> Building on stage-structured mutualism, phenological mismatch, developmental-race and buffering theory, we track how source-defined temporal information is transformed across interaction stages and ask whether its direction survives to final plant fitness.
 
 Avoid "first framework" or "first demonstration" until the dedicated novelty search is complete.
