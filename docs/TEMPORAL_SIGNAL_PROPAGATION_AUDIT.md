@@ -8,6 +8,7 @@ _Generated from data/registry/temporal_signal_components.csv; do not edit counts
 - Studies: **20**
 - Dependence clusters: **20**
 - Links reaching a final plant-fitness endpoint: **19** from **17 studies**
+- Final-fitness links with a directly comparable upstream/downstream direction: **18**
 
 A propagation link is not an effect size. It records whether a source-backed timing signal is preserved, transformed, reversed, erased, buffered, or fails to track a downstream stage. Multiple links from one programme retain one dependence cluster.
 
@@ -73,11 +74,11 @@ This table is descriptive at the propagation-link level. IWE032 contributes two 
 | realized_interaction_window | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 | seasonal_position_only | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 
-Prospectively defined timing references (independent partner activity or direct timing manipulation) retain the signal direction in **8/11** final-fitness links (8/11 are exact preserved). Realized-interaction or seasonal-position references retain direction in **2/8** links (1/8 exact preserved).
+Prospectively defined timing references (independent partner activity or direct timing manipulation) are exact preserved in **8/11** final-fitness links. Among links whose upstream/downstream direction is directly comparable, they retain direction in **8/11**. Realized-interaction or seasonal-position references are exact preserved in **1/8** links; among direction-comparable links they retain direction in **2/7**.
 
-The descriptive contrast is not driven by the duplicated Cardamine dependence cluster. If either of the two IWE032 final-fitness links is removed, direction retention in the realized/seasonal group is 1/7 or 2/7, while the prospective group remains 8/11.
+The shifted-filtered IWE032 total-egg -> active-egg link is explicitly marked direction-incomparable and is not counted as a directional failure. The second IWE032 link is direction-comparable; removing it changes realized/seasonal direction retention from 2/7 to 1/6, while the prospective group remains 8/11.
 
-This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class and timing provenance are confounded, and some programmes contribute more than one propagation link. It is a source-backed diagnostic supporting the next hypothesis that temporal signals are most stable when timing is defined prospectively at or near the biologically effective interaction stage.
+This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class, endpoint, causal depth and study design are confounded, and some programmes contribute more than one propagation link. It motivates—but does not identify—a causal-depth hypothesis. In particular, the prospective category mixes independent adult monitoring with direct experimental timing manipulation.
 
 ## Antagonist-only dependence-cluster sensitivity
 
@@ -86,11 +87,24 @@ To reduce confounding by interaction class and repeated links, final-fitness lin
 | Antagonist timing provenance | Programmes | All final links retain direction | Mixed retention | No final link retains direction |
 |---|---:|---:|---:|---:|
 | prospective | 6 | 4 | 1 | 1 |
-| realized_or_seasonal | 5 | 0 | 1 | 4 |
+| realized_or_seasonal | 5 | 1 | 0 | 4 |
 
-Within antagonists alone, prospective timing references yield **4/6 programmes with all final links direction-retaining**, 1/6 mixed (Gols 2025: one host species preserved, one buffered), and 1/6 with none. Realized/seasonal references yield **0/5 all-retained**, 1/5 mixed (Cardamine), and 4/5 none-retained.
+Within antagonists alone, prospective timing references yield **4/6 programmes with all direction-comparable final links retained**, 1 mixed, and 1 none-retained. Once direction-incomparable links are excluded from this binary summary, realized/seasonal references yield **1/5 all-retained**, 0 mixed, and 4 none-retained.
 
 This programme-level sensitivity removes the mutualist-class imbalance and collapses the duplicated Cardamine final links. It remains descriptive rather than inferential because the targeted programmes differ in endpoint and study design.
+
+## Antagonist-only exact-reference sensitivity
+
+The prospective category still mixes observational adult monitoring with direct timing experiments. The same antagonist links are therefore split by their exact timing-reference class.
+
+| Antagonist reference class | Programmes | All retained | Mixed | None retained |
+|---|---:|---:|---:|---:|
+| independent_partner_activity | 1 | 1 | 0 | 0 |
+| direct_interaction_manipulation | 5 | 3 | 1 | 1 |
+| realized_interaction_window | 4 | 1 | 0 | 3 |
+| seasonal_position_only | 1 | 0 | 0 | 1 |
+
+This split makes the design confounding explicit: independent adult monitoring and direct timing manipulations should not be interpreted as one biological causal-depth treatment. The table is a diagnostic for where confirmatory matched-design evidence is still missing.
 
 ## Interpretation
 
