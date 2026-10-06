@@ -67,7 +67,7 @@ The consumer does not track the moving resource closely enough for potential exp
 
 Example: *Parkinsonia–Penthobruchus*. Egg density declines at pod maturation rather than peaking with seed availability, and realized seed predation remains modest relative to potential.
 
-## Causal-depth hypothesis
+## Temporal information preservation / causal-depth hypothesis
 
 The expanded ledger suggests a more general biological hypothesis than a mutualist-versus-antagonist sign contrast:
 
@@ -92,7 +92,15 @@ By contrast, antagonist and mixed systems often insert additional causal stages:
 
 The current antagonist/mixed final links therefore occupy multiple transformation states rather than one preserved state.
 
-This pattern must **not** be interpreted as a literature-wide class frequency. The pilot was assembled for IWE rather than sampled to estimate transformation prevalence, and interaction class is correlated with which causal stages researchers typically measure.
+A provenance-based diagnostic now sharpens this observation without adding a new post hoc biological coding. Among final-fitness links:
+
+- timing defined prospectively from independent partner activity or direct timing manipulation retains direction in **7/8** links;
+- realized-interaction or seasonal-position references retain direction in **2/8** links;
+- exact `preserved` states are **7/8** versus **1/8**, respectively.
+
+The realized/seasonal side contains two Cardamine links from one dependence cluster; removing either leaves direction retention at 1/7 or 2/7, so the descriptive contrast does not depend on that duplicate.
+
+This pattern must **not** be interpreted as a literature-wide class frequency or formal treatment effect. The pilot was assembled for IWE rather than sampled to estimate transformation prevalence; interaction class, endpoint choice and timing-reference provenance are confounded; and propagation links are not guaranteed independent.
 
 The confirmatory version of the hypothesis is architectural rather than taxonomic:
 
@@ -123,6 +131,19 @@ and
 A meta-analysis that forces all of these into a common "synchrony" coefficient is therefore combining effects that are measured at different causal depths and whose sign can change between those depths.
 
 The evidence gap uncovered by strict H1 is partly a **causal-stage mismatch**, not merely missing sample size.
+
+## Relationship to prior mismatch and buffering frameworks
+
+This model overlaps with, but is not equivalent to, existing phenological mismatch theory.
+
+- Visser & Gienapp 2019 emphasize evolutionary and demographic consequences of mismatch and the need to connect timing to fitness.
+- Kharouba & Wolkovich 2020 identify a major disconnect between match-mismatch theory and the data normally collected, especially the scarcity of experiments that directly link timing to fitness.
+- Kharouba et al. 2023 report limited support for the terrestrial match-mismatch hypothesis and emphasize assumptions and alternative fitness drivers.
+- Weir & Phillimore 2024 explicitly synthesize buffering mechanisms that soften mismatch costs.
+
+IWE treats buffering as one transformation state rather than as the entire framework. Its candidate addition is to track several possible fates of a source-backed timing signal—preservation, filtering, reversal, erasure, buffering and tracking failure—across explicit causal stages and through to final plant reproduction.
+
+The term "temporal information preservation" is used as an internal working label. No claim is made that the phrase itself is novel.
 
 ## Relationship to the stage-specific window model
 
@@ -222,6 +243,6 @@ A defensible current synthesis is:
 
 > Phenological effects are not transmitted unchanged from interaction timing to fitness. Across the current IWE corpus, temporal signals can be preserved, filtered, reversed, erased or buffered as they pass through interaction stages; the key empirical problem is therefore to identify where in the causal chain timing information is converted into final reproductive consequences.
 
-The pilot further motivates a **causal-depth hypothesis**: timing information appears easiest to preserve in shallow service-to-fitness chains and most contingent when delayed consumers, host filters or alternative pathways intervene. That contrast is currently hypothesis-generating rather than a prevalence estimate.
+The pilot further motivates a **temporal information preservation / causal-depth hypothesis**: timing information appears most stable when the reference is defined prospectively at or near the biologically effective interaction stage, and increasingly contingent when delayed consumers, host filters, consumer targeting or alternative pathways intervene. The current 7/8 versus 2/8 provenance contrast is diagnostic only; the decisive test remains a within-programme paired comparison at final fitness.
 
 This is broader than the original mutualist/antagonist/mixed sign comparison while remaining testable and source-provenance aware.
