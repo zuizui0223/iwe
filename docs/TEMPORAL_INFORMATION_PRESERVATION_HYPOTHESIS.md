@@ -37,7 +37,7 @@ These states are not effect sizes and are not ordinal scores.
 
 Restrict the temporal signal-propagation ledger to links reaching a final plant-fitness endpoint.
 
-There are currently **17 final-fitness links from 16 studies**.
+There are currently **19 final-fitness links from 17 studies**.
 
 ### Prospectively defined timing references
 
@@ -46,17 +46,20 @@ Timing is considered prospective here when it is based on either:
 - `independent_partner_activity`; or
 - `direct_interaction_manipulation`.
 
-Among nine final-fitness links with these references:
+Among eleven final-fitness links with these references:
 
 - independent partner activity: **4/5 exact preserved**, **1/5 buffered**;
-- direct timing manipulation: **3/4 preserved**, **1/4 erased**.
+- direct timing manipulation: **4/6 preserved**, **1/6 erased**, **1/6 buffered**.
 
 Combined:
 
-- exact preservation: **7/9**;
-- direction retention under the conservative transformation coding: **7/9**.
+- exact preservation: **8/11**;
+- direction retention under the conservative transformation coding: **8/11**.
 
-The new prospective buffer is IWE023 *Mertensia ciliata*. Total visitation falls by more than fivefold across the experimental flowering cohorts, but later cohorts receive a higher proportion of more-effective bumblebee visits and seed set does not differ significantly across weeks (F(3,36)=1.01). The frozen week-1 versus week-4 SMD remains positive, but the source-level causal signal is classified as buffered rather than preserved.
+The prospective exceptions are biologically informative rather than treated as noise.
+
+- IWE023 *Mertensia ciliata*: total visitation falls by more than fivefold across experimental flowering cohorts, but later cohorts receive a higher proportion of more-effective bumblebee visits and seed set does not differ significantly across weeks (F(3,36)=1.01). The frozen week-1 versus week-4 SMD remains positive, but the source-level causal signal is classified as buffered rather than preserved.
+- Gols 2025: the same direct herbivory-timing experiment yields different downstream states in two brassicaceous hosts. Timing is buffered before integrated reproductive potential in *Sinapis arvensis* (ontogeny p=0.81) but preserved in *Brassica nigra* (p<0.001).
 
 The retained examples include mutualist service windows as well as antagonists such as Aucuba, Wu wheat-midge, Wise wheat-midge and experimentally timed *Asclepias–monarch* herbivory. Thus preservation is not unique to mutualism, while Mertensia supplies a prospective mutualist counterexample in which changing pollinator composition buffers a large visitation decline before final seed set.
 
@@ -89,10 +92,10 @@ The provenance pattern is not solely a mutualist-versus-antagonist contrast.
 
 After restricting to antagonists and collapsing all final-fitness links within each dependence cluster:
 
-- prospective timing references: **4/5 antagonist programmes all direction-retaining**, 0 mixed, 1 none-retaining;
+- prospective timing references: **4/6 antagonist programmes all direction-retaining**, 1 mixed (Gols 2025), 1 none-retaining;
 - realized/seasonal references: **0/5 all-retaining**, 1 mixed (Cardamine), 4 none-retaining.
 
-This removes both the mutualist-class contribution—including the newly recognized Mertensia buffer—and the duplicated Cardamine link count. It remains descriptive because the antagonist programmes differ in endpoint, design and biological system.
+This removes the mutualist-class contribution—including the Mertensia buffer—and the duplicated Cardamine link count. The added Gols programme prevents the prospective antagonist set from looking artificially homogeneous: one plant species preserves the timing effect and another buffers it within the same experiment. The comparison remains descriptive because the antagonist programmes differ in endpoint, design and biological system.
 
 ## Biological interpretation
 
@@ -102,7 +105,7 @@ A stronger candidate principle is:
 
 > **Temporal effects are more likely—but not guaranteed—to survive to final fitness when timing is measured prospectively at, or close to, the biological stage that actually delivers service or damage.**
 
-Mertensia makes the qualification essential: even a prospectively measured visitation window can be buffered when partner identity/effectiveness changes within the same season.
+Mertensia and Gols make the qualification essential: even prospectively defined timing can be buffered by changes in partner effectiveness or by compensatory host responses, and closely related hosts can differ in whether the signal reaches final reproduction.
 
 Upstream calendar timing, realized attack proxies and coarse seasonal position leave more intervening biological opportunities for the signal to be rewritten.
 
@@ -165,7 +168,7 @@ This is exactly the current `confirmatory_ready` gate.
 
 The hypothesis should be weakened or rejected if:
 
-1. systematic expansion of the corpus causes prospectively defined final-fitness links to show transformation/loss as often as lower-provenance links; the Mertensia buffer is already one such counterexample and must remain in the denominator;
+1. systematic expansion of the corpus causes prospectively defined final-fitness links to show transformation/loss as often as lower-provenance links; Mertensia and the buffered Sinapis arm of Gols 2025 are already counterexamples and must remain in the denominator;
 2. paired within-programme comparisons repeatedly show no predictive improvement from effective-stage alignment;
 3. the provenance contrast disappears after dependence-aware programme-level aggregation;
 4. transformation state is explained by study design or endpoint selection rather than biological causal position.
