@@ -4,11 +4,11 @@ _Generated from data/registry/temporal_signal_components.csv; do not edit counts
 
 ## Scope
 
-- Registered propagation links: **22**
-- Studies: **20**
-- Dependence clusters: **20**
-- Links reaching a final plant-fitness endpoint: **19** from **17 studies**
-- Final-fitness links with a directly comparable upstream/downstream direction: **18**
+- Registered propagation links: **24**
+- Studies: **21**
+- Dependence clusters: **21**
+- Links reaching a final plant-fitness endpoint: **21** from **18 studies**
+- Final-fitness links with a directly comparable upstream/downstream direction: **20**
 
 A propagation link is not an effect size. It records whether a source-backed timing signal is preserved, transformed, reversed, erased, buffered, or fails to track a downstream stage. Multiple links from one programme retain one dependence cluster.
 
@@ -18,7 +18,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 |---|---:|
 | buffered | 5 |
 | erased | 3 |
-| preserved | 9 |
+| preserved | 11 |
 | preserved_net_changed_mechanism | 1 |
 | shifted_filtered | 1 |
 | sign_reversed | 2 |
@@ -30,13 +30,13 @@ A propagation link is not an effect size. It records whether a source-backed tim
 |---|---:|
 | antagonist | 14 |
 | mixed_pollinating_seed_predator | 4 |
-| mutualist | 4 |
+| mutualist | 6 |
 
 ## Provenance of the upstream temporal reference
 
 | Window-reference class | Links |
 |---|---:|
-| direct_interaction_manipulation | 6 |
+| direct_interaction_manipulation | 8 |
 | independent_partner_activity | 5 |
 | realized_interaction_window | 9 |
 | seasonal_position_only | 2 |
@@ -47,7 +47,7 @@ A propagation link is not an effect size. It records whether a source-backed tim
 |---|---:|
 | buffered | 4 |
 | erased | 2 |
-| preserved | 9 |
+| preserved | 11 |
 | preserved_net_changed_mechanism | 1 |
 | shifted_filtered | 1 |
 | sign_reversed | 1 |
@@ -59,7 +59,7 @@ This matrix is descriptive for the targeted pilot corpus. It is not a literature
 
 | Interaction type | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| mutualist | 3 | 0 | 0 | 0 | 1 | 0 | 0 |
+| mutualist | 5 | 0 | 0 | 0 | 1 | 0 | 0 |
 | antagonist | 6 | 1 | 1 | 2 | 2 | 1 | 0 |
 | mixed_pollinating_seed_predator | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
 
@@ -70,13 +70,13 @@ This table is descriptive at the propagation-link level. IWE032 contributes two 
 | Timing reference | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | independent_partner_activity | 4 | 0 | 0 | 0 | 1 | 0 | 0 |
-| direct_interaction_manipulation | 4 | 0 | 0 | 1 | 1 | 0 | 0 |
+| direct_interaction_manipulation | 6 | 0 | 0 | 1 | 1 | 0 | 0 |
 | realized_interaction_window | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 | seasonal_position_only | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
 
-Prospectively defined timing references (independent partner activity or direct timing manipulation) are exact preserved in **8/11** final-fitness links. Among links whose upstream/downstream direction is directly comparable, they retain direction in **8/11**. Realized-interaction or seasonal-position references are exact preserved in **1/8** links; among direction-comparable links they retain direction in **2/7**.
+Prospectively defined timing references (independent partner activity or direct timing manipulation) are exact preserved in **10/13** final-fitness links. Among links whose upstream/downstream direction is directly comparable, they retain direction in **10/13**. Realized-interaction or seasonal-position references are exact preserved in **1/8** links; among direction-comparable links they retain direction in **2/7**.
 
-The shifted-filtered IWE032 total-egg -> active-egg link is explicitly marked direction-incomparable and is not counted as a directional failure. The second IWE032 link is direction-comparable; removing it changes realized/seasonal direction retention from 2/7 to 1/6, while the prospective group remains 8/11.
+The shifted-filtered IWE032 total-egg -> active-egg link is explicitly marked direction-incomparable and is not counted as a directional failure. The second IWE032 link is direction-comparable; removing it changes realized/seasonal direction retention from 2/7 to 1/6, while the prospective group remains 10/13.
 
 This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class, endpoint, causal depth and study design are confounded, and some programmes contribute more than one propagation link. It motivates—but does not identify—a causal-depth hypothesis. In particular, the prospective category mixes independent adult monitoring with direct experimental timing manipulation.
 
@@ -106,7 +106,7 @@ This split makes the design confounding explicit: independent adult monitoring a
 
 ## Interpretation
 
-The current pilot falsifies the idea that a phenological effect can be represented by one invariant synchrony coefficient carried unchanged from encounter to fitness. Source-backed timing signals are observed to persist, reverse sign, be shifted by host/consumer filtering, disappear before the next consumer stage, be buffered by alternative ecological routes, or fail to track moving resources. In the current targeted mutualist set, three final-fitness links are classified as preserved and IWE023 Mertensia is classified as buffered: visitation declines more than fivefold across flowering cohorts, but changing pollinator composition/effectiveness prevents a significant seed-set response across weeks. Antagonist and mixed links occupy multiple additional transformation states. This class pattern is a hypothesis-generating contrast, not a prevalence estimate.
+The current pilot falsifies the idea that a phenological effect can be represented by one invariant synchrony coefficient carried unchanged from encounter to fitness. Source-backed timing signals are observed to persist, reverse sign, be shifted by host/consumer filtering, disappear before the next consumer stage, be buffered by alternative ecological routes, or fail to track moving resources. In the current targeted mutualist set, five final-fitness links are classified as preserved: IWE001, IWE027, IWE029 and the two plant species in IWE005. IWE023 Mertensia is classified as buffered: visitation declines more than fivefold across flowering cohorts, but changing pollinator composition/effectiveness prevents a significant seed-set response across weeks. The two IWE005 links share one dependence cluster and are not two independent studies. Antagonist and mixed links occupy multiple additional transformation states. This class pattern is a hypothesis-generating contrast, not a prevalence estimate.
 
 Positive downstream propagation is not confined to Cardamine. Aucuba provides a direct timing manipulation in which complete gall induction that prevents seed production falls from 80.9% before 15 June to 8.8% after the host tissue window closes. Wise 2015 independently preserves experimentally shifted adult wheat-midge exposure timing to final seed damage/yield loss, while Wu 2015 links independently monitored adult occurrence × susceptible ear emergence to final yield loss across >400 cultivars. Cardamine adds ecotype-level phase-to-final-fate alignment, while Kula provides an independent mixed-system mechanistic sign reversal as a response-independent phase-safety margin crosses zero; Kula stops at predation rather than final plant fitness.
 
