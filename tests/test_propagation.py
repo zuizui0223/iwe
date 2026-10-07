@@ -318,3 +318,54 @@ def test_direction_incomparable_link_is_not_counted_as_directional_failure():
         "mixed": 0,
         "none_retained": 0,
     }
+
+
+def test_iwe032_exclusion_sensitivity_is_computed_from_registry_rows():
+    df = pd.DataFrame(
+        [
+            {
+                "propagation_id": "IWE32",
+                "study_id": "IWE032",
+                "interaction_type": "antagonist",
+                "from_stage": "phase",
+                "to_stage": "final",
+                "transformation": "preserved",
+                "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
+                "dependence_id": "D32",
+                "window_reference_class": "realized_interaction_window",
+                "evidence_note": "retained",
+            },
+            {
+                "propagation_id": "OTHER1",
+                "study_id": "OTHER",
+                "interaction_type": "antagonist",
+                "from_stage": "attack",
+                "to_stage": "final",
+                "transformation": "erased",
+                "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
+                "dependence_id": "DOTHER",
+                "window_reference_class": "realized_interaction_window",
+                "evidence_note": "not retained",
+            },
+            {
+                "propagation_id": "OTHER2",
+                "study_id": "OTHER2",
+                "interaction_type": "antagonist",
+                "from_stage": "season",
+                "to_stage": "final",
+                "transformation": "preserved",
+                "final_fitness_reached": "yes",
+                "direction_comparable": "yes",
+                "dependence_id": "DOTHER2",
+                "window_reference_class": "seasonal_position_only",
+                "evidence_note": "retained",
+            },
+        ]
+    )
+    summary = propagation_summary(df)
+    assert summary["realized_or_seasonal_direction_retaining"] == 2
+    assert summary["realized_or_seasonal_direction_comparable_links"] == 3
+    assert summary["realized_or_seasonal_excluding_iwe032_direction_retaining"] == 1
+    assert summary["realized_or_seasonal_excluding_iwe032_direction_comparable"] == 2
