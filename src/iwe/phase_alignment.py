@@ -185,6 +185,17 @@ def phase_alignment_summary(df: pd.DataFrame) -> dict[str, object]:
     if errors:
         raise ValueError("; ".join(errors))
 
+    paired_final = df[
+        df["paired_simpler_vs_stage_comparison"].eq("yes")
+        & df["final_plant_endpoint"].eq("yes")
+    ]
+    paired_positive = paired_final[
+        paired_final["status"].eq("paired_realized_positive")
+    ]
+    paired_null = paired_final[
+        paired_final["status"].eq("boundary_null")
+    ]
+
     return {
         "n_candidates": int(len(df)),
         "n_dependence_clusters": int(df["dependence_id"].nunique()),
@@ -202,6 +213,11 @@ def phase_alignment_summary(df: pd.DataFrame) -> dict[str, object]:
         "paired_comparison_blocked": int(
             df["paired_simpler_vs_stage_comparison"].eq("blocked").sum()
         ),
+        "paired_final_comparisons": int(len(paired_final)),
+        "paired_positive_nonconfirmatory": int(len(paired_positive)),
+        "paired_boundary_null": int(len(paired_null)),
+        "paired_positive_ids": list(paired_positive["candidate_id"].astype(str)),
+        "paired_null_ids": list(paired_null["candidate_id"].astype(str)),
     }
 
 
@@ -230,6 +246,17 @@ def render_phase_alignment_gate(df: pd.DataFrame) -> str:
         f"- Phase/alignment varies: **{summary['phase_varies_yes']} / {summary['n_candidates']}**",
         f"- Paired simpler-vs-stage comparison available: **{summary['paired_comparison_yes']} / {summary['n_candidates']}**",
         f"- Paired comparison explicitly blocked by one recoverable object: **{summary['paired_comparison_blocked']} / {summary['n_candidates']}**",
+        "",
+        "## Paired predictive stress test",
+        "",
+        f"- Paired simpler-vs-stage comparisons that reach final plant fitness: **{summary['paired_final_comparisons']}**",
+        f"- Positive stage-specific gain, non-confirmatory: **{summary['paired_positive_nonconfirmatory']}**",
+        f"- Direct null/boundary comparisons: **{summary['paired_boundary_null']}**",
+        "",
+        "Current positive IDs: " + (", ".join(summary["paired_positive_ids"]) if summary["paired_positive_ids"] else "none") + ".",
+        "Current null IDs: " + (", ".join(summary["paired_null_ids"]) if summary["paired_null_ids"] else "none") + ".",
+        "",
+        "This is the strongest current stress test of the predictive claim. A mechanistically richer stage coordinate does **not** automatically improve final-fitness prediction: Parkinsonia is positive, whereas Posledovich and long-term Lathyrus are retained nulls.",
         "",
         "## Candidate states",
         "",
