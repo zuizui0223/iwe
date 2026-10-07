@@ -155,3 +155,37 @@ def test_duplicate_study_dependence_phase_rows_fail():
 
     errors = validate_phase_alignment_registry(combined)
     assert any("duplicate phase-alignment programme rows" in error for error in errors)
+
+
+def test_paired_predictive_stress_test_separates_positive_and_nulls():
+    df = _rows()
+    positive = df.iloc[[0]].copy()
+    positive["candidate_id"] = "POSITIVE"
+    positive["study_id"] = "POS_STUDY"
+    positive["dependence_id"] = "POS_DEP"
+    positive["raw_or_adult_timing"] = "partial"
+    positive["effective_consumer_timing"] = "partial"
+    positive["prefinal_host_filter"] = "partial"
+    positive["phase_alignment_varies"] = "yes"
+    positive["final_plant_endpoint"] = "yes"
+    positive["paired_simpler_vs_stage_comparison"] = "yes"
+    positive["status"] = "paired_realized_positive"
+    positive["blocker"] = "realized exposure only"
+
+    null = positive.copy()
+    null["candidate_id"] = "NULL"
+    null["study_id"] = "NULL_STUDY"
+    null["dependence_id"] = "NULL_DEP"
+    null["raw_or_adult_timing"] = "yes"
+    null["effective_consumer_timing"] = "yes"
+    null["prefinal_host_filter"] = "yes"
+    null["status"] = "boundary_null"
+    null["blocker"] = "none"
+
+    combined = pd.concat([positive, null], ignore_index=True)
+    summary = phase_alignment_summary(combined)
+    assert summary["paired_final_comparisons"] == 2
+    assert summary["paired_positive_nonconfirmatory"] == 1
+    assert summary["paired_boundary_null"] == 1
+    assert summary["paired_positive_ids"] == ["POSITIVE"]
+    assert summary["paired_null_ids"] == ["NULL"]
