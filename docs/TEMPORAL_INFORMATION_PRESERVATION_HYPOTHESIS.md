@@ -37,7 +37,7 @@ These states are not effect sizes and are not ordinal scores.
 
 Restrict the temporal signal-propagation ledger to links reaching a final plant-fitness endpoint.
 
-There are currently **19 final-fitness links from 17 studies**.
+There are currently **30 final-fitness links from 26 studies**.
 
 ### Prospectively defined timing references
 
@@ -46,15 +46,15 @@ Timing is considered prospective here when it is based on either:
 - `independent_partner_activity`; or
 - `direct_interaction_manipulation`.
 
-Among eleven final-fitness links with these references:
+Among eighteen final-fitness links with these references:
 
-- independent partner activity: **4/5 exact preserved**, **1/5 buffered**;
-- direct timing manipulation: **4/6 preserved**, **1/6 erased**, **1/6 buffered**.
+- independent partner activity: **6/7 exact preserved**, **1/7 buffered**;
+- direct timing manipulation: **8/11 preserved**, **1/11 sign-reversed**, **1/11 erased**, **1/11 buffered**.
 
 Combined:
 
-- exact preservation: **8/11**;
-- direction retention among direction-comparable links: **8/11**.
+- exact preservation: **14/18**;
+- direction retention among direction-comparable links: **14/18**.
 
 The prospective exceptions are biologically informative rather than treated as noise.
 
@@ -67,11 +67,11 @@ The mandatory exception is Posledovich 2015: host stage and temperature alter he
 
 ### Realized-interaction or seasonal references
 
-Among eight final-fitness links whose upstream reference is `realized_interaction_window` or `seasonal_position_only`:
+Among twelve final-fitness links whose upstream reference is `realized_interaction_window` or `seasonal_position_only`:
 
-- exact preservation: **1/8**;
+- exact preservation: **2/12**;
 - one shifted/filtered Cardamine link changes window position/width and is explicitly **direction-incomparable**;
-- among the remaining seven direction-comparable links, direction retention including `preserved_net_changed_mechanism` is **2/7**;
+- among the remaining eleven direction-comparable links, direction retention including `preserved_net_changed_mechanism` is **3/11**;
 - the remaining links are reversed, erased, buffered or tracking-inertial.
 
 This group includes Peucedanum, Cardamine raw egg exposure, long-term Lathyrus, Ulex, Parkinsonia, Dianthus and Trollius buffering.
@@ -80,7 +80,7 @@ This group includes Peucedanum, Cardamine raw egg exposure, long-term Lathyrus, 
 
 Cardamine contributes two final-fitness propagation links to the realized-interaction class.
 
-The shifted/filtered total-egg -> active-egg Cardamine link is direction-incomparable and is not counted as a directional failure. Dropping the second, direction-comparable Cardamine phase-to-fate link changes realized/seasonal direction retention from **2/7 to 1/6**; prospective direction retention remains **8/11**.
+The shifted/filtered total-egg -> active-egg Cardamine link is direction-incomparable and is not counted as a directional failure. Excluding all IWE032 direction-comparable realized/seasonal links changes realized/seasonal direction retention from **3/11 to 2/10**; prospective direction retention remains **14/18**.
 
 No formal p-value is used because the corpus is targeted, reference provenance is confounded with biological system and interaction class, and propagation links are not guaranteed to be independent sampling units.
 
@@ -91,7 +91,7 @@ The provenance pattern is not solely a mutualist-versus-antagonist contrast.
 After restricting to antagonists and collapsing all final-fitness links within each dependence cluster:
 
 - prospective timing references: **4/6 antagonist programmes all direction-retaining**, 1 mixed (Gols 2025), 1 none-retaining;
-- realized/seasonal references: after excluding direction-incomparable links from the binary retention summary, **1/5 all-retaining**, 0 mixed, 4 none-retaining.
+- realized/seasonal references: after excluding direction-incomparable links from the binary retention summary, **1/7 all-retaining**, 0 mixed, 6 none-retaining.
 
 This removes the mutualist-class contribution—including the Mertensia buffer—and collapses repeated Cardamine links while refusing to treat a shifted window as a directional failure. The added Gols programme prevents the prospective antagonist set from looking artificially homogeneous: one plant species preserves the timing effect and another buffers it within the same experiment. The comparison remains descriptive because the antagonist programmes differ in endpoint, design and biological system.
 
@@ -188,6 +188,6 @@ It is one programme containing, at compatible units:
 3. final plant reproduction;
 4. enough unit-level data to compare predictive performance without defining the effective coordinate from the outcome.
 
-Current near-routes are IWE032 Cardamine, Hurlburt Yucca and Wu wheat-midge.
+Current near-routes are IWE032 Cardamine and Hurlburt Yucca; Wu wheat-midge is a strong stage-matched final-fitness example but lacks a genuinely stage-free adult-only comparator by design. Parkinsonia supplies a non-confirmatory paired realized comparison in which stage matching plus observed parasitism/hatch substantially improves out-of-region prediction of final seed predation.
 
 Until one of those paired comparisons closes, temporal information preservation remains a strongly motivated exploratory hypothesis rather than a confirmatory general law.
