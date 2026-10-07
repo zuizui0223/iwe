@@ -144,3 +144,10 @@ def test_stage_structure_evidence_is_not_counted_as_support():
     summary = landscape_pilot_summary(combined)
     assert summary["by_landscape_status"]["stage_structure_evidence"] == 1
     assert "mixed_pollinating_seed_predator" not in summary["recoverable_programmes_by_class"]
+
+
+def test_component_id_rejects_literal_newline_escape():
+    df = _rows()
+    df.loc[0, "component_id"] = r"\nLND_BROKEN"
+    errors = validate_landscape_registry(df)
+    assert any("component_id must contain only" in error for error in errors)
