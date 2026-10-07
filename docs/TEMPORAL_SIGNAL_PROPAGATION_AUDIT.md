@@ -4,11 +4,11 @@ _Generated from data/registry/temporal_signal_components.csv; do not edit counts
 
 ## Scope
 
-- Registered propagation links: **24**
-- Studies: **21**
-- Dependence clusters: **21**
-- Links reaching a final plant-fitness endpoint: **21** from **18 studies**
-- Final-fitness links with a directly comparable upstream/downstream direction: **20**
+- Registered propagation links: **33**
+- Studies: **29**
+- Dependence clusters: **27**
+- Links reaching a final plant-fitness endpoint: **30** from **26 studies**
+- Final-fitness links with a directly comparable upstream/downstream direction: **29**
 
 A propagation link is not an effect size. It records whether a source-backed timing signal is preserved, transformed, reversed, erased, buffered, or fails to track a downstream stage. Multiple links from one programme retain one dependence cluster.
 
@@ -16,41 +16,41 @@ A propagation link is not an effect size. It records whether a source-backed tim
 
 | Transformation | Links |
 |---|---:|
-| buffered | 5 |
+| buffered | 6 |
 | erased | 3 |
-| preserved | 11 |
+| preserved | 16 |
 | preserved_net_changed_mechanism | 1 |
 | shifted_filtered | 1 |
-| sign_reversed | 2 |
+| sign_reversed | 5 |
 | tracking_inertia | 1 |
 
 ## Interaction classes
 
 | Interaction type | Links |
 |---|---:|
-| antagonist | 14 |
+| antagonist | 16 |
 | mixed_pollinating_seed_predator | 4 |
-| mutualist | 6 |
+| mutualist | 13 |
 
 ## Provenance of the upstream temporal reference
 
 | Window-reference class | Links |
 |---|---:|
-| direct_interaction_manipulation | 8 |
-| independent_partner_activity | 5 |
+| direct_interaction_manipulation | 11 |
+| independent_partner_activity | 7 |
 | realized_interaction_window | 9 |
-| seasonal_position_only | 2 |
+| seasonal_position_only | 6 |
 
 ## Transformations observed in chains that reach final plant fitness
 
 | Transformation | Links |
 |---|---:|
-| buffered | 4 |
+| buffered | 5 |
 | erased | 2 |
-| preserved | 11 |
+| preserved | 16 |
 | preserved_net_changed_mechanism | 1 |
 | shifted_filtered | 1 |
-| sign_reversed | 1 |
+| sign_reversed | 4 |
 | tracking_inertia | 1 |
 
 ## Final-link transformations by interaction class
@@ -59,8 +59,8 @@ This matrix is descriptive for the targeted pilot corpus. It is not a literature
 
 | Interaction type | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| mutualist | 5 | 0 | 0 | 0 | 1 | 0 | 0 |
-| antagonist | 6 | 1 | 1 | 2 | 2 | 1 | 0 |
+| mutualist | 10 | 0 | 1 | 0 | 2 | 0 | 0 |
+| antagonist | 6 | 1 | 3 | 2 | 2 | 1 | 0 |
 | mixed_pollinating_seed_predator | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
 
 ## Final-link transformations by timing-reference provenance
@@ -69,14 +69,14 @@ This table is descriptive at the propagation-link level. IWE032 contributes two 
 
 | Timing reference | Preserved | Shifted / filtered | Sign reversed | Erased | Buffered | Tracking inertia | Net preserved, mechanism changed |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| independent_partner_activity | 4 | 0 | 0 | 0 | 1 | 0 | 0 |
-| direct_interaction_manipulation | 6 | 0 | 0 | 1 | 1 | 0 | 0 |
+| independent_partner_activity | 6 | 0 | 0 | 0 | 1 | 0 | 0 |
+| direct_interaction_manipulation | 8 | 0 | 1 | 1 | 1 | 0 | 0 |
 | realized_interaction_window | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
-| seasonal_position_only | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| seasonal_position_only | 1 | 0 | 2 | 0 | 2 | 0 | 0 |
 
-Prospectively defined timing references (independent partner activity or direct timing manipulation) are exact preserved in **10/13** final-fitness links. Among links whose upstream/downstream direction is directly comparable, they retain direction in **10/13**. Realized-interaction or seasonal-position references are exact preserved in **1/8** links; among direction-comparable links they retain direction in **2/7**.
+Prospectively defined timing references (independent partner activity or direct timing manipulation) are exact preserved in **14/18** final-fitness links. Among links whose upstream/downstream direction is directly comparable, they retain direction in **14/18**. Realized-interaction or seasonal-position references are exact preserved in **2/12** links; among direction-comparable links they retain direction in **3/11**.
 
-The shifted-filtered IWE032 total-egg -> active-egg link is explicitly marked direction-incomparable and is not counted as a directional failure. The second IWE032 link is direction-comparable; removing it changes realized/seasonal direction retention from 2/7 to 1/6, while the prospective group remains 10/13.
+The shifted-filtered IWE032 total-egg -> active-egg link is explicitly marked direction-incomparable and is not counted as a directional failure. Excluding all IWE032 direction-comparable realized/seasonal links changes direction retention from 3/11 to 2/10, while the prospective group remains 14/18.
 
 This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class, endpoint, causal depth and study design are confounded, and some programmes contribute more than one propagation link. It motivates—but does not identify—a causal-depth hypothesis. In particular, the prospective category mixes independent adult monitoring with direct experimental timing manipulation.
 
@@ -87,9 +87,9 @@ To reduce confounding by interaction class and repeated links, final-fitness lin
 | Antagonist timing provenance | Programmes | All direction-comparable final links retain direction | Mixed retention | No direction-comparable final link retains direction |
 |---|---:|---:|---:|---:|
 | prospective | 6 | 4 | 1 | 1 |
-| realized_or_seasonal | 5 | 1 | 0 | 4 |
+| realized_or_seasonal | 7 | 1 | 0 | 6 |
 
-Within antagonists alone, prospective timing references yield **4/6 programmes with all direction-comparable final links retained**, 1 mixed, and 1 none-retained. Once direction-incomparable links are excluded from this binary summary, realized/seasonal references yield **1/5 all-retained**, 0 mixed, and 4 none-retained. This programme-level sensitivity removes the mutualist-class imbalance and collapses repeated links, while remaining descriptive rather than inferential.
+Within antagonists alone, prospective timing references yield **4/6 programmes with all direction-comparable final links retained**, 1 mixed, and 1 none-retained. Once direction-incomparable links are excluded from this binary summary, realized/seasonal references yield **1/7 all-retained**, 0 mixed, and 6 none-retained. This programme-level sensitivity removes the mutualist-class imbalance and collapses repeated links, while remaining descriptive rather than inferential.
 
 ## Antagonist-only exact-reference sensitivity
 
@@ -100,7 +100,7 @@ The prospective category still mixes observational adult monitoring with direct 
 | independent_partner_activity | 1 | 1 | 0 | 0 |
 | direct_interaction_manipulation | 5 | 3 | 1 | 1 |
 | realized_interaction_window | 5 | 1 | 0 | 4 |
-| seasonal_position_only | 0 | 0 | 0 | 0 |
+| seasonal_position_only | 2 | 0 | 0 | 2 |
 
 This split makes the design confounding explicit: independent adult monitoring and direct timing manipulations should not be interpreted as one biological causal-depth treatment. The table is a diagnostic for where confirmatory matched-design evidence is still missing.
 
