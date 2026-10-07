@@ -20,6 +20,17 @@ A programme is confirmatory_ready only when it has source-backed raw/adult timin
 - Paired simpler-vs-stage comparison available: **3 / 13**
 - Paired comparison explicitly blocked by one recoverable object: **2 / 13**
 
+## Paired predictive stress test
+
+- Paired simpler-vs-stage comparisons that reach final plant fitness: **3**
+- Positive stage-specific gain, non-confirmatory: **1**
+- Direct null/boundary comparisons: **2**
+
+Current positive IDs: PHA_PARKINSONIA.
+Current null IDs: PHA_POSLEDOVICH2015, PHA_LATHYRUS_LONGTERM.
+
+This is the strongest current stress test of the predictive claim. A mechanistically richer stage coordinate does **not** automatically improve final-fitness prediction: Parkinsonia is positive, whereas Posledovich and long-term Lathyrus are retained nulls.
+
 ## Candidate states
 
 | Candidate | Interaction | Raw/adult timing | Effective consumer timing | Pre-final filter | Phase varies | Final endpoint | Paired comparison | Status | Blocker |
