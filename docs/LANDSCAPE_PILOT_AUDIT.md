@@ -4,9 +4,9 @@ _Generated from data/registry/landscape_components.csv; do not edit counts by ha
 
 ## Pilot scope
 
-- Components: **37**
-- Studies: **34**
-- Dependence clusters: **32**
+- Components: **38**
+- Studies: **35**
+- Dependence clusters: **33**
 
 This is a deliberately small re-audit of already-screened IWE programmes. It is not a systematic-review denominator.
 
@@ -15,7 +15,7 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 | Interaction type | Components |
 |---|---:|
 | antagonist | 19 |
-| mixed_pollinating_seed_predator | 12 |
+| mixed_pollinating_seed_predator | 13 |
 | mutualist | 6 |
 
 ## Window-reference provenance
@@ -25,7 +25,7 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 | direct_interaction_manipulation | 4 |
 | historical_partner_window | 1 |
 | independent_partner_activity | 10 |
-| realized_interaction_window | 18 |
+| realized_interaction_window | 19 |
 | seasonal_position_only | 4 |
 
 ## Landscape readiness
@@ -41,7 +41,7 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 | realized_window_evidence | 6 |
 | reextract_directional | 1 |
 | selection_shift_evidence | 1 |
-| stage_structure_evidence | 3 |
+| stage_structure_evidence | 4 |
 | strong_candidate | 6 |
 
 ## High-provenance anchors
@@ -76,4 +76,4 @@ These counts include strong anchors plus directional re-extraction, realized-win
 
 The landscape registry now separates upstream temporal exposure, stage-specific transformation, and final reproductive outcome while preserving the provenance of every timing reference. A companion temporal signal-propagation registry records whether source-backed timing signals are preserved, shifted/filtered, reversed, erased, buffered, or fail to track a downstream stage.
 
-Current broadened support comes from 4 mutualist, 9 antagonist, and 3 mixed dependence clusters; mechanism-only, boundary, and stage-structure rows are excluded from those counts. High-provenance antagonist coverage now includes Wu 2015, where independently monitored adult wheat-midge occurrence is aligned to an experimentally identified susceptible ear-emergence stage and predicts final yield loss across >400 cultivars. Direct experimental timing evidence includes Aucuba, where complete gall induction that destroys seed production falls from 80.9% before 15 June to 8.8% after the susceptible fruit stage closes, and Wise 2015, where delaying adult wheat-midge exposure beyond spike emergence reduces final seed damage/yield loss. Cardamine supplies positive phase-to-final-fate evidence, Parkinsonia a paired realized stage/filter diagnostic, while James, Posledovich, and long-term Lathyrus retain explicit downstream signal-loss/null cases. Mixed evidence includes Dianthus final post-predation fitness, Silene-Hadena phase reversal, Yucca service-window effects, senita overlap-conditioned redundancy, Trollius flower-age benefit-cost shifts, Glochidion annual-scale stage separation, and Després 2004 showing that strongly different early-versus-late Chiastocheta stage roles can converge on similar final intact-seed output after larval competition and host resource-size effects. The confirmatory question remains whether a prospectively defined effective-stage coordinate predicts final plant fitness better than calendar or upstream timing in independent programmes.
+Current broadened support comes from 4 mutualist, 9 antagonist, and 3 mixed dependence clusters; mechanism-only, boundary, and stage-structure rows are excluded from those counts. High-provenance antagonist coverage now includes Wu 2015, where independently monitored adult wheat-midge occurrence is aligned to an experimentally identified susceptible ear-emergence stage and predicts final yield loss across >400 cultivars. Direct experimental timing evidence includes Aucuba, where complete gall induction that destroys seed production falls from 80.9% before 15 June to 8.8% after the susceptible fruit stage closes, and Wise 2015, where delaying adult wheat-midge exposure beyond spike emergence reduces final seed damage/yield loss. Cardamine supplies positive phase-to-final-fate evidence, Parkinsonia a paired realized stage/filter diagnostic, while James, Posledovich, and long-term Lathyrus retain explicit downstream signal-loss/null cases. Mixed evidence includes Dianthus final post-predation fitness, Silene-Hadena phase reversal, Yucca service-window effects, senita overlap-conditioned redundancy, Trollius flower-age benefit-cost shifts, Glochidion annual-scale stage separation, and Després 2004 showing that strongly different early-versus-late Chiastocheta stage roles can converge on similar final intact-seed output after larval competition and host resource-size effects. Sambucus-Heterhelus adds an independent stage chain from pollination through larval-triggered abortion to viable seed and germination: infested-aborted fruits contain 20.1% viable seeds versus 77.2% in mature fruits, and germination is 2.7% versus 38.7%; site-level benefit:cost ratios differ strongly despite the same stage architecture. The confirmatory question remains whether a prospectively defined effective-stage coordinate predicts final plant fitness better than calendar or upstream timing in independent programmes.
