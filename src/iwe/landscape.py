@@ -126,6 +126,16 @@ def validate_landscape_registry(df: pd.DataFrame) -> list[str]:
     if df["component_id"].fillna("").astype(str).str.strip().eq("").any():
         errors.append("component_id must be non-blank")
 
+    invalid_component_ids = df.loc[
+        ~df["component_id"].fillna("").astype(str).str.fullmatch(r"[A-Z0-9_]+"),
+        "component_id",
+    ].astype(str)
+    if len(invalid_component_ids):
+        errors.append(
+            "component_id must contain only A-Z, 0-9, and underscore: "
+            + ", ".join(sorted(invalid_component_ids))
+        )
+
     if df["dependence_id"].fillna("").astype(str).str.strip().eq("").any():
         errors.append("dependence_id must be non-blank")
 
