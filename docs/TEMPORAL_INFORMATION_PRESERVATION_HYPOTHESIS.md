@@ -188,6 +188,6 @@ It is one programme containing, at compatible units:
 3. final plant reproduction;
 4. enough unit-level data to compare predictive performance without defining the effective coordinate from the outcome.
 
-Current near-routes are IWE032 Cardamine and Hurlburt Yucca; Wu wheat-midge is a strong stage-matched final-fitness example but lacks a genuinely stage-free adult-only comparator by design. Parkinsonia supplies a non-confirmatory paired realized comparison in which stage matching plus observed parasitism/hatch substantially improves out-of-region prediction of final seed predation.
+Current near-routes are IWE032 Cardamine and Hurlburt Yucca; Wu wheat-midge is a strong stage-matched final-fitness example but lacks a genuinely stage-free adult-only comparator by design. Parkinsonia supplies a non-confirmatory paired realized comparison, but it sharpens the hypothesis: stage matching alone reduces leave-one-region-out RMSE by only 3.2%, whereas adding the source-measured parasitism and hatch filters reduces RMSE by 76.1% relative to the annual exposure comparator. The useful extra information is therefore the biologically relevant conversion from exposure to effective future consumer pressure, not causal depth for its own sake.
 
 Until one of those paired comparisons closes, temporal information preservation remains a strongly motivated exploratory hypothesis rather than a confirmatory general law.
