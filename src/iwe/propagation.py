@@ -101,6 +101,9 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
     realized_or_seasonal_direction_comparable = realized_or_seasonal_reference[
         realized_or_seasonal_reference["direction_comparable"].eq("yes")
     ]
+    realized_or_seasonal_excluding_iwe032 = realized_or_seasonal_direction_comparable[
+        realized_or_seasonal_direction_comparable["study_id"].ne("IWE032")
+    ]
 
     programme_rows: list[dict[str, object]] = []
     for dependence_id, group in final.groupby("dependence_id"):
@@ -222,6 +225,14 @@ def propagation_summary(df: pd.DataFrame) -> dict[str, object]:
         ),
         "realized_or_seasonal_direction_retaining": int(
             realized_or_seasonal_direction_comparable["transformation"].isin(direction_retaining).sum()
+        ),
+        "realized_or_seasonal_excluding_iwe032_direction_comparable": int(
+            len(realized_or_seasonal_excluding_iwe032)
+        ),
+        "realized_or_seasonal_excluding_iwe032_direction_retaining": int(
+            realized_or_seasonal_excluding_iwe032["transformation"]
+            .isin(direction_retaining)
+            .sum()
         ),
         "final_programmes": int(len(programme_df)),
         "antagonist_programmes": int(len(antagonist_programmes)),
@@ -346,9 +357,12 @@ def render_propagation_audit(df: pd.DataFrame) -> str:
         "among direction-comparable links they retain direction in "
         f"**{summary['realized_or_seasonal_direction_retaining']}/{summary['realized_or_seasonal_direction_comparable_links']}**.",
         "",
-        "The shifted-filtered IWE032 total-egg -> active-egg link is explicitly marked direction-incomparable and is not counted as a directional failure. The second IWE032 link is direction-comparable; removing it changes realized/seasonal direction retention from "
+        "The shifted-filtered IWE032 total-egg -> active-egg link is explicitly marked direction-incomparable and is not counted as a directional failure. Excluding all IWE032 direction-comparable realized/seasonal links changes direction retention from "
         f"{summary['realized_or_seasonal_direction_retaining']}/{summary['realized_or_seasonal_direction_comparable_links']} "
-        "to 1/6, while the prospective group remains "
+        "to "
+        f"{summary['realized_or_seasonal_excluding_iwe032_direction_retaining']}/"
+        f"{summary['realized_or_seasonal_excluding_iwe032_direction_comparable']}, "
+        "while the prospective group remains "
         f"{summary['prospective_direction_retaining']}/{summary['prospective_direction_comparable_links']}.",
         "",
         "This contrast is not an inferential prevalence estimate: the corpus is targeted, interaction class, endpoint, causal depth and study design are confounded, and some programmes contribute more than one propagation link. It motivates—but does not identify—a causal-depth hypothesis. In particular, the prospective category mixes independent adult monitoring with direct experimental timing manipulation.",
