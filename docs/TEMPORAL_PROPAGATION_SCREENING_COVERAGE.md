@@ -9,9 +9,9 @@ _Generated from data/registry/temporal_propagation_screening.csv; do not edit co
 | Propagation-screen state | Studies |
 |---|---:|
 | blocked | 3 |
-| candidate | 10 |
+| candidate | 9 |
 | ineligible | 12 |
-| registered | 7 |
+| registered | 8 |
 
 The propagation ledger is therefore not an open-ended collection of illustrative examples. Every publication in the original 32-study IWE registry has an explicit propagation-screen state.
 
@@ -21,10 +21,10 @@ The propagation ledger is therefore not an open-ended collection of illustrative
 |---|---:|
 | dependence_unresolved | 1 |
 | model_derived_final | 1 |
-| needs_source_audit | 10 |
+| needs_source_audit | 9 |
 | no_final_fitness | 4 |
 | no_isolated_timing_signal | 5 |
-| registered_propagation | 7 |
+| registered_propagation | 8 |
 | synthesis_not_single_chain | 1 |
 | timing_to_final_linkage | 2 |
 | wrong_biological_surface | 1 |
@@ -43,9 +43,9 @@ The propagation ledger is therefore not an open-ended collection of illustrative
 |---|---:|
 | antagonist | 2 |
 | mixed_pollinating_seed_predator | 1 |
-| mutualist | 7 |
+| mutualist | 6 |
 
-P1 source-audit queue: **IWE002, IWE005, IWE008, IWE014, IWE024, IWE025**.
+P1 source-audit queue: **IWE002, IWE008, IWE014, IWE024, IWE025**.
 
 Blocked source/linkage queue: **IWE003, IWE015, IWE022**.
 
