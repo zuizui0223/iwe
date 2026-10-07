@@ -67,11 +67,11 @@ The consumer does not track the moving resource closely enough for potential exp
 
 Example: *Parkinsonia–Penthobruchus*. Egg density declines at pod maturation rather than peaking with seed availability, and realized seed predation remains modest relative to potential.
 
-## Temporal information preservation / causal-depth hypothesis
+## Temporal information preservation / conversion-bottleneck hypothesis
 
 The expanded ledger suggests a more general biological hypothesis than a mutualist-versus-antagonist sign contrast:
 
-> **Temporal information is most likely to survive when the measured interaction stage is causally close to plant reproduction; every additional developmental, behavioral or compensatory layer creates an opportunity to shift, reverse, erase or buffer the signal.**
+> **Temporal information is most likely to survive when the timing coordinate is defined at or downstream of the biological bottleneck that converts exposure into effective service or damage. Extra causal depth creates opportunities for transformation, but depth alone is not the target: adding a downstream stage helps only when that stage captures a real conversion bottleneck.**
 
 The current targeted pilot provides a deliberately descriptive contrast.
 
@@ -96,11 +96,11 @@ The current antagonist/mixed final links therefore occupy multiple transformatio
 
 A provenance-based diagnostic sharpens this observation without treating transformation states as effect sizes. Among final-fitness links:
 
-- prospectively defined references (independent partner activity or direct timing manipulation) are exact `preserved` in **8/11** links and retain direction in **8/11** direction-comparable links;
-- realized-interaction or seasonal-position references are exact `preserved` in **1/8** links and retain direction in **2/7** direction-comparable links;
+- prospectively defined references (independent partner activity or direct timing manipulation) are exact `preserved` in **14/18** links and retain direction in **14/18** direction-comparable links;
+- realized-interaction or seasonal-position references are exact `preserved` in **2/12** links and retain direction in **3/11** direction-comparable links;
 - the shifted/filtered Cardamine total-egg -> active-egg link is not a sign comparison and is excluded from the directional denominator.
 
-The direction-comparable antagonist programmes retain the same qualitative pattern after dependence-cluster aggregation: prospective references have 4/6 all-retained programmes, 1 mixed and 1 none-retained; realized/seasonal references have 1/5 all-retained and 4 none-retained.
+The direction-comparable antagonist programmes retain the same qualitative pattern after dependence-cluster aggregation: prospective references have 4/6 all-retained programmes, 1 mixed and 1 none-retained; realized/seasonal references have 1/7 all-retained and 6 none-retained.
 
 However, this does **not** identify biological causal depth. “Prospective” combines independent adult monitoring with direct timing experiments. Splitting antagonist programmes by exact timing reference gives 1/1 all-retained for independent adult monitoring and 3/5 all-retained, 1 mixed, 1 none-retained for direct timing manipulation. Study design, endpoint choice, interaction class and causal position remain confounded.
 
@@ -108,9 +108,11 @@ The pattern must therefore **not** be interpreted as a literature-wide frequency
 
 The confirmatory version of the hypothesis is architectural rather than taxonomic:
 
-> within comparable datasets, adding biologically required downstream stage information should improve final-fitness prediction when those stages genuinely transform exposure, but should not improve prediction when the extra stage is irrelevant.
+> within comparable datasets, adding a source-defined downstream stage should improve final-fitness prediction **only when that stage captures the dominant conversion bottleneck between exposure and reproductive consequence**.
 
-Parkinsonia supplies the first positive paired diagnostic under this logic; Posledovich and long-term Lathyrus supply mandatory nulls.
+Parkinsonia is diagnostic here. Moving from annual egg density to stage-matched egg density reduces leave-one-region-out RMSE only from 20.58 to 19.93 percentage points (**3.2%**). Adding the measured parasitism and hatch filters reduces RMSE to 4.92 (**76.1% below the annual-exposure model**). Thus the gain comes mainly from estimating which exposures become viable future consumers, not from causal depth or stage matching per se.
+
+Posledovich and long-term Lathyrus supply mandatory nulls: mechanistically plausible stage information can change intermediate biology without improving the final plant endpoint.
 
 ## Why this helps explain the original IWE bottleneck
 
@@ -134,7 +136,7 @@ and
 
 A meta-analysis that forces all of these into a common "synchrony" coefficient is therefore combining effects that are measured at different causal depths and whose sign can change between those depths.
 
-The evidence gap uncovered by strict H1 is partly a **causal-stage mismatch**, not merely missing sample size.
+The evidence gap uncovered by strict H1 is partly a **causal-stage mismatch**, not merely missing sample size. The paired evidence further suggests that the important mismatch is often specifically **which conversion bottleneck has or has not been measured**.
 
 ## Relationship to prior mismatch and buffering frameworks
 
@@ -176,6 +178,8 @@ The two models therefore play different roles.
 The stage-specific model explains *why* the signal changes.  
 The propagation model records *how far and in what form* it reaches plant fitness.
 
+The paired-prediction evidence adds a third question: **which downstream gate actually contains new predictive information?** A deeper coordinate is not automatically better.
+
 ## A response-independent phase coordinate
 
 Where source timing allows it, developmental head start can be defined before inspecting final fitness.
@@ -203,7 +207,7 @@ The strongest test is no longer:
 
 It is:
 
-> does a timing coordinate defined at the biologically effective causal stage explain final plant fitness better than calendar timing or an upstream encounter-only coordinate?
+> does a timing coordinate defined **after the dominant exposure-to-effect bottleneck** explain final plant fitness better than calendar timing, upstream encounter timing, or stage matching that omits the bottleneck?
 
 For a suitable multi-stage dataset, compare prospectively defined models based on:
 
@@ -213,7 +217,7 @@ For a suitable multi-stage dataset, compare prospectively defined models based o
 4. developmental phase or effective-consumer timing;
 5. host-filtered effective cost timing.
 
-Promotion requires improvement at the **final plant-fitness endpoint**, not just at larval performance, attack or another intermediate response.
+Promotion requires improvement at the **final plant-fitness endpoint**, not just at larval performance, attack or another intermediate response. Parkinsonia shows why: stage matching alone barely improves held-out prediction, whereas adding the pre-final survival filter does.
 
 ## Mandatory counterexamples
 
@@ -247,6 +251,6 @@ A defensible current synthesis is:
 
 > Phenological effects are not transmitted unchanged from interaction timing to fitness. Across the current IWE corpus, temporal signals can be preserved, filtered, reversed, erased or buffered as they pass through interaction stages; the key empirical problem is therefore to identify where in the causal chain timing information is converted into final reproductive consequences.
 
-The pilot further motivates a **temporal information preservation / causal-depth hypothesis**: timing information may be more stable when the reference is defined prospectively at or near the biologically effective interaction stage, and increasingly contingent when delayed consumers, host filters, consumer targeting or alternative pathways intervene. In the current targeted corpus, exact preservation is 8/11 for prospective references versus 1/8 for realized/seasonal references, while direction retention among direction-comparable links is 8/11 versus 2/7. These contrasts are confounded by study design and system; the decisive test remains a within-programme paired comparison at final fitness.
+The pilot further motivates a **temporal information preservation / conversion-bottleneck hypothesis**: timing information may be more stable when the reference is defined prospectively at or downstream of the biologically important gate that converts exposure into service or damage, and increasingly contingent when that gate is omitted or followed by compensatory pathways. In the current targeted corpus, exact preservation is 14/18 for prospective references versus 2/12 for realized/seasonal references, while direction retention among direction-comparable links is 14/18 versus 3/11. These contrasts remain confounded by design and system. More importantly, the three existing paired final-endpoint stress tests currently contain only **one positive and two nulls**, so predictive superiority is not established as a general law.
 
 This is broader than the original mutualist/antagonist/mixed sign comparison while remaining testable and source-provenance aware.
