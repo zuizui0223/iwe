@@ -34,7 +34,8 @@ def test_experimental_timing_and_cue_controls_are_not_merged_with_observations()
     assert set(df.index) == {
         "SONG2016_RHEUM", "OSTERGARD2007_LATHYRUS",
         "MEYER2014_BERBERIS", "JADEJA2017_YUCCA",
-        "IMAI2006_AUCUBA", "GOTO2010_GLOCHIDION"
+        "IMAI2006_AUCUBA", "GOTO2010_GLOCHIDION",
+        "BRODY2000_IPOMOPSIS"
     }
     assert df.loc["SONG2016_RHEUM", "independent_randomized_exposure"] == (
         "pollen_source_only"
@@ -50,7 +51,7 @@ def test_experimental_timing_and_cue_controls_are_not_merged_with_observations()
 
 def test_true_plant_fitness_not_automatically_obtained_from_retained_fruits():
     df = pd.read_csv(MATRIX)
-    assert len(df) == 6
+    assert len(df) == 7
     assert df.loc[
         df["programme"] == "SONG2016_RHEUM",
         "final_intact_seed_by_exposure_available",
@@ -110,3 +111,15 @@ def test_glochidion_modelled_counterfactual_is_not_randomized_seed_fitness():
                          "independent_randomized_exposure"] == "no"
     assert benchmark.loc["GOTO2010_GLOCHIDION",
                          "strict_h1_eligible_from_this_source"] == "no"
+
+
+def test_published_2000_no_choice_experiment_is_not_equated_to_pure_egg_injection():
+    table = pd.read_csv(MATRIX).set_index("programme")
+    row = table.loc["BRODY2000_IPOMOPSIS"]
+    assert row["source_doi"] == "10.1007/PL00008867"
+    assert row["independent_randomized_exposure"] == (
+        "forced_no_choice_female_caging_random_assignment_not_verified"
+    )
+    assert row["final_intact_seed_by_exposure_available"] == "no"
+    assert row["strict_h1_eligible_from_this_source"] == "no"
+    assert "caging" in row["remaining_unresolved_mechanism"]
