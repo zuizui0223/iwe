@@ -58,7 +58,7 @@ def test_synthetic_onset_shift_changes_homologous_smd_not_strict_h1():
     lag0 = _take(df, "scenario_stable_only", 0, "core_vs_late")
     lag7 = _take(df, "scenario_stable_only", 7, "core_vs_late")
     shifted = _take(df, "scenario_earliest_all", 7, "core_vs_late")
-    source = _take(df, "source_certified_only", None, "core_vs_late")
+    source = _take(df, "provided_bound_conditional_only", None, "core_vs_late")
     assert baseline.eligible_smd
     assert baseline.n_high == 4 and baseline.n_low == 3
     assert lag0.effect_native == pytest.approx(baseline.effect_native)
@@ -88,7 +88,7 @@ def test_source_bounds_can_stabilize_complete_comparison_but_are_not_auto_verifi
         _plants(), _adults(), _outcomes(),
         source_lower_bounds=source, scenario_lags=(7,)
     )
-    row = _take(df, "source_certified_only", None, "core_vs_late")
+    row = _take(df, "provided_bound_conditional_only", None, "core_vs_late")
     assert row.eligible_smd
     assert row.n_high == 4 and row.n_low == 3
     assert row.n_excluded_uncertain == 0

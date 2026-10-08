@@ -39,7 +39,7 @@ When no `l` exists, **only early refuge can be certified** from
 `u` and the adult flight distribution alone. A new 7-day sensitivity
 scenario explicitly substitutes `l_scenario=max(1,u-7)`; classifications
 stable under this scenario are **conditional on the assumption**,
-not source-certified. This scenario should be repeated with alternative
+not provided-bound conditional. This scenario should be repeated with alternative
 lags, and never be used to turn a missing bound into a fact.
 
 This audit intentionally keeps observation-based timing groups used
@@ -88,7 +88,7 @@ assignments:
 
 - `observed_point`: the original **first observed** flowering day, not
   necessarily true onset;
-- `source_certified_only`: only groups robust to a separately
+- `provided_bound_conditional_only`: only groups robust to a separately
   source-located inclusive onset interval; an unlocated late/core
   plant is dropped even if its observed day lies late;
 - `scenario_stable_only`: only groups invariant under an explicitly
@@ -115,7 +115,7 @@ necessary. The status JSON accordingly records
 
 **Interpretation stop rule:** a synthetic lag sensitivity, however
 stable, does not establish actual onset-day accuracy or admit H1
-effects. If the source-certified subset has fewer than two outcomes
+effects. If the provided-bound conditional subset has fewer than two outcomes
 per group or zero variance, report `eligible_smd=false`, not an
 imputed or borrowed effect. A difference between observed-point and
 assumed-earliest g is evidence of **analysis sensitivity under an

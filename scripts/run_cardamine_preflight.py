@@ -70,8 +70,8 @@ def main() -> int:
         "timing_exposure_rows": int(len(exposure)),
         "onset_interval_audit_rows": int(len(onset_audit)),
         "onset_effect_sensitivity_rows": int(len(onset_sensitivity)),
-        "source_certified_smd_contrasts": int(onset_sensitivity.loc[
-            onset_sensitivity["assignment_method"] == "source_certified_only",
+        "provided_bound_conditionally_estimable_smd_contrasts": int(onset_sensitivity.loc[
+            onset_sensitivity["assignment_method"] == "provided_bound_conditional_only",
             "eligible_smd"
         ].sum()) if not onset_sensitivity.empty else 0,
         "assumed_lag_smd_is_not_h1_provenance": True,
