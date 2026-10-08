@@ -26,6 +26,8 @@ jobs:
       - name: Download six source files (manual, strict)
         if: ${{ github.event_name == 'workflow_dispatch' }}
         env:
+          DRYAD_CLIENT_ID: ${{ secrets.DRYAD_CLIENT_ID }}
+          DRYAD_CLIENT_SECRET: ${{ secrets.DRYAD_CLIENT_SECRET }}
           DRYAD_ACCESS_TOKEN: ${{ secrets.DRYAD_ACCESS_TOKEN }}
         run: >-
           python scripts/recover_iwe015_dryad.py
