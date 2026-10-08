@@ -74,8 +74,19 @@ show an experimentally demonstrated adaptive oviposition distribution.
 | Programme | Reported host filter | Ecological implication to test |
 |---|---|---|
 | James et al. 1994, *Y. elata* | A 5-night fruit-maturation run whose position is variable; added pollen does not significantly increase final fruit production | The same adult-visit timing may have very different offspring/female-fitness consequences across inflorescences |
-| Jadeja et al. 2017, *Y. glauca*, DOI 10.1002/ece3.3426 | Previously developed basal fruits affect survival of later distal flowers; moths adjust oviposition | Adult insects may use *predictive host-resource cues* to avoid offspring mortality |
+| Jadeja et al. 2017, *Y. glauca*, DOI 10.1002/ece3.3426 | Experimental basal-fruit cue reduces whether females oviposit in distal flowers (P=0.048), but the host-abortion gradient is attributed to unpublished work | Adult *site acceptance* may respond to a host cue; final offspring survival and plant intact-seed effects remain untested as a linked chain |
 | Hurlburt 2004 northern *Y. glauca*, DOI 10.7939/r3-fe1d-kj80, as summarized by 2013 COSEWIC reports | Fewer ovipositions or poorer pollen receipt associate with higher flower abortion | In pollen-limited settings, eggs may *index delivered service*, reversing the apparent egg–retention correlation without plants intrinsically favoring seed predators |
+
+**Jadeja stage qualification:** the 2017 paper reports no significant
+basal-fruit effect on egg number *conditional on at least one oviposition*
+(P=0.61), or on larval emergence from a separate observational collection
+of 243 top fruits (P>0.7). These nulls are not equivalent to proof that
+the host cue does not influence later performance. The basal-fruit
+retention-risk gradient itself is cited as unpublished data. Therefore
+we have evidence that moths change **site acceptance**, not a
+source-matched demonstration that they improve their own fitness or
+host mature seed output. See
+`LANDSCAPE_JADEJA2017_YUCCA_HOST_FILTER.md`.
 
 These studies involve different years, sites, species or methods and
 **cannot** be pooled as three independent estimates of one
