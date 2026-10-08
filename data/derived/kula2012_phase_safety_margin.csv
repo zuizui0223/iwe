@@ -1,3 +1,3 @@
-year,synchrony_predation_sign,first_flower_to_first_larva_days,fruit_maturation_days,phase_safety_margin_days,host_can_mature_before_first_larva
-2008,positive,10,21.3,-11.3,False
-2009,negative,17,16.7,0.3,True
+year,synchrony_predation_sign,first_flower_to_first_larva_days,fruit_maturation_days,fruit_maturation_se_days,phase_detection_margin_days,margin_lower_two_se_maturation_only,margin_upper_two_se_maturation_only,margin_sign_maturation_only,damaging_onset_directly_observed
+2008,positive,10,21.30,0.28,-11.30,-11.86,-10.74,negative,False
+2009,negative,17,16.70,0.40,0.30,-0.50,1.10,unresolved,False
