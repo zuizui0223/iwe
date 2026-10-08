@@ -114,10 +114,27 @@ def endpoint_sensitivity(propagation: pd.DataFrame,
                 "mixed": states["mixed"],
                 "none": states["none"],
             })
+    # Keep biological class composition visible within the strictest endpoint.
+    strict = df[df["endpoint_class"].eq("observed_mature_seed_or_yield")]
+    strict_class_mix = []
+    for interaction_type in ("mutualist", "antagonist", "mixed_pollinating_seed_predator"):
+        for reference, reference_classes in REFERENCE_GROUPS.items():
+            group = strict[
+                strict["interaction_type"].eq(interaction_type)
+                & strict["window_reference_class"].isin(reference_classes)
+            ]
+            strict_class_mix.append({
+                "interaction_type": interaction_type,
+                "reference": reference,
+                "links": int(len(group)),
+                "retained": int(group["transformation"].isin(RETAINING).sum()),
+                "clusters": int(group["dependence_id"].nunique()),
+            })
     return {
         "n_links": int(len(df)),
         "endpoint_counts": dict(Counter(df["endpoint_class"])),
         "summary": summary,
+        "strict_class_mix": strict_class_mix,
         "ant_programmes": ant_programmes,
     }
 
@@ -157,6 +174,21 @@ def render_endpoint_sensitivity(propagation: pd.DataFrame,
         lines.append(f"| {r['scope']} | {r['reference']} | {r['links']} | "
                      f"{r['comparable']} | {r['retained']} | "
                      f"{r['exact_preserved']} | {r['clusters']} |")
+    lines += [
+        "",
+        "## Biological class mix within the mature-seed/yield subset",
+        "",
+        "The timing-reference groups have different interaction-class compositions. "
+        "Their retention fractions are not matched-design contrasts.",
+        "",
+        "| Class | Reference | Links | Retained | Dependence clusters |",
+        "|---|---|---:|---:|---:|",
+    ]
+    for r in d["strict_class_mix"]:
+        lines.append(
+            f"| {r['interaction_type']} | {r['reference']} | "
+            f"{r['links']} | {r['retained']} | {r['clusters']} |"
+        )
     lines += [
         "",
         "## Antagonist dependence-cluster sensitivity",
