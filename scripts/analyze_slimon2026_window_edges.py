@@ -113,7 +113,7 @@ def _source_full_date_year(value) -> int | None:
     raw = str(value).strip()
     if not raw or raw.upper() in MISSING_TOKENS:
         return None
-    if re.fullmatch(r"\\d+(?:\\.0+)?", raw):
+    if re.fullmatch(r"\d+(?:\.0+)?", raw):
         # A bare DOY does not identify a calendar year.
         return None
     parsed = pd.to_datetime(raw, errors="coerce", dayfirst=False)
