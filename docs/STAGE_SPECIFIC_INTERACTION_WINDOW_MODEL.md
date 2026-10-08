@@ -138,7 +138,7 @@ In Parkinsonia-Penthobruchus, the same seven region-season units show a monotoni
 - leave-one-**region**-out RMSE: **20.58 -> 19.93 -> 4.92** percentage points (7 region-season records, 4 held-out regions);
 - outcome-exposed exploratory ablation: measured nonparasitized × hatch fraction **alone** yields **4.11 pp**, without matching egg density to host stage.
 
-This is a useful positive paired diagnostic, but not a confirmatory test: adult timing is absent, n=7, and parasitism/hatch are mechanistically close to final seed destruction.
+This is a useful retrospective paired diagnostic, but not a confirmatory test: adult timing is absent, n=7, and parasitism/hatch are mechanistically close to final seed destruction. Crucially, the source Table 5 egg-status and seed-fate measurements come from the same late-collected pod samples, rather than measuring survival in advance of the final outcome.
 
 Accordingly, S_i can be used only when it is defined from pre-final biological processes and frozen independently of the final response. A filter cannot be tuned or selected because it maximizes agreement with final fitness.
 
