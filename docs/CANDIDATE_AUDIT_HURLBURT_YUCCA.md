@@ -60,6 +60,22 @@ Therefore IWE will not use:
 - Pinhorn absence of moths/fruit as a phenological contrast;
 - pooled 1999–2003 viable-seed variance as if it were a year-specific high/low-overlap variance.
 
+## Additional biological interest, not an unlock
+
+Official 2013 COSEWIC assessments citing this thesis report a northern
+**reverse selective abscission** pattern: flowers with fewer moth eggs
+or poor pollen delivery tend to be aborted, unlike sanctions against
+egg-rich flowers described in other yuccas. This is a source-backed
+ecological boundary suggesting that when pollen delivery is limiting,
+oviposition may mark service receipt and plant retention can favour
+units with more moth eggs.
+
+The report is secondary, does not isolate egg effects from pollination
+or host resource allocation, and contains no within-season adult
+overlap-to-intact-seed join. It therefore does not fix the missing
+Hurlburt key or create a quantitative mixed cluster. See
+`LANDSCAPE_HURLBURT_YUCCA_REVERSE_ABSCISSION.md`.
+
 ## Exact unlock condition
 
 The Hurlburt programme can close mixed #2 if the 2004 thesis or archived field data provide, for at least two independent biological groups/windows within the programme:
