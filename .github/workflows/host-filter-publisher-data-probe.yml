@@ -5,6 +5,7 @@ on:
     types: [opened, synchronize]
     paths:
       - scripts/probe_ostergard2007_meyer2014_archives.py
+      - scripts/recover_ostergard2007_figshare_appendix.py
       - tests/test_host_filter_open_archive_probe.py
       - .github/workflows/host-filter-publisher-data-probe.yml
 
@@ -28,11 +29,15 @@ jobs:
           python -m scripts.probe_ostergard2007_meyer2014_archives
           --output-dir /tmp/iwe-host-filter-open-archive-probe
           --timeout 15
-      - name: Upload metadata manifest only
+      - name: Retrieve the one source-pinned Figshare Appendix A
+        run: >-
+          python -m scripts.recover_ostergard2007_figshare_appendix
+          --outdir /tmp/iwe-host-filter-open-archive-probe
+      - name: Upload original unreviewed appendix and access manifests
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: host-filter-source-archive-metadata-only
-          path: /tmp/iwe-host-filter-open-archive-probe/manifest.json
+          name: host-filter-source-appendix-unreviewed
+          path: /tmp/iwe-host-filter-open-archive-probe/
           if-no-files-found: warn
           retention-days: 7
