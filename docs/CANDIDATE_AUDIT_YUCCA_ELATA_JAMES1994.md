@@ -39,6 +39,7 @@ became mature fruit.
 | Pooled fruit maturation fraction, 699/11,786 | **5.93%** (derived arithmetic) |
 | Published fruit maturation percentage | **6.6%** (1.4–15.1% among units, as reported) |
 | Fruit-setting run within an inflorescence | approximately **5 consecutive nights**, **36%** of its flowering duration |
+| Among inflorescences, later-season flowering | **Higher proportion of flowers matured as fruit**, according to source abstract |
 | Which part of anthesis the 5-night run occupies | variable across inflorescences: early, middle, or late |
 | Supplementary hand-pollination | **no significant increase** in final fruit fraction, as reported |
 | Moth relative abundance vs mature fruit production | **no correlation detected**, as reported |
@@ -55,6 +56,18 @@ that larger inflorescences had proportionally fewer mature fruits, which
 is compatible with this difference. This is a *possible explanation*,
 not verified without the exact Methods/table. Do not invent the 38
 individual denominators or test uncertainty from the 11,786 flowers.
+
+**Timing is structured differently at two spatial/temporal grains.**
+Across inflorescences, *later-season flowering inflorescences set a larger
+proportion of mature fruits than early flowering ones*. Within each
+inflorescence, however, the short five-night fruit-maturation window
+could appear at the beginning, middle or end of anthesis. This apparent
+combination of a *between-inflorescence seasonal direction* and
+*within-inflorescence unpredictability* is source reported, not a
+meta-analytic reversal. The first is an observational calendar effect;
+the second describes the location of fruit success inside an
+inflorescence's flowering sequence. Neither supplies the missing
+contemporaneous adult-moth synchrony-to-intact-seed matched effect.
 
 The **90% abortion** comes from a separately observed 31-flower subset,
 not 90% of the 11,786 flowers, and cannot be used to infer seeds destroyed
