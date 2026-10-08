@@ -52,49 +52,46 @@ Mean predation was:
 
 The reversal therefore cannot be summarized as a universal positive or negative effect of adult/oviposition synchrony.
 
-## Developmental phase lag explains the reversal
+## Developmental phase lag is a plausible mechanism, not a proven threshold
 
-Flowering and oviposition shifted by more than a week between years, but larval activity began and peaked at nearly the same calendar time.
+The source finds opposite significant synchrony–predation relationships in the two years. Flowering and oviposition shifted much more than the detected larval activity, and mean fruit maturation was faster in 2009.
 
-Relative to first larval observation:
+Relative to the **first larva observed on a focal plant**:
 
-- in 2008, first flowering preceded larvae by **10 d** and first egg by only **5 d**;
-- in 2009, first flowering preceded larvae by **17 d** and first egg by **15 d**.
+- 2008: first flowering preceded detection by **10 days**, first egg by **5 days**;
+- 2009: first flowering preceded detection by **17 days**, first egg by **15 days**.
 
-Fruit development was also faster in 2009:
+Mean time from flower marking to end-of-season collection of its fruit/flower set was:
 
-- 2008 mean maturation interval: **21.3 ± 0.28 d**;
-- 2009: **16.7 ± 0.40 d**.
+- 2008: **21.3 ± 0.28 SE days**;
+- 2009: **16.7 ± 0.40 SE days**.
 
-The dissertation's mechanistic interpretation is therefore temporal:
+The dissertation proposes that earlier flowering/oviposition in 2009 gave fruits a longer developmental lead before *large, mobile* larvae became abundant. This is biologically plausible but does not establish the beginning of feeding.
 
-- in 2008, plants most synchronized with oviposition remained close to peak larval activity and suffered more predation;
-- in 2009, highly synchronized plants had enough developmental lead for fruits to mature and harden before large larvae became abundant, so they suffered less predation.
+**Observation-lag limitation, verified in the original Methods:** focal plants were visited every **2–4 days**. Larvae were usually first detected *after* they started moving among flowers, at approximately **10–15 mm** body length. The cited third-instar comparison is to related *Hadena bicruris*, not a direct measurement of the first feeding instar of *H. ectypa*. Thus the first recorded larva is a **delayed detection event**, not a measured onset of damage.
 
-The same adult/oviposition overlap can therefore map to opposite plant costs depending on the delay between interaction stages.
+**Fruit-state limitation:** the maturation interval is calculated from flower marking to an end-of-season collection date based on fruit/flower condition. The actual date on which an individual fruit becomes unavailable to feeding larvae is not directly estimated.
 
-## Derived phase-safety margin
+## Descriptive margin to first **detected** mobile larva — uncertainty audit
 
-The source summaries permit one response-independent descriptive coordinate:
+The source summaries support a descriptive calendar margin, not a hardening or refuge threshold:
 
-`phase safety margin = days from first flowering to first larval observation - mean fruit maturation interval`.
+`detection margin = first detected larva date - first flowering date - mean collection/maturation interval`.
 
-This asks whether the host can, in principle, complete fruit maturation before the first damaging larval stage appears.
+This margin uses the source's *earliest flowering date* and *first observed mobile larva*, not a matched individual egg–larva–fruit development trajectory.
 
-Using only source-reported timing values:
+| Year | Detection lag from first flower | Mean collection interval ± SE | Detection margin | Maturation-only ±2SE range | Observed synchrony–predation sign |
+|---|---:|---:|---:|---:|---|
+| 2008 | 10 d | 21.3 ± 0.28 d | **−11.3 d** | −11.86 to −10.74 d | positive |
+| 2009 | 17 d | 16.7 ± 0.40 d | **+0.3 d** | **−0.50 to +1.10 d** | negative |
 
-| Year | Flower -> first larva | Fruit maturation | Phase safety margin | Synchrony -> predation |
-|---|---:|---:|---:|---|
-| 2008 | 10 d | 21.3 d | **-11.3 d** | positive |
-| 2009 | 17 d | 16.7 d | **+0.3 d** | negative |
+The ±2SE range is only a sensitivity check for the **mean collection interval** under the original reported SE. It is **not** a full confidence interval for the interaction phase because first-larva detection error, between-plant variation, flower-stage uncertainty and the unknown start of feeding are unquantified.
 
-The coordinate crosses zero in the same year that the synchrony-predation relationship changes sign.
+The 2009 margin crosses zero even before those additional uncertainties are considered. **The data do not demonstrate that fruits matured before larvae began damaging them.** It would be incorrect to classify 2009 as a confidently positive “safety margin” or to claim an experimentally identified zero-crossing threshold.
 
-This is not a two-point statistical test and is not used to claim a threshold law. It is a prospective mechanistic coordinate generated without fitting to final fitness: negative values mean the first larvae appear while the earliest fruits are still within their mean maturation interval; non-negative values mean those fruits can reach maturation before the first larval observation.
+The descriptive contrast—much greater flower-to-detected-larva lead and faster average collection/maturation in 2009—remains compatible with the source's stage-lag explanation of the opposite predation slopes. It is not an independent test or a confirmed threshold mechanism.
 
-The derivation is executable in
-`scripts/build_kula2012_phase_margin.py` and outputs
-`data/derived/kula2012_phase_safety_margin.csv`.
+The derivation remains executable in `scripts/build_kula2012_phase_margin.py` and writes `data/derived/kula2012_phase_safety_margin.csv` (historical filename retained for compatibility). The generated columns explicitly refer to **detection**, retain the maturation-only ±2SE check and set `damaging_onset_directly_observed=False` in both years.
 
 ## General mechanism
 
