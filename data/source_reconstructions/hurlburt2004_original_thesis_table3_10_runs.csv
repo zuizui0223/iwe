@@ -1,0 +1,10 @@
+study_id,source_doi,source_table,site,year,flowering_vs_fruiting_runs,flowering_vs_fruiting_z,flowering_vs_fruiting_n,flowering_vs_fruiting_p,visitation_vs_fruiting_runs,visitation_vs_fruiting_z,visitation_vs_fruiting_n,visitation_vs_fruiting_p,physical_pdf_page,test_class,strict_h1_effect,year_site_independent_timing_to_final_seed_effect
+HURLBURT2004_YUCCA,10.7939/r3-fe1d-kj80,Table_3_10,Onefour,1999,11,-1.165,33,0.244,12,-0.626,27,0.532,127,site_year_runs_test,no,no
+HURLBURT2004_YUCCA,10.7939/r3-fe1d-kj80,Table_3_10,Onefour,2000,11,-0.554,39,0.579,11,0.000,34,1.000,127,site_year_runs_test,no,no
+HURLBURT2004_YUCCA,10.7939/r3-fe1d-kj80,Table_3_10,Onefour,2001,9,-0.528,20,0.598,11,1.109,16,0.267,127,site_year_runs_test,no,no
+HURLBURT2004_YUCCA,10.7939/r3-fe1d-kj80,Table_3_10,Onefour,2002,3,-1.237,15,0.216,3,-0.791,10,0.429,127,site_year_runs_test,no,no
+HURLBURT2004_YUCCA,10.7939/r3-fe1d-kj80,Table_3_10,Loma,2000,3,-0.788,7,0.431,2,-1.369,6,0.171,127,site_year_runs_test,no,no
+HURLBURT2004_YUCCA,10.7939/r3-fe1d-kj80,Table_3_10,Loma,2001,3,-0.380,7,0.704,4,0.000,6,1.000,127,site_year_runs_test,no,no
+HURLBURT2004_YUCCA,10.7939/r3-fe1d-kj80,Table_3_10,Loma,2002,4,0.109,5,0.913,2,-0.982,5,0.326,127,site_year_runs_test,no,no
+HURLBURT2004_YUCCA,10.7939/r3-fe1d-kj80,Table_3_10,Fort_Benton,2001,4,0.000,7,1.000,4,0.000,7,1.000,127,site_year_runs_test,no,no
+HURLBURT2004_YUCCA,10.7939/r3-fe1d-kj80,Table_3_10,Fort_Benton,2002,4,0.000,6,1.000,4,0.000,6,1.000,127,site_year_runs_test,no,no
