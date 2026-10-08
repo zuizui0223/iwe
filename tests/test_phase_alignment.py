@@ -234,3 +234,13 @@ def test_real_biological_nulls_do_not_inflate_paired_model_evidence():
     assert summary["paired_model_null"] == 0
     assert summary["boundary_null"] == 2
     assert set(summary["boundary_null_ids"]) == {"PHA_POSLEDOVICH2015", "PHA_LATHYRUS_LONGTERM"}
+
+
+def test_true_model_null_requires_a_real_paired_predictive_comparison():
+    df = _rows().iloc[[0]].copy()
+    df.loc[:, "status"] = "paired_model_null"
+    df.loc[:, "paired_simpler_vs_stage_comparison"] = "no"
+    assert any("paired_model_null requires" in msg
+               for msg in validate_phase_alignment_registry(df))
+    df.loc[:, "paired_simpler_vs_stage_comparison"] = "yes"
+    assert validate_phase_alignment_registry(df) == []
