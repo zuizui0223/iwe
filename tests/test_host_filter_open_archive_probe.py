@@ -71,3 +71,40 @@ def test_source_appendix_rejects_json_and_short_html():
         inspect_html(b'{"error":"Rate limit"}')
     with pytest.raises(ValueError):
         inspect_html(b"<html>access denied</html>")
+
+
+def test_lathyrus_source_semantic_inversion_is_explicitly_held():
+    import pandas as pd
+    source = pd.read_csv(
+        "data/source_reconstructions/ostergard2007_appendixA_variable_contract.csv"
+    )
+    assert len(source) == 13
+    row = source.set_index("variable_label").loc["Proportion fruits aborted"]
+    assert row["source_definition"] == "Ratio mature fruits divided by initiated fruits"
+    assert row["semantic_audit"] == "LABEL_DEFINITION_OPPOSITE_RETENTION_VS_ABORTION"
+    assert row["source_unit_or_grain"] == "plant"
+    # An invented example makes the sign problem reproducible, without
+    # claiming source observations were computed this way.
+    initiated, mature = 5, 3
+    retention_ratio = mature / initiated
+    true_abortion_ratio = (initiated - mature) / initiated
+    assert retention_ratio == 0.6
+    assert true_abortion_ratio == 0.4
+    assert retention_ratio != true_abortion_ratio
+
+
+def test_lathyrus_final_escape_is_distinct_from_developed_seeds():
+    import pandas as pd
+    source = pd.read_csv(
+        "data/source_reconstructions/ostergard2007_appendixA_variable_contract.csv"
+    ).set_index("variable_label")
+    assert source.loc["Number of escaped seeds", "source_unit_or_grain"] == "plant"
+    assert "escapes Bruchus" in source.loc[
+        "Number of escaped seeds", "source_definition"
+    ] if False else source.loc["Number of escaped seeds", "source_definition"].startswith(
+        "All seeds escaping Bruchus"
+    )
+    assert source.loc["Number of seeds", "semantic_audit"] == "not_identical_to_escaped_seeds"
+    for name in ("Number of eggs per fruit", "Number of eggs recorded at first survey"):
+        assert source.loc[name, "source_unit_or_grain"] == "fruit"
+        assert source.loc[name, "semantic_audit"] == "realized_egg_placement_not_independent_adult_activity"
