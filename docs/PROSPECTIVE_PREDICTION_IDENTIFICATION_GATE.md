@@ -74,13 +74,52 @@ one exchangeable estimate:
 
 | Study | Actual intervention or comparison | Permissible identification |
 |---|---|---|
-| Rheum–Bradysia 2016 | Natural egg receipt vs non-receipt; pollen source separately randomized | Correlation and physiological association, not causal host manipulation |
+| Silene–Hadena (Labouche & Bernasconi 2013) | **Egg placement inside vs petal randomized** on 137 plants; **corolla depth and natural egg position observed** separately | Causal egg-*location* effect on day-10 attack and fruit development only; neither randomized flower morphology nor egg presence nor final intact-seed fitness; selected surviving larvae are not marginal causal fitness |\n| Rheum–Bradysia 2016 | Natural egg receipt vs non-receipt; pollen source separately randomized | Correlation and physiological association, not causal host manipulation |
 | Ipomopsis–Hylemya (Brody & Morita 2000) | **No-choice female caging** vs bagged controls; female choice restricted experimentally | Supports a female-exposure component beyond unrestricted site selection, but pure egg deposition vs handling/contact unresolved and final post-cost intact seeds unavailable |
 | Lathyrus–Bruchus 2007 | Observed targeted eggs vs modelled random placement | Behavioral targeting associated with a host retention filter, not a randomized targeting fitness contrast |
 | Glochidion–Epicephala 2010 | Egg-load/ovule-damage associations vs **modelled random flower abortion** | Estimated **+16% seeds** from selective abortion and up to **62%** consumer fitness loss; **not** a randomized host abortion treatment, with no adult phenology contrast |
 | Berberis–Rhagoletis 2014 | Observed puncture and seed/sibling state vs fitted random-abortion models | Conditional retained-fruit seed abortion, not plant net-fitness gain |
 | Yucca–Tegeticula (Jadeja 2017) | **Basal-fruit cue manipulated** in oviposition trials | Causal cue response in egg-site acceptance; no demonstrated coupled survival/intact-seed effect |
 | Aucuba–Asphondylia (Imai 2006) | **Oviposition date manipulated** in caged fruits | Causal susceptible-window to gall/reproductive-fate relationship, not full prospective stage-model comparison |
+
+### A randomized placement control does not randomize the plant's defensive trait
+
+Labouche & Bernasconi (2013), DOI `10.1111/1365-2435.12062`,
+is a genuine **egg-placement intervention** in a nursery-pollination system.
+It experimentally distinguishes placing an egg inside the corolla from
+placing the same type of fertilized egg on a petal (71 vs 66 female plants;
+one treated flower per plant; eight plant source populations). Across
+populations, successful fruit attack was 44 ± 8% vs 29 ± 4% (SE;
+P=0.033), and day-10 fruit development was 83 ± 4% vs 97 ± 2%
+(P=0.005). These are *population-mean percentages*, not 71/66
+reconstructable binomial success counts.
+
+The proposed trait-to-cost mechanism is nevertheless **not a single
+randomized causal chain**. The preceding natural-exposure experiment found
+that a longer constrained corolla tube predicted eggs outside the tube
+(GLMM coefficient for egg-inside odds −4.69 ± 1.5 SE, P=0.003,
+N=71 infested measured flowers), but **corolla length was not assigned**.
+The fitted 19-mm crossover is a model-derived association, not an
+experimentally identified mechanical threshold. A separate observation of
+fertilized-ovule proportions among infested fruits found no statistically
+detectable egg-position effect (P=0.2, N=80); **lack of significance does
+not establish equivalence of pollination services** or no trade-off.
+
+Thus the strongest identified edge is:
+`do(egg_location) → day-10 attack / fruit development`.
+The full sequence
+`do(corolla_length) → egg_location → mature intact seed fitness`
+is still **unidentified**. The egg-inside/outside comparison does not
+randomize egg *presence*, and mass among developed fruits (63 vs 59) or
+mass of 32 recovered living larvae are **conditioned on post-treatment
+selection**. They cannot be repurposed as intention-to-treat or seed-fitness
+effects. The study also supplies **no adult flight–flowering phase contrast**
+and therefore contributes **zero strict-H1 clusters**.
+
+See
+[`LANDSCAPE_LABOUCHE2013_TRAIT_TO_COST_IDENTIFICATION.md`](LANDSCAPE_LABOUCHE2013_TRAIT_TO_COST_IDENTIFICATION.md)
+and the source-grain reconstruction
+[`labouche2013_trait_position_service.csv`](../data/source_reconstructions/labouche2013_trait_position_service.csv).
 
 Machine-readable scope/identification contract:
 `data/source_reconstructions/host_retention_causal_gate_matrix.csv`.
