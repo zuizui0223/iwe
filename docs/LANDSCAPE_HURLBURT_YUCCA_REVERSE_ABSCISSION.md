@@ -18,7 +18,13 @@ Soapweed plants at Alberta's Onefour population tend to abort flowers with
 *fewer* moth ovipositions, retaining fruit linked to more moth eggs. Its
 companion Soapweed assessment says flowers with low pollen or few ovipositions
 were more likely to abort. The report contrasts this with sanction-like
-abortion of egg-rich fruits in many other yuccas.
+abortion of egg-rich fruits in many other yuccas. The Onefour
+study also reports that only approximately **10% of pollinated flowers**
+(range **7.6–15%**) reach mature fruit. This high background abortion rate
+makes fruit retention a potentially stronger demographic bottleneck
+than oviposition itself, but does **not** establish whether the shortage
+of pollen, plant resource limitation, or selective abortion determines
+which individual fruits survive.
 
 Sources:
 
