@@ -33,9 +33,7 @@ jobs:
       - name: Locate likely original thesis table pages (not source verification)
         run: |
           if test -f /tmp/hurlburt2004-public-thesis-source/NQ95948.pdf; then
-            python -m scripts.screen_hurlburt2004_thesis_text \\
-              --pdf /tmp/hurlburt2004-public-thesis-source/NQ95948.pdf \\
-              --outdir /tmp/hurlburt2004-public-thesis-source
+            python -m scripts.screen_hurlburt2004_thesis_text --pdf /tmp/hurlburt2004-public-thesis-source/NQ95948.pdf --outdir /tmp/hurlburt2004-public-thesis-source
           else
             echo 'No original PDF; no table/page audit possible'
           fi
