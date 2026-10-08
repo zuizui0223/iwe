@@ -135,7 +135,8 @@ A realized egg or attack event is not automatically a future damaging consumer.
 In Parkinsonia-Penthobruchus, the same seven region-season units show a monotonic descriptive improvement from annual ground-pod egg density to stage-matched egg density to stage-matched egg density filtered by observed parasitism and hatch:
 
 - Pearson r with final seed predation: 0.476 -> 0.596 -> 0.938;
-- leave-one-out RMSE: 12.31 -> 11.02 -> 4.58 percentage points.
+- leave-one-**region**-out RMSE: **20.58 -> 19.93 -> 4.92** percentage points (7 region-season records, 4 held-out regions);
+- outcome-exposed exploratory ablation: measured nonparasitized × hatch fraction **alone** yields **4.11 pp**, without matching egg density to host stage.
 
 This is a useful positive paired diagnostic, but not a confirmatory test: adult timing is absent, n=7, and parasitism/hatch are mechanistically close to final seed destruction.
 
