@@ -35,7 +35,7 @@ def _rows() -> pd.DataFrame:
                 "prefinal_host_filter": "yes",
                 "phase_alignment_varies": "yes",
                 "final_plant_endpoint": "yes",
-                "paired_simpler_vs_stage_comparison": "yes",
+                "paired_simpler_vs_stage_comparison": "no",
                 "status": "boundary_null",
                 "blocker": "none; retained as null",
                 "notes": "synthetic null row",
@@ -55,9 +55,17 @@ def test_confirmatory_ready_requires_all_six_evidence_states_yes():
     assert any("confirmatory_ready requires all six" in error for error in errors)
 
 
-def test_boundary_null_requires_final_paired_comparison():
+def test_biological_boundary_does_not_require_a_paired_predictive_comparison():
     df = _rows()
-    df.loc[1, "paired_simpler_vs_stage_comparison"] = "no"
+    assert validate_phase_alignment_registry(df) == []
+    df.loc[1, "paired_simpler_vs_stage_comparison"] = "yes"
+    errors = validate_phase_alignment_registry(df)
+    assert any("boundary_null requires" in error for error in errors)
+
+
+def test_biological_boundary_still_requires_an_observed_final_endpoint():
+    df = _rows()
+    df.loc[1, "final_plant_endpoint"] = "no"
     errors = validate_phase_alignment_registry(df)
     assert any("boundary_null requires" in error for error in errors)
 
@@ -179,16 +187,17 @@ def test_paired_predictive_stress_test_separates_positive_and_nulls():
     null["raw_or_adult_timing"] = "yes"
     null["effective_consumer_timing"] = "yes"
     null["prefinal_host_filter"] = "yes"
-    null["status"] = "boundary_null"
-    null["blocker"] = "none"
+    null["status"] = "paired_model_null"
+    null["blocker"] = "observed paired null diagnostic"
 
     combined = pd.concat([positive, null], ignore_index=True)
     summary = phase_alignment_summary(combined)
     assert summary["paired_final_comparisons"] == 2
     assert summary["paired_positive_nonconfirmatory"] == 1
-    assert summary["paired_boundary_null"] == 1
+    assert summary["paired_model_null"] == 1
     assert summary["paired_positive_ids"] == ["POSITIVE"]
     assert summary["paired_null_ids"] == ["NULL"]
+    assert summary["boundary_null_ids"] == []
 
 
 def test_adult_host_paired_positive_is_not_effective_stage_confirmation():
@@ -211,3 +220,17 @@ def test_adult_host_paired_positive_is_not_effective_stage_confirmation():
     df.loc[:, "paired_simpler_vs_stage_comparison"] = "yes"
     errors = validate_phase_alignment_registry(df)
     assert any("paired_adult_host_positive requires" in error for error in errors)
+
+
+def test_real_biological_nulls_do_not_inflate_paired_model_evidence():
+    df = pd.read_csv("data/registry/phase_alignment_candidates.csv")
+    targets = df[df["candidate_id"].isin({"PHA_POSLEDOVICH2015", "PHA_LATHYRUS_LONGTERM"})]
+    assert len(targets) == 2
+    assert set(targets["status"]) == {"boundary_null"}
+    assert set(targets["paired_simpler_vs_stage_comparison"]) == {"no"}
+    summary = phase_alignment_summary(df)
+    assert summary["paired_final_comparisons"] == 1
+    assert summary["paired_positive_nonconfirmatory"] == 1
+    assert summary["paired_model_null"] == 0
+    assert summary["boundary_null"] == 2
+    assert set(summary["boundary_null_ids"]) == {"PHA_POSLEDOVICH2015", "PHA_LATHYRUS_LONGTERM"}
