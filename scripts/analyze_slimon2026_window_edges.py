@@ -106,6 +106,22 @@ def _date_doy(value, year: int) -> float:
     return float(date.dayofyear)
 
 
+def _source_full_date_year(value) -> int | None:
+    """Return explicit input calendar year, never cohort/experiment number."""
+    if value is None or pd.isna(value):
+        return None
+    raw = str(value).strip()
+    if not raw or raw.upper() in MISSING_TOKENS:
+        return None
+    if re.fullmatch(r"\\d+(?:\\.0+)?", raw):
+        # A bare DOY does not identify a calendar year.
+        return None
+    parsed = pd.to_datetime(raw, errors="coerce", dayfirst=False)
+    if pd.isna(parsed):
+        return None
+    return int(parsed.year)
+
+
 def _num(value) -> float:
     try:
         if value is None or str(value).strip().upper() in MISSING_TOKENS:
@@ -168,6 +184,19 @@ def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
                 "status": "no_four_file_plant_join",
                 "original_tables": original_meta}
 
+    # Original exp1/exp2 are distinct experimental components, not
+    # mutually exclusive 2022/2023 reproductive calendar years.
+    source_date_years = {}
+    for col in ("first_flr", "last_flower"):
+        observed = combined[col].map(_source_full_date_year).dropna()
+        source_date_years[col] = {
+            str(int(y)): int(n) for y, n in observed.value_counts().items()
+        }
+        if any(int(y) != year for y in observed):
+            raise ValueError(
+                f"Original {label} {col} contains source dates outside "
+                f"flowering calendar year {year}; cannot force experiment=year"
+            )
     combined["first_doy"] = combined["first_flr"].map(lambda x: _date_doy(x, year))
     combined["last_doy"] = combined["last_flower"].map(lambda x: _date_doy(x, year))
     for old, new in (("num_flr", "flowers_reported"),
@@ -210,6 +239,7 @@ def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
         "status": "exploratory_join_and_component_audit",
         "original_tables": original_meta,
         "joint_plant_ids_n": len(combined),
+        "source_explicit_date_year_counts": source_date_years,
         "source_date_fields": {
             "first_flr": {"examples": combined["first_flr"].dropna().astype(str).head(3).tolist()},
             "last_flower": {"examples": combined["last_flower"].dropna().astype(str).head(3).tolist()},
