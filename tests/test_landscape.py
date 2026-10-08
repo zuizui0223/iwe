@@ -151,3 +151,19 @@ def test_component_id_rejects_literal_newline_escape():
     df.loc[0, "component_id"] = r"\nLND_BROKEN"
     errors = validate_landscape_registry(df)
     assert any("component_id must contain only" in error for error in errors)
+
+def test_early_impact_trace_requires_nonpromoting_stage_structure():
+    df = _rows()
+    df.loc[1, "window_reference_class"] = "seasonal_position_only"
+    df.loc[1, "timing_geometry"] = "persistent_early_impact_trace"
+    df.loc[1, "landscape_status"] = "stage_structure_evidence"
+    df.loc[1, "current_quant_status"] = "source_summary_evidence"
+    assert validate_landscape_registry(df) == []
+
+    summary = landscape_pilot_summary(df)
+    assert summary["by_landscape_status"]["stage_structure_evidence"] == 1
+    assert "antagonist" not in summary["recoverable_programmes_by_class"]
+
+    df.loc[1, "landscape_status"] = "realized_window_evidence"
+    errors = validate_landscape_registry(df)
+    assert any("persistent_early_impact_trace requires" in error for error in errors)
