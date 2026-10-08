@@ -14,6 +14,7 @@ PHASE_ALIGNMENT_STATUSES = {
     "boundary_null",
     "final_tracking_evidence",
     "paired_realized_positive",
+    "paired_adult_host_positive",
     "final_landscape_no_alignment",
     "stage_structure",
     "host_sensitivity_final",
@@ -144,6 +145,23 @@ def validate_phase_alignment_registry(df: pd.DataFrame) -> list[str]:
             + ", ".join(sorted(bad_paired_positive))
         )
 
+    adult_host = df["status"].eq("paired_adult_host_positive")
+    bad_adult_host = df.loc[
+        adult_host
+        & (
+            df["raw_or_adult_timing"].ne("yes")
+            | df["phase_alignment_varies"].ne("yes")
+            | df["final_plant_endpoint"].ne("yes")
+            | df["paired_simpler_vs_stage_comparison"].ne("partial")
+        ),
+        "candidate_id",
+    ].astype(str)
+    if len(bad_adult_host):
+        errors.append(
+            "paired_adult_host_positive requires independent adult timing, phase variation, final outcome, and partial stage comparison: "
+            + ", ".join(sorted(bad_adult_host))
+        )
+
     host_final = df["status"].eq("host_sensitivity_final")
     bad_host_final = df.loc[
         host_final
@@ -205,6 +223,7 @@ def phase_alignment_summary(df: pd.DataFrame) -> dict[str, object]:
         "near_confirmatory": int(df["status"].eq("near_confirmatory").sum()),
         "boundary_null": int(df["status"].eq("boundary_null").sum()),
         "paired_realized_positive": int(df["status"].eq("paired_realized_positive").sum()),
+        "paired_adult_host_positive": int(df["status"].eq("paired_adult_host_positive").sum()),
         "final_endpoint_yes": int(df["final_plant_endpoint"].eq("yes").sum()),
         "phase_varies_yes": int(df["phase_alignment_varies"].eq("yes").sum()),
         "paired_comparison_yes": int(
@@ -237,6 +256,7 @@ def render_phase_alignment_gate(df: pd.DataFrame) -> str:
         f"- Near-confirmatory blocked routes: **{summary['near_confirmatory']}**",
         f"- Registered direct null/boundary comparisons: **{summary['boundary_null']}**",
         f"- Positive paired realized comparisons (non-confirmatory): **{summary['paired_realized_positive']}**",
+        f"- Independent adult × host timing gains over host calendar alone (not effective-stage tests): **{summary['paired_adult_host_positive']}**",
         "",
         "A programme is confirmatory_ready only when it has source-backed raw/adult timing, effective consumer timing, a pre-final host filter, variation in phase alignment, a final plant endpoint, and a paired simpler-vs-stage-specific timing comparison.",
         "",
