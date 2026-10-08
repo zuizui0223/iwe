@@ -40,9 +40,14 @@ A complete download is only **step one**.
    (2.66,3.91,9.77,8.60), and the correct column-wise dispersion using
    `scripts/audit_iwe015_raw_variance.py`; separately reconcile the
    reported ANOVA degrees of freedom with the 227 Table 1 adult plants.
-3. Distinguish *total tagged flowering opportunities* from the
-   280/239/294/281 flowers specifically measured for morphological traits.
-   The latter are not viable denominators for intact-fruit production.
+3. **Resolve the source-unit discrepancy:** the *Oviposition and flower
+   fate* methods describe 280/239/294/281 one-week tagged/measured flowers;
+   the *Female fitness components* methods refer to all labelled RUs.
+   But 2013 Table 1 mean successful fruits per plant (9.77 early, 8.60 late)
+   exceed the respective measured flowers per plant (294/55=5.35 and
+   281/55=5.11). Do not assume without evidence that the source flower
+   totals are a trait-only subset. Audit exact plant/flower identifiers,
+   timing coverage, total reproductive-unit denominator and any joins.
 4. At the **plant level**, separate observed initiated and intact fruits,
    larval fruit predation, flowers/pistils missing completely after attack,
    and flower-display opportunity. An entirely eaten pistil has
