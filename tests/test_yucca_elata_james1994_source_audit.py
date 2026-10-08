@@ -40,6 +40,7 @@ def test_pooled_fruit_fraction_is_not_reported_inflorescence_mean():
 
 def test_biological_host_retention_and_moth_summary_remains_nonpromoting():
     row = pd.read_csv(SOURCE).iloc[0]
+    assert row["late_flowering_inflorescence_mature_fruit_fraction"] == "greater_than_early"
     assert row["reported_fruit_retention_window_nights_mean"] == 5
     assert row["reported_window_fraction_of_flowering_period"] == 0.36
     assert row["observed_moth_pollinated_subset_n"] == 31
