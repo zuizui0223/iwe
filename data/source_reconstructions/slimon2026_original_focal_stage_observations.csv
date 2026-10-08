@@ -1,8 +1,8 @@
-study_id,source_doi,original_file,source_component,experimental_year,source_rows,distinct_plant_ids,observed_event_date,nonmissing_numeric_observations,positive_rows,sum_reported_events,shared_host_stage_fruit_ids,adult_host_activity_independent_of_host_sampling_verified,direct_postcost_intact_seed_counts_verified,strict_h1_effect
-PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,2022,171,169,07-11,169,2,2,153,no,no,no
-PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,2022,171,169,07-12,169,1,1,153,no,no,no
-PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,2022,171,169,07-18,169,2,2,153,no,no,no
-PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,2022,171,169,07-20,169,3,5,153,no,no,no
-PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,2022,171,169,07-21,169,1,5,153,no,no,no
-PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,2022,171,169,07-26,169,3,3,153,no,no,no
-PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp2F.csv,focal_host_larval_schinia_only,2023,951,123,,0,0,0,123,no,no,no
+study_id,source_doi,original_file,source_component,experiment,flowering_calendar_year,source_rows,distinct_plant_ids,observed_event_date,nonmissing_numeric_observations,positive_rows,sum_reported_events,shared_host_stage_fruit_ids,adult_host_activity_independent_of_host_sampling_verified,direct_postcost_intact_seed_counts_verified,strict_h1_effect
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,exp1,2023,171,169,07-11,169,2,2,153,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,exp1,2023,171,169,07-12,169,1,1,153,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,exp1,2023,171,169,07-18,169,2,2,153,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,exp1,2023,171,169,07-20,169,3,5,153,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,exp1,2023,171,169,07-21,169,1,5,153,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp1F.csv,focal_host_adult_schinia,exp1,2023,171,169,07-26,169,3,3,153,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,df2_exp2F.csv,focal_host_larval_schinia_only,exp2,2023,951,123,,0,0,0,123,no,no,no

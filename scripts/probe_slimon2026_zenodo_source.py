@@ -149,12 +149,12 @@ def stage_linkage_preflight(raw: bytes) -> dict:
     external partner-availability curve. The output makes that distinction.
     """
     wanted = {
-        "adult_2022": "Freese Stats/df2_exp1F.csv",
-        "larval_2023": "Freese Stats/df2_exp2F.csv",
-        "host_2022": "Freese Stats/main_exp1.csv",
-        "host_2023": "Freese Stats/main_exp2.csv",
-        "fruit_2022": "Freese Stats/fitness_exp1.csv",
-        "fruit_2023": "Freese Stats/Exp 2 fitness.csv",
+        "adult_exp1": "Freese Stats/df2_exp1F.csv",
+        "larval_exp2": "Freese Stats/df2_exp2F.csv",
+        "host_exp1": "Freese Stats/main_exp1.csv",
+        "host_exp2": "Freese Stats/main_exp2.csv",
+        "fruit_exp1": "Freese Stats/fitness_exp1.csv",
+        "fruit_exp2": "Freese Stats/Exp 2 fitness.csv",
     }
     records = {}
     with ZipFile(BytesIO(raw)) as zf:
@@ -166,7 +166,9 @@ def stage_linkage_preflight(raw: bytes) -> dict:
     result = {
         "schema": "iwe_slimon2026_original_stage_linkage_preflight_v1",
         "source": DOI,
-        "source_scope": "two_2022_2023_host_cohorts",
+        "source_scope": "two_source_experiments_with_2023_flowering",
+        "flowering_calendar_year_verified_from_original_dates": 2023,
+        "warning_experiment_number_is_not_calendar_year": True,
         "stage_assignments_from_filename_not_verified_adult_activity": True,
         "independent_adult_partner_availability_identified": False,
         "original_mature_intact_seed_by_date_verified": False,
@@ -180,9 +182,9 @@ def stage_linkage_preflight(raw: bytes) -> dict:
         return {str(row.get("ID", row.get("ID #", ""))).strip()
                 for row in rows
                 if str(row.get("ID", row.get("ID #", ""))).strip()}
-    for year, tag in ((2022, "2022"), (2023, "2023")):
+    for experiment, tag in (("exp1", "exp1"), ("exp2", "exp2")):
         left = records["host_" + tag]
-        mid = records[("adult_" if year == 2022 else "larval_") + tag]
+        mid = records[("adult_" if experiment == "exp1" else "larval_") + tag]
         right = records["fruit_" + tag]
         a, b, c = ids(left), ids(mid), ids(right)
         result["join_by_original_plant_id"][tag] = {
@@ -192,6 +194,8 @@ def stage_linkage_preflight(raw: bytes) -> dict:
             "host_stage_fruit_shared_ids": len(a & b & c),
             "host_fruit_shared_ids": len(a & c),
             "stage_source_cohort": "focal_host_observations",
+            "source_experiment": experiment,
+            "flowering_calendar_year": 2023,
             "row_ids_source_authenticated": False,
         }
         result["fruit_outcome_column_inventory"][tag] = {
@@ -199,7 +203,7 @@ def stage_linkage_preflight(raw: bytes) -> dict:
             "has_raw_intact_seed_count_column_verified": False,
         }
     for stage, field_prefix in (("adult", "sf_adult_"), ("larvae", "sf_larvae_")):
-        file_rows = records["adult_2022"]
+        file_rows = records["adult_exp1"]
         columns = list(file_rows[0].keys()) if file_rows else []
         dates = {}
         for col in columns:
@@ -223,7 +227,7 @@ def stage_linkage_preflight(raw: bytes) -> dict:
                 "focal_host_observation_not_external_phenology": True,
             }
         result["date_resolved_focal_adult_counts"][stage] = dates
-    larvae_2023 = records["larval_2023"]
+    larvae_2023 = records["larval_exp2"]
     stage_columns_2023 = list(larvae_2023[0].keys()) if larvae_2023 else []
     result["exp2_2023_stage_headers"] = [
         c for c in stage_columns_2023 if c.startswith("sf_")

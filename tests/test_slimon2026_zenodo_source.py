@@ -77,9 +77,11 @@ def test_synthetic_stage_preflight_separates_2022_adult_from_2023_larvae():
         z.writestr("Freese Stats/fitness_exp1.csv", "ID,lg frt,schinia\na,5,0\nb,6,2\n")
         z.writestr("Freese Stats/Exp 2 fitness.csv", "ID,lg frt,schinia\na,8,1\nb,2,0\n")
     audit = stage_linkage_preflight(b.getvalue())
-    assert audit["join_by_original_plant_id"]["2022"]["host_stage_fruit_shared_ids"] == 2
+    assert audit["join_by_original_plant_id"]["exp1"]["host_stage_fruit_shared_ids"] == 2
     assert audit["date_resolved_focal_adult_counts"]["adult"]["sf_adult_7_11"]["positive_rows"] == 1
     assert audit["exp2_2023_has_sf_adult_columns"] is False
+    assert audit["flowering_calendar_year_verified_from_original_dates"] == 2023
+    assert audit["warning_experiment_number_is_not_calendar_year"] is True
     assert audit["independent_adult_partner_availability_identified"] is False
     assert audit["original_mature_intact_seed_by_date_verified"] is False
     assert audit["strict_h1_effect"] is False
