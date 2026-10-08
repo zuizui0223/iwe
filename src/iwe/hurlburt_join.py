@@ -10,9 +10,7 @@ The public government annual summaries do not contain these join keys.
 """
 from __future__ import annotations
 
-from collections import Counter
 from datetime import date
-from pathlib import Path
 
 import pandas as pd
 
@@ -130,7 +128,6 @@ def audit_marked_unit_join(
     joined = [k in fkeys for k in mkeys]
     with_mature = set(k for k, ok in zip(mkeys, joined) if ok)
     years = sorted(set(f["year"]) | set(a["year"]) | set(m["year"]))
-    adult_days = a.groupby("year")["census_date"].nunique().to_dict()
     period = {}
     for y in years:
         f_this = f[f["year"].eq(y)]
@@ -181,7 +178,8 @@ def audit_marked_unit_join(
         "unmatched_mature_fruits": len(joined) - sum(joined),
         "linked_marked_inflorescences": len(with_mature),
         "date_resolved_adult_and_fitness_join_present": bool(
-            status == "source_unit_lineage_structurally_present_not_an_effect"
+            mode == "original_source_review"
+            and status == "source_unit_lineage_structurally_present_not_an_effect"
         ),
         "original_source_verification_required": True,
         "unobserved_aborted_fruits_imputed": False,
