@@ -176,6 +176,20 @@ The strongest dataset has all of the following at a shared biological unit:
 
 A direct test would estimate whether between-year, between-population or experimental changes in the phase difference between adult service and effective cost windows predict changes in final fitness geometry, and whether that prediction improves on calendar timing and adult-only timing. Nulls such as Posledovich 2015 and the long-term Lathyrus result must be retained in that comparison.
 
+## Candidate exception: persistent costs can outlive the consumer
+
+A biologically later consumer census need not be the causal stage where the plant's future seed loss was determined. Earlier feeding can irreversibly injure developing reproductive tissue; an induced host response can also impose a lasting resource cost even if the offending larvae later die.
+
+Chavalle et al. (2015), *Triticum aestivum–Sitodiplosis mosellana*, report that timed insecticide protection reduced later larval abundance and increased harvested yield even in a midge-resistant cultivar. Their interpretation offers **early larval damage or costly defence induction** as alternatives, not an identified mechanism.
+
+The stage-specific model must therefore admit an **impact-history term** distinct from surviving later larvae. This changes the confirmatory prediction:
+
+> The best candidate temporal predictor is the stage where reproductive consequences are incurred or become difficult to reverse, which need not be the last observable consumer stage.
+
+This is a hypothesis, not a fitted law. It needs pre-harvest early-attack or plant-response measurements plus later consumer observations and harvested seed/yield at the same biological unit. A surviving-larva-only comparator must remain in the falsification set.
+
+Source receipt: `docs/LANDSCAPE_CHAVALLE2015_EARLY_IMPACT_TRACE.md`.
+
 ## Claim boundary
 
 This model is a structured synthesis of measured quantities already present in the IWE corpus.
