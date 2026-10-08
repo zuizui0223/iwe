@@ -5,6 +5,7 @@ on:
     types: [opened, synchronize]
     paths:
       - scripts/probe_jackson2022_saved_model_frames.R
+      - scripts/analyze_jackson2022_predator_crop_regularities.R
       - .github/workflows/jackson2022-public-model-frame-audit.yml
   workflow_dispatch:
 
@@ -31,7 +32,12 @@ jobs:
           Rscript scripts/probe_jackson2022_saved_model_frames.R
           /tmp/jackson2022/output/results/model-fits.rds
           /tmp/jackson-model-frame-audit
-      - name: Publish source metadata only
+      - name: Test recorded predator interaction with crop-size variation (exploratory)
+        run: >-
+          Rscript scripts/analyze_jackson2022_predator_crop_regularities.R
+          /tmp/jackson2022/output/results/model-fits.rds
+          /tmp/jackson-model-frame-audit
+      - name: Publish source audit and descriptive model summaries only
         if: always()
         uses: actions/upload-artifact@v4
         with:
