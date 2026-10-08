@@ -167,3 +167,27 @@ def test_early_impact_trace_requires_nonpromoting_stage_structure():
     df.loc[1, "landscape_status"] = "realized_window_evidence"
     errors = validate_landscape_registry(df)
     assert any("persistent_early_impact_trace requires" in error for error in errors)
+
+def test_terminal_seed_damage_does_not_count_as_final_net_fitness():
+    df = _rows()
+    df.loc[1, "window_reference_class"] = "independent_partner_activity"
+    df.loc[1, "timing_geometry"] = "adult_host_stage_niche_overlap"
+    df.loc[1, "fitness_channel"] = "cost_channel"
+    df.loc[1, "outcome_finality"] = "not_final"
+    df.loc[1, "current_quant_status"] = "statistical_evidence"
+    df.loc[1, "landscape_status"] = "terminal_damage_evidence"
+
+    assert validate_landscape_registry(df) == []
+    summary = landscape_pilot_summary(df)
+    assert summary["by_landscape_status"]["terminal_damage_evidence"] == 1
+    assert summary["independent_reference_by_class"]["antagonist"] == 1
+    assert "antagonist" not in summary["recoverable_programmes_by_class"]
+
+    df.loc[1, "landscape_status"] = "strong_candidate"
+    df.loc[1, "outcome_finality"] = "final"
+    errors = validate_landscape_registry(df)
+    assert any("strong_candidate requires" in e for e in errors)
+
+    df.loc[1, "landscape_status"] = "terminal_damage_evidence"
+    errors = validate_landscape_registry(df)
+    assert any("terminal_damage_evidence requires" in e for e in errors)
