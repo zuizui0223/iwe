@@ -15,7 +15,9 @@ An explicit falsification test asks: **does the measured survival/conversion fra
 
 The comparison uses the same **7 region-season records from 4 regions**, the same reported final percentage seed predation, and the same leave-one-**region**-out folds and single-predictor intercept+linear-slope model as the prior published-source reconstruction.
 
-Raw values are in `data/source_reconstructions/vanklinken2008_paired_stage_diagnostic.csv`. Stage-matched eggs are drawn from the source-defined late sampling window; survival fraction is `(1 - egg parasitism / 100) × (egg hatch / 100)`. It is based on post-oviposition biological observations, not on the final damage response itself. All fractions are measured within the same source units and are not independent experiments.
+Raw values are in `data/source_reconstructions/vanklinken2008_paired_stage_diagnostic.csv`. Stage-matched eggs are drawn from the source-defined late sampling window; survival fraction is `(1 - egg parasitism / 100) × (egg hatch / 100)`. All fractions are measured within the same source units and are not independent experiments.
+
+**Critical timing-of-measurement audit:** the original Methods state that collected pods were frozen and then dissected to examine egg presence/condition (including parasitism and hatch) **and seed fate in the same sample**. Table 5 lists egg density, egg parasitism, egg hatch and seed predation for the late pod collections in the same region-season. Thus parasitism and hatch are biologically upstream of larval seed consumption, but their empirical values were **not available at an independent time prior to the outcome observation**. They are **contemporaneous retrospective diagnostics**, not operational early-warning predictors. Blocking regions during regression CV cannot transform same-sample measurements into a prospective forecast.
 
 **Crucial selection disclosure:** the ten ablation predictors were specified after inspecting the seven final outcomes and the original three-model results. The leave-one-region-out folds re-fit regression coefficients but **do not nest the predictor-selection process**. Their ranking is descriptive/optimistic and must not be presented as an unbiased validation of a selected model.
 
@@ -34,7 +36,7 @@ Raw values are in `data/source_reconstructions/vanklinken2008_paired_stage_diagn
 | Annual eggs × joint survival | 0.862 | 8.18 | 7.31 |
 | Stage eggs × joint survival | 0.938 | 4.92 | 4.78 |
 
-The alternative **joint survival fraction alone** gives RMSE **4.11 pp**, versus **4.92 pp** when multiplied by stage-matched egg density. The difference is only **0.82 pp**, not a tested biological superiority. But it is sufficient to defeat a claim that temporal stage matching is needed to explain the apparent gain in this sample.
+The alternative **joint survival fraction alone** gives held-region-out retrospective RMSE **4.11 pp**, versus **4.92 pp** when multiplied by stage-matched egg density. The difference is only **0.82 pp**, not a tested biological superiority. But it is sufficient to defeat a claim that temporal stage matching is needed to explain the apparent retrospective association in this sample.
 
 ## Ecological interpretation
 
@@ -55,6 +57,7 @@ A better predictor at stage 3 does not demonstrate that the earlier stage 2 timi
 
 - **Seven records / four groups** is inadequate for stable generalization; region blocks are uneven and some predictions are even negative because the source-compatible OLS model is unconstrained.
 - Comparing **ten predictors after observing the outcome** induces winner's curse despite leave-one-region-out regression refits.
+- **Contemporaneous same-sample measurement:** Table 5 egg parasitism/hatch and final seed fate are measured by dissecting the same late pod samples. The survival fractions are not independently measured ahead of the later damage; these RMSEs are diagnostic reconstruction scores, **not prospective seed-damage forecasting**.
 - Parasitism and hatch may depend on climate, local parasitoid assemblages, region and density, so the survival-only association need not be causal.
 - Both stage-matched and annual egg density are realized oviposition rather than independently observed adult activity.
 - A robust test would need a larger external or withheld dataset, temporal and regional replication, independently defined conversion filters, and prespecified comparisons between adult-only, host-stage-only, survival-only and stage×survival models.
