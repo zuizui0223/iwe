@@ -31,6 +31,19 @@ Retained direction means preserved or preserved_net_changed_mechanism. Incompara
 | original_final | prospective_design | 18 | 18 | 14 | 14 | 13 |
 | original_final | realized_or_seasonal | 12 | 11 | 3 | 2 | 11 |
 
+## Biological class mix within the mature-seed/yield subset
+
+The timing-reference groups have different interaction-class compositions. Their retention fractions are not matched-design contrasts.
+
+| Class | Reference | Links | Retained | Dependence clusters |
+|---|---|---:|---:|---:|
+| mutualist | prospective_design | 11 | 9 | 7 |
+| mutualist | realized_or_seasonal | 2 | 1 | 2 |
+| antagonist | prospective_design | 3 | 3 | 3 |
+| antagonist | realized_or_seasonal | 1 | 0 | 1 |
+| mixed_pollinating_seed_predator | prospective_design | 0 | 0 | 0 |
+| mixed_pollinating_seed_predator | realized_or_seasonal | 1 | 0 | 1 |
+
 ## Antagonist dependence-cluster sensitivity
 
 Repeated links within a dependence cluster are collapsed; no comparable link means no classification, not a failure.
