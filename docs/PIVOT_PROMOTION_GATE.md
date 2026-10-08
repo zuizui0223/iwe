@@ -141,6 +141,14 @@ A signed contrast without defensible SE/covariance can be reported with its sour
 
 The existing CR2 minimum-information rule remains the inferential gate for any pooled class estimate.
 
+## Prospective prediction identification
+
+**The strict paired-model interpretation requirements are now separated in `docs/PROSPECTIVE_PREDICTION_IDENTIFICATION_GATE.md`.** A positive stage/final-fate correlation, a retrospective region-blocked reconstruction and a prospective forecast are not equivalent evidence.
+
+Parkinsonia's egg survival fractions and final seed fate were assessed in the same late pod collections, and its strongest observed survival-only model was selected after inspecting those outcomes. It cannot close the prospective predictive-superiority gate, regardless of its low region-blocked descriptive RMSE.
+
+For promotion, require a genuinely pre-outcome conversion/stage coordinate and an outcome-unseen comparison against **both** upstream adult/host timing **and** the survival/filter-only comparator, with independent temporal or spatial validation.
+
 ## Branch decision rule
 
 ### Promote the pivot toward the main IWE paper if
