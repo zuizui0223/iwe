@@ -9,25 +9,46 @@ inferred for all environments and does not license imputation.
 The public Dryad landing page:
 https://datadryad.org/dataset/doi:10.5061/dryad.6q573n5w1
 
-## Independent network probe
+## Network access results and authenticated recovery
 
-The repository now includes a narrowly bounded network probe intended to run
-on a *separate GitHub-hosted runner*:
+Two independently executed GitHub-hosted anonymous probes failed on all six
+pinned files (2026-10-08; workflow runs `37736221261` and `37737502478`).
+The direct file-stream endpoint returned HTTP **403**; the official
+`/api/v2/files/{id}/download` endpoint returned HTTP **401**.
+**Zero source files were recovered**. Although GitHub displayed a successful
+workflow status, that was because an earlier workflow permitted the download
+step to fail. It was never a successful source-download result.
+
+Dryad's official API-account documentation explicitly notes that downloading
+some files requires an **OAuth bearer token** even if their metadata are
+public. It documents an ORCID-based account/API credential setup
+(https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md).
+That is a plausible explanation of 401, not proof the particular dataset
+requires authentication for every legitimate client.
+
+The new procedure separates (a) PR-level *offline unit tests* and (b) a
+**manual, strict** remote download, so the absence of data cannot masquerade
+as a passed retrieval. A user may create a personal Dryad API token and set
+it as the GitHub Actions repository secret `DRYAD_ACCESS_TOKEN` using GitHub
+Settings → Secrets and variables → Actions. **Never paste the token into a
+GitHub PR, issue, commit, action log, or ChatGPT conversation.** The manual
+`IWE015 public Dryad archive access audit` workflow reads that secret
+through the environment; if no token is configured, the download is
+attempted anonymously and must report **blocked** upon a 401/403.
+
+The bounded script may also be used locally with a private environment
+variable:
 
 `python scripts/recover_iwe015_dryad.py --output-dir /tmp/iwe015-dryad --strict`
 
-It attempts only six pinned, named files from Dryad: four female cohort CSVs,
-`data_analysis.R`, and `README.txt`. It tries the published direct download
-and API file download URLs, then verifies that the payload is plausible text
-rather than an HTML denial or empty/error response.
+It attempts only the four female cohort CSVs, `data_analysis.R`, and
+`README.txt` for their pinned Dryad file IDs. Redirects to non-Dryad
+storage hosts strip the bearer header. The `manifest.json` stores only
+a boolean `bearer_auth_configured`, source URL, status, file SHA256 and
+header/row information, **never** the token itself. Raw bytes, if genuinely
+downloaded, remain unreviewed and are uploaded to a seven-day GitHub artifact.
 
-Outputs are an explicit `manifest.json` with status
-`complete`/`blocked`, file SHA256s, source URLs, CSV column names and row
-counts; successful raw bytes are placed under `source_files/`. The result is
-a *source-access diagnostic*, not a biological result. The workflow
-`.github/workflows/iwe015-dryad-probe.yml` runs on changes to the probe and
-can be manually dispatched. It uploads any obtained files in a temporary
-seven-day GitHub Actions artifact and leaves the code/data registry alone.
+The repo's strict-H1 extraction and all effect sizes remain unchanged.
 
 ## Conditions for real source reanalysis
 
@@ -63,7 +84,7 @@ A complete download is only **step one**.
 ## Stop rule
 
 The download probe never computes Hedges g, changes any registry,
-relabels `SE` as `SD`, or promotes IWE015 into strict H1. A 403 or
+relabels `SE` as `SD`, or promotes IWE015 into strict H1. A 401/403 or
 partial download is recorded as `blocked` rather than a false success.
 Even a complete download requires manual confirmation of source analysis
 and linked biological unit definitions.
