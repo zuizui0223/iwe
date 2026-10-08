@@ -24,10 +24,19 @@ jobs:
         run: |
           python -m pip install -e '.[dev]'
           python -m pytest -q tests/test_iwe015_dataset_archive_probe.py
-      - name: Try documented public whole-dataset archive endpoint
-        id: raw_archive
+      - name: Test public whole-dataset ZIP API once without secrets
+        if: ${{ github.event_name == 'pull_request' }}
         continue-on-error: true
+        run: >-
+          python -m scripts.probe_iwe015_dataset_zip
+          --output-dir /tmp/iwe015-whole-archive
+          --strict
+          --timeout 20
+      - name: Manually retrieve public archive with secret OAuth credentials
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         env:
+          DRYAD_CLIENT_ID: ${{ secrets.DRYAD_CLIENT_ID }}
+          DRYAD_CLIENT_SECRET: ${{ secrets.DRYAD_CLIENT_SECRET }}
           DRYAD_ACCESS_TOKEN: ${{ secrets.DRYAD_ACCESS_TOKEN }}
         run: >-
           python -m scripts.probe_iwe015_dataset_zip
