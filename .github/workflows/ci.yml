@@ -33,6 +33,8 @@ jobs:
         run: python scripts/render_landscape_pilot_audit.py --check
       - name: Check phase-alignment confirmatory gate
         run: python scripts/render_phase_alignment_gate.py --check
+      - name: Check source-only Riemer paired classification bounds
+        run: python scripts/render_riemer_paired_bounds.py --check
       - name: Check temporal signal-propagation audit
         run: python scripts/render_temporal_signal_propagation.py --check
       - name: Check propagation endpoint sensitivity
