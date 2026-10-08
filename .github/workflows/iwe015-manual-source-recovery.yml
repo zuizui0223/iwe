@@ -1,0 +1,81 @@
+name: IWE015 manual Dryad source recovery (pivot, no inference)
+
+on:
+  workflow_dispatch:
+    inputs:
+      retrieval_mode:
+        type: choice
+        description: "Source download API route"
+        required: true
+        default: archive
+        options:
+          - archive
+          - individual
+
+permissions:
+  contents: read
+
+jobs:
+  recover-public-source:
+    runs-on: ubuntu-latest
+    steps:
+      # This trusted dispatch definition lives on the repository default
+      # branch; analysis code and data remain on the unmerged pivot branch.
+      - name: Checkout current IWE analysis branch
+        uses: actions/checkout@v4
+        with:
+          ref: pivot/interaction-window-landscape
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Strict source recovery with fresh short-lived Dryad OAuth
+        env:
+          MODE: ${{ inputs.retrieval_mode }}
+          DRYAD_CLIENT_ID: ${{ secrets.DRYAD_CLIENT_ID }}
+          DRYAD_CLIENT_SECRET: ${{ secrets.DRYAD_CLIENT_SECRET }}
+          DRYAD_ACCESS_TOKEN: ${{ secrets.DRYAD_ACCESS_TOKEN }}
+        run: |
+          case "$MODE" in
+            archive)
+              python -m scripts.probe_iwe015_dataset_zip --output-dir /tmp/iwe015-recovered --strict
+              ;;
+            individual)
+              python scripts/recover_iwe015_dryad.py --output-dir /tmp/iwe015-recovered --strict
+              ;;
+            *)
+              echo "::error::Unsupported retrieval mode"
+              exit 2
+              ;;
+          esac
+      - name: Show manifest status without revealing credentials
+        if: always()
+        env:
+          MODE: ${{ inputs.retrieval_mode }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          name = ('archive_manifest.json' if os.environ['MODE'] == 'archive'
+                  else 'manifest.json')
+          p = Path('/tmp/iwe015-recovered') / name
+          if not p.exists():
+              print('::error::Source recovery produced no manifest')
+          else:
+              data = json.loads(p.read_text())
+              total = data.get('n_expected', data.get('files_expected', 0))
+              found = data.get('n_matched', data.get('files_downloaded', 0))
+              print(f"Dryad original-file status: {data['status']} ({found}/{total})")
+              if data['status'] != 'complete':
+                  print('::warning::No complete original source, SMD remains withheld')
+          print('Never treat workflow success as original-data verification.')
+          PY
+      - name: Retain an unreviewed 7-day source artifact for audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe015-source-recovery-unreviewed
+          path: /tmp/iwe015-recovered/
+          if-no-files-found: warn
+          retention-days: 7
