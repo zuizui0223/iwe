@@ -44,7 +44,7 @@ SOURCE_PATHS = {
     },
 }
 SCALAR_COLUMNS = {
-    "host": ["first_flr", "num_flr", "geno"],
+    "host": ["first_flr", "num_flr", "geno", "TRT", "Treatment"],
     "last": ["last_flower"],
     "fitness": ["schinia", "lg frt", "sm frt", "abort"],
     "mompha": ["FINAL_Mompha"],
@@ -144,6 +144,66 @@ def _safe_spearman(frame: pd.DataFrame, x: str, y: str):
             "reason": "noncausal_outcome_exposed_exploratory_only"}
 
 
+def _source_group(value) -> str | None:
+    if value is None or pd.isna(value):
+        return None
+    v = str(value).strip()
+    return v if v and v.upper() not in MISSING_TOKENS else None
+
+
+def _partial_rank_window_association(
+    table: pd.DataFrame, axis: str, outcome: str, other_axis: str
+) -> dict:
+    """Condition on other flowering edge, source genotype, treatment.
+
+    Residualize *ranks* using source covariates. No pooled cohort model,
+    no selection-adjusted p-values or causal interpretation.
+    """
+    needed = [axis, outcome, other_axis, "geno", "source_treatment"]
+    sub = table[needed].dropna().copy()
+    sub = sub.loc[
+        sub["geno"].map(_source_group).notna()
+        & sub["source_treatment"].map(_source_group).notna()
+    ]
+    n = len(sub)
+    if n < 30 or sub[axis].nunique() < 4 or sub[outcome].nunique() < 4:
+        return {"n": n, "partial_rank_rho": None,
+                "status": "too_few_comparable_ranked_plants"}
+    for col in (axis, outcome, other_axis):
+        sub[col + "_rank"] = sub[col].rank(method="average")
+    categorical = pd.get_dummies(
+        sub[["geno", "source_treatment"]].astype("string"),
+        drop_first=True, dtype=float
+    )
+    covariates = np.column_stack([
+        np.ones(n),
+        sub[other_axis + "_rank"].to_numpy(dtype=float),
+        categorical.to_numpy(dtype=float),
+    ])
+    if covariates.shape[1] >= n - 8:
+        return {"n": n, "partial_rank_rho": None,
+                "status": "too_many_fixed_covariates"}
+    target_x = sub[axis + "_rank"].to_numpy(dtype=float)
+    target_y = sub[outcome + "_rank"].to_numpy(dtype=float)
+    resid_x = target_x - covariates @ np.linalg.lstsq(
+        covariates, target_x, rcond=None
+    )[0]
+    resid_y = target_y - covariates @ np.linalg.lstsq(
+        covariates, target_y, rcond=None
+    )[0]
+    if np.std(resid_x) < 1e-8 or np.std(resid_y) < 1e-8:
+        return {"n": n, "partial_rank_rho": None,
+                "status": "conditional_variation_not_identified"}
+    return {
+        "n": n,
+        "partial_rank_rho": round(float(np.corrcoef(resid_x, resid_y)[0, 1]), 5),
+        "status": "descriptive_conditional_association_no_inference",
+        "source_genotype_categories": int(sub["geno"].nunique()),
+        "source_treatment_categories": int(sub["source_treatment"].nunique()),
+        "control_axes": [other_axis, "geno", "source_treatment"],
+    }
+
+
 def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
     """Experiment 1/2 are source components, NOT different flowering years."""
     mapping = SOURCE_PATHS[label]
@@ -197,6 +257,10 @@ def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
                 f"Original {label} {col} contains source dates outside "
                 f"flowering calendar year {year}; cannot force experiment=year"
             )
+    combined["source_treatment"] = [
+        (_source_group(t) or _source_group(tt))
+        for t, tt in zip(combined["TRT"], combined["Treatment"])
+    ]
     combined["first_doy"] = combined["first_flr"].map(lambda x: _date_doy(x, year))
     combined["last_doy"] = combined["last_flower"].map(lambda x: _date_doy(x, year))
     for old, new in (("num_flr", "flowers_reported"),
@@ -242,6 +306,16 @@ def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
             correlations.append({"phenology_axis": date_var,
                                  "response_component": outcome, **m})
 
+    partials = [
+        {"phenology_axis": axis,
+         "response_component": "mompha_per_opportunity_proxy",
+         **_partial_rank_window_association(
+             combined, axis, "mompha_per_opportunity_proxy", other
+         )}
+        for axis, other in (
+            ("first_doy", "last_doy"), ("last_doy", "first_doy")
+        )
+    ]
     source_data = {}
     for x in ("first_doy", "last_doy", "schinia_fruit_count",
               "mompha_final_count", "raw_large_fruit_count",
@@ -274,6 +348,7 @@ def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
         },
         "variable_coverage": source_data,
         "exploratory_correlations": correlations,
+        "partially_adjusted_exploratory_ranks": partials,
         "strict_h1_effect_eligible": False,
         "external_adult_partner_curve_obtained": False,
         "direct_final_seed_counts_obtained": False,
@@ -323,6 +398,10 @@ def run(outdir: Path) -> dict:
             year.get("source_date_fields", {}), ensure_ascii=False
         ))
         print("COVERAGE", json.dumps(year.get("variable_coverage", {})))
+        print("PARTIAL_RANKS", json.dumps({
+            "experiment": year["experiment"],
+            "results": year.get("partially_adjusted_exploratory_ranks", [])
+        }))
         for row in year.get("exploratory_correlations", []):
             print("CORRELATION", json.dumps({
                 "experiment": year["experiment"],
