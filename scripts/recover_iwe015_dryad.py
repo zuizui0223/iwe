@@ -12,7 +12,9 @@ import csv
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
+from urllib.parse import urlsplit
 import urllib.error
 import urllib.request
 
@@ -28,9 +30,33 @@ SOURCE_FILES = {
 
 def source_urls(file_id: int) -> tuple[str, ...]:
     return (
-        f"https://datadryad.org/downloads/file_stream/{file_id}",
         f"https://datadryad.org/api/v2/files/{file_id}/download",
+        f"https://datadryad.org/downloads/file_stream/{file_id}",
     )
+
+
+class ScopeBearerRedirect(urllib.request.HTTPRedirectHandler):
+    """Never forward a Dryad bearer token to a signed-storage redirect."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        redirected = super().redirect_request(req, fp, code, msg, headers, newurl)
+        if redirected is not None and (
+            urlsplit(newurl).scheme != "https"
+            or urlsplit(newurl).hostname != "datadryad.org"
+        ):
+            redirected.remove_header("Authorization")
+        return redirected
+
+
+def source_headers(token: str | None = None) -> dict[str, str]:
+    """Build source-only headers without ever exposing the token in reports."""
+    headers = {
+        "User-Agent": "IWE-reproducibility-audit/1.0",
+        "Accept": "text/csv,text/plain,application/octet-stream,*/*",
+    }
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    return headers
 
 def inspect_payload(filename: str, payload: bytes) -> dict[str, object]:
     """Reject blocked/error pages and validate file contents before archiving."""
@@ -69,18 +95,14 @@ def inspect_payload(filename: str, payload: bytes) -> dict[str, object]:
     return result
 
 def retrieve_one(filename: str, file_id: int, dest: Path, *,
-                 timeout: float = 15) -> dict[str, object]:
+                 timeout: float = 15,
+                 token: str | None = None) -> dict[str, object]:
     attempts = []
+    opener = urllib.request.build_opener(ScopeBearerRedirect())
     for url in source_urls(file_id):
-        request = urllib.request.Request(
-            url,
-            headers={
-                "User-Agent": "IWE-reproducibility-audit/1.0",
-                "Accept": "text/csv,text/plain,application/octet-stream,*/*",
-            },
-        )
+        request = urllib.request.Request(url, headers=source_headers(token))
         try:
-            with urllib.request.urlopen(request, timeout=timeout) as response:
+            with opener.open(request, timeout=timeout) as response:
                 payload = response.read(2_000_001)
             metadata = inspect_payload(filename, payload)
         except urllib.error.HTTPError as exc:
@@ -101,10 +123,11 @@ def retrieve_one(filename: str, file_id: int, dest: Path, *,
         "attempts": attempts,
     }
 
-def run(output_dir: Path, timeout: float = 15) -> dict[str, object]:
+def run(output_dir: Path, timeout: float = 15,
+        token: str | None = None) -> dict[str, object]:
     output_dir.mkdir(parents=True, exist_ok=True)
     rows = [retrieve_one(name, file_id, output_dir / "source_files",
-                         timeout=timeout)
+                         timeout=timeout, token=token)
             for name, file_id in SOURCE_FILES.items()]
     success = sum(row["status"] == "downloaded" for row in rows)
     manifest: dict[str, object] = {
@@ -113,6 +136,7 @@ def run(output_dir: Path, timeout: float = 15) -> dict[str, object]:
         "source_dataset_url": "https://datadryad.org/dataset/doi:10.5061/dryad.6q573n5w1",
         "files_expected": len(SOURCE_FILES),
         "files_downloaded": success,
+        "bearer_auth_configured": bool(token),
         "status": "complete" if success == len(SOURCE_FILES) else "blocked",
         "evidence_promoted": False,
         "source_analysis_executed": False,
@@ -134,7 +158,10 @@ def main() -> int:
     args = parser.parse_args()
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
-    manifest = run(args.output_dir, timeout=args.timeout)
+    # Configure only through a secret environment variable. Never accept or
+    # print tokens on the CLI, in tracebacks, or in manifest fields.
+    token = os.environ.get("DRYAD_ACCESS_TOKEN", "").strip() or None
+    manifest = run(args.output_dir, timeout=args.timeout, token=token)
     print(f"IWE015 pinned public source status: {manifest['status']}, "
           f"{manifest['files_downloaded']}/{manifest['files_expected']} files.")
     for f in manifest["files"]:
