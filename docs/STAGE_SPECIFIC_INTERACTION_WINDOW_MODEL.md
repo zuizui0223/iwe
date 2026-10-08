@@ -117,6 +117,7 @@ Two opposite feedbacks are already present in the corpus:
 
 - *Lathyrus–Bruchus*: the seed predator uses phenology/position and other cues to target fruits with lower future abortion probability, partly bypassing the host filter;
 - *Rheum–Bradysia*: naturally oviposited flowers have substantially lower abortion and higher IAA before larvae hatch, but the study did **not** randomise female oviposition; a host-quality selection mechanism remains observationally compatible. The paper's separate randomisation concerns pollen treatment, not egg placement.
+- *Glochidion–Epicephala*: floral abortion rises with egg burden and ovule damage, with a source *modelled* random-abortion benchmark estimating **16% more seeds** under observed selective abortion (Goto et al. 2010). This is opposite in direction to Rheum's binary natural-egg/retention association, but differs in seed/ovule number, egg intensity, experiment design, and counterfactual units. Neither alone isolates a general egg-induced defense mechanism.
 
 Therefore host retention/vulnerability should be **modelled as potentially conditional on interaction history**, while causal statements about host manipulation remain held until egg/wounding treatments are assigned independently of host quality. A fixed host filter, consumer choice based on unobserved host quality, and egg-induced host modification are distinct possible data-generating processes.
 
