@@ -118,6 +118,15 @@ def audit_marked_unit_join(
         raise ValueError("adult counts must be measured non-negative values")
     if a.duplicated(["year", "census_date"]).any():
         raise ValueError("adult census duplicates a day; aggregate only with source support")
+    # Moths were searched for *inside freshly open Yucca flowers*. These
+    # observations are independent of egg/larva counts, but detection is
+    # conditioned on availability of sampled host flowers. Never infer zeros
+    # on unsampled days or an unconstrained external moth flight season.
+    effort_recorded = "flowers_examined" in a.columns
+    if effort_recorded:
+        effort = pd.to_numeric(a["flowers_examined"], errors="coerce")
+        if effort.isna().any() or (effort <= 0).any() or (effort % 1 != 0).any():
+            raise ValueError("flowers_examined must be explicit positive integer effort")
     seeds = pd.to_numeric(m["viable_seeds"], errors="coerce")
     if seeds.isna().any() or (seeds < 0).any() or (seeds % 1 != 0).any():
         raise ValueError("mature viable seeds must be explicit non-negative integer counts")
@@ -184,6 +193,10 @@ def audit_marked_unit_join(
         "original_source_verification_required": True,
         "unobserved_aborted_fruits_imputed": False,
         "annual_partner_abundance_as_synchrony": False,
+        "adult_census_detection_context": "moths_counted_within_fresh_host_flowers",
+        "flowers_examined_per_census_recorded": effort_recorded,
+        "unsampled_adult_activity_imputed_zero": False,
+        "independent_unconditional_adult_flight_window_verified": False,
         "source_defined_timing_contrast_frozen": False,
         "plant_fitness_effect_estimated": False,
         "strict_h1_effect_promoted": False,
@@ -194,6 +207,8 @@ def audit_marked_unit_join(
             "multiple fruits share one marked inflorescence. Absence from the mature "
             "fruit file is not zero reproductive fitness. Timing grouping, net plant "
             "output/abortion, sampling variance, and independent adult-to-stage "
-            "prediction require separately preregistered source auditing."
+            "prediction require separately preregistered source auditing. Adult "
+            "moths were surveyed inside fresh flowers; a non-surveyed day cannot "
+            "be classified as true adult absence."
         ),
     }
