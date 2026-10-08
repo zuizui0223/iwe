@@ -148,6 +148,40 @@ towards zero under source-count weighting. It would be incorrect to
 call the opposite mechanism established, or to claim that seed
 predators do not exploit predictable fruits in general.
 
+### Incremental test on completely held-out plant species
+
+A fixed pair of **whole-species leave-one-out** models was compared
+within the public tropical-forest sample. Predicting each held-out
+species' long-run premature-drop **log odds** from the other 123
+species gives:
+
+| Model | Held-species RMSE (log-odds scale) |
+|---|---:|
+| **Additive:** seed-crop CV + known-predator indicator | **1.9471** |
+| **Interactive:** additive model + CV × predator status | **1.9619** |
+
+The more complex interaction is **0.0147 log-odds units worse**, about
+**0.76% greater RMSE** than the fixed additive comparator. Leaving
+out any *single* source species changes the fitted interaction between
++0.0739 and +0.4805, without producing a negative point estimate;
+the wider bootstrap distribution nevertheless includes negative
+effects when many species are jointly resampled.
+
+This result does **not** establish equality or rule out conditional
+enemy responses in other forests. The test is within **one forest**,
+uses estimated seed-trap output rather than known seed-predator
+attributable mortality, and the external hypothesis was formulated
+after the 2022 paper's marginal results were public. Still, there is
+**no evidence here that adding the predator×crop-regularity term
+provides incremental predictive value** beyond an additive
+description. This directly challenges the stronger, generic
+"crop predictability × predator-specific host use" extension.
+
+Reproducible sources:
+`scripts/analyze_jackson2022_predator_crop_regularities.R` reports
+`held_species_model_diagnostic.csv` alongside the source check and
+bootstrap sensitivity.
+
 The analysis is in
 `scripts/analyze_jackson2022_predator_crop_regularities.R`,
 run against the exact public model-fits revision, with outputs in the
