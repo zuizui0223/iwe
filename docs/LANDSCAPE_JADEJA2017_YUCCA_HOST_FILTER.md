@@ -48,6 +48,35 @@ larvae. See `LANDSCAPE_HURLBURT_YUCCA_REVERSE_ABSCISSION.md` for the
 secondary-source evidence, competing mechanisms and a falsifiable
 within-species comparison. Neither study is promoted to strict H1.
 
+## When is the host filter predictable enough to anticipate?
+
+James et al. 1994, *Oikos* DOI `10.2307/3546140`, tracked **38
+Yucca elata inflorescences** across a season with nightly adult
+Tegeticula relative abundance, nightly opening flowers and later
+mature-fruit fates. The fruit-retention window averaged **five
+consecutive nights** (36% of inflorescence anthesis), but appeared
+unpredictably at early, middle or late positions. Additional
+hand-pollination did not significantly increase fruit maturation,
+and adult-moth abundance was not detectably correlated with mature
+fruit output.
+
+This is distinct from *Y. glauca* in Jadeja 2017, where the
+presence of basal fruits gives moths a directional cue about
+late distal flowers' abortion risk and moths alter their oviposition.
+Together they motivate a **cross-context discriminator**:
+
+> Does accurate information about future host fruit retention permit
+> timing or placement specialization by a seed-eating pollinator,
+> whereas poorly predictable retention rewards spreading eggs among
+> different reproductive units?
+
+This is an **untested comparative ecological hypothesis**, not a
+demonstrated adaptive strategy or an observed within-species
+reversal. The James 1994 published abstract contains no recoverable
+linked *adult timing → intact seed production* variance-bearing
+contrast. See `CANDIDATE_AUDIT_YUCCA_ELATA_JAMES1994.md`;
+the candidate remains **P2**, outside strict H1.
+
 ## Claim boundary
 
 This study does not supply the final plant reproductive surface required for a primary IWE fitness effect.
