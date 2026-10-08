@@ -80,6 +80,7 @@ LANDSCAPE_STATUSES = {
     "context_only",
     "boundary_evidence",
     "stage_structure_evidence",
+    "terminal_damage_evidence",
 }
 
 REQUIRED_COLUMNS = [
@@ -146,12 +147,13 @@ def validate_landscape_registry(df: pd.DataFrame) -> list[str]:
         & (
             df["window_reference_class"].ne("independent_partner_activity")
             | df["outcome_finality"].ne("final")
+            | ~df["fitness_channel"].isin({"net_reproduction", "total_offspring_fitness"})
         ),
         "component_id",
     ].astype(str)
     if len(bad_strong):
         errors.append(
-            "strong_candidate requires independent_partner_activity and final outcome: "
+            "strong_candidate requires independent_partner_activity and final net reproduction: "
             + ", ".join(sorted(bad_strong))
         )
 
@@ -236,6 +238,21 @@ def validate_landscape_registry(df: pd.DataFrame) -> list[str]:
         errors.append(
             "realized_window_evidence requires a realized interaction window and final outcome: "
             + ", ".join(sorted(bad_realized_window))
+        )
+
+    terminal_damage = df["landscape_status"].eq("terminal_damage_evidence")
+    invalid_terminal_damage = df.loc[
+        terminal_damage
+        & (
+            df["fitness_channel"].ne("cost_channel")
+            | df["outcome_finality"].ne("not_final")
+        ),
+        "component_id",
+    ].astype(str)
+    if len(invalid_terminal_damage):
+        errors.append(
+            "terminal_damage_evidence requires cost_channel and not_final net fitness: "
+            + ", ".join(sorted(invalid_terminal_damage))
         )
 
     boundary = df["landscape_status"].eq("boundary_evidence")
