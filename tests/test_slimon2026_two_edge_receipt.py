@@ -35,5 +35,5 @@ def test_receipt_is_not_an_added_strict_effect_or_another_year():
     df = pd.read_csv("data/extraction/direct_effects.csv")
     assert not df.study_id.astype(str).str.contains("SLIMON", case=False).any()
     report = open("docs/SLIMON2026_TWO_EDGE_RAW_REANALYSIS_20261009.md", encoding="utf-8").read()
-    assert "two independently replicated field seasons" not in report
+    assert "not 2022 and 2023 annual replication" in report
     assert "not an individually observed" in report
