@@ -47,3 +47,55 @@ def test_biological_host_retention_and_moth_summary_remains_nonpromoting():
     assert "smd" not in " ".join(pd.read_csv(SOURCE).columns).lower()
     # Observed resource-limited context does not prove a unique cause
     # or justify a plant/inflorescence variance from flower counts.
+
+
+def test_new_yucca_candidate_and_completion_route_are_nonpromoting():
+    candidates = pd.read_csv("data/registry/replication_candidates.csv")
+    rows = candidates.loc[candidates["candidate_id"].eq(CANDIDATE_ID)]
+    assert len(rows) == 1
+    row = rows.iloc[0]
+    assert row["target_class"] == "mixed_pollinating_seed_predator"
+    assert row["independent_programme"] == "yes"
+    assert row["timing_window_measured"] == "yes"
+    assert row["post_predation_final_reproduction"] == "partial"
+    assert row["smd_summary_stats"] == "no"
+    assert row["status"] == "blocked_final_surface"
+    assert row["priority"] == "P2"
+
+    routes = pd.read_csv("data/registry/replication_completion_routes.csv")
+    route = routes.loc[routes["candidate_id"].eq(CANDIDATE_ID)]
+    assert len(route) == 1
+    assert route.iloc[0]["route_rank"] == 5
+    assert route.iloc[0]["unlock_type"] == "same_unit_raw_data"
+    effects = pd.read_csv("data/extraction/direct_effects.csv")
+    assert "JAMES1994_YUCCA_ELATA" not in set(effects["study_id"])
+    # A new screening lead is not a quantitative independent replication.
+
+
+def test_jadeja_experiment_changes_site_acceptance_not_proven_larval_fitness():
+    stages = pd.read_csv(
+        "data/source_reconstructions/jadeja2017_yucca_host_cue_stage_summary.csv"
+    ).set_index("stage")
+    assert set(stages.index) == {
+        "flower_acceptance",
+        "conditional_oviposition_intensity",
+        "larval_emergence",
+    }
+    first = stages.loc["flower_acceptance"]
+    second = stages.loc["conditional_oviposition_intensity"]
+    last = stages.loc["larval_emergence"]
+    assert first["n_trials"] == second["n_trials"] == 29
+    assert first["n_positive_trials"] == second["n_positive_trials"] == 16
+    assert first["reported_p"] == 0.048
+    assert first["basal_fruit_association"] == "negative"
+    assert second["reported_p"] == 0.61
+    assert second["basal_fruit_association"] == "not_significant"
+    assert last["n_fruits"] == 243
+    assert last["reported_p"] == 0.7
+    assert last["p_operator"] == "greater_than"
+    assert all(stages["final_plant_intact_seed_endpoint"] == "no")
+    assert (
+        last["source_scope"] == "separate_observational_fruit_sample"
+    )
+    # Null tests do not prove equality, and distinct source units do not
+    # establish prospective host-cue to larval survival to plant seed fitness.
