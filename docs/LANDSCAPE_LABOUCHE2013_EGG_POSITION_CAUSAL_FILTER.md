@@ -52,6 +52,35 @@ post-randomization outcome that depends on egg position, host state
 and larval establishment. Conditioning on attack can induce selection
 bias and cannot be interpreted as a second randomized comparison.
 
+## A second reversal among selected survivors
+
+Among **32 living larvae from successfully attacked, developing
+fruits**, larval mass was higher when eggs had originally been
+placed **outside** rather than inside the flower
+(source **F(1,22)=5.62, P=0.03**). Larvae from fruit
+classified as **aborted** were also heavier than those in
+nonaborted developed fruits (**F(1,22)=7.91, P=0.01**).
+
+This should not be flattened into a reversal of the causal
+treatment effect: the egg-position randomization is real,
+but this comparison includes *only the larvae still alive
+and recovered after multiple post-treatment filters*.
+The study does not report a complete independent seed/larval
+fitness distribution for every initially assigned egg.
+Neither P-value establishes that abortion benefits larval fitness
+or that the larvae eventually survive after fruit separation.
+
+However, the mere occurrence of living larvae in fruits
+identified as aborted at the early day-10 collection warns
+against an automatic rule that **host fruit abortion is
+synonymous with immediate consumer death**. That rule
+can be appropriate for immobile eggs in some Yucca stages
+but must be separately verified for mobile Hadena larvae.
+
+Source-preserved conditional analysis:
+`data/source_reconstructions/labouche2013_conditional_larval_mass.csv`.
+No numerical group means are digitized from Figure 6.
+
 ## What it resolves, versus the Rheum ambiguity
 
 In Song et al. 2016 *Rheum nobile–Bradysia*, the strong natural
