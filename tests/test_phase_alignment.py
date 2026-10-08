@@ -189,3 +189,25 @@ def test_paired_predictive_stress_test_separates_positive_and_nulls():
     assert summary["paired_boundary_null"] == 1
     assert summary["paired_positive_ids"] == ["POSITIVE"]
     assert summary["paired_null_ids"] == ["NULL"]
+
+
+def test_adult_host_paired_positive_is_not_effective_stage_confirmation():
+    df = _rows().iloc[[0]].copy()
+    df.loc[:, "candidate_id"] = "ADULT_HOST"
+    df.loc[:, "study_id"] = "STUDY_ADULT_HOST"
+    df.loc[:, "dependence_id"] = "DEP_ADULT_HOST"
+    df.loc[:, "status"] = "paired_adult_host_positive"
+    df.loc[:, "raw_or_adult_timing"] = "yes"
+    df.loc[:, "effective_consumer_timing"] = "no"
+    df.loc[:, "prefinal_host_filter"] = "no"
+    df.loc[:, "paired_simpler_vs_stage_comparison"] = "partial"
+    df.loc[:, "blocker"] = "effective-stage comparator not measured"
+    assert validate_phase_alignment_registry(df) == []
+    summary = phase_alignment_summary(df)
+    assert summary["paired_adult_host_positive"] == 1
+    assert summary["confirmatory_ready"] == 0
+    assert summary["paired_final_comparisons"] == 0
+
+    df.loc[:, "paired_simpler_vs_stage_comparison"] = "yes"
+    errors = validate_phase_alignment_registry(df)
+    assert any("paired_adult_host_positive requires" in error for error in errors)
