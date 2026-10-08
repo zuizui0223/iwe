@@ -259,6 +259,9 @@ def run(outdir: Path) -> dict:
         print("YEAR", year["year"],
               "joined_plants", year.get("joint_plant_ids_n"),
               "date_crosscheck", year.get("source_date_scale_crosscheck"))
+        print("SOURCE_DATE_FORMS", year["year"], json.dumps(
+            year.get("source_date_fields", {}), ensure_ascii=False
+        ))
         print("COVERAGE", json.dumps(year.get("variable_coverage", {})))
         for row in year.get("exploratory_correlations", []):
             print("CORRELATION", json.dumps({
