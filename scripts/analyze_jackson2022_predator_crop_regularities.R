@@ -152,6 +152,39 @@ sens$note <- "source_model_frame_exploratory_not_independent_data_not_causal"
 write.csv(sens,file.path(outdir,"crop_regularities_predator_interaction.csv"),
           row.names=FALSE,na="")
 print(sens,row.names=FALSE)
+# An incremental predictive diagnostic: does the interaction improve
+# prediction of a genuinely held-out SPECIES over the additive model?
+# Both models are fixed before these folds, with no species-year leakage.
+pred_add <- pred_inter <- rep(NA_real_,nrow(species))
+jack_inter <- rep(NA_real_,nrow(species))
+for(i in seq_len(nrow(species))) {
+  train <- species[-i,,drop=FALSE]
+  held <- species[i,,drop=FALSE]
+  m0 <- lm(logit_abscission~cvseed_cs+predator,data=train)
+  m1 <- model_fit(train)
+  if(is.null(m1)) stop("held-species training strata became singular")
+  pred_add[i] <- as.numeric(predict(m0,newdata=held))
+  pred_inter[i] <- as.numeric(predict(m1,newdata=held))
+  jack_inter[i] <- unname(coef(m1)[["cvseed_cs:predator"]])
+}
+if(any(!is.finite(pred_add)) || any(!is.finite(pred_inter)) ||
+   any(!is.finite(jack_inter))) stop("nonfinite species-held-out scores")
+loso <- data.frame(
+  model=c("additive_CV_and_predator","CV_x_predator_interaction"),
+  holdout_unit="whole_species_not_seed_or_species_year",
+  n_species=nrow(species),
+  held_species_rmse_log_odds=c(
+    sqrt(mean((pred_add-species$logit_abscission)^2)),
+    sqrt(mean((pred_inter-species$logit_abscission)^2))),
+  jackknife_interaction_min=min(jack_inter),
+  jackknife_interaction_max=max(jack_inter),
+  jackknife_sign_negative_fraction=mean(jack_inter<0),
+  note="within_one_forest_exploratory_not_untouched_external_validation"
+)
+write.csv(loso,file.path(outdir,"held_species_model_diagnostic.csv"),
+          row.names=FALSE)
+cat("HELD-SPECIES DIAGNOSTIC (source outcome exposed before model design)\n")
+print(loso,row.names=FALSE)
 # The source retained data contain only fruit-drop estimates, not true
 # causes of abscission or direct parasitoid/oviposition chronology.
 cat("BOTH EXPLOITATION AND ENEMY-INDUCED ABSCISSION CAN PRODUCE THE SAME INTERACTION.\n")
