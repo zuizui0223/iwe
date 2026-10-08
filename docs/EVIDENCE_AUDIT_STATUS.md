@@ -58,8 +58,8 @@ Public search is marked **exhausted for 9** routes and **monitor-only for 2**; t
 
 | Next action | Routes |
 |---|---:|
-| contact_or_archive | 4 |
-| retrieve_longform | 3 |
+| contact_or_archive | 5 |
+| retrieve_longform | 2 |
 | retrieve_public_asset | 2 |
 | monitor_repository | 1 |
 | monitor_source_release | 1 |
