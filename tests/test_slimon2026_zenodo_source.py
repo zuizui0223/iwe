@@ -51,3 +51,14 @@ def test_archive_rejects_path_traversal_and_readme_leads_do_not_certify():
     hits = contexts("Study flowering and seed predator adult activity.")
     assert hits
     assert all(x["source_verified_method_claim"] is False for x in hits)
+
+
+def test_malformed_csv_remains_a_source_warning_not_imputed_data():
+    b = BytesIO()
+    with ZipFile(b, "w") as z:
+        z.writestr("raw/old_export.csv", "plant,adult\na,1\u0000\u000bb,2\n")
+    out = archive_inventory(b.getvalue())
+    assert len(out) == 1
+    # A corrupted source must not be silently treated as an adult census.
+    assert out[0]["member"] == "raw/old_export.csv"
+    assert "adult_partner_window_verified" not in out[0]
