@@ -35,7 +35,7 @@ def test_experimental_timing_and_cue_controls_are_not_merged_with_observations()
         "SONG2016_RHEUM", "OSTERGARD2007_LATHYRUS",
         "MEYER2014_BERBERIS", "JADEJA2017_YUCCA",
         "IMAI2006_AUCUBA", "GOTO2010_GLOCHIDION",
-        "BRODY2000_IPOMOPSIS"
+        "BRODY2000_IPOMOPSIS", "LABOUCHE2013_SILENE_HADENA"
     }
     assert df.loc["SONG2016_RHEUM", "independent_randomized_exposure"] == (
         "pollen_source_only"
@@ -51,7 +51,7 @@ def test_experimental_timing_and_cue_controls_are_not_merged_with_observations()
 
 def test_true_plant_fitness_not_automatically_obtained_from_retained_fruits():
     df = pd.read_csv(MATRIX)
-    assert len(df) == 7
+    assert len(df) == 8
     assert df.loc[
         df["programme"] == "SONG2016_RHEUM",
         "final_intact_seed_by_exposure_available",
@@ -123,3 +123,53 @@ def test_published_2000_no_choice_experiment_is_not_equated_to_pure_egg_injectio
     assert row["final_intact_seed_by_exposure_available"] == "no"
     assert row["strict_h1_eligible_from_this_source"] == "no"
     assert "caging" in row["remaining_unresolved_mechanism"]
+
+
+def test_labouche_randomized_egg_location_is_not_randomized_flower_trait():
+    row = pd.read_csv(MATRIX).set_index("programme").loc[
+        "LABOUCHE2013_SILENE_HADENA"
+    ]
+    assert row["interaction_type"] == "mixed_pollinating_seed_predator"
+    assert row["source_doi"] == "10.1111/1365-2435.12062"
+    assert row["independent_randomized_exposure"] == "egg_position_inside_vs_outside"
+    assert row["final_intact_seed_by_exposure_available"] == "no"
+    assert row["strict_h1_eligible_from_this_source"] == "no"
+    assert "corolla_length_observational" in row["remaining_unresolved_mechanism"]
+
+    random = pd.read_csv(
+        "data/source_reconstructions/labouche2013_randomized_egg_position.csv"
+    ).set_index("endpoint")
+    assert set(random["n_inside_assigned"]) == {71}
+    assert set(random["n_outside_assigned"]) == {66}
+    assert random.loc["successful_fruit_attack", "source_reported_p"] == 0.033
+    assert random.loc["initial_fruit_development", "source_reported_p"] == 0.005
+    assert random.loc["fruit_mass_among_developed", "post_assignment_selection"] == "yes"
+
+
+def test_labouche_natural_trait_association_and_non_significant_service_are_not_equivalence():
+    rows = pd.read_csv(
+        "data/source_reconstructions/labouche2013_trait_position_service.csv"
+    ).set_index("source_component")
+    assert set(rows.index) == {
+        "natural_flower_morphology_vs_egg_position",
+        "natural_egg_position_vs_fertilized_ovules",
+        "natural_tube_length_vs_fertilized_ovules_no_egg",
+    }
+    morph = rows.loc["natural_flower_morphology_vs_egg_position"]
+    assert morph["design"] == "observational_common_garden"
+    assert morph["analysis_n"] == 71
+    assert morph["source_coefficient"] == -4.69
+    assert morph["source_coefficient_se"] == 1.5
+    assert morph["source_p"] == 0.003
+    assert morph["fitted_crossover_mm"] == 19
+    assert morph["randomized_predictor"] == "no"
+    assert morph["causal_crossover_identified"] == "no"
+    service = rows.loc["natural_egg_position_vs_fertilized_ovules"]
+    assert service["analysis_n"] == 80
+    assert service["source_p"] == 0.2
+    assert service["equivalence_test"] == "no"
+    assert service["randomized_predictor"] == "no"
+    assert (
+        rows.loc["natural_tube_length_vs_fertilized_ovules_no_egg", "source_p"]
+        == 0.47
+    )
