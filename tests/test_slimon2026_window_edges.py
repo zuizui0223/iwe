@@ -51,6 +51,11 @@ def test_two_cohorts_have_real_plant_grain_and_no_fake_seed_fitness():
     assert second["original_tables"]["schinia_stage"]["repeated_measurement_rows"] == 14
     assert first["source_date_scale_crosscheck"]["n_last_before_first"] == 0
     assert first["strict_h1_effect_eligible"] is False
+    assert "opportunity_adjustment_assumption" in first
+    proxies = [a for a in first["exploratory_correlations"]
+               if a["response_component"] == "mompha_per_opportunity_proxy"]
+    assert len(proxies) == 2
+    assert all(a["n"] == 14 for a in proxies)
     assert second["direct_final_seed_counts_obtained"] is False
     pair = [v for v in first["exploratory_correlations"]
             if v["phenology_axis"] == "first_doy"
