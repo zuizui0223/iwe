@@ -76,3 +76,44 @@ def test_printed_proportion_dispersions_cannot_be_plant_level_se_at_reported_n()
                 row["year"], row["period"], metric, printed, se_upper
             )
     # No guessing SD, pooling years, or adding effects to strict H1 here.
+
+
+def test_within_early_egg_female_signal_stays_negative_when_group_mean_flips():
+    table = _table().set_index(["year", "period"])
+    source = pd.read_csv(
+        "data/source_reconstructions/iwe015_source_egg_fitness_correlations.csv"
+    ).set_index("year")
+    assert list(source.index) == [2012, 2013]
+    assert (source["egg_sampling_period"] == "early_only").all()
+    assert (source["egg_vs_female_fitness_spearman_r"] < 0).all()
+    assert (source["egg_vs_female_fitness_p"] < 0.05).all()
+    assert (source["egg_vs_male_fitness_result"] == "near_zero_not_significant").all()
+    assert source.loc[2012, "mean_eggs_per_flower"] == 1.04
+    assert source.loc[2013, "mean_eggs_per_flower"] == 0.55
+    assert table.loc[(2013, "early"), "successful_fruits_mean"] > (
+        table.loc[(2013, "late"), "successful_fruits_mean"]
+    )
+    # Different contrasts: group-level early/late versus within-early plants.
+    # Neither identifies egg causality, pollen service, or Simpson's paradox.
+
+
+def test_floral_trait_sample_is_not_final_fruit_denominator():
+    # Methods: 294 flowers were measured for traits on 55 early-2013 plants.
+    # Table 1: mean post-predation intact successful fruits = 9.77 per plant.
+    # A numerator cannot exceed a genuine complete reproductive opportunity
+    # denominator, so these must be different subsets/count definitions.
+    measured_2013_early_per_plant = 294 / 55
+    final_successful_fruits_per_plant = _table().set_index(
+        ["year", "period"]
+    ).loc[(2013, "early"), "successful_fruits_mean"]
+    assert final_successful_fruits_per_plant > measured_2013_early_per_plant
+
+
+def test_recovery_requires_an_explicit_sample_membership_reconciliation():
+    # Published Table 1 adult plants sum to 227. The paper reports
+    # F(3,224), which implies 228 observations in a simple one-way ANOVA.
+    # This is an open source-membership question, not a new pooled effect.
+    assert int(_table()["adult_plants"].sum()) == 227
+    reported_residual_df = 224
+    reported_model_df = 3
+    assert reported_residual_df + reported_model_df + 1 == 228
