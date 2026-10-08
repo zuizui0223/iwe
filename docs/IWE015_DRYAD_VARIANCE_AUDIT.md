@@ -61,6 +61,27 @@ The printed uncertainty problem is independently checkable without raw files. Fo
 
 Primary source: Zhou et al. (2020), *Evolution* 74:1321–1334, DOI https://doi.org/10.1111/evo.13965, Table 1 and Methods/Results.
 
+## Cross-scale ecological contrast: egg burden remains negatively associated with female fitness
+
+The original paper additionally reports directly quantified oviposition **only in the early season**. The mean eggs per flower decreased between years, from **1.04 (2012)** to **0.55 (2013)** (Welch t=4.27, P<0.001, source-reported). Within these early-season samples, the association between a plant's average egg receipt and its female reproductive success is **negative in both years**:
+
+| Year | Mean eggs per early flower | Egg burden versus female fitness, Spearman r | Source P | Early − late successful fruits per plant |
+|---|---:|---:|---:|---:|
+| 2012 | 1.04 | −0.26 | 0.049 | −1.25 |
+| 2013 | 0.55 | −0.40 | 0.003 | +1.17 |
+
+The authors report no significant association between egg receipt and **male** fitness in either year. In other words, the early group has higher mean intact-fruit production in 2013 **while a plant-level increase in oviposition is still associated with lower female fitness within that season**. This is an empirically observed *cross-scale sign difference* between a between-group fruit-count contrast and a within-group oviposition association—not a statistically demonstrated Simpson's paradox, and not evidence that a moth egg directly caused the negative within-group association. Egg receipt is jointly related to moth choice, floral display and subsequent herbivory.
+
+Source data are transcribed separately into `data/source_reconstructions/iwe015_source_egg_fitness_correlations.csv`; source publication section: "Oviposition preference of *Hadena ectypa*". Crucially, **there are no late-season egg observations on the same design**. A year-level egg-load difference cannot substitute for an early-versus-late independent adult-activity contrast.
+
+The paper's source-level fruit-initiation comparison reports **F(3,224)=0.47, P>0.10**, while fruit predation differs among experiments (**F(3,224)=48.1, P<0.001**) and between years (**F(1,226)=45.35, P<0.001**). These do not independently test the specific year × flowering-period interaction in final fruit counts. Lack of a fruit-initiation difference is not equivalence of pollination or effective service.
+
+**Measured-flower denominator warning:** Methods report 280/239 and 294/281 *trait-measured flowers* in early/late 2012 and 2013 (approximately 4–5 flowers per plant). This is a trait-measurement subset, **not the total tagged/produced reproductive-unit count** for the final fruit outcome: for example, mean intact successful fruits per early 2013 plant = 9.77, already greater than 294/55 measured flowers = 5.35. Replacing total flower opportunity with trait-subsample `N` would yield invalid fruit conversion rates. Reconstruct the actual total flower / RU counts from raw female files and source R code instead.
+
+Finally, Table 1 totals 227 adult plants, but the source's one-way F(3,224) and two-year F(1,226) degrees of freedom would imply N=228 in simple unweighted ANOVA without omitted groups. This one-observation discrepancy is an **audit query, not proof of an error**: the raw source model may use different records or transformations. Reconcile sample membership from `data_analysis.R` before accepting source inferential claims as directly reproduced.
+
+**Candidate biological mechanism to falsify:** a strong local oviposition-associated female cost can persist across years even when the *group-level* early-minus-late fruit ranking changes, because flower supply, partner service, and realized survival through larval feeding vary independently. Any test must keep the female-count, male-paternity and predation channels separate; do not manufacture a signed pooled synchrony effect.
+
 ## Frozen biological questions for raw readmission
 
 The two-year crossover creates a falsifiable distinction between an **exposure-to-cost change** and a **flower-supply/fitness-denominator change**. Before inspecting the raw plant-level outcomes, fix the following checks:
