@@ -127,11 +127,16 @@ model of smoothed log seed-loss odds gave:
 | Equal species weight (124 species; primary) | **+0.3632** |
 | Cap-weighted by square root of estimated seed counts | **+0.0186** |
 | Species with at least ten observed years (99 species) | **+0.7206** |
+| After accounting for measured seed mass and local adult abundance (89 species; 68 predator-recorded, 21 without records) | **+0.7087** |
 
 The **1,000-draw stratified species bootstrap** for the primary
 interaction gave a percentile 95% interval **[-0.6691, +1.0022]**.
 This is a descriptive bootstrap interval, not a prospective or
-phylogenetically adjusted confidence statement. These coefficients
+phylogenetically adjusted confidence statement. The adjusted fit has
+**no separate uncertainty interval**, uses fewer species and must
+not be presented as a statistically supported opposite mechanism.
+The much smaller seed-count-weighted interaction demonstrates
+that the numerical magnitude is **not stable to weighting**. These coefficients
 are differences in the slope of *crop-size variation*, not flowering
 dates or resource-retention probability.
 
