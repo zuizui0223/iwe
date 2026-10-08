@@ -7,7 +7,13 @@ Status: mechanism-only boundary evidence; not a final plant-fitness effect.
 
 ## Mechanism
 
-*Yucca glauca* flowers sequentially from basal to distal positions. Late-opening distal flowers are more likely to abort when already initiated basal fruits are present because those fruits act as strong resource sinks.
+*Yucca glauca* flowers sequentially from basal to distal positions. The
+authors motivate their experiment with the expectation that late-opening
+distal flowers are more likely to abort when basal fruits already exist
+because those fruits compete for plant resources. **Importantly, the
+published 2017 paper attributes this particular fruit-abortion
+gradient to Jadeja & Tenhumberg's unpublished observations**; it does
+not itself experimentally measure a linked host abortion outcome.
 
 For the pollinating seed predator *Tegeticula yuccasella*, this plant allocation decision is a hard post-oviposition filter:
 
@@ -30,6 +36,37 @@ Across the current examples:
 - *Yucca–Tegeticula*: host resource allocation determines whether an oviposited flower is retained at all.
 
 These mechanisms differ, but all break the equivalence between **an interaction occurring** and **that interaction surviving the host filter to become an effective future cost**.
+
+## A non-obvious within-study stage break: accept a site or adjust egg number?
+
+The published behavioral experiment manipulated basal-fruit presence
+in *Y. glauca* while presenting wild-caught *T. yuccasella* females
+with distal flowers. The effects differ among source-defined stages:
+
+| Endpoint | Source comparison | Reported result |
+|---|---|---|
+| **Flower accepted as an egg-laying site** | Basal fruit present vs absent, **29 trials** | Fewer flowers oviposited when basal fruits are present, **P=0.048** |
+| **Egg-laying intensity conditional on oviposition** | Same experiment, 16 positive trials | Difference **not significant**, **P=0.61** |
+| **Larvae emerging from top fruits** | Distinct observational dataset spanning three years, **243 fruits** | No association detected with basal fruit number, **P>0.7** |
+
+Thus the demonstrated shift is in **whether a reproductive site receives
+any eggs**, not a validated change in the number of eggs laid after
+acceptance. Lack of significance for conditional egg number **does not
+prove equality**; no larval-success change is established in the
+separate observational fruit dataset. The 2017 study also cannot
+directly quantify final plant seed fitness under the two host states.
+
+For IWE this is a crucial *gate-versus-intensity* distinction:
+`host cue → probability of oviposition` has experimental evidence,
+but `host cue → egg number among accepted flowers → successful offspring
+→ plant intact seeds` is not one observed causal chain. The proposed
+connection to future abortion risk relies partly on unpublished
+host-survival observations. Do not promote these three results as
+same-unit temporal signal propagation or as a paired predictive null.
+
+Source: Jadeja & Tenhumberg 2017, DOI `10.1002/ece3.3426`, Results
+§3.1–3.2 and Methods §2.2; frozen stage summary:
+`data/source_reconstructions/jadeja2017_yucca_host_cue_stage_summary.csv`.
 
 ## A second, nonmonotone host-filter boundary
 
