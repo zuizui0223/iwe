@@ -24,6 +24,29 @@ The same source Table 1 documents scrub-habitat categories;
 all 8 source combinations are frozen in
 `data/source_reconstructions/meyer2014_berberis_published_fruit_states.csv`.
 
+### Resource context changes the meaning of an oviposition cue
+
+The original table also gives a striking **observational, not
+causal**, environmental interaction. For two-seeded fruits, exactly
+one seed was aborted in:
+
+| Habitat | No egg-laying puncture | Puncture present |
+|---|---:|---:|
+| Moist pine forest | **28.3%** (131/463) | **76.3%** (61/80) |
+| Dry scrub | **68.8%** (64/93) | **71.8%** (356/496) |
+
+Thus a large *puncture-associated* difference occurs in the
+moister forest, whereas the drier habitat already has many partially
+aborted fruits without punctures. This is consistent with resource
+stress acting through the same fruit-decision surface, **not** proof
+that drought eliminates parasite defense. The original article also
+found no significant difference between pine-punctured and
+scrub-unpunctured **distributions of fruit states** (source
+χ²=1.6, P>0.45). These are distinct samples, with habitat and
+population identity confounded; no within-plant response to an
+experimentally randomized puncture or watering treatment is
+identified here.
+
 **Important outcome caveat:** the paper's *state definition* deliberately
 groups larva-eaten seeds with living seeds in its **nonaborted**
 category. These are counts of *abortion patterns* among sampled mature
