@@ -163,8 +163,22 @@ The Wiley *Ecology* article explicitly links Figshare collection
 `10.6084/m9.figshare.c.3300059` as supporting research data.
 Meyer et al. (2014) have original supplementary fruit-state counts in
 Dryad `10.5061/dryad.k8m7b` (one published Word file).
-A finite, no-auth public-API metadata audit is implemented in
-`scripts/probe_ostergard2007_meyer2014_archives.py` and runs with
-the source-linked endpoints only. An API listing or publisher page
-does **not** establish that row-level or plant-ID raw observations
-have been recovered; no formal meta-effect is generated.
+The official Figshare API confirms that collection
+`3300059` contains **exactly one item**, article ID `3528548`,
+`10.6084/m9.figshare.3528548.v1`:
+**Appendix A: descriptions of variables and transformations**,
+file `appendix-A.htm` (11,770 bytes, file ID `5600258`).
+**This is a methodological supplement, not a deposited original
+fruit-by-fruit CSV or an independently sampled dataset**.
+The Dryad dataset for *Berberis* is publicly discoverable
+(dataset ID `19421`, version 1), but its API dataset response
+did not expose a downloadable file link in this probe.
+
+The metadata audit is implemented in
+`scripts/probe_ostergard2007_meyer2014_archives.py`.
+A second strictly pinned Appendix A retrieval uses
+`scripts/recover_ostergard2007_figshare_appendix.py`,
+and records an original-file checksum if access succeeds.
+Neither a listing nor receipt of a methods appendix establishes
+that row-level, plant-ID or independent adult-flight data have
+been recovered; no formal meta-effect is generated.
