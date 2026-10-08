@@ -12,6 +12,7 @@ PHASE_ALIGNMENT_STATUSES = {
     "near_confirmatory",
     "mechanism_only",
     "boundary_null",
+    "paired_model_null",
     "final_tracking_evidence",
     "paired_realized_positive",
     "paired_adult_host_positive",
@@ -113,9 +114,27 @@ def validate_phase_alignment_registry(df: pd.DataFrame) -> list[str]:
             + ", ".join(sorted(bad_ready))
         )
 
+    # A biological null at the plant endpoint is not a predictive comparison.
+    # A genuine paired model null must use the dedicated status instead.
     boundary = df["status"].eq("boundary_null")
     bad_boundary = df.loc[
         boundary
+        & (
+            df["phase_alignment_varies"].ne("yes")
+            | df["final_plant_endpoint"].ne("yes")
+            | df["paired_simpler_vs_stage_comparison"].eq("yes")
+        ),
+        "candidate_id",
+    ].astype(str)
+    if len(bad_boundary):
+        errors.append(
+            "boundary_null requires phase variation and final endpoint, but must not claim a paired model comparison: "
+            + ", ".join(sorted(bad_boundary))
+        )
+
+    paired_null = df["status"].eq("paired_model_null")
+    bad_paired_null = df.loc[
+        paired_null
         & (
             df["phase_alignment_varies"].ne("yes")
             | df["final_plant_endpoint"].ne("yes")
@@ -123,10 +142,10 @@ def validate_phase_alignment_registry(df: pd.DataFrame) -> list[str]:
         ),
         "candidate_id",
     ].astype(str)
-    if len(bad_boundary):
+    if len(bad_paired_null):
         errors.append(
-            "boundary_null requires phase variation, final endpoint, and paired comparison: "
-            + ", ".join(sorted(bad_boundary))
+            "paired_model_null requires phase variation, final endpoint, and a source-backed paired comparison: "
+            + ", ".join(sorted(bad_paired_null))
         )
 
     paired_positive = df["status"].eq("paired_realized_positive")
@@ -211,7 +230,7 @@ def phase_alignment_summary(df: pd.DataFrame) -> dict[str, object]:
         paired_final["status"].eq("paired_realized_positive")
     ]
     paired_null = paired_final[
-        paired_final["status"].eq("boundary_null")
+        paired_final["status"].eq("paired_model_null")
     ]
 
     return {
@@ -234,7 +253,8 @@ def phase_alignment_summary(df: pd.DataFrame) -> dict[str, object]:
         ),
         "paired_final_comparisons": int(len(paired_final)),
         "paired_positive_nonconfirmatory": int(len(paired_positive)),
-        "paired_boundary_null": int(len(paired_null)),
+        "paired_model_null": int(len(paired_null)),
+        "boundary_null_ids": list(df.loc[df["status"].eq("boundary_null"), "candidate_id"].astype(str)),
         "paired_positive_ids": list(paired_positive["candidate_id"].astype(str)),
         "paired_null_ids": list(paired_null["candidate_id"].astype(str)),
     }
@@ -254,7 +274,7 @@ def render_phase_alignment_gate(df: pd.DataFrame) -> str:
         f"- Dependence clusters: **{summary['n_dependence_clusters']}**",
         f"- Confirmatory-ready positive or null comparisons: **{summary['confirmatory_ready']}**",
         f"- Near-confirmatory blocked routes: **{summary['near_confirmatory']}**",
-        f"- Registered direct null/boundary comparisons: **{summary['boundary_null']}**",
+        f"- Biological endpoint nulls (not paired predictive tests): **{summary['boundary_null']}**",
         f"- Positive paired realized comparisons (non-confirmatory): **{summary['paired_realized_positive']}**",
         f"- Independent adult × host timing gains over host calendar alone (not effective-stage tests): **{summary['paired_adult_host_positive']}**",
         "",
@@ -271,12 +291,13 @@ def render_phase_alignment_gate(df: pd.DataFrame) -> str:
         "",
         f"- Paired simpler-vs-stage comparisons that reach final plant fitness: **{summary['paired_final_comparisons']}**",
         f"- Positive stage-specific gain, non-confirmatory: **{summary['paired_positive_nonconfirmatory']}**",
-        f"- Direct null/boundary comparisons: **{summary['paired_boundary_null']}**",
+        f"- Paired model nulls (different from biological endpoint nulls): **{summary['paired_model_null']}**",
         "",
-        "Current positive IDs: " + (", ".join(summary["paired_positive_ids"]) if summary["paired_positive_ids"] else "none") + ".",
-        "Current null IDs: " + (", ".join(summary["paired_null_ids"]) if summary["paired_null_ids"] else "none") + ".",
+        "Current paired positive IDs: " + (", ".join(summary["paired_positive_ids"]) if summary["paired_positive_ids"] else "none") + ".",
+        "Current paired model null IDs: " + (", ".join(summary["paired_null_ids"]) if summary["paired_null_ids"] else "none") + ".",
+        "Separate biological endpoint null IDs: " + (", ".join(summary["boundary_null_ids"]) if summary["boundary_null_ids"] else "none") + ".",
         "",
-        "This is the strongest current stress test of the predictive claim. A mechanistically richer stage coordinate does **not** automatically improve final-fitness prediction: Parkinsonia is positive, whereas Posledovich and long-term Lathyrus are retained nulls.",
+        "Only Parkinsonia supplies a source-level paired stage/filter model diagnostic, and it is retrospective rather than confirmatory. Posledovich and long-term Lathyrus are independent biological endpoint/pathway boundaries, not failed M5-vs-M2/M4 predictive model comparisons.",
         "",
         "## Candidate states",
         "",
@@ -319,7 +340,7 @@ def render_phase_alignment_gate(df: pd.DataFrame) -> str:
             "",
             "Riemer 2024 adds a distinct field-scale adult-host positive: 88 pea fields with independently measured first male moth arrival and host flowering show a lower final damaged-seed LOOCV RMSE for a moth-by-flowering model (7.36 percentage points) than for a flowering-only model (9.20). This is field-wise leave-one-out across four years, not leave-one-year-out; no adult-only or consumer-stage/filter comparator is fitted. Accordingly it does not increment the confirmatory-ready or paired effective-stage counts.",
             "",
-            "The registry also retains complete nulls. Posledovich 2015 shows that manipulated stage matching and temperature alter herbivore performance without altering the mature-seedpod escape endpoint beyond host-species effects. The long-term Lathyrus programme shows that climate-driven changes in phenology–seed-predation covariance do not explain flowering-time selection on intact-seed fitness.",
+            "The registry separately retains two biological boundaries. Posledovich 2015 reports host-species-only effects on mature-seedpod escape among analyzed transferred hosts despite host-stage effects on larval performance; it did not compare predictive timing models or measure all-plant viable seed number. In the 21-year Lathyrus study, variation in flowering-date–seed-predation covariance did not significantly explain variation in flowering-time selection; non-significance does not establish an exactly zero pathway. Neither study is a paired-model predictive null.",
             "",
             "Accordingly, stage-specific timing now has a positive paired realized comparison as well as final-seed-loss examples, but **predictive superiority over simpler adult/calendar timing under the full confirmatory contract remains open**.",
             "",
