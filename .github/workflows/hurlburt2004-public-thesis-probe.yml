@@ -1,0 +1,38 @@
+name: Hurlburt 2004 institutional PDF source access probe
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/probe_hurlburt2004_public_thesis.py
+      - tests/test_hurlburt2004_public_thesis_probe.py
+      - .github/workflows/hurlburt2004-public-thesis-probe.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-only-access:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify fail-closed downloader without network
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_hurlburt2004_public_thesis_probe.py
+      - name: Retrieve DOI-linked original institution-hosted PDF if public
+        run: >-
+          python -m scripts.probe_hurlburt2004_public_thesis
+          --outdir /tmp/hurlburt2004-public-thesis-source
+          --timeout 15
+      - name: Save unreviewed source and access manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hurlburt2004-thesis-source-unreviewed
+          path: /tmp/hurlburt2004-public-thesis-source/
+          if-no-files-found: warn
+          retention-days: 7
