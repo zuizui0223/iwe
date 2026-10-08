@@ -47,6 +47,35 @@ This separates two meanings of "independent" which must not be conflated:
   observed counts alone do not reconstruct an unconditional moth emergence
   distribution outside the sampled flowering period.
 
+### An observed annual discordance, not a timing effect
+
+The COSEWIC 2013 Table 1 yearly summaries illustrate why direct moth
+detection **per fresh flower** should not automatically be interpreted
+as realized pollination service or timing alignment. At Onefour:
+
+| Year | Adult moths per inspected flower | Fruit per flowering clone |
+|---|---:|---:|
+| 1999 | 0.456 ± 0.259 | 4.537 ± 0.328 |
+| 2000 | 0.563 ± 0.259 | 0.354 ± 0.172 |
+| 2001 | 0.388 ± 0.235 | 2.119 ± 0.207 |
+
+The **highest** of these three published annual moths-per-flower
+indices (2000) coincides with the **lowest** fruit-per-clone
+index. The contrast is observational, combines metrics with different
+denominators and potentially different sampling cohorts, and does
+**not** establish a negative relationship between synchrony and
+fitness or identify a causal mechanism. Floral opportunity,
+flower-/clone-level sampling, resource allocation, abortion, and
+other annual conditions could change final fruit set independently.
+
+It does demonstrate an empirical risk of treating *per-flower adult
+presence* as if it were a sufficient proxy for net plant benefit.
+Do not turn the three annual rows into independent seasonal-overlap
+effect sizes. Table 1 also repeats identical fruit/inflorescence
+and fruit/clone printed values for 2002 and 2003; this may reflect
+source aggregation or a transcription issue and is not independently
+resolved here.
+
 The preflight therefore preserves `adult_census_detection_context =
 moths_counted_within_fresh_host_flowers`,
 `independent_unconditional_adult_flight_window_verified=false`,
