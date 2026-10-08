@@ -83,6 +83,37 @@ does not rule out selection on pre-existing host physiology.
 Likewise, observational similarity in sampled floral morphology,
 flower timing and pollen loads does not block all unmeasured backdoors.
 
+### Why even arbitrarily significant observations cannot solve this
+
+This is a mathematical identification problem, not merely a small-
+sample power problem. For **illustration only**, suppose an
+unpublished, synthetic population had
+`P(egg)=0.5`,
+`P(retained|egg)=0.8`,
+`P(retained|no egg)=0.4`.
+
+The same joint 2×2 table is produced by either:
+
+- **Causal model A:** randomize eggs with probability 0.5, then
+  egg-bearing fruit retention is 0.8 versus 0.4 without eggs;
+  the experimental average egg effect is **+0.4**.
+- **Selection-only model B:** preexisting latent host viability
+  `U=retained` has prevalence 0.6, female choice
+  `P(egg|U=1)=2/3` and `P(egg|U=0)=1/4`;
+  egg receipt has **zero causal effect** because `U`, not the egg,
+  determines retention.
+
+Both models give precisely the same observed probabilities:
+`P(egg,retained)=0.40`,
+`P(egg,aborted)=0.10`,
+`P(no egg,retained)=0.20`,
+`P(no egg,aborted)=0.30`.
+A statistical test can make the observational association arbitrarily
+precise without discriminating these mechanisms. **These probabilities
+are synthetic, NOT values estimated for Rheum.** The numerical
+counterexample is unit-tested in
+`tests/test_host_retention_causal_gate.py`.
+
 ## Final fitness can be opposite from fruit retention
 
 A plant can mature more fruits carrying fly offspring while losing
