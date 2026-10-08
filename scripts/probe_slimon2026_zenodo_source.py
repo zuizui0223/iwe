@@ -110,6 +110,8 @@ def archive_inventory(raw: bytes) -> list[dict]:
             if member.is_dir():
                 continue
             name = member.filename
+            if name.startswith("__MACOSX/") or "/._" in name or Path(name).name.startswith("~$"):
+                continue
             if (name.startswith("/") or ".." in name.split("/")
                     or member.file_size > MAX_MEMBER):
                 raise ValueError("unsafe or oversized member")
@@ -233,6 +235,36 @@ def stage_linkage_preflight(raw: bytes) -> dict:
     return result
 
 
+def fitness_model_code_leads(raw: bytes) -> dict[str, list[dict]]:
+    """Tiny line-located leads from published scripts, no recreated estimator."""
+    selected = ("Freese Stats/exp1_pubver.R", "Freese Stats/exp2_pubver.R")
+    trigger = re.compile(
+        r"(?i)seed|fitness|fecund|fruit|schinia|mompha|predict.*seed"
+    )
+    out: dict[str, list[dict]] = {}
+    with ZipFile(BytesIO(raw)) as zf:
+        for member in selected:
+            if member not in zf.namelist():
+                out[member] = []
+                continue
+            lines = zf.read(member).decode("utf-8-sig", errors="replace").splitlines()
+            hits = []
+            for i, line in enumerate(lines):
+                stripped = line.strip()
+                if (not stripped or stripped.startswith("#")
+                        or not trigger.search(line)):
+                    continue
+                if not any(op in line for op in ("<-", "=", "mutate(", "glm(", "lm(")):
+                    continue
+                hits.append({"source_line": i + 1,
+                             "source_code_short": stripped[:170],
+                             "derived_seed_fitness_formula_verified": False})
+                if len(hits) >= 38:
+                    break
+            out[member] = hits
+    return out
+
+
 def preview_relevant_readme_lines(readme: str) -> list[dict]:
     """Small methods/dictionary windows; no arbitrary transcript dump."""
     wanted = set(range(43, 94))
@@ -273,6 +305,7 @@ def audit(outdir: Path):
             elif label.endswith(".zip"):
                 report["archive_members"] = archive_inventory(raw)
                 report["focal_stage_linkage_preflight"] = stage_linkage_preflight(raw)
+                report["fitness_original_code_leads"] = fitness_model_code_leads(raw)
         report["status"] = "inventory_recovered" if files else "targets_not_listed"
     except (ValueError, OSError, TimeoutError, RuntimeError, json.JSONDecodeError) as exc:
         report["status"] = "source_access_or_format_blocked"
@@ -291,6 +324,10 @@ def audit(outdir: Path):
         report.get("focal_stage_linkage_preflight", {}),
         ensure_ascii=False
     ))
+    for source_name, hits in report.get("fitness_original_code_leads", {}).items():
+        print("SOURCE FITNESS CODE", source_name, json.dumps(
+            hits[:26], ensure_ascii=False
+        ))
     print("SOURCE README DICTIONARY", json.dumps(
         report.get("readme_original_file_dictionary", [])[:42],
         ensure_ascii=False
