@@ -59,7 +59,7 @@ Antagonists:
 
 Mixed pollinating seed predators:
 - no quantitative strict-H1 row currently admitted.
-- IWE015 (*Silene stellata × Hadena ectypa*) remains timing/final-outcome eligible but quantitatively **held** pending raw Dryad variance verification. A non-promoting Table 1 audit finds an opposing mean-only early-minus-late successful-fruit contrast (**−1.25 in 2012; +1.17 in 2013**) with predation differences of **+18 vs +1 percentage points**; this is not a significant interaction or SMD. See `docs/IWE015_DRYAD_VARIANCE_AUDIT.md`.
+- IWE015 (*Silene stellata × Hadena ectypa*) remains timing/final-outcome eligible but quantitatively **held** pending raw Dryad variance verification. A non-promoting Table 1 audit finds an opposing mean-only early-minus-late successful-fruit contrast (**−1.25 in 2012; +1.17 in 2013**) with predation differences of **+18 vs +1 percentage points**. Separately, within the early experiments egg burden remains negatively associated with female fitness in both years (Spearman r=−0.26 and −0.40), although 2013 early plants have higher mean successful fruits than late plants. These are different comparison grains, not a demonstrated time-by-year interaction, Simpson's paradox or admissible SMD. See `docs/IWE015_DRYAD_VARIANCE_AUDIT.md`.
 
 The two IWE027 rows share one dependence cluster and IWE023 supplies a second independent mutualist SMD cluster. The two-cluster threshold remains a **replication milestone only**. H1 is not inferentially evaluable: the reference CR2 workflow requires at least 4 conservative cluster degrees of freedom (therefore at least 5 dependence clusters per class under the current intercept-only reference) before reporting inferential SEs/CIs.
 
