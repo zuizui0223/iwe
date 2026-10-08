@@ -31,14 +31,14 @@ Search terms combined variants of `phenological mismatch`, `flowering time`, `po
 <!-- BEGIN GENERATED SCREENING SNAPSHOT -->
 _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 
-**Registered publications: 32.** Current decisions: 13 include, 7 unresolved, 12 context only, 0 exclude.
+**Registered publications: 34.** Current decisions: 13 include, 7 unresolved, 14 context only, 0 exclude.
 
 | Candidate class | Include | Unresolved | Context only | Exclude | Total |
 |---|---:|---:|---:|---:|---:|
 | mutualist | 9 | 5 | 2 | 0 | 16 |
 | antagonist | 2 | 2 | 4 | 0 | 8 |
-| mixed pollinating seed predator | 2 | 0 | 6 | 0 | 8 |
-| **Total** | **13** | **7** | **12** | **0** | **32** |
+| mixed pollinating seed predator | 2 | 0 | 8 | 0 | 10 |
+| **Total** | **13** | **7** | **14** | **0** | **34** |
 
 ### Registry snapshot
 
@@ -76,6 +76,8 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 | `IWE030` | antagonist | `context_only` | `10.1890/0012-9658(1997)078[1624:EOPHAS]2.0.CO;2` | Effects of pollinators herbivores and seed predators on flowering phenology |
 | `IWE031` | antagonist | `context_only` | `10.1002/ecy.3854` | Timing of a plant-herbivore interaction alters plant growth and reproduction |
 | `IWE032` | antagonist | `include` | `10.1002/ece3.11330` | Flowering phenology mediates escape from a specialist butterfly seed predator |
+| `IWE033` | mixed pollinating seed predator | `context_only` | `10.1002/ecy.70440` | A novel nursery pollination mutualism between a water primrose and its fruit-parasitizing weevil |
+| `IWE034` | mixed pollinating seed predator | `context_only` | `10.1111/nph.71476` | Spatial decoupling and herbivory tolerance stabilise a nursery pollination mutualism in an aquatic plant |
 <!-- END GENERATED SCREENING SNAPSHOT -->
 
 `include` means the publication currently appears to satisfy the biological Tier-A screen and should proceed to quantitative extraction. It does not mean an effect size has already been recovered or that the study will survive variance/dependence checks.
@@ -129,6 +131,11 @@ _Generated from `data/registry/studies.csv`; do not edit this block by hand._
 - `IWE027`: 2007 E-to-M contrasts at HIS and GOS are ordered by contemporaneously measured bumble-bee activity. Intact natural seed-set mean±SE+n reconstructs two mutualist SMD rows; 2006 is deliberately excluded because animal activity was not directly measured that year.
 
 These decisions are machine-readable in `data/registry/strict_h1_adjudications.csv`.
+
+## 2026-09-29 search refresh
+
+- `IWE033` — Wu & Chen 2026, *Ludwigia adscendens × Nanophyes proles*: newly published genuine nursery-pollination system with public Figshare data and quantified seed consumption, but retained as `context_only` because the study does not define a plant-timing contrast ordered by an independent adult-weevil activity window. Fruit submergence/parasitism is the main experimental axis, not phenological synchrony.
+- `IWE034` — Wu et al. 2026, *Ottelia jingxiensis × Hydrellia* sp.: genuine nursery pollination, but larvae migrate from the calyx to submerged leaves and foliar herbivory is essentially unrelated to seed set. Retain as `context_only`/wrong-surface boundary evidence rather than redefining vegetative herbivory as pollinating seed predation.
 
 ## Unresolved high-value studies
 
