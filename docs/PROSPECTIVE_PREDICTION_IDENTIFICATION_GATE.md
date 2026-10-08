@@ -37,6 +37,70 @@ Two independently sourced studies restrict the ecological mechanism, but do **no
 
 The registry therefore records both as `boundary_null` with `paired_simpler_vs_stage_comparison=no`. Only comparisons explicitly registered as `paired_model_null` or `paired_realized_positive` may enter paired model counts. The latter may remain retrospective, so paired does not mean confirmatory.
 
+## A separate causal identification gate: forecasting versus rewriting the host's future
+
+The *IWE* stage-specific framework requires more than observing that
+egg-bearing flowers are retained. An animal may:
+
+1. **Forecast a pre-existing host filter** by recognizing cues to a fruit's
+   latent probability of retention;
+2. **Rewrite the filter** with oviposition, mechanical damage,
+   secreted effectors or altered auxin/defence physiology; or
+3. **Respond to another host state** correlated with oviposition and
+   retention, with neither predictive foresight nor manipulation.
+
+The same natural observational distribution of eggs, auxin and fruit
+retention is compatible with all three when unmeasured host quality
+drives both female choice and host fate. A smaller P-value in
+`egg_receipt → fruit_retention` does not identify direction of
+causation. Original pollen treatments randomised on other flowers
+do not serve as an oviposition experiment.
+
+**Source-check on Rheum nobile–Bradysia (Song et al. 2016,
+DOI 10.1038/srep29886):** Seven plants per year, 200 naturally visited
+flowers per plant, were followed after observational fly oviposition.
+The randomized component allocated **self/cross/open pollen source**
+rather than moth eggs; the IAA comparison further contrasted
+naturally oviposited flowers with **bagged, hand-pollinated**
+non-oviposited flowers. Thus the F=287.24 association of natural egg
+receipt with fruit abortion, and F=355.97 IAA difference, do not
+identify an intervention `do(oviposition)` or a causal auxin
+mediator. Higher IAA before larval hatching is inconsistent with
+direct *early larval feeding* being the proximate inducer but remains
+compatible with unmeasured host-quality selection.
+
+The contrast across verified studies is instructive rather than
+one exchangeable estimate:
+
+| Study | Actual intervention or comparison | Permissible identification |
+|---|---|---|
+| Rheum–Bradysia 2016 | Natural egg receipt vs non-receipt; pollen source separately randomized | Correlation and physiological association, not causal host manipulation |
+| Lathyrus–Bruchus 2007 | Observed targeted eggs vs modelled random placement | Behavioral targeting associated with a host retention filter, not a randomized targeting fitness contrast |
+| Berberis–Rhagoletis 2014 | Observed puncture and seed/sibling state vs fitted random-abortion models | Conditional retained-fruit seed abortion, not plant net-fitness gain |
+| Yucca–Tegeticula (Jadeja 2017) | **Basal-fruit cue manipulated** in oviposition trials | Causal cue response in egg-site acceptance; no demonstrated coupled survival/intact-seed effect |
+| Aucuba–Asphondylia (Imai 2006) | **Oviposition date manipulated** in caged fruits | Causal susceptible-window to gall/reproductive-fate relationship, not full prospective stage-model comparison |
+
+Machine-readable scope/identification contract:
+`data/source_reconstructions/host_retention_causal_gate_matrix.csv`.
+Source-level Rheum component audit:
+`data/source_reconstructions/song2016_rheum_causal_design_audit.csv`.
+
+A decisive study would cross **host resource/retention cue reliability**
+with **independently assigned oviposition exposure and credible sham
+controls**, optionally perturb IAA independently, and follow **all
+initially tagged ovules** to larval fate and **intact maternal seeds**.
+If the host can be manipulated into retaining larva-bearing fruit,
+that is insect benefit but **not automatically plant benefit**:
+*Rheum* has one ovule per flower, consumed if the larva survives.
+
+This causal gate and the earlier **prospective prediction** gate are
+different: a variable may predict a future fruit fate without
+causing it, and a causal timing manipulation may identify a local
+effect without outperforming simpler models in external prediction.
+Neither type of evidence is promoted into the frozen strict-H1
+corpus without source-correct partner synchrony and final plant
+reproduction.
+
 ## Mandatory falsification comparators
 
 For a newly recovered source with genuinely pre-outcome observations and a common biological unit, predeclare:
