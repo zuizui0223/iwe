@@ -1,0 +1,3 @@
+study_id,doi,source_sample_size,original_egg_position_randomized,analytical_unit,comparison,source_direction,F_num_df,F_den_df,F_value,reported_p,post_treatment_conditioned,causal_marginal_larval_fitness_identified,original_mature_intact_seed_outcome
+LABOUCHE2013_SILENE_HADENA,10.1111/1365-2435.12062,32,yes,living_larvae_in_successfully_attacked_developed_fruits,egg_outside_vs_inside,outside_heavier,1,22,5.62,0.03,yes,no,no
+LABOUCHE2013_SILENE_HADENA,10.1111/1365-2435.12062,32,yes,living_larvae_in_successfully_attacked_developed_fruits,aborted_vs_nonaborted_fruit,aborted_fruit_larvae_heavier,1,22,7.91,0.01,yes,no,no
