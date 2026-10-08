@@ -42,6 +42,25 @@ Two diagnostic reconstructions are therefore kept conceptually separate:
 
 No IWE015 row is currently admitted to `data/extraction/direct_effects.csv`.
 
+## Year-specific mean-only biological signal (source Table 1; 2026-10-08)
+
+The source table was transcribed into `data/source_reconstructions/iwe015_published_table1.csv` exactly as printed, including the disputed `SE` label. These are **group means only**, not admitted effect sizes. Define the contrast consistently as **early Hadena-dominant − late co-pollinator-dominant**, within year:
+
+| Year | Successful fruits: early / late | Early − late fruits per plant | Fruit predation: early / late | Early − late predation |
+|---|---|---:|---|---:|
+| 2012 | 2.66 / 3.91 | **−1.25** | 0.59 / 0.41 | **+18 percentage points** |
+| 2013 | 9.77 / 8.60 | **+1.17** | 0.20 / 0.19 | **+1 percentage point** |
+
+The mean successful-fruit contrast **changes sign**: the high-Hadena early period has fewer successful fruits in 2012 but more in 2013. The early–late predation contrast is much larger in 2012. This jointly motivates a test of whether the timing-to-fitness direction depends on the strength of the delayed seed-predation cost, rather than on nominal early/late or pollinator identity alone.
+
+The pattern **does not establish** a statistically significant year-by-season interaction, an effect of moth timing itself, or an adult-service-versus-larval-cost causal decomposition. Different plants occupied the two calendar windows, environmental conditions and flower supply can differ, and the study's reported negligible *year variation in floral-trait selection gradients* is not a test of these final-fruit means. The two years share `DEP_SILENE_STELLATA_HADENA_MLBS` and cannot be counted as independent mixed programmes.
+
+The printed uncertainty problem is independently checkable without raw files. For `n` plant-level observations bounded between 0 and 1, with sample mean `p`, the **largest possible sample SE** is `sqrt(p*(1-p)/(n-1))`. For the 2012 early fruit-initiation proportion (`p=0.91`, `n=59`) this bound is approximately **0.0376**, whereas Table 1 prints **0.19** and labels it SE. The same incompatibility occurs for all four initiation and four predation entries if their sample sizes equal the listed adult-plant counts. The test `tests/test_iwe015_published_table1.py` makes this constraint executable.
+
+**Decision: descriptive contrast identified, strict-H1 quantitative hold unchanged.** Neither the bounded-outcome contradiction nor the direction reversal licenses relabelling any printed dispersion as SD. Require the Dryad female CSVs and `data_analysis.R` before constructing Hedges g or uncertainty; do not add an SMD based on this mean-only transcription.
+
+Primary source: Zhou et al. (2020), *Evolution* 74:1321–1336, DOI https://doi.org/10.1111/evo.13965, Table 1 and Methods/Results.
+
 ## Raw-data acceptance test
 
 Promotion requires all four female CSVs to reproduce, for each year × season:
