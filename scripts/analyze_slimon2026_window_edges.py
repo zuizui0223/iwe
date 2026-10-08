@@ -57,9 +57,13 @@ def _load_rows(zf: ZipFile, filename: str) -> list[dict[str, str]]:
         raise ValueError(f"pinned original member unavailable: {filename}")
     payload = zf.read(filename).decode("utf-8-sig", errors="replace")
     reader = csv.DictReader(StringIO(payload, newline=""))
-    if reader.fieldnames is None or "ID" not in reader.fieldnames:
+    if reader.fieldnames is None or not ({"ID", "ID #"} & set(reader.fieldnames)):
         raise ValueError(f"missing original ID column in: {filename}")
-    return list(reader)
+    rows = list(reader)
+    if "ID" not in reader.fieldnames and "ID #" in reader.fieldnames:
+        for row in rows:
+            row["ID"] = row.get("ID #", "")
+    return rows
 
 
 def _id_table(rows: list[dict], wanted: list[str], label: str) -> pd.DataFrame:
@@ -132,11 +136,25 @@ def audit_year(zf: ZipFile, year: int) -> dict:
     for kind, filename in mapping.items():
         rows = _load_rows(zf, filename)
         cols = SCALAR_COLUMNS.get(kind, [])
+        if kind == "schinia_stage":
+            stage_ids = [str(x.get("ID", "")).strip() for x in rows
+                         if str(x.get("ID", "")).strip()]
+            original_meta[kind] = {
+                "raw_rows": len(rows),
+                "unique_keyed_plants": len(set(stage_ids)),
+                "repeated_measurement_rows": len(stage_ids) - len(set(stage_ids)),
+                "original_stage_columns": (
+                    [c for c in rows[0].keys() if c.startswith("sf_")]
+                    if rows else []
+                ),
+                "source_path": filename,
+                "not_adult_availability_series": True,
+            }
+            continue
         table = _id_table(rows, cols, f"{label} {kind}")
         original_meta[kind] = {
             "raw_rows": len(rows), "unique_keyed_plants": len(table),
-            "columns_used": cols,
-            "source_path": filename,
+            "columns_used": cols, "source_path": filename,
         }
         tables[kind] = table
     combined = tables["host"].copy()
