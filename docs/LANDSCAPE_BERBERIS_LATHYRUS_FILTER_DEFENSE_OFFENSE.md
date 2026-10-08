@@ -57,6 +57,55 @@ population identity confounded; no within-plant response to an
 experimentally randomized puncture or watering treatment is
 identified here.
 
+### What the eight published fruit states actually identify
+
+The machine-reproducible, **descriptive** source calculations show that
+the association with a visible fly oviposition puncture is not stable
+across habitat or reproductive-unit structure. Changes below are
+`punctured minus unpunctured` in **percentage points**, not causally
+identified treatment effects.
+
+| Seed structure and outcome, conditional on recovered fruit | Moist pine forest | Dry scrub |
+|---|---:|---:|
+| Two-seeded: exactly one seed aborted | **+48.0 pp** | **+3.0 pp** |
+| One-seeded: only seed aborted | **−1.2 pp** | **+10.6 pp** |
+
+The second row prevents overstating a simple *always protect the
+last seed* rule: although sole-seed abortion remains less than
+20% in every original group, the sampled dry-scrub punctured
+fruits have **27/194** sole-seed abortion versus **4/120**
+without punctures. The original paper's inference of conditional
+defense concerns relative selective-abortion rates and modelled
+sibling value; it does not imply a constant direction for every
+habitat-specific puncture association.
+
+A second, crucial **identification limit** can be calculated directly
+from the source counts. The maximum number of physically intact
+seeds **among retained, sampled fruits**, *assuming that every source
+"nonaborted" seed was living*, would equal:
+
+- two-seeded source state: `(F1 + 2 × F2) / N fruits`;
+- one-seeded state: `f1 / N fruits`.
+
+For example, in the pine-forest two-seeded comparison, this
+potential upper bound is **1.670** per sampled fruit without
+punctures versus **1.188** with punctures; in the dry-scrub
+one-seeded comparison, it is **0.967** versus **0.861**.
+But the original authors intentionally group **eaten seeds**
+into their `nonaborted` classes. Hence these are only
+**upper bounds**, with no informative positive lower bound on
+intact seeds from these aggregates alone. They are **not**
+measured viable seed yields; missing whole fruits are also
+excluded by construction.
+
+These descriptive identities and source-dependent checks are
+frozen in
+`data/derived/meyer2014_conditional_abortion_contrasts.csv`,
+generated reproducibly by
+`scripts/build_meyer2014_conditional_fruit_state_contrasts.py`.
+No plant-independent sampling variance, within-plant causal
+interaction or post-larval synchrony effect is inferred.
+
 **Important outcome caveat:** the paper's *state definition* deliberately
 groups larva-eaten seeds with living seeds in its **nonaborted**
 category. These are counts of *abortion patterns* among sampled mature
