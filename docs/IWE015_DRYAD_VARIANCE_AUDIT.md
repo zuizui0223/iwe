@@ -61,6 +61,16 @@ The printed uncertainty problem is independently checkable without raw files. Fo
 
 Primary source: Zhou et al. (2020), *Evolution* 74:1321–1334, DOI https://doi.org/10.1111/evo.13965, Table 1 and Methods/Results.
 
+## Frozen biological questions for raw readmission
+
+The two-year crossover creates a falsifiable distinction between an **exposure-to-cost change** and a **flower-supply/fitness-denominator change**. Before inspecting the raw plant-level outcomes, fix the following checks:
+
+1. **Total realized reproduction (primary):** compare intact successful-fruit **counts per plant** between source-defined early and late windows separately for 2012 and 2013; preserve year-specific estimates and one shared programme dependence cluster. Do not call source-labelled dispersions SD.
+2. **Flower supply and reproductive conversion (diagnostic):** report total flowers/labelled units, fruit-initiation counts or proportions, attacked versus intact fruit counts and missing/destroyed-unit definitions using the original R code. Ask whether the crossover in per-plant intact fruits persists on a defensible flower-denominator scale. A change in fruit counts alone is not evidence of more successful pollination per flower.
+3. **Stage mediation (mechanistic, not automatic causal):** test whether the year-specific change in the early–late predation contrast covaries with the change in final intact fruits. Predation occurs downstream of flowering/partner exposure, so conditioning on it is **not** a confounder-adjusted estimate of the total timing effect. Treat decomposition as descriptive unless exposure and mediator assumptions can be justified.
+
+The source tracks flower number and harvested reproductive units, but some entirely consumed pistils have unknown initiation status and were excluded from the paper's initiation denominator. This missing-outcome mechanism must be preserved rather than coding such units as confirmed initiation failures. Early and late groups are different plants, and there are only two years: no claim of replicated temporal moderation or independently identified pollination-versus-seed-consumption pathways follows from Table 1 alone.
+
 ## Raw-data acceptance test
 
 Promotion requires all four female CSVs to reproduce, for each year × season:
