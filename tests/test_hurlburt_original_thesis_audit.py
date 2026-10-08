@@ -35,4 +35,4 @@ def test_public_original_thesis_no_longer_claimed_undownloadable():
     assert r.next_action_type == "contact_or_archive"
     assert "no author contact" in r.next_action.lower()
     assert "post-larval" in r.unlock_requirement
-    assert r.last_audited == "2026-10-08"
+    assert r.last_audited >= "2026-10-08"  # later archive checks must not regress
