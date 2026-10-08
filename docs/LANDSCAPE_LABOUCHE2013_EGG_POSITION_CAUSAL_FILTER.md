@@ -2,7 +2,7 @@
 
 Date: 2026-10-08
 System: *Silene latifolia × Hadena bicruris*
-Source: Labouche, Bernasconi & Henry, *Functional Ecology* (2013),
+Source: Labouche & Bernasconi, *Functional Ecology* (2013),
 DOI [10.1111/1365-2435.12062](https://doi.org/10.1111/1365-2435.12062).
 Evidence: **randomized egg-placement to short-run attack and fruit-development
 responses**, but not a manipulation of flowering or partner synchrony,
