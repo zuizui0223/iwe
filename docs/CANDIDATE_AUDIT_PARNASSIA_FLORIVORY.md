@@ -35,6 +35,24 @@ Recovery was:
 
 The paper reports a strong decline in seeds per recovered fruit across these periods (Kruskal-Wallis chi-square=41.215, df=2, p<0.001), with early flowers highest and late flowers lowest.
 
+## Observed fruit-recovery channel — source audit 2026-10-08
+
+The denominator is explicitly **60 initially marked/bagged flowers per flowering cohort**, and the authors report **31, 41 and 25 fruits recovered in September**. Hence the following *descriptive* recovery proportions can be computed **without any assumptions about the missing flowers**:
+
+| Site-A flowering cohort | Marked flowers | September fruits recovered | Recovery fraction | Not recovered |
+|---|---:|---:|---:|---:|
+| Early, June (no beetles observed) | 60 | 31 | **0.517** | 29 |
+| Middle, 1–15 July (beetles on fewer than 20% of flowers) | 60 | 41 | **0.683** | 19 |
+| Late, 16 July–1 August (beetles on more than 70% of flowers) | 60 | 25 | **0.417** | 35 |
+
+This is **not a monotonic reduction in fruit recovery** with later phenology: *middle is highest*, then early, then late. In the same source, seeds **per recovered fruit** decline through the flowering season. Thus a monotonic conditional seed-number trend and a nonmonotonic recovered-fruit trend coexist at **different outcome grains**. Neither establishes the ordering of **net seeds per initially marked flower**, because the seeds in unrecovered units are unobserved and the cause of each loss is not identified.
+
+A separate study experiment in the Methods marks 35 + 35 infested/uninfested flowers at Site A and yields **31 pistils for pollen-tube counts**. Those **31 pistils are not the same cohort** as the 31 mature fruits recovered from 60 June flowers; merging their denominators would be a spurious biological-unit join.
+
+The 60 flowers in each calendar cohort are **within-site nested samples, not 60 independently replicated phenological schedules or beetle-activity curves**. Recovery proportions are consequently reported with no flower-level p-value, no independent-group Hedges g, and no replicated cohort-level causal contrast. Period confounds beetle exposure with seasonal plant state, weather and pollinator availability. The observed outcome is explicitly `September_fruit_recovery_per_initially_marked_flower` — **not proven mature-seed output per flower, beetle-attributable fruit loss, or final plant-level fitness**.
+
+Machine-readable source counts and fail-closed tests: `data/source_reconstructions/parnassia_siteA_cohort_fruit_recovery_2024.csv` and `tests/test_parnassia_cohort_fruit_recovery.py`. This increases **descriptive resolution**, not strict-H1 replication clusters.
+
 ## Why the published figure/test is not yet an SMD-ready net fitness effect
 
 The same methods section states that some tagged flowers were lost because beetles chewed the peduncle.
