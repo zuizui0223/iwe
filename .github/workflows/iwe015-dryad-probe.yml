@@ -1,0 +1,57 @@
+name: IWE015 public Dryad archive access audit
+
+on:
+  pull_request:
+    paths:
+      - scripts/recover_iwe015_dryad.py
+      - tests/test_iwe015_dryad_recovery_probe.py
+      - .github/workflows/iwe015-dryad-probe.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  access-probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check non-network probe invariants
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_iwe015_dryad_recovery_probe.py
+      - name: Retrieve pinned public files, if allowed
+        id: retrieval
+        # Access failures must be visible in manifest/step result, but
+        # must not be mistaken for a failed scientific hypothesis.
+        continue-on-error: true
+        run: >-
+          python scripts/recover_iwe015_dryad.py
+          --output-dir /tmp/iwe015-dryad
+          --timeout 15
+          --strict
+      - name: Print archive access decision
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("/tmp/iwe015-dryad/manifest.json")
+          if p.exists():
+              x = json.loads(p.read_text())
+              print(f"Archive status={x['status']}; files={x['files_downloaded']}/{x['files_expected']}")
+              print("No strict effect promoted.")
+          else:
+              print("Archive probe did not produce a manifest; this is NOT validation.")
+          PY
+      - name: Upload unreviewed source files and manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe015-public-dryad-raw-unreviewed
+          path: /tmp/iwe015-dryad/
+          if-no-files-found: warn
+          retention-days: 7
