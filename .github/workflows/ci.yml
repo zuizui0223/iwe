@@ -35,6 +35,8 @@ jobs:
         run: python scripts/render_phase_alignment_gate.py --check
       - name: Check temporal signal-propagation audit
         run: python scripts/render_temporal_signal_propagation.py --check
+      - name: Check propagation endpoint sensitivity
+        run: python scripts/render_propagation_endpoint_sensitivity.py --check
       - name: Check IWE001 directional landscape
         run: python scripts/build_iwe001_directional_landscape.py --check
       - name: Check IWE011 plot-rank landscape
