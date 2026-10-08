@@ -99,11 +99,9 @@ def test_lathyrus_final_escape_is_distinct_from_developed_seeds():
         "data/source_reconstructions/ostergard2007_appendixA_variable_contract.csv"
     ).set_index("variable_label")
     assert source.loc["Number of escaped seeds", "source_unit_or_grain"] == "plant"
-    assert "escapes Bruchus" in source.loc[
+    assert source.loc[
         "Number of escaped seeds", "source_definition"
-    ] if False else source.loc["Number of escaped seeds", "source_definition"].startswith(
-        "All seeds escaping Bruchus"
-    )
+    ].startswith("All seeds escaping Bruchus")
     assert source.loc["Number of seeds", "semantic_audit"] == "not_identical_to_escaped_seeds"
     for name in ("Number of eggs per fruit", "Number of eggs recorded at first survey"):
         assert source.loc[name, "source_unit_or_grain"] == "fruit"
