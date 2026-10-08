@@ -59,7 +59,7 @@ The printed uncertainty problem is independently checkable without raw files. Fo
 
 **Decision: descriptive contrast identified, strict-H1 quantitative hold unchanged.** Neither the bounded-outcome contradiction nor the direction reversal licenses relabelling any printed dispersion as SD. Require the Dryad female CSVs and `data_analysis.R` before constructing Hedges g or uncertainty; do not add an SMD based on this mean-only transcription.
 
-Primary source: Zhou et al. (2020), *Evolution* 74:1321–1336, DOI https://doi.org/10.1111/evo.13965, Table 1 and Methods/Results.
+Primary source: Zhou et al. (2020), *Evolution* 74:1321–1334, DOI https://doi.org/10.1111/evo.13965, Table 1 and Methods/Results.
 
 ## Raw-data acceptance test
 
