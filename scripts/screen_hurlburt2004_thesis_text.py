@@ -93,12 +93,48 @@ def screen_pdf(pdf: Path, outdir: Path) -> dict:
     for p in ranked[:12]:
         print(f"PDF page {p['physical_pdf_page']}: score={p['score']}; "
               f"excerpt={p['lead_only']}")
+    # These source Methods/result pages contain the most plausible marked
+    # flower -> fruit dissection design details and need visual verification.
+    focus_pages = (83, 84, 85, 86, 87, 88, 119, 120, 121, 122)
+    focus_terms = (
+        "marked flower", "fruit dissection", "mature fruit",
+        "flower was collected", "oviposition", "individual",
+        "seed", "fruit"
+    )
+    targeted = []
+    for n in focus_pages:
+        if n > len(pages):
+            continue
+        flat = re.sub(r"\\s+", " ", pages[n - 1]).strip()
+        snippets = []
+        for term in focus_terms:
+            pos = flat.lower().find(term)
+            if pos >= 0:
+                snippet = flat[max(0, pos - 100):pos + 450]
+                if snippet not in snippets:
+                    snippets.append(snippet)
+            if len(snippets) >= 3:
+                break
+        targeted.append({
+            "physical_pdf_page": n,
+            "keywords_found": [w for w in focus_terms if w in flat.lower()],
+            "source_excerpt_candidates": snippets,
+            "visually_verified": False,
+            "joined_raw_rows_verified": False
+        })
+        print(f"FOCUS PDF physical page {n}: " +
+              " | ".join(snippets[:2]))
+    summary["source_methods_targeted_pages"] = targeted
+    (outdir / "page_review_leads.json").write_text(
+        json.dumps(summary, indent=2, ensure_ascii=False) + "\\n"
+    )
     if ranked:
         preview = outdir / "original_page_previews_unreviewed"
         preview.mkdir(exist_ok=True)
         with fitz.open(str(pdf)) as document:
-            for p in ranked[:5]:
-                page_no = p["physical_pdf_page"]
+            for page_no in sorted(set(
+                [p["physical_pdf_page"] for p in ranked[:5]] + [85, 86, 121]
+            )):
                 page = document[page_no - 1]
                 image = page.get_pixmap(matrix=fitz.Matrix(1.25, 1.25),
                                         alpha=False)
