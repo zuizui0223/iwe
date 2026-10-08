@@ -5,7 +5,7 @@ from zipfile import ZipFile
 import pytest
 
 from scripts.analyze_slimon2026_window_edges import (
-    _date_doy, _safe_spearman, audit_year,
+    _date_doy, _source_full_date_year, audit_experiment,
 )
 
 
@@ -17,7 +17,7 @@ def _csv(data):
 def _zip_source():
     b = BytesIO()
     with ZipFile(b, "w") as z:
-        for year, exp in ((2022, "exp1"), (2023, "exp2")):
+        for exp in ("exp1", "exp2"):
             n = 14
             host = [["ID", "first_flr", "num_flr", "geno"]]
             last = [["ID", "last_flower"]]
@@ -43,10 +43,11 @@ def _zip_source():
 
 def test_two_cohorts_have_real_plant_grain_and_no_fake_seed_fitness():
     with ZipFile(BytesIO(_zip_source())) as zf:
-        first = audit_year(zf, 2022)
-        second = audit_year(zf, 2023)
+        first = audit_experiment(zf, "exp1")
+        second = audit_experiment(zf, "exp2")
     assert first["joint_plant_ids_n"] == 14
     assert second["joint_plant_ids_n"] == 14
+    assert first["flowering_calendar_year"] == second["flowering_calendar_year"] == 2023
     assert second["original_tables"]["schinia_stage"]["repeated_measurement_rows"] == 14
     assert first["source_date_scale_crosscheck"]["n_last_before_first"] == 0
     assert first["strict_h1_effect_eligible"] is False
@@ -74,4 +75,11 @@ def test_any_duplicate_plant_id_fails_instead_of_join_multiplication():
         z.writestr("Freese Stats/df2_exp1F.csv", "ID #,sf_adult_7_11\n1,2\n")
     with ZipFile(BytesIO(b.getvalue())) as zf:
         with pytest.raises(ValueError, match="duplicate"):
-            audit_year(zf, 2022)
+            audit_experiment(zf, "exp1")
+
+
+def test_original_experiment_number_cannot_relabel_source_calendar_year():
+    assert _source_full_date_year("7/12/23") == 2023
+    assert _source_full_date_year("7/12/2023") == 2023
+    assert _source_full_date_year("192") is None
+    assert _source_full_date_year("NA") is None
