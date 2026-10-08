@@ -38,6 +38,19 @@ Raw values are in `data/source_reconstructions/vanklinken2008_paired_stage_diagn
 
 The alternative **joint survival fraction alone** gives held-region-out retrospective RMSE **4.11 pp**, versus **4.92 pp** when multiplied by stage-matched egg density. The difference is only **0.82 pp**, not a tested biological superiority. But it is sufficient to defeat a claim that temporal stage matching is needed to explain the apparent retrospective association in this sample.
 
+## Held-out-region heterogeneity
+
+The global 4.11-vs-4.92 pp RMSE ordering does **not** repeat in every held-out region. Using the same unbounded OLS fitted on the three remaining regions:
+
+| Held-out region | Observations | Joint survival fraction RMSE | Stage eggs × joint survival RMSE | Lower error |
+|---|---:|---:|---:|---|
+| Victoria River District | 2 | 4.92 | 4.16 | Stage × survival |
+| Barkly Tablelands | 2 | 4.01 | 4.36 | Survival alone |
+| Central Queensland | 2 | 1.25 | 6.23 | Survival alone |
+| Central Australia | 1 | 5.87 | 4.42 | Stage × survival |
+
+The survival-only model wins **2 of 4** held-out regions, not all four. Its lower pooled RMSE is influenced strongly by the two Central Queensland observations. This makes a general model-ranking claim even less defensible and reinforces the need for an external data source with temporally separated predictor and outcome measurements.
+
 ## Ecological interpretation
 
 Across these source regions/seasons, measured egg parasitism is highly variable. The fraction of eggs capable of producing viable beetles is strongly associated with realized final seed destruction, even if raw egg density is removed from the simple linear predictor.
