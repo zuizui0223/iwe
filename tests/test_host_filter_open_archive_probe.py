@@ -48,3 +48,26 @@ def test_bounded_retrieval_does_not_claim_raw_data_recovery(monkeypatch):
         assert x["raw_data_recovered"] is False
         assert x["source_join_verified"] is False
         assert x["strict_effect_promoted"] is False
+
+
+def test_source_figshare_appendix_is_not_raw_data():
+    from scripts.recover_ostergard2007_figshare_appendix import inspect_html
+    original = (
+        "<html><body>" + "<p>Fruit abortion and seed oviposition</p>" * 50
+        + "</body></html>"
+    ).encode()
+    result = inspect_html(original)
+    assert result["source_article_id"] == 3528548
+    assert result["original_file_id"] == 5600258
+    assert result["raw_data_recovered"] is False
+    assert result["source_egg_to_seed_join_verified"] is False
+    assert result["quantitative_smd_promoted"] is False
+
+
+def test_source_appendix_rejects_json_and_short_html():
+    import pytest
+    from scripts.recover_ostergard2007_figshare_appendix import inspect_html
+    with pytest.raises(ValueError):
+        inspect_html(b'{"error":"Rate limit"}')
+    with pytest.raises(ValueError):
+        inspect_html(b"<html>access denied</html>")
