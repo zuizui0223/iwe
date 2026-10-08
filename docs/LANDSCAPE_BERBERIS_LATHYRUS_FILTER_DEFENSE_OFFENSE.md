@@ -176,9 +176,27 @@ did not expose a downloadable file link in this probe.
 
 The metadata audit is implemented in
 `scripts/probe_ostergard2007_meyer2014_archives.py`.
-A second strictly pinned Appendix A retrieval uses
-`scripts/recover_ostergard2007_figshare_appendix.py`,
-and records an original-file checksum if access succeeds.
-Neither a listing nor receipt of a methods appendix establishes
-that row-level, plant-ID or independent adult-flight data have
-been recovered; no formal meta-effect is generated.
+A second strictly pinned retrieval in
+`scripts/recover_ostergard2007_figshare_appendix.py` **successfully
+downloaded the original Appendix A** (SHA256
+`0898f5355bea88bd4b707ea1f1435067533947c4521ca368c8fda2eb790b4dc5`).
+The source Appendix A inventories the plant-level final
+**seeds escaping Bruchus predation**, together with flower,
+fruit and oviposition variables. This confirms that the programme
+measured the right *final fitness channel*, but **does not
+release its raw matched fruit-level records**.
+
+Crucially, its variable `Proportion fruits aborted` is defined as
+`mature fruits / initiated fruits`: a **retention proportion**,
+the mathematical complement of abortion. This *source label vs
+definition* inconsistency is an explicit sign-provenance hold.
+Do **not** multiply fitted coefficients by -1 or claim the original
+paper made the error without identifying the actually fitted
+formula and the original model data. Exact source variable
+definitions and executable guard tests are in
+`data/source_reconstructions/ostergard2007_appendixA_variable_contract.csv`.
+
+Neither publisher methods appendix nor the publicly listed Berberis
+aggregate seed states establishes a plant-independent adult
+phenological synchrony–intact-seed effect; no formal meta-effect
+is generated.
