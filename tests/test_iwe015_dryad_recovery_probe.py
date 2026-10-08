@@ -8,6 +8,7 @@ from scripts.recover_iwe015_dryad import (
     inspect_payload,
     source_headers,
     source_urls,
+    resolve_bearer_from_environment,
 )
 
 
@@ -80,3 +81,47 @@ def test_bearer_is_removed_on_redirect_outside_dryad():
     )
     assert same_origin is not None
     assert same_origin.has_header("Authorization")
+
+
+def test_bearer_resolution_prefers_fresh_client_credentials(monkeypatch):
+    import json
+    from urllib.parse import parse_qs
+    monkeypatch.setenv("DRYAD_CLIENT_ID", "fake-id-for-unit-test")
+    monkeypatch.setenv("DRYAD_CLIENT_SECRET", "fake-secret-for-unit-test")
+    monkeypatch.setenv("DRYAD_ACCESS_TOKEN", "old-direct-token")
+    called = {}
+
+    class FakeResponse:
+        def __enter__(self):
+            return self
+        def __exit__(self, *exc):
+            return False
+        def read(self, n):
+            return json.dumps({"access_token": "new-fake-token"}).encode()
+
+    def urlopen(req, timeout):
+        called["method"] = req.get_method()
+        called["url"] = req.full_url
+        called["body"] = parse_qs(req.data.decode())
+        return FakeResponse()
+
+    monkeypatch.setattr(urllib.request, "urlopen", urlopen)
+    token = resolve_bearer_from_environment()
+    assert token == "new-fake-token"
+    assert called["method"] == "POST"
+    assert called["url"] == "https://datadryad.org/oauth/token"
+    assert called["body"]["grant_type"] == ["client_credentials"]
+
+
+def test_expired_or_partial_credentials_fail_closed_without_secret(monkeypatch):
+    monkeypatch.setenv("DRYAD_CLIENT_ID", "fake-id")
+    monkeypatch.delenv("DRYAD_CLIENT_SECRET", raising=False)
+    with pytest.raises(ValueError, match="credentials incomplete"):
+        resolve_bearer_from_environment()
+
+
+def test_existing_short_lived_token_is_accepted_only_as_fallback(monkeypatch):
+    monkeypatch.delenv("DRYAD_CLIENT_ID", raising=False)
+    monkeypatch.delenv("DRYAD_CLIENT_SECRET", raising=False)
+    monkeypatch.setenv("DRYAD_ACCESS_TOKEN", "fake-short-lived-bearer")
+    assert resolve_bearer_from_environment() == "fake-short-lived-bearer"
