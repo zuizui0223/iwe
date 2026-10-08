@@ -67,6 +67,10 @@ The species *A. cardamines* also appears in IWE032, but the programmes answer di
 
 The laboratory developmental-race result is therefore an independent boundary test, not another Dibbinsdale dependence cluster.
 
+## Source-analysis population limitation
+
+The source GLM for mature-seedpod outgrowth used only first host plants that were exchanged for a second host during the experiment; plants that never required exchange were excluded because equivalent seed-production observations were unavailable. The published null for host phenological index and temperature applies to that analyzed binary outgrowth outcome and is **not** a test of zero effects on viable seed number over all exposed plants. It is also not an out-of-sample paired prediction comparison with calendar/adult-only timing.
+
 ## Claim boundary
 
 The plant response is mature-seedpod formation / host outgrowth, not a count of viable seeds per plant.

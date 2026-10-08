@@ -28,6 +28,15 @@ A stage-specific coordinate is a mechanistic description until it passes tempora
 | **Aucuba–Asphondylia** (Imai et al. 2006) | Adult emergence monitored; oviposition timing experimentally shifted | Gall induction causing complete seed failure | Early vs late fruit-stage exposure | **Causal timing-to-final-fate positive**, no paired simple/adult-only vs delayed-filter predictive comparison |
 | **Wheat midge** (Wu 2015 / Wise 2015) | Adult occurrence monitored or experimentally imposed relative to susceptible wheat stage | Final yield loss / seed damage | Source timing-stage effects | **Stage-specific final-endpoint positives**, but not the required prospectively compared downstream conversion models |
 
+## Biological endpoint boundaries are not model-comparison nulls
+
+Two independently sourced studies restrict the ecological mechanism, but do **not** furnish negative paired M2/M4/M5 prediction tests:
+
+- **Posledovich et al. 2015**, DOI 10.1111/1365-2656.12417: experimental host-stage and temperature shifts affected larval performance, while the reported binary mature-seedpod-outgrowth GLM selected host species identity. The outgrowth GLM was fit to initial hosts replaced by a second host plant, not to every original host. It does not count all viable seeds and it does not compare stage-specific versus calendar/adult-only models on untouched observations.
+- **Valdés & Ehrlén 2021**, DOI 10.1002/ecy.3466: in a 21-year *Lathyrus* series, variation in the flowering–seed-predation covariance did not significantly moderate flowering-time selection (estimate -0.033, 95% CI -0.101 to 0.037). There is no measured delayed consumer-stage predictor or paired M2/M4/M5 predictive comparison, and a non-significant coefficient is not evidence of equivalence.
+
+The registry therefore records both as `boundary_null` with `paired_simpler_vs_stage_comparison=no`. Only comparisons explicitly registered as `paired_model_null` or `paired_realized_positive` may enter paired model counts. The latter may remain retrospective, so paired does not mean confirmatory.
+
 ## Mandatory falsification comparators
 
 For a newly recovered source with genuinely pre-outcome observations and a common biological unit, predeclare:

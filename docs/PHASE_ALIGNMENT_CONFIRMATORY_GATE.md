@@ -8,7 +8,7 @@ _Generated from data/registry/phase_alignment_candidates.csv; do not edit counts
 - Dependence clusters: **14**
 - Confirmatory-ready positive or null comparisons: **0**
 - Near-confirmatory blocked routes: **2**
-- Registered direct null/boundary comparisons: **2**
+- Biological endpoint nulls (not paired predictive tests): **2**
 - Positive paired realized comparisons (non-confirmatory): **1**
 - Independent adult × host timing gains over host calendar alone (not effective-stage tests): **1**
 
@@ -18,19 +18,20 @@ A programme is confirmatory_ready only when it has source-backed raw/adult timin
 
 - Final plant endpoint present: **12 / 14**
 - Phase/alignment varies: **13 / 14**
-- Paired simpler-vs-stage comparison available: **3 / 14**
+- Paired simpler-vs-stage comparison available: **1 / 14**
 - Paired comparison explicitly blocked by one recoverable object: **2 / 14**
 
 ## Paired predictive stress test
 
-- Paired simpler-vs-stage comparisons that reach final plant fitness: **3**
+- Paired simpler-vs-stage comparisons that reach final plant fitness: **1**
 - Positive stage-specific gain, non-confirmatory: **1**
-- Direct null/boundary comparisons: **2**
+- Paired model nulls (different from biological endpoint nulls): **0**
 
-Current positive IDs: PHA_PARKINSONIA.
-Current null IDs: PHA_POSLEDOVICH2015, PHA_LATHYRUS_LONGTERM.
+Current paired positive IDs: PHA_PARKINSONIA.
+Current paired model null IDs: none.
+Separate biological endpoint null IDs: PHA_POSLEDOVICH2015, PHA_LATHYRUS_LONGTERM.
 
-This is the strongest current stress test of the predictive claim. A mechanistically richer stage coordinate does **not** automatically improve final-fitness prediction: Parkinsonia is positive, whereas Posledovich and long-term Lathyrus are retained nulls.
+Only Parkinsonia supplies a source-level paired stage/filter model diagnostic, and it is retrospective rather than confirmatory. Posledovich and long-term Lathyrus are independent biological endpoint/pathway boundaries, not failed M5-vs-M2/M4 predictive model comparisons.
 
 ## Candidate states
 
@@ -38,8 +39,8 @@ This is the strongest current stress test of the predictive claim. A mechanistic
 |---|---|---|---|---|---|---|---|---|---|
 | PHA_IWE032 | antagonist | blocked | yes | yes | yes | yes | blocked | near_confirmatory | numeric 2012-2014 female flight timing |
 | PHA_KULA2012 | mixed_pollinating_seed_predator | partial | yes | yes | yes | no | partial | mechanism_only | final post-cost plant reproduction absent in Chapter 3 |
-| PHA_POSLEDOVICH2015 | antagonist | yes | yes | yes | yes | yes | yes | boundary_null | none; retained as null |
-| PHA_LATHYRUS_LONGTERM | antagonist | partial | no | yes | yes | yes | yes | boundary_null | delayed consumer-stage timing not measured as a phase coordinate |
+| PHA_POSLEDOVICH2015 | antagonist | yes | yes | yes | yes | yes | no | boundary_null | no paired simpler-vs-stage prediction comparison; final response is mature-seedpod escape not viable-seed count |
+| PHA_LATHYRUS_LONGTERM | antagonist | partial | no | yes | yes | yes | no | boundary_null | no measured delayed consumer-stage timing or paired simpler-vs-stage predictive comparison |
 | PHA_PARKINSONIA | antagonist | partial | partial | partial | yes | yes | yes | paired_realized_positive | realized oviposition rather than independent adult timing; pre-final filter is parasitism/hatch rather than a host-specific phase coordinate |
 | PHA_DIANTHUS | mixed_pollinating_seed_predator | no | partial | partial | yes | yes | no | final_landscape_no_alignment | independent adult timing and explicit delayed-stage coordinate absent |
 | PHA_GLOCHIDION | mixed_pollinating_seed_predator | yes | yes | yes | no | yes | no | stage_structure | phase lag does not vary as a tested predictor |
@@ -63,6 +64,6 @@ Aucuba-Asphondylia adds a strong experimental host-window-to-final-fate test: ad
 
 Riemer 2024 adds a distinct field-scale adult-host positive: 88 pea fields with independently measured first male moth arrival and host flowering show a lower final damaged-seed LOOCV RMSE for a moth-by-flowering model (7.36 percentage points) than for a flowering-only model (9.20). This is field-wise leave-one-out across four years, not leave-one-year-out; no adult-only or consumer-stage/filter comparator is fitted. Accordingly it does not increment the confirmatory-ready or paired effective-stage counts.
 
-The registry also retains complete nulls. Posledovich 2015 shows that manipulated stage matching and temperature alter herbivore performance without altering the mature-seedpod escape endpoint beyond host-species effects. The long-term Lathyrus programme shows that climate-driven changes in phenology–seed-predation covariance do not explain flowering-time selection on intact-seed fitness.
+The registry separately retains two biological boundaries. Posledovich 2015 reports host-species-only effects on mature-seedpod escape among analyzed transferred hosts despite host-stage effects on larval performance; it did not compare predictive timing models or measure all-plant viable seed number. In the 21-year Lathyrus study, variation in flowering-date–seed-predation covariance did not significantly explain variation in flowering-time selection; non-significance does not establish an exactly zero pathway. Neither study is a paired-model predictive null.
 
 Accordingly, stage-specific timing now has a positive paired realized comparison as well as final-seed-loss examples, but **predictive superiority over simpler adult/calendar timing under the full confirmatory contract remains open**.
