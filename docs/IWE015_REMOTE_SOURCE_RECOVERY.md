@@ -26,29 +26,52 @@ public. It documents an ORCID-based account/API credential setup
 That is a plausible explanation of 401, not proof the particular dataset
 requires authentication for every legitimate client.
 
-The new procedure separates (a) PR-level *offline unit tests* and (b) a
-**manual, strict** remote download, so the absence of data cannot masquerade
-as a passed retrieval. A user may create a personal Dryad API token and set
-it as the GitHub Actions repository secret `DRYAD_ACCESS_TOKEN` using GitHub
-Settings → Secrets and variables → Actions. **Never paste the token into a
-GitHub PR, issue, commit, action log, or ChatGPT conversation.** The manual
-`IWE015 public Dryad archive access audit` workflow reads that secret
-through the environment; if no token is configured, the download is
-attempted anonymously and must report **blocked** upon a 401/403.
+The retrieval implementation now provides **two distinct public retrieval
+methods**, without changing the published source identity:
 
-The bounded script may also be used locally with a private environment
-variable:
+1. The six pinned individual files under `/api/v2/files/{file_id}/download`
+   and `/downloads/file_stream/{file_id}`, which yielded 0/6 anonymously.
+2. A **new independent one-time archive route**, the officially documented
+   whole-dataset ZIP API:
+   `https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.6q573n5w1/download`.
+   Run `python -m scripts.probe_iwe015_dataset_zip --output-dir /tmp/iwe015-archive --strict`.
+   Only the six exactly pinned source basenames are accepted from the ZIP;
+   unknown entries are never written, duplicate paths or an invalid ZIP
+   fail closed, and neither final-fitness lineage nor variance is inferred
+   from successful retrieval. On opening the archive-fallback PR, CI tries
+   this public endpoint once without credentials and writes an access
+   manifest; *workflow success* is never evidence that download succeeded.
 
-`python scripts/recover_iwe015_dryad.py --output-dir /tmp/iwe015-dryad --strict`
+For repeatable **manual** authenticated access, Dryad documents that its
+OAuth **access tokens expire after about ten hours**. Do not store an
+unrenewed access token as a durable secret and assume it will continue to
+work. Instead, a user with API-account permission may create two GitHub
+Actions repository secrets, `DRYAD_CLIENT_ID` and `DRYAD_CLIENT_SECRET`
+(Settings → Secrets and variables → Actions). Both manual workflows perform
+the documented client-credentials exchange at
+`https://datadryad.org/oauth/token` to obtain a fresh short-lived bearer.
+A manually supplied `DRYAD_ACCESS_TOKEN` remains an opt-in fallback if
+client credentials are not configured.
 
-It attempts only the four female cohort CSVs, `data_analysis.R`, and
-`README.txt` for their pinned Dryad file IDs. Redirects to non-Dryad
-storage hosts strip the bearer header. The `manifest.json` stores only
-a boolean `bearer_auth_configured`, source URL, status, file SHA256 and
-header/row information, **never** the token itself. Raw bytes, if genuinely
-downloaded, remain unreviewed and are uploaded to a seven-day GitHub artifact.
+**Never paste any token or OAuth client secret into this chat, a PR, issue,
+commit, or log.** The scripts do not log the secret, and their redirect
+handler strips Authorization when a Dryad URL redirects to an external
+storage domain. Credentials are only made available to the *manual*
+`workflow_dispatch` download steps, not PR-triggered public probes.
+A failed OAuth exchange is recorded as `blocked` with no effects promoted.
 
-The repo's strict-H1 extraction and all effect sizes remain unchanged.
+The individual-file script is:
+`python scripts/recover_iwe015_dryad.py --output-dir /tmp/iwe015-dryad --strict`.
+The whole-dataset ZIP script is:
+`python -m scripts.probe_iwe015_dataset_zip --output-dir /tmp/iwe015-archive --strict`.
+
+Both programs use a size-bounded, source-checked `manifest.json`
+(or `archive_manifest.json`) and retain any obtained files only under
+`source_files/`. Files recovered in a manual run remain **unreviewed**,
+with seven-day GitHub Actions artifact retention.
+
+The strict-H1 extraction, effect sizes, and all IWE015 eligibility gates
+remain unchanged.
 
 ## Conditions for real source reanalysis
 
