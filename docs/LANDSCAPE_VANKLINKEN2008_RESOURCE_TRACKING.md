@@ -57,6 +57,8 @@ A third coordinate applies only pre-final biological filters measured in that sa
 
 `filtered stage exposure = stage-matched egg density × (1 - egg parasitism) × egg hatch`.
 
+**Measurement-time caveat:** in Table 5, these egg states and final seed predation are obtained from dissection of the same late-collected pod samples. The parasitism/hatch process is biologically upstream but the *data used to compute its rate are contemporaneous with observed seed fate*. Consequently all region-held-out errors below are **retrospective conditional associations**, not forecasts from independently measured early exposure.
+
 No final seed-predation value enters this coordinate.
 
 The resulting descriptive performance is:
@@ -77,7 +79,7 @@ It is deliberately not called confirmatory for three reasons:
 2. the exposure is realized oviposition on seeds, not an independently measured adult-flight or adult-abundance window;
 3. the strongest coordinate incorporates egg parasitism and hatch, which are mechanistically close to seed consumption and are not a host-specific developmental filter.
 
-The diagnostic is therefore registered as `paired_realized_positive`, not `confirmatory_ready`.
+The diagnostic remains registered as `paired_realized_positive` only as a **retrospective paired-source diagnostic**, not `confirmatory_ready`. It **does not meet a prospective prediction/early-warning interpretation** because egg parasitism, hatch and seed fate were assessed on the same late pod collection.
 
 The reconstruction is executable in
 `scripts/build_vanklinken2008_paired_stage_diagnostic.py`,
