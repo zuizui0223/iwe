@@ -6,11 +6,12 @@ from pathlib import Path
 SOURCE = "data/source_reconstructions/slimon2026_original_focal_stage_observations.csv"
 
 
-def test_2022_source_adult_counts_are_sparse_direct_focal_host_detections():
+def test_exp1_source_adult_counts_are_sparse_direct_focal_host_detections():
     rows = pd.read_csv(SOURCE)
     adult = rows.loc[rows.source_component.eq("focal_host_adult_schinia")]
     assert len(adult) == 6
-    assert (adult.experimental_year == 2022).all()
+    assert (adult.experiment == "exp1").all()
+    assert set(adult.flowering_calendar_year) == {2023}
     assert adult.sum_reported_events.sum() == 18
     assert adult.positive_rows.sum() == 12  # repeat appearances across dates
     assert set(adult.nonmissing_numeric_observations) == {169}
@@ -20,10 +21,11 @@ def test_2022_source_adult_counts_are_sparse_direct_focal_host_detections():
     }
 
 
-def test_2023_has_larval_only_window_and_no_fake_adult_or_seed_finality():
+def test_exp2_has_larval_only_window_and_no_fake_adult_or_seed_finality():
     rows = pd.read_csv(SOURCE)
-    exp2 = rows.loc[rows.experimental_year.eq(2023)]
+    exp2 = rows.loc[rows.experiment.eq("exp2")]
     assert len(exp2) == 1
+    assert exp2.iloc[0].flowering_calendar_year == 2023
     assert exp2.iloc[0].source_component == "focal_host_larval_schinia_only"
     assert exp2.iloc[0].distinct_plant_ids == 123
     assert exp2.iloc[0].source_rows == 951
