@@ -67,7 +67,7 @@ The resulting descriptive performance is:
 | Stage-matched egg density | **0.596** | 0.571 | **19.93** | 16.10 |
 | Filtered stage exposure | **0.938** | 0.929 | **4.92** | 4.78 |
 
-Thus, in this small matched set, moving from an annual exposure average toward a stage-matched and biologically filtered exposure substantially improves association and **leave-one-region-out** prediction of final seed predation. Region blocking is required because VRD, Barkly and Central Queensland each contribute two seasons; row-wise leave-one-out would leak the same region into training and test sets.
+The three source-defined comparisons above show a large apparent gain after adding egg parasitism and hatch. An additional **post-outcome, non-confirmatory ablation** (all ten single-variable candidates retained in the companion file) shows a sharper limitation: **joint nonparasitized × hatch fraction alone**, *without either egg-density or timing term*, obtains leave-one-region-out RMSE **4.11 pp**, slightly lower than **4.92 pp** for stage-matched egg density multiplied by the same survival fraction. Stage matching alone improves 20.58 to only 19.93 pp. Consequently, these data **do not isolate incremental predictive value of stage alignment once downstream survival is known**. The dominant measured contrast is survival/conversion eligibility, and even that result needs independent validation. Region blocking is required because VRD, Barkly and Central Queensland each contribute two seasons; row-wise leave-one-out would leak the same region into training and test sets.
 
 This is the first independent IWE programme with an explicit **simpler-coordinate versus stage/filter-coordinate diagnostic** pointing in the predicted direction.
 
