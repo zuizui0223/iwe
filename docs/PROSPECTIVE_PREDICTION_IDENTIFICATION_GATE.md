@@ -75,6 +75,7 @@ one exchangeable estimate:
 | Study | Actual intervention or comparison | Permissible identification |
 |---|---|---|
 | Rheum–Bradysia 2016 | Natural egg receipt vs non-receipt; pollen source separately randomized | Correlation and physiological association, not causal host manipulation |
+| Ipomopsis–Hylemya (Brody & Morita 2000) | **No-choice female caging** vs bagged controls; female choice restricted experimentally | Supports a female-exposure component beyond unrestricted site selection, but pure egg deposition vs handling/contact unresolved and final post-cost intact seeds unavailable |
 | Lathyrus–Bruchus 2007 | Observed targeted eggs vs modelled random placement | Behavioral targeting associated with a host retention filter, not a randomized targeting fitness contrast |
 | Glochidion–Epicephala 2010 | Egg-load/ovule-damage associations vs **modelled random flower abortion** | Estimated **+16% seeds** from selective abortion and up to **62%** consumer fitness loss; **not** a randomized host abortion treatment, with no adult phenology contrast |
 | Berberis–Rhagoletis 2014 | Observed puncture and seed/sibling state vs fitted random-abortion models | Conditional retained-fruit seed abortion, not plant net-fitness gain |
