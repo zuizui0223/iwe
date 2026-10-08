@@ -8,6 +8,8 @@ import pandas as pd
 from .effects import hedges_g_from_summary
 
 
+SOURCE_SUCCESSFUL_FRUITS_COL = "ft"
+
 PUBLISHED_IWE015 = {
     "2012_early": {
         "year": 2012,
@@ -125,10 +127,82 @@ def bounded_dispersion_check(
     }
 
 
+
+def combined_sd_from_group_summaries(
+    summaries: list[tuple[int, float, float]] | tuple[tuple[int, float, float], ...]
+) -> tuple[float, float]:
+    """Return the combined mean and sample SD from group n, mean and SD summaries."""
+    if not summaries:
+        raise ValueError("at least one group summary is required")
+    if any(int(n) < 2 for n, _, _ in summaries):
+        raise ValueError("each group must have n >= 2")
+    if any(float(sd) < 0 for _, _, sd in summaries):
+        raise ValueError("group SD must be non-negative")
+
+    total_n = sum(int(n) for n, _, _ in summaries)
+    grand_mean = sum(int(n) * float(mean) for n, mean, _ in summaries) / total_n
+    ss = sum(
+        (int(n) - 1) * float(sd) ** 2
+        + int(n) * (float(mean) - grand_mean) ** 2
+        for n, mean, sd in summaries
+    )
+    return float(grand_mean), math.sqrt(ss / (total_n - 1))
+
+
+def published_table_internal_consistency() -> pd.DataFrame:
+    """Diagnose whether printed group dispersions behave like SDs across Table 1.
+
+    This does not promote any IWE015 effect. It checks whether treating the four
+    printed group dispersions as SDs reconstructs the table's printed overall
+    dispersion for variables whose group n is the reported adult-plant n.
+    """
+    specs = {
+        "fruit_initiation": (
+            "fruit_initiation_mean",
+            "fruit_initiation_dispersion",
+            0.92,
+            0.15,
+        ),
+        "predation_rate": (
+            "predation_rate_mean",
+            "predation_rate_dispersion",
+            0.34,
+            0.35,
+        ),
+        "successful_fruits": (
+            "successful_fruits_mean",
+            "successful_fruits_dispersion",
+            6.36,
+            6.34,
+        ),
+    }
+    rows: list[dict[str, object]] = []
+    for component, (mean_key, dispersion_key, overall_mean, overall_dispersion) in specs.items():
+        groups = [
+            (
+                int(PUBLISHED_IWE015[key]["n"]),
+                float(PUBLISHED_IWE015[key][mean_key]),
+                float(PUBLISHED_IWE015[key][dispersion_key]),
+            )
+            for key in PUBLISHED_IWE015
+        ]
+        reconstructed_mean, reconstructed_sd = combined_sd_from_group_summaries(groups)
+        rows.append(
+            {
+                "component": component,
+                "printed_overall_mean": overall_mean,
+                "reconstructed_mean_if_group_n_complete": reconstructed_mean,
+                "printed_overall_dispersion": overall_dispersion,
+                "reconstructed_overall_sd_if_group_dispersion_is_sd": reconstructed_sd,
+                "overall_sd_difference": reconstructed_sd - overall_dispersion,
+            }
+        )
+    return pd.DataFrame(rows)
+
 def audit_iwe015_group(
     df: pd.DataFrame,
     group: str,
-    successful_fruits_col: str,
+    successful_fruits_col: str = SOURCE_SUCCESSFUL_FRUITS_COL,
     fruit_initiation_col: str | None = None,
     predation_rate_col: str | None = None,
     rounding_tolerance: float = 0.0051,
