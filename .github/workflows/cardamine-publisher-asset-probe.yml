@@ -2,7 +2,7 @@ name: Cardamine publisher source-timing asset audit
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     paths:
       - scripts/probe_cardamine_public_timing_assets.py
       - tests/test_cardamine_public_timing_asset_probe.py
@@ -23,7 +23,7 @@ jobs:
         run: |
           python -m pip install -e '.[dev]'
           python -m pytest -q tests/test_cardamine_public_timing_asset_probe.py
-      - name: Download only four source-linked official publisher assets
+      - name: Download four source-linked official publisher assets (non-promoting)
         run: >-
           python -m scripts.probe_cardamine_public_timing_assets
           --outdir /tmp/cardamine-publisher-asset-probe
