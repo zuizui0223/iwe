@@ -34,7 +34,7 @@ def test_experimental_timing_and_cue_controls_are_not_merged_with_observations()
     assert set(df.index) == {
         "SONG2016_RHEUM", "OSTERGARD2007_LATHYRUS",
         "MEYER2014_BERBERIS", "JADEJA2017_YUCCA",
-        "IMAI2006_AUCUBA"
+        "IMAI2006_AUCUBA", "GOTO2010_GLOCHIDION"
     }
     assert df.loc["SONG2016_RHEUM", "independent_randomized_exposure"] == (
         "pollen_source_only"
@@ -50,7 +50,7 @@ def test_experimental_timing_and_cue_controls_are_not_merged_with_observations()
 
 def test_true_plant_fitness_not_automatically_obtained_from_retained_fruits():
     df = pd.read_csv(MATRIX)
-    assert len(df) == 5
+    assert len(df) == 6
     assert df.loc[
         df["programme"] == "SONG2016_RHEUM",
         "final_intact_seed_by_exposure_available",
@@ -92,3 +92,21 @@ def test_same_observed_egg_retention_table_can_be_generated_by_two_causal_models
         assert abs(selection_only[event] - target) < 1e-12
     # This is a possible-model proof that observational significance
     # cannot distinguish egg-induced retention from preferential egg choice.
+
+
+def test_glochidion_modelled_counterfactual_is_not_randomized_seed_fitness():
+    source = pd.read_csv(
+        "data/source_reconstructions/goto2010_glochidion_abortions_costs.csv"
+    ).iloc[0]
+    assert source["modelled_seed_production_gain_pct"] == 16
+    assert source["max_reported_moth_fitness_loss_pct"] == 62
+    assert source["plant_counterfactual_comparator"] == (
+        "modelled_random_flower_abortion"
+    )
+    assert source["adult_phenology_timing_contrast"] == "no"
+    assert source["raw_same_unit_plant_fitness_available"] == "no"
+    benchmark = pd.read_csv(MATRIX).set_index("programme")
+    assert benchmark.loc["GOTO2010_GLOCHIDION",
+                         "independent_randomized_exposure"] == "no"
+    assert benchmark.loc["GOTO2010_GLOCHIDION",
+                         "strict_h1_eligible_from_this_source"] == "no"
