@@ -135,3 +135,45 @@ def test_recovery_requires_an_explicit_sample_membership_reconciliation():
     reported_residual_df = 224
     reported_model_df = 3
     assert reported_residual_df + reported_model_df + 1 == 228
+
+
+def test_table1_overall_mean_cannot_be_group_weighted_at_reported_sample_sizes():
+    groups = _table()
+    overall = pd.read_csv(
+        "data/source_reconstructions/iwe015_table1_reported_overall.csv"
+    ).iloc[0]
+    n = int(groups["adult_plants"].sum())
+    assert n == int(overall["adult_plants"]) == 227
+    expected_mean = (
+        (groups["adult_plants"] * groups["successful_fruits_mean"]).sum() / n
+    )
+    # All four reported means and the overall number use two decimals.
+    # Even the most favorable rounding can shift either by at most 0.005.
+    assert round(expected_mean, 4) == 6.1413
+    assert overall["successful_fruits_mean"] == 6.36
+    assert abs(expected_mean - overall["successful_fruits_mean"]) > 2 * 0.005
+    # Does not prove the source's underlying rows are erroneous; the same
+    # biological units and missing-data conventions may not have been used.
+
+
+def test_group_implied_successful_fruits_exceed_tagged_flower_inventory():
+    groups = _table()
+    floral = pd.read_csv(
+        "data/source_reconstructions/iwe015_labelled_flower_denominator_audit.csv"
+    )
+    merged = groups.merge(
+        floral[["year", "period", "source_reported_measured_flowers"]],
+        on=["year", "period"], validate="one_to_one"
+    )
+    inferred_successes = (
+        merged["adult_plants"] * merged["successful_fruits_mean"]
+    ).sum()
+    measured = merged["source_reported_measured_flowers"].sum()
+    assert measured == 1094
+    assert inferred_successes > 1393
+    assert inferred_successes > measured + 0.005 * len(merged) * 60
+    # No one-week tagged flower can produce more than one mature fruit.
+    # Therefore these two published totals cannot describe *identical*
+    # labelled reproductive units, absent an undisclosed definition shift.
+    # The raw plant/flower join remains unresolved; no final-flower
+    # conversion denominator or timing SMD is reconstructed.
