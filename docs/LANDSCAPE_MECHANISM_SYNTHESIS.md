@@ -83,6 +83,8 @@ Individual plant flowering was combined with the seasonal oviposition curve to c
 
 The phase relationship changed sharply. First flowering and first egg preceded first larval observation by only **10 and 5 days** in 2008, compared with **17 and 15 days** in 2009. Fruit maturation was also faster in 2009 (**16.7 ± 0.40 d** versus **21.3 ± 0.28 d**).
 
+However, first larval **observation is not feeding onset**: plants were checked every 2–4 days and larvae were usually first noticed once mobile among flowers at ~10–15 mm. The descriptive flower-to-detected-larva minus mean collection interval is −11.3 days in 2008 and +0.3 days in 2009; the latter overlaps zero under even a maturation-only ±2SE check (−0.50 to +1.10 days). The stage-lag mechanism remains plausible, but no safe maturation threshold is demonstrated.
+
 Thus plants highly synchronized with adult oviposition in 2009 could mature and harden fruits before large larvae became abundant. The adult/oviposition window and the damaging larval window are therefore temporally distinct biological objects.
 
 Conceptually:
