@@ -41,9 +41,9 @@ This is a deliberately small re-audit of already-screened IWE programmes. It is 
 | realized_window_evidence | 6 |
 | reextract_directional | 1 |
 | selection_shift_evidence | 1 |
-| terminal_damage_evidence | 1 |
 | stage_structure_evidence | 5 |
 | strong_candidate | 6 |
+| terminal_damage_evidence | 1 |
 
 ## High-provenance anchors
 
