@@ -10,14 +10,14 @@ def _plants():
         {"year": 2012, "ecotype": "late", "plant_id": "E", "doy": 100, "flowers": 2, "final_ru": 99},
         {"year": 2012, "ecotype": "late", "plant_id": "B", "doy": 112, "flowers": 1, "final_ru": 99},
         {"year": 2012, "ecotype": "late", "plant_id": "C", "doy": 119, "flowers": 3, "final_ru": 99},
-        {"year": 2012, "ecotype": "late", "plant_id": "L", "doy": 138, "flowers": 2, "final_ru": 99},
+        {"year": 2012, "ecotype": "late", "plant_id": "L", "doy": 135, "flowers": 2, "final_ru": 99},
     ])
 
 
 def _adults():
     return pd.DataFrame({
         "year": [2012] * 11,
-        "event_doy": [100, 110, 115, 118, 120, 125, 127, 130, 133, 140, 150],
+        "event_doy": [100, 110, 112, 114, 116, 118, 120, 122, 125, 130, 150],
     })
 
 
@@ -46,7 +46,7 @@ def test_source_original_bounds_separate_certified_from_boundary_sensitive():
     # Original bounds cannot start after first observed flowering.
     with pytest.raises(ValueError, match="exceeds"):
         audit_cardamine_onset_intervals(_plants(), _adults(), bounds)
-    bounds.loc[bounds["plant_id"].eq("L"), "earliest_possible_doy"] = 136
+    bounds.loc[bounds["plant_id"].eq("L"), "earliest_possible_doy"] = 132
     out = audit_cardamine_onset_intervals(_plants(), _adults(), bounds).set_index("plant_id")
     assert out.loc["B", "source_identified_group"] == "boundary_sensitive"
     assert out.loc["C", "source_identified_group"] == "core_flight"
