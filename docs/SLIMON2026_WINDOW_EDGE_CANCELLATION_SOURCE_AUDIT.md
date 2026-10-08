@@ -46,6 +46,18 @@ are made on focal host plants, conditional on available/visited
 flowers. Their coverage is limited to six dates and cannot be
 extrapolated to unobserved later months as zero moth activity.
 
+**Species-identity gate:** The archive also contains
+`momphaCALC_exp1.csv`, `momphaCALC_exp2.csv`, and
+`fflr_overlap_ex1.csv` / `fflr_overlap_ex2.csv`, whose original
+README defines the latter as **flower–Mompha overlap** rather than
+adult *Schinia* overlap. This is not the same interacting
+seed-predator species as the directly counted adult *Schinia florida*.
+Adult *Schinia* detections must **not** be used as a substitute
+independent partner window for *Mompha stellella* seed predation.
+The source archive's *Mompha* observations are counts of realized
+host-associated stages, not a separately validated adult
+availability curve.
+
 The original 2022 `main_exp1.csv`, `df2_exp1F.csv`,
 and `fitness_exp1.csv` share 153 original plant IDs (157 host
 IDs, 169 *Schinia* observation IDs and 165 fruit-sheet IDs).
@@ -93,6 +105,10 @@ Hedges-g contract.
   independent seasonal availability curve**.
 - Dated adult *Schinia* observations in 2023 source stage table:
   **no; larvae only**.
+- Source-derived *Mompha* flowering overlap:
+  **realized host-stage overlap**, not recovered independent adult
+  *Mompha* flight or trapping. Species substitution from
+  *Schinia* adult detections is forbidden.
 - Correct-unit observed post-larval intact seed numbers:
   **not verified**; native seed fitness constructed from fruit
   counts and source damage coefficients.
