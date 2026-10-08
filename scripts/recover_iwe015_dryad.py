@@ -17,6 +17,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 import urllib.error
 import urllib.request
+from urllib.parse import urlencode
 
 DOI = "10.5061/dryad.6q573n5w1"
 SOURCE_FILES = {
@@ -57,6 +58,49 @@ def source_headers(token: str | None = None) -> dict[str, str]:
     if token:
         headers["Authorization"] = f"Bearer {token}"
     return headers
+
+def resolve_bearer_from_environment(timeout: float = 15) -> str | None:
+    """Obtain a fresh 10-hour Dryad bearer with secret client credentials.
+
+    Dryad issues short-lived OAuth access tokens. Store API client ID/secret
+    in repository secrets, not an expiring access token, for repeatable manual
+    runs. A manually supplied DRYAD_ACCESS_TOKEN remains a fallback.
+    All errors redact credentials and raw HTTP responses.
+    """
+    client_id = os.environ.get("DRYAD_CLIENT_ID", "").strip()
+    client_secret = os.environ.get("DRYAD_CLIENT_SECRET", "").strip()
+    if client_id or client_secret:
+        if not (client_id and client_secret):
+            raise ValueError("Dryad OAuth client credentials incomplete")
+        data = urlencode({
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "grant_type": "client_credentials",
+        }).encode("utf-8")
+        request = urllib.request.Request(
+            "https://datadryad.org/oauth/token",
+            data=data,
+            headers={"Content-Type":
+                     "application/x-www-form-urlencoded;charset=UTF-8"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                payload = response.read(10_001)
+            if len(payload) > 10_000:
+                raise ValueError("Dryad OAuth response unexpectedly long")
+            token = json.loads(payload.decode("utf-8")).get("access_token")
+            if not isinstance(token, str) or not token:
+                raise ValueError("Dryad OAuth returned no access token")
+            return token
+        except urllib.error.HTTPError as exc:
+            raise ValueError(f"Dryad OAuth HTTP {exc.code}") from None
+        except (urllib.error.URLError, TimeoutError, OSError):
+            raise ValueError("Dryad OAuth network unavailable") from None
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            raise ValueError("Dryad OAuth response invalid") from None
+    return os.environ.get("DRYAD_ACCESS_TOKEN", "").strip() or None
+
 
 def inspect_payload(filename: str, payload: bytes) -> dict[str, object]:
     """Reject blocked/error pages and validate file contents before archiving."""
@@ -158,9 +202,25 @@ def main() -> int:
     args = parser.parse_args()
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
-    # Configure only through a secret environment variable. Never accept or
-    # print tokens on the CLI, in tracebacks, or in manifest fields.
-    token = os.environ.get("DRYAD_ACCESS_TOKEN", "").strip() or None
+    # Accept only environment secrets; never accept credentials in CLI args.
+    # An incomplete/expired OAuth exchange fails closed to a manifest.
+    try:
+        token = resolve_bearer_from_environment(timeout=args.timeout)
+    except ValueError as exc:
+        args.output_dir.mkdir(parents=True, exist_ok=True)
+        blocked = {
+            "schema": "iwe015_source_download_probe_v1",
+            "doi": DOI, "files_expected": len(SOURCE_FILES),
+            "files_downloaded": 0, "status": "blocked",
+            "oauth_error": str(exc),
+            "evidence_promoted": False,
+            "table1_dispersion_verified": False,
+        }
+        (args.output_dir / "manifest.json").write_text(
+            json.dumps(blocked, indent=2) + "\n", encoding="utf-8"
+        )
+        print(f"Dryad OAuth unavailable: {exc}. No source effects promoted.")
+        return 2 if args.strict else 0
     manifest = run(args.output_dir, timeout=args.timeout, token=token)
     print(f"IWE015 pinned public source status: {manifest['status']}, "
           f"{manifest['files_downloaded']}/{manifest['files_expected']} files.")
