@@ -119,9 +119,20 @@ def archive_inventory(raw: bytes) -> list[dict]:
             if record["ext"] in {".csv", ".tsv"} and member.file_size < 3_000_000:
                 content = zf.read(member).decode("utf-8-sig", errors="replace")
                 sep = "\t" if record["ext"] == ".tsv" else ","
-                reader = csv.reader(StringIO(content), delimiter=sep)
-                record["headers"] = next(reader, [])[:120]
-                record["rows"] = sum(1 for _ in reader)
+                try:
+                    reader = csv.reader(StringIO(content, newline=""),
+                                        delimiter=sep)
+                    record["headers"] = next(reader, [])[:120]
+                    record["rows"] = sum(1 for _ in reader)
+                except csv.Error:
+                    # A source file with mixed delimiters or broken quoting
+                    # is NOT a tabular row set. Inspect only its first
+                    # physical line and never invent a valid data-row count.
+                    record["headers"] = next(csv.reader(
+                        [content.splitlines()[0]], delimiter=sep
+                    ), [])[:120] if content.splitlines() else []
+                    record["rows"] = None
+                    record["parse_warning"] = "source_csv_not_parseable_as_rows"
             elif record["ext"] in {".r", ".rmd"}:
                 script = zf.read(member).decode("utf-8-sig", errors="replace")
                 record["candidate_timing_lines"] = contexts(script, 12)
