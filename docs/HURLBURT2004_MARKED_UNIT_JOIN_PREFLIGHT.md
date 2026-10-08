@@ -53,7 +53,7 @@ The COSEWIC 2013 Table 1 yearly summaries illustrate why direct moth
 detection **per fresh flower** should not automatically be interpreted
 as realized pollination service or timing alignment. At Onefour:
 
-| Year | Adult moths per inspected flower | Fruit per flowering clone |
+| Year | Moths / flower (source index) | Fruits / clone (source index) |
 |---|---:|---:|
 | 1999 | 0.456 ± 0.259 | 4.537 ± 0.328 |
 | 2000 | 0.563 ± 0.259 | 0.354 ± 0.172 |
