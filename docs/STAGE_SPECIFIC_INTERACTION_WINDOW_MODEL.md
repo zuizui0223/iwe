@@ -31,7 +31,7 @@ B_i = integral P_i(t) A(t) dt.
 
 For a mixed interaction, let O(t) denote oviposition/exposure, K(l) the distribution of delays from exposure to damaging consumer activity, S_i(s,l) the probability that an exposure survives non-host conversion filters to become a damaging consumer (for example egg hatch or parasitoid escape), and H_i(t | history) the host retention/vulnerability state at the later time.
 
-The explicit dependence on interaction history matters because the host filter can itself be altered by the interaction. Rheum-Bradysia provides the motivating case: oviposition changes IAA dynamics and lowers fruit abortion before larvae hatch.
+The explicit dependence on interaction history is a **causal possibility**, not automatically an observed effect. Rheum-Bradysia offers source-observed natural egg receipt associated with lower abortion and higher pre-hatch IAA, but egg receipt was not randomised. The partner may manipulate host fate **or** females may choose flowers that were intrinsically more likely to be retained.
 
 Let Q_i(s) describe consumer targeting of reproductive units at exposure time. This is needed because consumers can preferentially select units likely to survive a later host filter, as in Lathyrus-Bruchus.
 
@@ -109,16 +109,16 @@ Senita cactus shows that alternative pollinators can be present in the community
 
 Thus mismatch buffering should be modeled against R_eff(t), not species richness.
 
-### P6 — host filtering is endogenous to the interaction
+### P6 — host filtering may be endogenous, but host selection can mimic manipulation
 
 A developmental filter is not necessarily a fixed plant property.
 
 Two opposite feedbacks are already present in the corpus:
 
 - *Lathyrus–Bruchus*: the seed predator uses phenology/position and other cues to target fruits with lower future abortion probability, partly bypassing the host filter;
-- *Rheum–Bradysia*: oviposition strongly reduces fruit abortion and changes IAA dynamics before larvae hatch, consistent with partner-induced modification of the host filter.
+- *Rheum–Bradysia*: naturally oviposited flowers have substantially lower abortion and higher IAA before larvae hatch, but the study did **not** randomise female oviposition; a host-quality selection mechanism remains observationally compatible. The paper's separate randomisation concerns pollen treatment, not egg placement.
 
-Therefore host retention/vulnerability should be represented as conditional on interaction history, not only on calendar time or plant stage.
+Therefore host retention/vulnerability should be **modelled as potentially conditional on interaction history**, while causal statements about host manipulation remain held until egg/wounding treatments are assigned independently of host quality. A fixed host filter, consumer choice based on unobserved host quality, and egg-induced host modification are distinct possible data-generating processes.
 
 ### P6b — the sign of reproductive filtering depends on protectable value and enemy information
 
