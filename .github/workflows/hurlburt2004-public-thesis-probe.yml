@@ -42,7 +42,9 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: hurlburt2004-thesis-source-unreviewed
-          path: /tmp/hurlburt2004-public-thesis-source/
+          name: hurlburt2004-source-access-manifests-only
+          path: |
+            /tmp/hurlburt2004-public-thesis-source/manifest.json
+            /tmp/hurlburt2004-public-thesis-source/page_review_leads.json
           if-no-files-found: warn
           retention-days: 7
