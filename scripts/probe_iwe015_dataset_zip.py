@@ -23,7 +23,8 @@ import urllib.request
 import zipfile
 
 from scripts.recover_iwe015_dryad import (
-    DOI, SOURCE_FILES, ScopeBearerRedirect, inspect_payload, source_headers
+    DOI, SOURCE_FILES, ScopeBearerRedirect, inspect_payload, source_headers,
+    resolve_bearer_from_environment,
 )
 
 MAX_ARCHIVE_BYTES = 75_000_000
@@ -141,7 +142,22 @@ def main() -> int:
     args = parser.parse_args()
     if args.timeout <= 0:
         parser.error("--timeout must be positive")
-    token = os.environ.get("DRYAD_ACCESS_TOKEN", "").strip() or None
+    try:
+        token = resolve_bearer_from_environment(timeout=args.timeout)
+    except ValueError as exc:
+        args.output_dir.mkdir(parents=True, exist_ok=True)
+        result = {
+            "schema": "iwe015_full_dryad_dataset_archive_probe_v1",
+            "doi": DOI, "status": "blocked",
+            "n_expected": len(SOURCE_FILES), "n_matched": 0,
+            "error": str(exc), "evidence_promoted": False,
+            "table1_variance_verified": False,
+            "flower_fruit_lineage_verified": False,
+        }
+        (args.output_dir / "archive_manifest.json").write_text(
+            json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        print(f"Dryad OAuth unavailable: {exc}")
+        return 2 if args.strict else 0
     result = probe(args.output_dir, token=token, timeout=args.timeout)
     print(f"Dryad full-dataset archive: {result['status']}; "
           f"{result['n_matched']}/{result['n_expected']} source files.")
