@@ -82,6 +82,48 @@ Finally, Table 1 totals 227 adult plants, but the source's one-way F(3,224) and 
 
 **Candidate biological mechanism to falsify:** a strong local oviposition-associated female cost can persist across years even when the *group-level* early-minus-late fruit ranking changes, because flower supply, partner service, and realized survival through larval feeding vary independently. Any test must keep the female-count, male-paternity and predation channels separate; do not manufacture a signed pooled synchrony effect.
 
+## Table 1 overall-mean and flower-count arithmetic check (2026-10-08)
+
+A second non-parametric source arithmetic audit uses only printed Table 1
+summaries and the Methods flower inventory. It does **not** reconstruct raw
+plant distributions. The reported overall line was transcribed separately as
+`data/source_reconstructions/iwe015_table1_reported_overall.csv`.
+
+| Source quantity | Value |
+|---|---:|
+| Adult plants, 4 cohorts | 59 + 58 + 55 + 55 = **227** |
+| Successful fruit mean weighted from 4 cohort means | **6.1413 fruits/plant** |
+| Table 1 printed overall mean | **6.36 fruits/plant** |
+| Difference (overall minus weighted) | **+0.2187 fruits/plant** |
+| Tagged/measured flowers across cohorts | **1,094** |
+| Successful-fruit count implied by 4 group means × n | **approximately 1,394** |
+| Difference if both represent exactly the same one-week flowers | **approximately +300 fruits** |
+
+Because all means are printed to two decimal places, the weighted mean
+computed from them can shift by at most 0.005 under rounding; the separately
+printed overall mean can also shift by only 0.005. Their discrepancy of
+0.2187 therefore **cannot** be attributed to rounding alone. Similarly,
+1,394 implied successes cannot come from only 1,094 tagged flowers if both
+refer to the exact same reproductive units and each flower yields at most
+one fruit. The particularly large conflict is in 2013: the implied early
+and late fruit counts are roughly 537 and 473, compared with 294 and 281
+tagged/measured flowers.
+
+**What this does and does not mean:** These are internal consistency
+constraints on a hypothetical *common* observation grain, **not** evidence
+that the source's underlying observations are necessarily wrong. The
+overall mean may summarize a different set of individuals or reproductive
+units, and the flower census and final fruit analysis may cover different
+time windows. The raw `data_analysis.R` must specify which population,
+cohort membership, time interval and denominator generated each summary.
+No ecological year × time interaction, synchrony effect, revised dispersion
+or Hedges g can be inferred from the mismatched arithmetic.
+
+Executable non-promoting regression checks:
+`tests/test_iwe015_published_table1.py`. IWE015 remains unresolved in the
+strict-H1 adjudication registry until *both* the biological-unit join and
+dispersion are verified.
+
 ## Frozen biological questions for raw readmission
 
 The two-year crossover creates a falsifiable distinction between an **exposure-to-cost change** and a **flower-supply/fitness-denominator change**. Before inspecting the raw plant-level outcomes, fix the following checks:
