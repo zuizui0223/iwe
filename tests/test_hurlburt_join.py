@@ -39,6 +39,9 @@ def test_synthetic_join_keeps_fruits_nested_and_prevents_smd():
     assert result["strict_h1_effect_promoted"] is False
     assert result["plant_fitness_effect_estimated"] is False
     assert result["unobserved_aborted_fruits_imputed"] is False
+    assert result["adult_census_detection_context"] == "moths_counted_within_fresh_host_flowers"
+    assert result["independent_unconditional_adult_flight_window_verified"] is False
+    assert result["flowers_examined_per_census_recorded"] is False
 
 
 def test_annual_aggregate_does_not_carry_source_marked_join():
@@ -110,3 +113,22 @@ def test_invalid_intervals_and_seed_values_fail_closed():
     fruits.loc[0, "viable_seeds"] = -1
     with pytest.raises(ValueError, match="non-negative"):
         audit_marked_unit_join(marked, adult, fruits, manifest)
+
+
+def test_optional_fresh_flower_survey_effort_is_verified_not_assumed():
+    marked, adult, fruits, manifest = _tables()
+    adult["flowers_examined"] = [100, 95]
+    result = audit_marked_unit_join(marked, adult, fruits, manifest)
+    assert result["flowers_examined_per_census_recorded"] is True
+    assert result["independent_unconditional_adult_flight_window_verified"] is False
+    adult.loc[0, "flowers_examined"] = 0
+    with pytest.raises(ValueError, match="positive integer effort"):
+        audit_marked_unit_join(marked, adult, fruits, manifest)
+
+
+def test_unsampled_adult_day_is_not_imputed_as_a_true_zero():
+    marked, adult, fruits, manifest = _tables()
+    result = audit_marked_unit_join(marked, adult, fruits, manifest)
+    assert result["unsampled_adult_activity_imputed_zero"] is False
+    assert result["year_breakdown"]["1999"]["adult_census_days"] == 2
+    assert result["independent_unconditional_adult_flight_window_verified"] is False
