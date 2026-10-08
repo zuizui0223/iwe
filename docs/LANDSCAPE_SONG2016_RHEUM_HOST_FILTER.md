@@ -139,6 +139,29 @@ This is also why treating the increased size of parasitised fruits
 as a host benefit is particularly problematic: the developing larva
 can consume the only potential seed inside.
 
+## Historical benchmark: female choice versus manipulation was tested before 2016
+
+Brody & Morita (2000), *Oecologia*, DOI
+`10.1007/PL00008867`, directly framed this same mechanistic dilemma
+for the non-pollinating seed predator *Hylemya* on
+*Ipomopsis aggregata*. They experimentally **restricted female
+choice** by enclosing females with flowers; oviposited flowers in
+the no-choice treatment still had significantly higher fruit set
+than bagged controls without caged flies. This is stronger
+evidence against a **pure free-choice explanation** than the
+natural egg-vs-no-egg *Rheum* comparison. However, the accessible
+abstract does not prove the egg alone was randomized or distinguish
+ovipositor puncture from caged-female contact and handling; it does
+not expose later intact-seed output after larvae fed.
+
+Therefore **"female choice or host manipulation" is an established
+research question (at least since 2000), not IWE's new discovery**.
+The actionable IWE extension is to couple independently identifiable
+consumer choice and induced changes in host retention with
+*post-consumer plant intact-seed fitness* and partner timing.
+This study is a separately controlled benchmark and **not** another
+strict H1 antagonist synchrony effect.
+
 ## Opposite egg-load pattern in another pollinating seed predator
 
 Goto et al. 2010 (*Ecology Letters*, DOI
