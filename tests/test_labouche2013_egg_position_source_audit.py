@@ -65,3 +65,24 @@ def test_not_strict_h1_effect_or_extra_replication():
     assert not set(pd.read_csv(RANDOMIZED).columns) & {
         "adult_flight_DOY", "flowering_partner_overlap", "mature_intact_seeds",
     }
+
+
+def test_living_larval_mass_does_not_become_unselected_treatment_fitness():
+    df = pd.read_csv(
+        "data/source_reconstructions/labouche2013_conditional_larval_mass.csv"
+    ).set_index("comparison")
+    assert set(df.index) == {
+        "egg_outside_vs_inside", "aborted_vs_nonaborted_fruit"
+    }
+    assert (df["source_sample_size"] == 32).all()
+    assert (df["post_treatment_conditioned"] == "yes").all()
+    assert (df["causal_marginal_larval_fitness_identified"] == "no").all()
+    assert (df["original_mature_intact_seed_outcome"] == "no").all()
+    assert df.loc["egg_outside_vs_inside", "source_direction"] == "outside_heavier"
+    assert df.loc["aborted_vs_nonaborted_fruit", "source_direction"] == (
+        "aborted_fruit_larvae_heavier"
+    )
+    assert df.loc["egg_outside_vs_inside", "F_value"] == 5.62
+    assert df.loc["aborted_vs_nonaborted_fruit", "F_value"] == 7.91
+    assert df.loc["egg_outside_vs_inside", "reported_p"] == 0.03
+    assert df.loc["aborted_vs_nonaborted_fruit", "reported_p"] == 0.01
