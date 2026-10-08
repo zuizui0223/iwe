@@ -30,7 +30,7 @@ def cardamine_onset_effect_sensitivity(
 
     Interpretation:
     - observed_point: first *observed* open flower, a directly observed proxy.
-    - source_certified_only: keep only classifications with independently
+    - provided_bound_conditional_only: keep only classifications with independently
       supplied individual-level lower bounds (early needs no lower bound).
     - scenario_stable_only: keep plants whose group cannot change under an
       *assumed* maximum delay of lag days.
@@ -118,7 +118,7 @@ def cardamine_onset_effect_sensitivity(
     collect(first, "observed_point", None)
     source = first.copy()
     source["timing_group"] = source["source_identified_group"]
-    collect(source, "source_certified_only", None)
+    collect(source, "provided_bound_conditional_only", None)
 
     for lag in lags:
         audit = audit_cardamine_onset_intervals(
