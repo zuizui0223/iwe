@@ -88,3 +88,31 @@ def test_original_experiment_number_cannot_relabel_source_calendar_year():
     assert _source_full_date_year("7/12/2023") == 2023
     assert _source_full_date_year("192") is None
     assert _source_full_date_year("NA") is None
+
+
+def test_conditional_two_edge_rank_is_not_an_unadjusted_risk_estimate():
+    import pandas as pd
+    from scripts.analyze_slimon2026_window_edges import (
+        _partial_rank_window_association,
+    )
+    rows = [
+        {
+            "first_doy": 170 + (i % 13),
+            "last_doy": 230 + ((i * 7) % 17),
+            "mompha_per_opportunity_proxy": (
+                0.15 + (i % 13) * 0.01 + ((i * 3) % 5) * 0.001
+            ),
+            "geno": "2" if i % 2 else "6",
+            "source_treatment": "JA" if i % 3 else "control",
+        }
+        for i in range(54)
+    ]
+    out = _partial_rank_window_association(
+        pd.DataFrame(rows),
+        "first_doy", "mompha_per_opportunity_proxy", "last_doy",
+    )
+    assert out["n"] == 54
+    assert out["status"] == "descriptive_conditional_association_no_inference"
+    assert out["partial_rank_rho"] > 0.3
+    assert out["source_genotype_categories"] == 2
+    assert out["source_treatment_categories"] == 2
