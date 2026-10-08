@@ -24,6 +24,7 @@ jobs:
       - name: Verify fail-closed downloader without network
         run: |
           python -m pip install -e '.[dev]'
+          python -m pip install 'pymupdf>=1.23,<1.29'
           python -m pytest -q tests/test_hurlburt2004_public_thesis_probe.py tests/test_hurlburt2004_thesis_text_screen.py
       - name: Retrieve DOI-linked original institution-hosted PDF if public
         run: >-
