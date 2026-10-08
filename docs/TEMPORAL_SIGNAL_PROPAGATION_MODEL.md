@@ -110,7 +110,7 @@ The confirmatory version of the hypothesis is architectural rather than taxonomi
 
 > within comparable datasets, adding a source-defined downstream stage should improve final-fitness prediction **only when that stage captures the dominant conversion bottleneck between exposure and reproductive consequence**.
 
-Parkinsonia is diagnostic here. Moving from annual egg density to stage-matched egg density reduces leave-one-region-out RMSE only from 20.58 to 19.93 percentage points (**3.2%**). Adding the measured parasitism and hatch filters reduces RMSE to 4.92 (**76.1% below the annual-exposure model**). Thus the gain comes mainly from estimating which exposures become viable future consumers, not from causal depth or stage matching per se.
+Parkinsonia is diagnostic here. Annual to stage-matched egg density reduces leave-one-region-out RMSE only from 20.58 to 19.93 percentage points (**3.2%**); adding parasitism and hatch yields 4.92 pp. However, an **outcome-exposed exploratory ablation of ten single-coordinate alternatives** finds RMSE **4.11 pp** for the nonparasitized × hatch fraction **without egg-density or timing information**. In this small 7-record dataset, the gain cannot be attributed to stage alignment; downstream survival eligibility appears sufficient to explain the observed contrast. The 4.11 versus 4.92 difference is neither confirmatory nor an independently validated model ranking.
 
 Posledovich and long-term Lathyrus supply mandatory nulls: mechanistically plausible stage information can change intermediate biology without improving the final plant endpoint.
 
