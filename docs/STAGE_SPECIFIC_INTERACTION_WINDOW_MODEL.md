@@ -72,16 +72,15 @@ In the Kula programme:
 - 2008 flower/egg to first larva = 10/5 d; fruit maturation = 21.3 d;
 - 2009 flower/egg to first larva = 17/15 d; fruit maturation = 16.7 d.
 
-A response-independent **phase safety margin** can therefore be defined as:
+A response-independent **margin to first detected mobile larva** can be calculated descriptively:
 
-`M = (flower -> first larva delay) - fruit maturation interval`.
+`M_detect = (first flower -> first observed mobile larva) - mean fruit collection interval`.
 
-This gives:
+Point estimates are **-11.3 d** (2008) and **+0.3 d** (2009), but the 2009 maturation-only ±2SE sensitivity interval is **-0.50 to +1.10 d** and already spans zero.
 
-- 2008: **M = -11.3 d**;
-- 2009: **M = +0.3 d**.
+Crucially, the original study visited plants every **2–4 days** and usually first detected larvae only after they were moving between flowers, at approximately **10–15 mm**. First detection is not the onset of larval feeding, and the reported maturation interval is estimated from fruit collection dates rather than direct tissue hardening. Thus **no positive host-safety threshold has been demonstrated**.
 
-The coordinate crosses zero in the same year that the synchrony-predation sign changes from positive to negative. With only two years, this is a mechanistic prediction and not an inferred threshold law.
+The year-to-year difference in developmental lead remains consistent with the opposite predation slopes. The margin is not a validated two-year phase-threshold law or a final-fitness predictor.
 
 ### P3 — climate can alter interaction outcome without changing adult overlap
 
