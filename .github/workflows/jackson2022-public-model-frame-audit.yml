@@ -2,7 +2,7 @@ name: Jackson 2022 published fruit-fate model-frame access audit
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     paths:
       - scripts/probe_jackson2022_saved_model_frames.R
       - .github/workflows/jackson2022-public-model-frame-audit.yml
