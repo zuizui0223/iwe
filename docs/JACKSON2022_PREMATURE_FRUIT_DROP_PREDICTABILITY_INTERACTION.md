@@ -104,6 +104,64 @@ linkage. The published coefficients also must not be described as
 joint-adjusted effects because the original analyses were one trait
 at a time.
 
+## Executed public model-object reanalysis (2026-10-08)
+
+The archived `model-fits.rds` file was successfully retrieved **from
+the pinned public GitHub repository**, not from the underlying Dryad
+deposits. Two original `glmer` model frames contained exactly matching
+estimated premature and viable seed counts at **2,609 matched
+species × year records from 124 tree species over 31 years**.
+
+- 91 species have a reared/recorded pre-dispersal seed predator.
+- 33 species have **no recorded predator**, which is not the same as
+  experimentally confirmed absence.
+- Both species-level traits are constant across years; source counts
+  match exactly after joining on original species code and year.
+
+Using one species-level response constructed from the sum of its
+observed seed-trap count estimates, an equal-species-weight linear
+model of smoothed log seed-loss odds gave:
+
+| Species-level specification | CV × predator interaction coefficient |
+|---|---:|
+| Equal species weight (124 species; primary) | **+0.3632** |
+| Cap-weighted by square root of estimated seed counts | **+0.0186** |
+| Species with at least ten observed years (99 species) | **+0.7206** |
+
+The **1,000-draw stratified species bootstrap** for the primary
+interaction gave a percentile 95% interval **[-0.6691, +1.0022]**.
+This is a descriptive bootstrap interval, not a prospective or
+phylogenetically adjusted confidence statement. These coefficients
+are differences in the slope of *crop-size variation*, not flowering
+dates or resource-retention probability.
+
+**First interpretation:** the prespecified directional prediction
+that documented predator hosts have a *more negative* CV–abscission
+slope (expected interaction < 0) **was not supported**. The point
+estimate has the opposite sign, crosses zero widely, and shrinks
+towards zero under source-count weighting. It would be incorrect to
+call the opposite mechanism established, or to claim that seed
+predators do not exploit predictable fruits in general.
+
+The analysis is in
+`scripts/analyze_jackson2022_predator_crop_regularities.R`,
+run against the exact public model-fits revision, with outputs in the
+short-lived GitHub Actions artifact. The source model objects were
+already fitted on the observations; this is **not an independent
+validation cohort or a source-blind predeclared experiment**. Its
+inference is limited by phylogenetic relatedness, varying seed-trap
+sampling, nonrandom recording of seed predators, and the inability
+of trap-derived immature seed counts to identify the cause of
+fruit abscission.
+
+**Mechanism nonidentification:** even a reliable positive or negative
+interaction in this observational survey cannot by itself
+distinguish insect-triggered abortion from plant-selected abortion
+that insects learn to anticipate. Both processes can produce
+predator-correlated seed-loss patterns. The individual-fruit timing
+and survival records needed to distinguish them remain unavailable
+in this external dataset.
+
 ## What it could change in IWE
 
 A predator-status interaction would supply external, cross-species
