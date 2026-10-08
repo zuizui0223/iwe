@@ -45,7 +45,7 @@ The reference workflow now uses a REML working random-effects model with CR2 dep
 
 ## Current real strict-H1 corpus
 
-The current real extraction contains four strict-H1 rows, all in the mutualist class. IWE015 mixed evidence remains on a quantitative hold pending raw Dryad variance verification, and the former IWE011 antagonist SMD was withdrawn on 2026-09-28 after the same independent-partner-window and exposure-unit rules were applied retrospectively.
+The current real extraction contains four strict-H1 rows, all in the mutualist class. IWE015 mixed evidence remains on hold pending both raw Dryad variance verification and linkage of final fruits to the source-defined flowering groups, and the former IWE011 antagonist SMD was withdrawn on 2026-09-28 after the same independent-partner-window and exposure-unit rules were applied retrospectively.
 
 Mutualists:
 - `IWE029_LATE_VS_PEAK_NP_LOGOR` — *Stigmaphyllon paralias* × oil-collecting *Centris* bees; `log_odds_ratio = +1.55`.
@@ -59,7 +59,7 @@ Antagonists:
 
 Mixed pollinating seed predators:
 - no quantitative strict-H1 row currently admitted.
-- IWE015 (*Silene stellata × Hadena ectypa*) remains timing/final-outcome eligible but is withheld until `docs/IWE015_DRYAD_VARIANCE_AUDIT.md` is closed.
+- IWE015 (*Silene stellata × Hadena ectypa*) has contemporaneous adult activity and final-fruit observations, but is **held** pending raw variance and sample-unit/flowering-window linkage verification. A non-promoting Table 1 audit finds an opposing mean-only early-minus-late successful-fruit contrast (**−1.25 in 2012; +1.17 in 2013**) with predation differences of **+18 vs +1 percentage points**. Separately, within the early experiments egg burden remains negatively associated with female fitness in both years (Spearman r=−0.26 and −0.40), although 2013 early plants have higher mean successful fruits than late plants. These are different comparison grains, not a demonstrated time-by-year interaction, Simpson's paradox or admissible SMD. See `docs/IWE015_DRYAD_VARIANCE_AUDIT.md`.
 
 The two IWE027 rows share one dependence cluster and IWE023 supplies a second independent mutualist SMD cluster. The two-cluster threshold remains a **replication milestone only**. H1 is not inferentially evaluable: the reference CR2 workflow requires at least 4 conservative cluster degrees of freedom (therefore at least 5 dependence clusters per class under the current intercept-only reference) before reporting inferential SEs/CIs.
 
@@ -73,11 +73,11 @@ Current SMD replication state:
 
 - mutualist: **2 independent clusters — discovery milestone satisfied, not inferentially sufficient**;
 - antagonist: **0 quantitative strict clusters after the IWE011 timing/unit re-audit**;
-- mixed pollinating seed predator: **0 quantitative clusters while IWE015 is on variance hold**.
+- mixed pollinating seed predator: **0 quantitative clusters while IWE015 is on variance and outcome-linkage hold**.
 
 The machine-readable claim status reports both current cluster counts and remaining gaps. Search/extraction priority is frozen as:
 
-1. restore IWE015 only after raw Dryad variance verification, while continuing the second independent mixed-programme search;
+1. restore IWE015 only after raw Dryad variance and flowering-cohort-to-final-fruit linkage verification, while continuing the second independent mixed-programme search;
 2. recover a first valid antagonist SMD cluster under the independent-partner-window and exposure-unit rules, then continue toward the two-cluster discovery milestone;
 3. additional independent programmes in all classes after the two-cluster discovery milestone, because two clusters do not support robust inference.
 
