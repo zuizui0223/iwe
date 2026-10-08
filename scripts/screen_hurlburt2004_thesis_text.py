@@ -69,15 +69,9 @@ def screen_pdf(pdf: Path, outdir: Path) -> dict:
     outdir.mkdir(parents=True, exist_ok=True)
     if not pdf.is_file():
         raise ValueError("original PDF file missing")
-    if not shutil.which("pdftotext"):
-        raise RuntimeError("pdftotext missing; do not substitute OCR")
-    proc = subprocess.run(
-        ["pdftotext", "-layout", "-enc", "UTF-8", str(pdf), "-"],
-        check=True, text=True, capture_output=True, timeout=120
-    )
-    pages = proc.stdout.split("\f")
-    if pages and not pages[-1].strip():
-        pages.pop()
+    import fitz  # PyMuPDF; use existing PDF text layer without OCR
+    with fitz.open(str(pdf)) as document:
+        pages = [page.get_text("text", sort=True) for page in document]
     ranked = rank_pages(pages)
     summary = {
         "schema": "iwe_hurlburt2004_pdf_text_leads_v1",
@@ -99,16 +93,16 @@ def screen_pdf(pdf: Path, outdir: Path) -> dict:
     for p in ranked[:12]:
         print(f"PDF page {p['physical_pdf_page']}: score={p['score']}; "
               f"excerpt={p['lead_only']}")
-    if shutil.which("pdftoppm"):
+    if ranked:
         preview = outdir / "original_page_previews_unreviewed"
         preview.mkdir(exist_ok=True)
-        for p in ranked[:5]:
-            page = p["physical_pdf_page"]
-            subprocess.run([
-                "pdftoppm", "-f", str(page), "-l", str(page),
-                "-singlefile", "-scale-to", "1400", "-png",
-                str(pdf), str(preview / f"pdf_physical_page_{page}")
-            ], check=True, timeout=45, capture_output=True)
+        with fitz.open(str(pdf)) as document:
+            for p in ranked[:5]:
+                page_no = p["physical_pdf_page"]
+                page = document[page_no - 1]
+                image = page.get_pixmap(matrix=fitz.Matrix(1.25, 1.25),
+                                        alpha=False)
+                image.save(str(preview / f"pdf_physical_page_{page_no}.png"))
     return summary
 
 
