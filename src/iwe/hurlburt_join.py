@@ -177,7 +177,7 @@ def audit_marked_unit_join(
         "mature_fruits_with_exact_marked_unit_join": sum(joined),
         "unmatched_mature_fruits": len(joined) - sum(joined),
         "linked_marked_inflorescences": len(with_mature),
-        "date_resolved_adult_and_fitness_join_present": bool(
+        "date_resolved_adult_and_mature_fruit_join_present": bool(
             mode == "original_source_review"
             and status == "source_unit_lineage_structurally_present_not_an_effect"
         ),
