@@ -8,6 +8,7 @@ from pathlib import Path
 import pandas as pd
 
 from iwe.cardamine_pipeline import run_cardamine_preflight
+from iwe.cardamine_onset_audit import audit_cardamine_onset_intervals
 
 
 def main() -> int:
@@ -41,6 +42,8 @@ def main() -> int:
     outdir = Path(args.output_dir)
     outdir.mkdir(parents=True, exist_ok=True)
     exposure.to_csv(outdir / "timing_exposure.csv", index=False)
+    onset_audit = audit_cardamine_onset_intervals(plant_timing, adult_events)
+    onset_audit.to_csv(outdir / "onset_interval_audit.csv", index=False)
     audit.to_csv(outdir / "outcome_smd_audit.csv", index=False)
     effects.to_csv(outdir / "smd_effects.csv", index=False)
 
@@ -52,6 +55,15 @@ def main() -> int:
         "adult_timing_source_backed": bool(adult_provenance["source_backed"]),
         "synthetic_fixture": bool(adult_provenance["synthetic_fixture"]),
         "timing_exposure_rows": int(len(exposure)),
+        "onset_interval_audit_rows": int(len(onset_audit)),
+        "source_identified_onset_groups": int(onset_audit["source_identified_group"].isin(
+            ["early_refugium", "core_flight", "late_refugium"]
+        ).sum()),
+        "scenario_7day_boundary_sensitive_or_unresolved": int((
+            ~onset_audit["observed_group_scenario_stable"]
+        ).sum()),
+        "assumed_survey_lag_is_source_verified": False,
+        "onset_interval_audit_is_nonpromoting": True,
         "directional_contrasts_audited": int(len(audit)),
         "eligible_smd_contrasts": eligible,
         "smd_effect_rows": int(len(effects)),
@@ -64,6 +76,8 @@ def main() -> int:
     print(
         f"Wrote Cardamine preflight outputs to {outdir}; "
         f"eligible directional contrasts={eligible}, SMD rows={len(effects)}. "
+        "First observed flowering may be left-censored; onset_interval_audit.csv "
+        "is a non-promoting observation-lag sensitivity. "
         "No row is promoted to the primary extraction table automatically."
     )
     return 0
