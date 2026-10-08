@@ -83,3 +83,18 @@ def test_synthetic_stage_preflight_separates_2022_adult_from_2023_larvae():
     assert audit["independent_adult_partner_availability_identified"] is False
     assert audit["original_mature_intact_seed_by_date_verified"] is False
     assert audit["strict_h1_effect"] is False
+
+
+def test_published_fitness_code_leads_are_not_an_unverified_seed_formula():
+    from scripts.probe_slimon2026_zenodo_source import fitness_model_code_leads
+    b = BytesIO()
+    with ZipFile(b, "w") as z:
+        z.writestr("Freese Stats/exp1_pubver.R",
+                   "# seed estimate unverified\n"
+                   "plantfitness <- total_fruit * mean_seed\n")
+        z.writestr("Freese Stats/exp2_pubver.R", "x <- 2\n")
+    source = fitness_model_code_leads(b.getvalue())
+    hits = source["Freese Stats/exp1_pubver.R"]
+    assert len(hits) == 1
+    assert hits[0]["source_line"] == 2
+    assert hits[0]["derived_seed_fitness_formula_verified"] is False
