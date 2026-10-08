@@ -1,0 +1,347 @@
+"""Source-limited inventory of Slimon & Agrawal 2026's public Zenodo archive.
+
+Non-promoting: tests whether a contemporaneous *independent adult*
+seed-predator activity series is present alongside the original flowering,
+predation and lifetime seed data. Only metadata, file paths, field names
+and short README search contexts are logged. Never invent DOY or effects.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+from io import BytesIO, StringIO, TextIOWrapper
+import json
+from pathlib import Path
+import re
+from urllib.parse import urlsplit
+from urllib.request import Request, urlopen
+from zipfile import ZipFile, BadZipFile
+
+RECORD = "19488509"
+DOI = "10.5281/zenodo.19488509"
+API = f"https://zenodo.org/api/records/{RECORD}"
+FILES = frozenset(("Freese Stats.zip", "READ_ME_Phenological_plasticity.txt"))
+MAX_REMOTE = 22_000_000
+MAX_ZIP_FILES = 2000
+MAX_MEMBER = 12_000_000
+KEYWORDS = ("adult", "flight", "trap", "catch", "moth", "schinia",
+            "seed predator", "predation", "flowering", "fitness",
+            "total seed", "reproductive", "date", "phenolog")
+
+
+def safe_source_link(link: str) -> bool:
+    parsed = urlsplit(link)
+    return (parsed.scheme == "https" and parsed.hostname == "zenodo.org"
+            and parsed.path.startswith(("/api/records/19488509",
+                                        "/records/19488509/files/")))
+
+
+def read_public(url: str, max_bytes: int = MAX_REMOTE, timeout: int = 25) -> bytes:
+    if not safe_source_link(url):
+        raise ValueError("source link outside exact public Zenodo record")
+    request = Request(url, headers={
+        "User-Agent": "IWE-source-audit/1.0",
+        "Accept": "application/json,application/zip,text/plain,*/*"
+    })
+    with urlopen(request, timeout=timeout) as response:
+        if not safe_source_link(response.geturl()):
+            raise ValueError("archive redirects outside the original record")
+        data = response.read(max_bytes + 1)
+    if len(data) > max_bytes:
+        raise ValueError("source file exceeds audit cap")
+    return data
+
+
+def file_info(json_obj: dict) -> list[dict]:
+    """Zenodo InvenioRDM records list files as entries[*] (dict or list)."""
+    obj = json_obj.get("files", {})
+    entries = obj.get("entries", obj) if isinstance(obj, dict) else obj
+    if isinstance(entries, dict):
+        files = list(entries.values())
+    elif isinstance(entries, list):
+        files = entries
+    else:
+        raise ValueError("unknown Zenodo file listing schema")
+    result = []
+    for entry in files:
+        key = entry.get("key", entry.get("filename", ""))
+        if key not in FILES:
+            continue
+        links = entry.get("links", {})
+        url = links.get("content") or links.get("self")
+        if not url or not safe_source_link(url):
+            raise ValueError("Zenodo file link missing or untrusted")
+        result.append({"name": key, "url": url,
+                       "bytes_expected": entry.get("size"),
+                       "checksum": entry.get("checksum", "")})
+    return result
+
+
+def contexts(readme: str, max_matches: int = 22) -> list[dict]:
+    """Short source quotations to guide original read, not proof of data."""
+    lines = readme.splitlines()
+    out = []
+    for i, line in enumerate(lines):
+        hit = [k for k in KEYWORDS if k in line.lower()]
+        if hit:
+            out.append({
+                "readme_line": i + 1,
+                "keywords": hit,
+                "short_context": line.strip()[:180],
+                "source_verified_method_claim": False,
+            })
+        if len(out) >= max_matches:
+            break
+    return out
+
+
+def archive_inventory(raw: bytes) -> list[dict]:
+    result = []
+    try:
+        zf = ZipFile(BytesIO(raw))
+    except BadZipFile as exc:
+        raise ValueError("not a valid ZIP archive") from exc
+    with zf:
+        members = zf.infolist()
+        if len(members) > MAX_ZIP_FILES:
+            raise ValueError("too many files")
+        for member in members:
+            if member.is_dir():
+                continue
+            name = member.filename
+            if name.startswith("__MACOSX/") or "/._" in name or Path(name).name.startswith("~$"):
+                continue
+            if (name.startswith("/") or ".." in name.split("/")
+                    or member.file_size > MAX_MEMBER):
+                raise ValueError("unsafe or oversized member")
+            record = {"member": name, "byte_size": member.file_size,
+                      "ext": Path(name).suffix.lower(),
+                      "headers": [], "rows": None}
+            if record["ext"] in {".csv", ".tsv"} and member.file_size < 3_000_000:
+                content = zf.read(member).decode("utf-8-sig", errors="replace")
+                sep = "\t" if record["ext"] == ".tsv" else ","
+                try:
+                    reader = csv.reader(StringIO(content, newline=""),
+                                        delimiter=sep)
+                    record["headers"] = next(reader, [])[:120]
+                    record["rows"] = sum(1 for _ in reader)
+                except csv.Error:
+                    # A source file with mixed delimiters or broken quoting
+                    # is NOT a tabular row set. Inspect only its first
+                    # physical line and never invent a valid data-row count.
+                    record["headers"] = next(csv.reader(
+                        [content.splitlines()[0]], delimiter=sep
+                    ), [])[:120] if content.splitlines() else []
+                    record["rows"] = None
+                    record["parse_warning"] = "source_csv_not_parseable_as_rows"
+            elif record["ext"] in {".r", ".rmd"}:
+                script = zf.read(member).decode("utf-8-sig", errors="replace")
+                record["candidate_timing_lines"] = contexts(script, 12)
+            result.append(record)
+    return result
+
+
+def stage_linkage_preflight(raw: bytes) -> dict:
+    """Only original archive *column and coverage* checks; never an SMD.
+
+    Per-plant adult observations on host flowers are NOT automatically an
+    external partner-availability curve. The output makes that distinction.
+    """
+    wanted = {
+        "adult_2022": "Freese Stats/df2_exp1F.csv",
+        "larval_2023": "Freese Stats/df2_exp2F.csv",
+        "host_2022": "Freese Stats/main_exp1.csv",
+        "host_2023": "Freese Stats/main_exp2.csv",
+        "fruit_2022": "Freese Stats/fitness_exp1.csv",
+        "fruit_2023": "Freese Stats/Exp 2 fitness.csv",
+    }
+    records = {}
+    with ZipFile(BytesIO(raw)) as zf:
+        for alias, name in wanted.items():
+            if name not in zf.namelist():
+                raise ValueError("pinned source file missing: " + name)
+            txt = zf.read(name).decode("utf-8-sig", errors="replace")
+            records[alias] = list(csv.DictReader(StringIO(txt, newline="")))
+    result = {
+        "schema": "iwe_slimon2026_original_stage_linkage_preflight_v1",
+        "source": DOI,
+        "source_scope": "two_2022_2023_host_cohorts",
+        "stage_assignments_from_filename_not_verified_adult_activity": True,
+        "independent_adult_partner_availability_identified": False,
+        "original_mature_intact_seed_by_date_verified": False,
+        "strict_h1_effect": False,
+        "per_file_rows": {k: len(v) for k, v in records.items()},
+        "date_resolved_focal_adult_counts": {},
+        "join_by_original_plant_id": {},
+        "fruit_outcome_column_inventory": {},
+    }
+    def ids(rows: list[dict]) -> set[str]:
+        return {str(row.get("ID", row.get("ID #", ""))).strip()
+                for row in rows
+                if str(row.get("ID", row.get("ID #", ""))).strip()}
+    for year, tag in ((2022, "2022"), (2023, "2023")):
+        left = records["host_" + tag]
+        mid = records[("adult_" if year == 2022 else "larval_") + tag]
+        right = records["fruit_" + tag]
+        a, b, c = ids(left), ids(mid), ids(right)
+        result["join_by_original_plant_id"][tag] = {
+            "host_ids": len(a),
+            "stage_ids": len(b),
+            "fruit_ids": len(c),
+            "host_stage_fruit_shared_ids": len(a & b & c),
+            "host_fruit_shared_ids": len(a & c),
+            "stage_source_cohort": "focal_host_observations",
+            "row_ids_source_authenticated": False,
+        }
+        result["fruit_outcome_column_inventory"][tag] = {
+            "columns": list(right[0].keys()) if right else [],
+            "has_raw_intact_seed_count_column_verified": False,
+        }
+    for stage, field_prefix in (("adult", "sf_adult_"), ("larvae", "sf_larvae_")):
+        file_rows = records["adult_2022"]
+        columns = list(file_rows[0].keys()) if file_rows else []
+        dates = {}
+        for col in columns:
+            if not col.startswith(field_prefix):
+                continue
+            values = [str(row.get(col, "")).strip() for row in file_rows]
+            numeric = []
+            errors = 0
+            for v in values:
+                if not v or v.upper() in {"NA", "N/A", "NULL"}:
+                    continue
+                try:
+                    numeric.append(float(v))
+                except ValueError:
+                    errors += 1
+            dates[col] = {
+                "numeric_observations": len(numeric),
+                "positive_rows": sum(v > 0 for v in numeric),
+                "sum_reported_counts": round(sum(numeric), 4),
+                "unparseable_nonmissing": errors,
+                "focal_host_observation_not_external_phenology": True,
+            }
+        result["date_resolved_focal_adult_counts"][stage] = dates
+    larvae_2023 = records["larval_2023"]
+    stage_columns_2023 = list(larvae_2023[0].keys()) if larvae_2023 else []
+    result["exp2_2023_stage_headers"] = [
+        c for c in stage_columns_2023 if c.startswith("sf_")
+    ]
+    result["exp2_2023_has_sf_adult_columns"] = any(
+        c.startswith("sf_adult_") for c in stage_columns_2023
+    )
+    result["real_source_rows_joined_to_fitness_without_exposure_or_unit_audit"] = False
+    return result
+
+
+def fitness_model_code_leads(raw: bytes) -> dict[str, list[dict]]:
+    """Tiny line-located leads from published scripts, no recreated estimator."""
+    selected = ("Freese Stats/exp1_pubver.R", "Freese Stats/exp2_pubver.R")
+    trigger = re.compile(
+        r"(?i)seed|fitness|fecund|fruit|schinia|mompha|predict.*seed"
+    )
+    out: dict[str, list[dict]] = {}
+    with ZipFile(BytesIO(raw)) as zf:
+        for member in selected:
+            if member not in zf.namelist():
+                out[member] = []
+                continue
+            lines = zf.read(member).decode("utf-8-sig", errors="replace").splitlines()
+            hits = []
+            for i, line in enumerate(lines):
+                stripped = line.strip()
+                if (not stripped or stripped.startswith("#")
+                        or not trigger.search(line)):
+                    continue
+                if not any(op in line for op in ("<-", "=", "mutate(", "glm(", "lm(")):
+                    continue
+                hits.append({"source_line": i + 1,
+                             "source_code_short": stripped[:170],
+                             "derived_seed_fitness_formula_verified": False})
+                if len(hits) >= 38:
+                    break
+            out[member] = hits
+    return out
+
+
+def preview_relevant_readme_lines(readme: str) -> list[dict]:
+    """Small methods/dictionary windows; no arbitrary transcript dump."""
+    wanted = set(range(43, 94))
+    return [
+        {"line": i + 1, "source_text": line.strip()[:220]}
+        for i, line in enumerate(readme.splitlines())
+        if i + 1 in wanted and line.strip() and len(line.strip()) < 500
+    ][:48]
+
+
+def audit(outdir: Path):
+    outdir.mkdir(parents=True, exist_ok=True)
+    report = {
+        "schema": "iwe_slimon2026_archive_source_inventory_v1",
+        "doi": DOI,
+        "study_class": "antagonist",
+        "status": "not_checked",
+        "adult_partner_window_verified": False,
+        "same_unit_final_seeds_verified": False,
+        "strict_h1_eligible": False,
+        "promoted": False,
+        "source_claim": "two cohorts; flowering broadened by induced herbivory; opposing early/late predation consequences",
+    }
+    try:
+        metadata = json.loads(read_public(API).decode("utf-8"))
+        files = file_info(metadata)
+        report["listed_targets"] = [f["name"] for f in files]
+        for entry in files:
+            raw = read_public(entry["url"])
+            label = entry["name"]
+            report[label + "_sha256"] = hashlib.sha256(raw).hexdigest()
+            if label.endswith(".txt"):
+                report["readme_contexts"] = contexts(raw.decode("utf-8", errors="replace"))
+                report["readme_line_count"] = len(raw.splitlines())
+                report["readme_original_file_dictionary"] = (
+                    preview_relevant_readme_lines(raw.decode("utf-8", errors="replace"))
+                )
+            elif label.endswith(".zip"):
+                report["archive_members"] = archive_inventory(raw)
+                report["focal_stage_linkage_preflight"] = stage_linkage_preflight(raw)
+                report["fitness_original_code_leads"] = fitness_model_code_leads(raw)
+        report["status"] = "inventory_recovered" if files else "targets_not_listed"
+    except (ValueError, OSError, TimeoutError, RuntimeError, json.JSONDecodeError) as exc:
+        report["status"] = "source_access_or_format_blocked"
+        report["error"] = str(exc)[:250]
+    (outdir / "source_only_inventory.json").write_text(
+        json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    print("Source archive:", report["status"], "; listed targets:", report.get("listed_targets"))
+    print("README source leads:", report.get("readme_contexts", []))
+    for f in report.get("archive_members", []):
+        print("ARCHIVE MEMBER", f["member"], "size", f["byte_size"],
+              "headers", f["headers"][:35], "rows", f["rows"])
+        for lead in f.get("candidate_timing_lines", [])[:5]:
+            print("SCRIPT KEYWORD", lead["short_context"])
+    print("SOURCE STAGE PROVENANCE PREFLIGHT", json.dumps(
+        report.get("focal_stage_linkage_preflight", {}),
+        ensure_ascii=False
+    ))
+    for source_name, hits in report.get("fitness_original_code_leads", {}).items():
+        print("SOURCE FITNESS CODE", source_name, json.dumps(
+            hits[:26], ensure_ascii=False
+        ))
+    print("SOURCE README DICTIONARY", json.dumps(
+        report.get("readme_original_file_dictionary", [])[:42],
+        ensure_ascii=False
+    ))
+    print("No independent adult flight or H1 effect verified by automated inventory.")
+    return report
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--outdir", required=True, type=Path)
+    args = parser.parse_args()
+    audit(args.outdir)
+
+
+if __name__ == "__main__":
+    main()
