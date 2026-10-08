@@ -19,7 +19,7 @@ THESIS_DOI = "10.7939/r3-fe1d-kj80"
 DOI_URL = "https://doi.org/" + THESIS_DOI
 FILENAME = "NQ95948.pdf"
 ALLOWED_HOSTS = frozenset({
-    "doi.org", "scholaris.ca", "www.scholaris.ca",
+    "doi.org", "scholaris.ca", "www.scholaris.ca", "ualberta.scholaris.ca",
     "era.library.ualberta.ca", "era-av.library.ualberta.ca",
 })
 MAX_BYTES = 12_000_000
@@ -76,7 +76,7 @@ def _get(url: str, timeout: float):
     with urlopen(req, timeout=timeout) as response:
         landing = response.geturl()
         if not _allowed(landing):
-            raise ValueError("redirected off allowed institution/DOI hosts")
+            raise ValueError("redirected off allowed institution/DOI hosts: " + str(urlsplit(landing).hostname))
         body = response.read(MAX_BYTES + 1)
         return landing, body, response.headers.get("Content-Type", "")
 
@@ -126,7 +126,7 @@ def probe_thesis(output_dir: Path, timeout: float = 15.) -> dict:
                 item["status"] = "blocked_or_invalid"
                 item["reason"] = ("HTTP_" + str(exc.code)
                                   if isinstance(exc, HTTPError)
-                                  else type(exc).__name__)
+                                  else str(exc) if isinstance(exc, ValueError) else type(exc).__name__)
                 report["attempts"].append(item)
     except (HTTPError, URLError, OSError, ValueError, TimeoutError) as exc:
         report["landing_error"] = ("HTTP_" + str(exc.code)
