@@ -97,16 +97,34 @@ def test_within_early_egg_female_signal_stays_negative_when_group_mean_flips():
     # Neither identifies egg causality, pollen service, or Simpson's paradox.
 
 
-def test_floral_trait_sample_is_not_final_fruit_denominator():
-    # Methods: 294 flowers were measured for traits on 55 early-2013 plants.
-    # Table 1: mean post-predation intact successful fruits = 9.77 per plant.
-    # A numerator cannot exceed a genuine complete reproductive opportunity
-    # denominator, so these must be different subsets/count definitions.
-    measured_2013_early_per_plant = 294 / 55
-    final_successful_fruits_per_plant = _table().set_index(
-        ["year", "period"]
-    ).loc[(2013, "early"), "successful_fruits_mean"]
-    assert final_successful_fruits_per_plant > measured_2013_early_per_plant
+def test_2013_tagged_flower_to_fruit_universe_remains_unresolved():
+    # The Methods identify these counts in the one-week tagged flower/fate
+    # study, not unambiguously as a separate trait-only subsample.
+    # If these are the same reproductive units counted in Table 1, the
+    # numbers conflict in BOTH 2013 windows.
+    df = pd.read_csv(
+        "data/source_reconstructions/iwe015_labelled_flower_denominator_audit.csv"
+    ).set_index(["year", "period"])
+    table = _table().set_index(["year", "period"])
+    assert len(df) == len(table) == 4
+    for key in table.index:
+        row = df.loc[key]
+        assert row["scope_reconciled"] == "not_yet"
+        assert int(row["adult_plants"]) == int(table.loc[key, "adult_plants"])
+        assert row["table1_successful_fruits_mean_per_plant"] == (
+            table.loc[key, "successful_fruits_mean"]
+        )
+    for period in ("early", "late"):
+        row = df.loc[(2013, period)]
+        labelled_per_plant = (
+            row["source_reported_measured_flowers"] / row["adult_plants"]
+        )
+        table_fruits_per_plant = row[
+            "table1_successful_fruits_mean_per_plant"
+        ]
+        assert table_fruits_per_plant > labelled_per_plant
+    # This is a fail-closed lineage/denominator audit, not proof of
+    # data error or eligibility for a fruit-set-rate model.
 
 
 def test_recovery_requires_an_explicit_sample_membership_reconciliation():
