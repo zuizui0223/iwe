@@ -28,14 +28,14 @@ from scripts.probe_slimon2026_zenodo_source import (
 
 EXPECTED_ZIP_MD5 = "151bbd516fc0032af2a2598cb5529c78"
 SOURCE_PATHS = {
-    "2022": {
+    "exp1": {
         "host": "Freese Stats/main_exp1.csv",
         "last": "Freese Stats/d_pheno.csv",
         "fitness": "Freese Stats/fitness_exp1.csv",
         "mompha": "Freese Stats/comp_final_sum_exp1.csv",
         "schinia_stage": "Freese Stats/df2_exp1F.csv",
     },
-    "2023": {
+    "exp2": {
         "host": "Freese Stats/main_exp2.csv",
         "last": "Freese Stats/d_pheno_exp2.csv",
         "fitness": "Freese Stats/Exp 2 fitness.csv",
@@ -128,8 +128,8 @@ def _safe_spearman(frame: pd.DataFrame, x: str, y: str):
             "reason": "noncausal_outcome_exposed_exploratory_only"}
 
 
-def audit_year(zf: ZipFile, year: int) -> dict:
-    label = str(year)
+def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
+    """Experiment 1/2 are source components, NOT different flowering years."""
     mapping = SOURCE_PATHS[label]
     tables = {}
     original_meta = {}
@@ -164,7 +164,8 @@ def audit_year(zf: ZipFile, year: int) -> dict:
             validate="one_to_one",
         )
     if combined.empty:
-        return {"year": year, "status": "no_four_file_plant_join",
+        return {"flowering_calendar_year": year, "experiment": label,
+                "status": "no_four_file_plant_join",
                 "original_tables": original_meta}
 
     combined["first_doy"] = combined["first_flr"].map(lambda x: _date_doy(x, year))
@@ -205,7 +206,8 @@ def audit_year(zf: ZipFile, year: int) -> dict:
             "n_positive": int(v.gt(0).sum()),
         }
     return {
-        "year": year, "status": "exploratory_join_and_component_audit",
+        "flowering_calendar_year": year, "experiment": label,
+        "status": "exploratory_join_and_component_audit",
         "original_tables": original_meta,
         "joint_plant_ids_n": len(combined),
         "source_date_fields": {
@@ -237,13 +239,14 @@ def run(outdir: Path) -> dict:
     if checksum != EXPECTED_ZIP_MD5:
         raise ValueError("original source archive MD5 changed; stop rather than analyze")
     with ZipFile(BytesIO(raw)) as zf:
-        results = [audit_year(zf, year) for year in (2022, 2023)]
+        results = [audit_experiment(zf, cohort) for cohort in ("exp1", "exp2")]
     summary = {
         "schema": "iwe_slimon2026_window_edges_exploratory_v1",
         "source_doi": DOI,
         "source_archive_md5": checksum,
         "study_interaction_type": "antagonist",
-        "year_results": results,
+        "experiment_results": results,
+        "phenology_calendar_year_provenance": "both experiments have original 2023-dated first/last flowering columns",
         "confirmatory_inference_authorized": False,
         "observed_intact_mature_seed_response": False,
         "independent_adult_partner_activity": False,
@@ -256,16 +259,17 @@ def run(outdir: Path) -> dict:
         encoding="utf-8",
     )
     for year in results:
-        print("YEAR", year["year"],
+        print("EXPERIMENT", year["experiment"], "flowering_year", year["flowering_calendar_year"],
               "joined_plants", year.get("joint_plant_ids_n"),
               "date_crosscheck", year.get("source_date_scale_crosscheck"))
-        print("SOURCE_DATE_FORMS", year["year"], json.dumps(
+        print("SOURCE_DATE_FORMS", year["experiment"], json.dumps(
             year.get("source_date_fields", {}), ensure_ascii=False
         ))
         print("COVERAGE", json.dumps(year.get("variable_coverage", {})))
         for row in year.get("exploratory_correlations", []):
             print("CORRELATION", json.dumps({
-                "year": year["year"], **row
+                "experiment": year["experiment"],
+                "flowering_calendar_year": year["flowering_calendar_year"], **row
             }))
     print("Strict-H1: zero newly admitted, observed final seed counts: none")
     return summary
