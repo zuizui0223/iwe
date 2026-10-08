@@ -140,6 +140,109 @@ def archive_inventory(raw: bytes) -> list[dict]:
     return result
 
 
+def stage_linkage_preflight(raw: bytes) -> dict:
+    """Only original archive *column and coverage* checks; never an SMD.
+
+    Per-plant adult observations on host flowers are NOT automatically an
+    external partner-availability curve. The output makes that distinction.
+    """
+    wanted = {
+        "adult_2022": "Freese Stats/df2_exp1F.csv",
+        "larval_2023": "Freese Stats/df2_exp2F.csv",
+        "host_2022": "Freese Stats/main_exp1.csv",
+        "host_2023": "Freese Stats/main_exp2.csv",
+        "fruit_2022": "Freese Stats/fitness_exp1.csv",
+        "fruit_2023": "Freese Stats/Exp 2 fitness.csv",
+    }
+    records = {}
+    with ZipFile(BytesIO(raw)) as zf:
+        for alias, name in wanted.items():
+            if name not in zf.namelist():
+                raise ValueError("pinned source file missing: " + name)
+            txt = zf.read(name).decode("utf-8-sig", errors="replace")
+            records[alias] = list(csv.DictReader(StringIO(txt, newline="")))
+    result = {
+        "schema": "iwe_slimon2026_original_stage_linkage_preflight_v1",
+        "source": DOI,
+        "source_scope": "two_2022_2023_host_cohorts",
+        "stage_assignments_from_filename_not_verified_adult_activity": True,
+        "independent_adult_partner_availability_identified": False,
+        "original_mature_intact_seed_by_date_verified": False,
+        "strict_h1_effect": False,
+        "per_file_rows": {k: len(v) for k, v in records.items()},
+        "date_resolved_focal_adult_counts": {},
+        "join_by_original_plant_id": {},
+        "fruit_outcome_column_inventory": {},
+    }
+    def ids(rows: list[dict]) -> set[str]:
+        return {str(row.get("ID", row.get("ID #", ""))).strip()
+                for row in rows
+                if str(row.get("ID", row.get("ID #", ""))).strip()}
+    for year, tag in ((2022, "2022"), (2023, "2023")):
+        left = records["host_" + tag]
+        mid = records[("adult_" if year == 2022 else "larval_") + tag]
+        right = records["fruit_" + tag]
+        a, b, c = ids(left), ids(mid), ids(right)
+        result["join_by_original_plant_id"][tag] = {
+            "host_ids": len(a),
+            "stage_ids": len(b),
+            "fruit_ids": len(c),
+            "host_stage_fruit_shared_ids": len(a & b & c),
+            "host_fruit_shared_ids": len(a & c),
+            "stage_source_cohort": "focal_host_observations",
+            "row_ids_source_authenticated": False,
+        }
+        result["fruit_outcome_column_inventory"][tag] = {
+            "columns": list(right[0].keys()) if right else [],
+            "has_raw_intact_seed_count_column_verified": False,
+        }
+    for stage, field_prefix in (("adult", "sf_adult_"), ("larvae", "sf_larvae_")):
+        file_rows = records["adult_2022"]
+        columns = list(file_rows[0].keys()) if file_rows else []
+        dates = {}
+        for col in columns:
+            if not col.startswith(field_prefix):
+                continue
+            values = [str(row.get(col, "")).strip() for row in file_rows]
+            numeric = []
+            errors = 0
+            for v in values:
+                if not v or v.upper() in {"NA", "N/A", "NULL"}:
+                    continue
+                try:
+                    numeric.append(float(v))
+                except ValueError:
+                    errors += 1
+            dates[col] = {
+                "numeric_observations": len(numeric),
+                "positive_rows": sum(v > 0 for v in numeric),
+                "sum_reported_counts": round(sum(numeric), 4),
+                "unparseable_nonmissing": errors,
+                "focal_host_observation_not_external_phenology": True,
+            }
+        result["date_resolved_focal_adult_counts"][stage] = dates
+    larvae_2023 = records["larval_2023"]
+    stage_columns_2023 = list(larvae_2023[0].keys()) if larvae_2023 else []
+    result["exp2_2023_stage_headers"] = [
+        c for c in stage_columns_2023 if c.startswith("sf_")
+    ]
+    result["exp2_2023_has_sf_adult_columns"] = any(
+        c.startswith("sf_adult_") for c in stage_columns_2023
+    )
+    result["real_source_rows_joined_to_fitness_without_exposure_or_unit_audit"] = False
+    return result
+
+
+def preview_relevant_readme_lines(readme: str) -> list[dict]:
+    """Small methods/dictionary windows; no arbitrary transcript dump."""
+    wanted = set(range(43, 94))
+    return [
+        {"line": i + 1, "source_text": line.strip()[:220]}
+        for i, line in enumerate(readme.splitlines())
+        if i + 1 in wanted and line.strip() and len(line.strip()) < 500
+    ][:48]
+
+
 def audit(outdir: Path):
     outdir.mkdir(parents=True, exist_ok=True)
     report = {
@@ -164,8 +267,12 @@ def audit(outdir: Path):
             if label.endswith(".txt"):
                 report["readme_contexts"] = contexts(raw.decode("utf-8", errors="replace"))
                 report["readme_line_count"] = len(raw.splitlines())
+                report["readme_original_file_dictionary"] = (
+                    preview_relevant_readme_lines(raw.decode("utf-8", errors="replace"))
+                )
             elif label.endswith(".zip"):
                 report["archive_members"] = archive_inventory(raw)
+                report["focal_stage_linkage_preflight"] = stage_linkage_preflight(raw)
         report["status"] = "inventory_recovered" if files else "targets_not_listed"
     except (ValueError, OSError, TimeoutError, RuntimeError, json.JSONDecodeError) as exc:
         report["status"] = "source_access_or_format_blocked"
@@ -180,6 +287,14 @@ def audit(outdir: Path):
               "headers", f["headers"][:35], "rows", f["rows"])
         for lead in f.get("candidate_timing_lines", [])[:5]:
             print("SCRIPT KEYWORD", lead["short_context"])
+    print("SOURCE STAGE PROVENANCE PREFLIGHT", json.dumps(
+        report.get("focal_stage_linkage_preflight", {}),
+        ensure_ascii=False
+    ))
+    print("SOURCE README DICTIONARY", json.dumps(
+        report.get("readme_original_file_dictionary", [])[:42],
+        ensure_ascii=False
+    ))
     print("No independent adult flight or H1 effect verified by automated inventory.")
     return report
 
