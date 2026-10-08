@@ -6,6 +6,20 @@ System: *Yucca elata* × *Tegeticula yuccasella* (name as used by the original a
 Source: James, Hoffman, Lightfoot, Forbes & Whitford (1994), *Oikos* 69:207–216,
 DOI [10.2307/3546140](https://doi.org/10.2307/3546140).
 
+**Important taxonomic boundary:** James et al. 1994 used the historical
+name *Tegeticula yuccasella* for moths associated with *Yucca elata*.
+Pellmyr's 1999 revision (DOI
+`10.1046/j.1365-3113.1999.00079.x`) split the former widespread
+*T. yuccasella* complex; *T. elatella* is the accepted host-associated
+pollinator of *Y. elata* in later work (e.g. Segraves et al. 2005,
+DOI `10.1098/rspb.2005.3201`). **The original 1994 specimens have
+not been reidentified here**, so source-label and contemporary
+host-associated taxonomy are retained separately. In particular, the
+1994 *Y. elata* moths must **not** be counted as the same nominal
+pollinator lineage as the *Y. glauca–T. yuccasella* studied by
+Jadeja et al. 2017. The comparison below is across distinct
+plant–pollinator systems, not within one animal species.
+
 **Decision:** independent, biologically unusual nursery-pollination candidate;
 **P2 blocked final-net-seed and same-unit quantitative linkage**, not an H1
 effect and **not** the second recovered independent mixed SMD cluster.
