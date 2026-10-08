@@ -49,7 +49,6 @@ This is the strongest current stress test of the predictive claim. A mechanistic
 | PHA_AUCUBA_IMAI | antagonist | yes | yes | yes | yes | yes | no | host_sensitivity_final | host tissue calibration and final-fate experiment are not measured on the same units |
 | PHA_WU2015_WHEAT_MIDGE | antagonist | yes | yes | yes | yes | yes | no | host_sensitivity_final | source design contains no cultivar-varying stage-free adult-only comparator |
 | PHA_WISE2015_WHEAT_MIDGE | antagonist | yes | partial | yes | yes | yes | no | host_sensitivity_final | no paired calendar/adult-only versus stage-specific predictive comparison; public abstract lacks full timing-group table |
-
 | PHA_RIEMER2024 | antagonist | yes | no | no | yes | yes | partial | paired_adult_host_positive | no measured larval stage/filter and no adult-only or held-out-year comparison |
 
 ## Interpretation
