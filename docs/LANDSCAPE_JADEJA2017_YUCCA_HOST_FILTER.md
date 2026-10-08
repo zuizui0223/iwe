@@ -31,6 +31,23 @@ Across the current examples:
 
 These mechanisms differ, but all break the equivalence between **an interaction occurring** and **that interaction surviving the host filter to become an effective future cost**.
 
+## A second, nonmonotone host-filter boundary
+
+The 2013 Canadian COSEWIC Soapweed/Yucca Moth assessments (citing Hurlburt
+2004) describe **reverse selective abscission** at the northern Onefour
+population: flowers with fewer ovipositions or less pollen are more
+likely to be aborted. In contrast, classic yucca sanction examples abort
+egg-rich flowers. This does **not** overturn the experimental Jadeja 2017
+result, because different populations and measurements are involved.
+
+It shows why "host filtering" should not be coded as a universally
+monotone anti-consumer defence. Egg receipt is coupled to adult
+pollination, and apparent acceptance of egg-rich flowers may reflect
+pollen or reproductive-unit quality rather than a preference for costly
+larvae. See `LANDSCAPE_HURLBURT_YUCCA_REVERSE_ABSCISSION.md` for the
+secondary-source evidence, competing mechanisms and a falsifiable
+within-species comparison. Neither study is promoted to strict H1.
+
 ## Claim boundary
 
 This study does not supply the final plant reproductive surface required for a primary IWE fitness effect.
