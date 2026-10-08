@@ -3,6 +3,16 @@
 **Date:** 2026-10-08  
 **Scope:** independently sourced ecological comparison, **not a new strict-H1 effect**, and not a causal cross-species meta-estimate.
 
+**Crucial difference in biological units:** *Lathyrus* involves abortion
+of **entire immature fruits**, so oviposited eggs in those fruits are
+lost along with all potential seeds. *Berberis* involves **individual
+seed abortion inside fruits that were retained to sampling**, and
+a second, potentially valuable sibling seed may remain. They are
+related but **not the same physical host filter**. The observed
+contrast cannot identify the effect of information predictability
+without controlling reproductive-unit scale, sibling value and
+plant resource status.
+
 ### 1. Plant strategy can depend on the value of a surviving sibling seed
 
 Meyer et al. (2014), *The American Naturalist*, DOI
