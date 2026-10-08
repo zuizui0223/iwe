@@ -139,6 +139,45 @@ This is also why treating the increased size of parasitised fruits
 as a host benefit is particularly problematic: the developing larva
 can consume the only potential seed inside.
 
+## Opposite egg-load pattern in another pollinating seed predator
+
+Goto et al. 2010 (*Ecology Letters*, DOI
+`10.1111/j.1461-0248.2009.01425.x`) documented
+*Glochidion acuminatum–Epicephala* nursery pollination.
+In that system, flower abortion **increased** with
+moth egg load and with ovule damage. Their source-based
+**random-abortion counterfactual model** estimated that
+selective abortion increased plant seed output by **16%**;
+female moth fitness could be reduced by as much as **62%**
+when selecting pre-infested flowers.
+
+This sharpens a biological boundary that does **not**
+follow from flowering synchrony alone:
+
+- In *Rheum*, one flower produces one ovule/seed and generally
+  one Bradysia egg; the lower abortion among naturally
+  egg-bearing flowers can benefit flies even if each surviving
+  larva completely consumes its maternal plant seed.
+- In *Glochidion*, multiple ovules and sometimes multiple eggs
+  create scope for rejecting *egg-heavy* reproductive units,
+  reducing future larval costs while retaining other fruits.
+  The **16%** is compared with a *modelled* random-abortion
+  baseline, not randomized plant abortion, and is not a
+  common-effect estimate with Rheum.
+
+**Testable mechanistic moderator:** Does the plant-side
+retention response depend jointly on egg intensity **and**
+how many viable offspring can still be saved by aborting a
+unit? An observational egg-count×ovule-count interaction
+would not identify induced plant discrimination without
+blocking flower quality and family/resource dependence.
+This must not be simplified into “all pollinating seed
+predators manipulate hosts” or “all plants sanction high
+egg loads.”
+
+Pinned bibliographic source summary:
+`data/source_reconstructions/goto2010_glochidion_abortions_costs.csv`.
+
 ## Exact experiment needed for causal separation
 
 Within each randomly chosen plant and position/phenological block,
