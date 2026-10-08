@@ -137,8 +137,21 @@ Source authenticity, chart-series identity, 2012–2014 year coverage,
 female capture-versus-recapture grain, and exact q10/q90 values all still
 require inspection before Cardamine's timing/final-fitness preflight.
 
-**Decision until the runner result is read:** strict-admissible 2012–2014
-female adult timing is **not recovered**. A successful CI step or a fetched
-PowerPoint file would not lift the P1 `blocked_timing_linkage` status. If
-all four publisher binaries are blocked or contain only figure artwork,
-stop this no-contact route rather than reusing egg timing or estimated pixels.
+**Observed outcome (GitHub-hosted runner 2026-10-08):** the source-asset
+workflow [run 37752302689](https://github.com/zuizui0223/iwe/actions/runs/37752302689)
+passed **9 no-network tests**, but recovered **0/4 source files**. The 2024
+official Figure 4 PowerPoint and all three 2019 Ecology supporting PDFs
+independently returned **HTTP 403**. Workflow `success` describes robust
+probe execution, not successful document retrieval. The downloadable artifact
+contains an access manifest, **not the publication binary files**.
+
+This closes the identified **anonymous direct-publisher/GitHub-runner route
+in this environment** without establishing that the public materials are
+globally inaccessible or that they contain no embedded source data.
+The source-backed 2012–2014 female capture/recapture series and/or exact
+year-specific flight q10/q90 values remain **unrecovered**. P1
+`blocked_timing_linkage` and the frozen preflight are unchanged.
+The next legitimate step is a permitted institutional/library binary
+download or narrowly scoped archive request. Do not repeat anonymous
+downloads, digitize plot geometry, substitute egg receipt, or count
+the existing ecological stage/final-fate contrasts as a strict timing SMD.
