@@ -120,6 +120,48 @@ Two opposite feedbacks are already present in the corpus:
 
 Therefore host retention/vulnerability should be represented as conditional on interaction history, not only on calendar time or plant stage.
 
+### P6b — the sign of reproductive filtering depends on protectable value and enemy information
+
+Not all fruit/seed abortion is a defense, and its absence is not a
+failure of defense. The fitness consequences also depend on **the
+value of a reproductive sibling that can be saved** and **the
+information that a seed predator has about future retention**.
+
+- *Berberis vulgaris–Rhagoletis meigenii* (Meyer et al. 2014,
+  DOI `10.1086/675063`): under pine-forest conditions, the
+  proportion of sampled **two-seeded fruits with exactly one
+  aborted seed** was 61/80 if an oviposition puncture was present
+  and 131/463 without; **one-seeded fruits with their sole seed
+  aborted** were 1/38 vs 16/418. Scrub-habitat source states
+  differed and even unpunctured two-seeded fruits commonly had
+  one aborted seed. The source's *nonaborted* category includes
+  **larva-eaten**, so this is a seed-abortion/fate contrast,
+  not net intact-seed fitness. Also, the study conditions on
+  fruits retained to sampling.
+- *Lathyrus vernus–Bruchus atomarius* (Östergård et al. 2007,
+  DOI `10.1890/07-0346.1`): beetles appear to forecast the
+  probability that a young fruit will survive plant abortion,
+  allowing antagonist oviposition to circumvent the host filter.
+
+**Empirically unresolved causal crossover:** If plants can protect
+a viable sibling through abortion *and consumers cannot anticipate
+which fruits will be retained*, the filter may favor the plant.
+If antagonists reliably detect that future retention despite
+protective plant abortion, selective oviposition can turn the
+same filter into a source of enemy advantage. This is a
+**testable two-dimensional moderator**, not a fitted
+multiplicative payoff or a universal law.
+
+A source-adequate design must independently manipulate or measure
+`protectable sibling value` and `pre-oviposition cue reliability`,
+then follow **all initially available** reproductive units
+through oviposition, aborted whole fruits, surviving larvae
+and intact mature seeds. Neither source supplies a full
+phenology-to-fitness same-unit experimental dataset, so no strict
+H1 effect is entered.
+
+See `LANDSCAPE_BERBERIS_LATHYRUS_FILTER_DEFENSE_OFFENSE.md`.
+
 ### P7 — mechanistic alignment need not predict final plant fitness
 
 Posledovich 2015 directly manipulates host stage at oviposition and developmental temperature. Those variables strongly affect herbivore performance, yet the probability that the first host outgrows the larva and forms mature seedpods depends only on host species identity.
