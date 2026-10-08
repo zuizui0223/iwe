@@ -14,6 +14,9 @@ def test_source_summary_is_one_programme_not_11786_effects():
     r = t.iloc[0]
     assert r["study_id"] == "JAMES1994_YUCCA_ELATA"
     assert r["article_doi"] == "10.2307/3546140"
+    assert r["animal_taxon"] == "Tegeticula yuccasella"
+    assert r["modern_yucca_elata_pollinator"] == "Tegeticula elatella"
+    assert r["original_1994_moth_voucher_reidentified"] == "no"
     assert r["publication_year"] == 1994
     assert r["inflorescences_n"] == 38
     assert r["flowers_monitored_n"] == 11786
