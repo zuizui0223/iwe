@@ -35,7 +35,7 @@ def test_synthetic_join_keeps_fruits_nested_and_prevents_smd():
     assert result["mature_fruits_with_exact_marked_unit_join"] == 3
     assert result["unmatched_mature_fruits"] == 0
     assert result["year_breakdown"]["1999"]["adult_census_days"] == 2
-    assert result["date_resolved_adult_and_fitness_join_present"] is False
+    assert result["date_resolved_adult_and_mature_fruit_join_present"] is False
     assert result["strict_h1_effect_promoted"] is False
     assert result["plant_fitness_effect_estimated"] is False
     assert result["unobserved_aborted_fruits_imputed"] is False
