@@ -112,6 +112,43 @@ crossed experiment of *host-filter predictability* and
 *protectable reproductive value*. See
 `LANDSCAPE_BERBERIS_LATHYRUS_FILTER_DEFENSE_OFFENSE.md`.
 
+## Primary Figshare Appendix A recovered: important variable-sign hold (2026-10-08)
+
+The *Ecology* paper's Figshare collection DOI
+`10.6084/m9.figshare.c.3300059` holds one appendix file,
+`appendix-A.htm`, article `10.6084/m9.figshare.3528548.v1`,
+download ID `5600258` (11,770 bytes; SHA256
+`0898f5355bea88bd4b707ea1f1435067533947c4521ca368c8fda2eb790b4dc5`).
+**The original appendix has now been downloaded and inspected.**
+
+Its Table A1 inventories, at the **plant level**, total flowers,
+initiated/mature/aborted fruits, all beetle eggs, developed seeds and
+**seeds escaping Bruchus predation**; at the **fruit level** it
+records position, phenology in four classes (early, intermediate,
+late, very late), total eggs and first-survey eggs. These are
+source-defined analytic variables, **not an openly recovered
+fruit-by-fruit data table**.
+
+**Critical source-semantic inconsistency:** a variable titled
+`Proportion fruits aborted` is *defined* in Appendix A as
+**mature fruits / initiated fruits**, transformed by arcsine-square
+root. This mathematical fraction represents **fruit retention**;
+the complementary fraction
+`(initiated - mature)/initiated` would represent fruit abortion.
+We cannot determine from the methodology-only appendix whether
+the label or the displayed ratio is erroneous or what exact
+ratio was actually fitted in the original statistical model.
+**No regression sign, host-abortion coefficient or fitted
+claim may be flipped automatically** on the basis of this
+label-definition discrepancy. Recover original fitted data,
+script or full model tables first.
+
+The source-variable inventory is frozen in
+`data/source_reconstructions/ostergard2007_appendixA_variable_contract.csv`,
+with tests that block mistaking observed oviposition for independent
+adult-flight synchrony and developed seeds for seeds escaping
+consumption.
+
 ## Claim boundary
 
 Phenology is only one of several cues used by *B. atomarius*, and the study does not isolate a pure timing effect or manipulate the egg-to-seed developmental lag.
