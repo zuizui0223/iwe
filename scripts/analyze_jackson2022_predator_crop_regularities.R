@@ -116,9 +116,9 @@ sens <- rbind(
 # Do not combine columns from unrelated rows or silently drop cases.
 covar <- function(key) {
   p <- panel(key)
-  test <- merge(v[,c("sp4","year","a_cv","v_cv")],
+  test <- merge(v[,c("sp4","year","abscised_cv","viable_cv")],
     p,by=c("sp4","year"),all=FALSE)
-  if(any(test$a_cv!=test$abscised) || any(test$v_cv!=test$viable))
+  if(any(test$abscised_cv!=test$abscised) || any(test$viable_cv!=test$viable))
     stop(paste("covariate source outcome misaligned:",key))
   spl <- split(test,test$sp4)
   if(any(vapply(spl,function(t) length(unique(t$trait))!=1L,logical(1))))
@@ -132,7 +132,8 @@ names(seed)[2] <- "seed_mass_z"
 abundance <- covar("bcireproductive_log_cs")
 names(abundance)[2] <- "local_abundance_z"
 adjusted <- merge(merge(species,seed,by="sp4"),abundance,by="sp4")
-if(nrow(adjusted)>=40 && all(table(adjusted$predator)>=10)) {
+if(nrow(adjusted)>=40 && length(unique(adjusted$predator))==2 &&
+   all(table(adjusted$predator)>=10)) {
   f_adjusted <- lm(logit_abscission ~ cvseed_cs*predator +
       seed_mass_z + local_abundance_z,data=adjusted)
   adjusted_row <- data.frame(model="seed_mass_and_local_density_adjusted",
