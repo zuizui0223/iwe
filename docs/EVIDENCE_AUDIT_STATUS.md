@@ -60,9 +60,9 @@ Public search is marked **exhausted for 9** routes and **monitor-only for 2**; t
 |---|---:|
 | contact_or_archive | 4 |
 | retrieve_longform | 3 |
+| retrieve_public_asset | 2 |
 | monitor_repository | 1 |
 | monitor_source_release | 1 |
-| retrieve_public_asset | 2 |
 
 This means the remaining gap is no longer well described as simply "more literature searching." Most unresolved routes require a named long-form source, public binary asset, archive/raw table, or future repository release.
 
