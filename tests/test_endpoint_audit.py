@@ -101,3 +101,16 @@ def test_endpoint_audit_requires_reason_and_known_class():
     errors = validate_endpoint_audit(propagation, bad)
     assert any("rationale" in e for e in errors)
     assert any("invalid endpoint_class" in e for e in errors)
+
+
+def test_endpoint_strict_comparison_displays_class_imbalance():
+    propagation, endpoints = _registered()
+    summary = endpoint_sensitivity(propagation, endpoints)
+    d = {(x["interaction_type"], x["reference"]): x
+         for x in summary["strict_class_mix"]}
+    assert d[("mutualist", "prospective_design")]["links"] == 11
+    assert d[("mutualist", "prospective_design")]["retained"] == 9
+    assert d[("antagonist", "prospective_design")]["links"] == 3
+    assert d[("antagonist", "realized_or_seasonal")]["links"] == 1
+    assert d[("mixed_pollinating_seed_predator", "prospective_design")]["links"] == 0
+    assert d[("mixed_pollinating_seed_predator", "realized_or_seasonal")]["links"] == 1
