@@ -212,12 +212,32 @@ def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
                    "flowers_reported"]
     if any((combined[c].dropna() < 0).any() for c in nonnegative):
         raise ValueError(f"source counts have negative values in {year}")
+    # Analytical sensitivity only. 'lg frt' and 'sm frt' are original
+    # recorded fruit components, not independently observed mature seeds.
+    # A denominator of fruits + final Mompha galls is an exposure-
+    # opportunity proxy, NOT a confirmed postcost per-ovule risk.
+    combined["raw_fruit_components_sum"] = (
+        combined["raw_large_fruit_count"] + combined["raw_small_fruit_count"]
+    )
+    opportunity = (
+        combined["raw_fruit_components_sum"] + combined["mompha_final_count"]
+    )
+    combined["mompha_per_opportunity_proxy"] = (
+        combined["mompha_final_count"] / opportunity.where(opportunity > 0)
+    )
+    combined["schinia_per_raw_fruit_proxy"] = (
+        combined["schinia_fruit_count"] / combined["raw_fruit_components_sum"].where(
+            combined["raw_fruit_components_sum"] > 0
+        )
+    )
     both = combined[["first_doy", "last_doy"]].dropna()
     backwards = int((both["last_doy"] < both["first_doy"]).sum())
     correlations = []
     for date_var in ("first_doy", "last_doy"):
         for outcome in ("schinia_fruit_count", "mompha_final_count",
-                        "raw_large_fruit_count", "raw_small_fruit_count"):
+                        "raw_large_fruit_count", "raw_small_fruit_count",
+                        "mompha_per_opportunity_proxy",
+                        "schinia_per_raw_fruit_proxy"):
             m = _safe_spearman(combined, date_var, outcome)
             correlations.append({"phenology_axis": date_var,
                                  "response_component": outcome, **m})
@@ -225,7 +245,10 @@ def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
     source_data = {}
     for x in ("first_doy", "last_doy", "schinia_fruit_count",
               "mompha_final_count", "raw_large_fruit_count",
-              "raw_small_fruit_count", "flowers_reported"):
+              "raw_small_fruit_count", "flowers_reported",
+              "raw_fruit_components_sum",
+              "mompha_per_opportunity_proxy",
+              "schinia_per_raw_fruit_proxy"):
         v = combined[x]
         source_data[x] = {
             "n_nonmissing": int(v.notna().sum()),
@@ -255,6 +278,10 @@ def audit_experiment(zf: ZipFile, label: str, year: int = 2023) -> dict:
         "external_adult_partner_curve_obtained": False,
         "direct_final_seed_counts_obtained": False,
         "pooled_cross_cohort_model_performed": False,
+        "opportunity_adjustment_assumption": (
+            "Exploratory shares use raw large+small fruits as a denominator; "
+            "not a source-verified per-seed risk or final intact-seed outcome"
+        ),
     }
 
 
