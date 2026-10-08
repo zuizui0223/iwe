@@ -128,3 +128,45 @@ The source README also records **half-day DOYs** for transects
 surveyed across two successive days; do not round dates before the
 timing audit. Female flight observations remain a distinct unrecovered
 data object.
+
+## Independent risk: source Figure 4's **relative Day 1** is not raw DOY
+
+The published Davies & Saccheri (2024) Figure 4 caption defines **Day 1
+separately in each year as the first observed early-ecotype flowering
+date** at Dibbinsdale. This is a different temporal coordinate from
+calendar day of year (DOY), including when both happen to be in
+the numeric range 1–366. This distinction is independent of the
+5–7-day observation-lag issue above.
+
+A numerical figure value `figure_day1=30` cannot be compared with
+`plant_doy=120` without a **source-backed, same-year calendar
+anchor**. The conversion, if its inputs are independently
+established, would be
+
+`adult_calendar_doy = figure_relative_day + observed_first_early_calendar_doy - 1`,
+
+using the study's Figure-4 Day-1 convention. No anchor is assumed, no
+figure is digitized, and no adult values are recovered here.
+
+For **real** IWE032 timing input, the provenance manifest must
+explicitly declare:
+
+- `adult_event_doy_basis=calendar_day_of_year`;
+- `plant_observation_doy_basis=calendar_day_of_year`;
+- `adult_calendar_origin_source_locator` locating the original
+  date-stamped female capture/recapture records or a reviewed
+  year-specific transformation;
+- `figure_digitization_performed=false`.
+
+These declarations are necessary but not sufficient: an entered
+locator is **not automatically verified** by the validator. Actual
+raw-source inspection is still required before evidence admission.
+The validator also rejects DOY 366 in non-leap 2013 or 2014.
+
+Real Cardamine input that instead supplies Figure-4-relative
+numbers must fail closed, even if numeric ranges and other study
+metadata pass. Synthetic test fixtures can omit these real-source
+declarations but never authorize real H1 promotion.
+
+Source: Davies & Saccheri (2024), Figure 4 caption,
+https://doi.org/10.1002/ece3.11330.
