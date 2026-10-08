@@ -107,7 +107,7 @@ Only after these checks may the 2012 and 2013 Hedges-g rows return to the strict
 
 ## Current consequence
 
-The IWE015 programme still passes the biological timing and final-reproduction gates, but contributes **zero quantitative strict-H1 effects and zero current mixed SMD dependence clusters** until raw variance verification succeeds.
+The IWE015 programme contains independently observed contemporaneous adult timing and a reported final post-predation fruit outcome, but **the exact alignment of the published fruit-count universe with the source-defined one-week flowering groups is now provisional** because of the 2013 measured-flower/successful-fruit discrepancy. Consequently, the evidence is withheld on **both** sample-unit/outcome-linkage and raw-variance verification grounds. It contributes **zero quantitative strict-H1 effects and zero mixed SMD dependence clusters**. Recovery of dispersion alone is insufficient: the final RU must also be tied to a source-defined flowering exposure.
 
 
 ## Executable raw audit
