@@ -97,7 +97,7 @@ hand-pollination did not significantly increase fruit maturation,
 and adult-moth abundance was not detectably correlated with mature
 fruit output.
 
-This is distinct from *Y. glauca* in Jadeja 2017, where the
+This is a **cross-host and cross-pollinator-lineage comparison**: the 1994 *Y. elata* moth was called *T. yuccasella* sensu lato before Pellmyr's 1999 revision, whereas the modern *Y. elata* pollinator is *T. elatella*. Do not treat the two moth populations as one modern species. This is distinct from *Y. glauca* in Jadeja 2017, where the
 presence of basal fruits gives moths a directional cue about
 late distal flowers' abortion risk and moths alter their oviposition.
 Together they motivate a **cross-context discriminator**:
