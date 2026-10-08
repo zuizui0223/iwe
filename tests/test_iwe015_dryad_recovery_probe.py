@@ -1,9 +1,12 @@
 import pytest
+import urllib.request
 
 from scripts.recover_iwe015_dryad import (
     DOI,
     SOURCE_FILES,
+    ScopeBearerRedirect,
     inspect_payload,
+    source_headers,
     source_urls,
 )
 
@@ -50,3 +53,30 @@ def test_probe_rejects_error_pages_and_incomplete_csv(payload):
 def test_short_script_does_not_masquerade_as_source_code():
     with pytest.raises(ValueError):
         inspect_payload("data_analysis.R", b"no")
+
+
+def test_bearer_token_only_in_header_not_in_manifest_fields():
+    token = "example-secret-NOT-REAL"
+    assert "Authorization" not in source_headers()
+    with_auth = source_headers(token)
+    assert with_auth["Authorization"] == "Bearer " + token
+    assert not any(token in str(x) for x in source_urls(278487))
+
+
+def test_bearer_is_removed_on_redirect_outside_dryad():
+    url = source_urls(278487)[0]
+    req = urllib.request.Request(url, headers=source_headers("test-only"))
+    handler = ScopeBearerRedirect()
+    external = handler.redirect_request(
+        req, None, 302, "Found", {},
+        "https://storage.example.org/dryad/signed-object"
+    )
+    assert external is not None
+    assert not external.has_header("Authorization")
+
+    same_origin = handler.redirect_request(
+        req, None, 302, "Found", {},
+        "https://datadryad.org/downloads/temporary"
+    )
+    assert same_origin is not None
+    assert same_origin.has_header("Authorization")
