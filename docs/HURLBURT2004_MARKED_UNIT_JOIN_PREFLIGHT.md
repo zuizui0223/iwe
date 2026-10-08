@@ -28,6 +28,44 @@ abort than egg-richer flowers in this resource/partner-limited context. This is
 an ecological mechanism boundary, **not** an independent marked-unit
 synchrony-to-final-fitness comparison.
 
+## Newly explicit adult-detection boundary
+
+The official COSEWIC 2013 assessment (section "Sampling Effort and Methods",
+Yucca Moth) states that the 1999–2003 counts were made **inside approximately
+100 fresh flowers several times a week**, and that adult Yucca Moth total
+abundance **could not be determined** because of short adult lives,
+within-year variability, and inability to detect them outside Yucca flowers.
+
+This separates two meanings of "independent" which must not be conflated:
+
+- **Independent of egg receipt / larval injury:** adult moths were directly
+  counted rather than inferred from already-laid eggs, so they are a valid
+  directly observed *within-flower adult census*.
+- **Independent of host-flower sampling opportunity:** **not established**.
+  Detection is conditional on fresh host flowers being available and visited
+  by observers. A missing census date is not an observed zero-moth day, and
+  observed counts alone do not reconstruct an unconditional moth emergence
+  distribution outside the sampled flowering period.
+
+The preflight therefore preserves `adult_census_detection_context =
+moths_counted_within_fresh_host_flowers`,
+`independent_unconditional_adult_flight_window_verified=false`,
+and `unsampled_adult_activity_imputed_zero=false` regardless of a
+successful marked-fruit join. An optional original `flowers_examined`
+column can verify dated positive flower-sampling effort. Presence of that
+column **does not** itself prove a full, flower-independent adult
+flight/activity curve.
+
+This caveat weakens automatic transport to the strict
+independent-partner-*availability* estimand. It does not retroactively
+prove that the programme is ineligible: after original-source audit, a
+defensible, host-availability-conditioned adult activity contrast may
+still exist, but must be named correctly and predeclared before seeing
+final seeds. Only the original source can establish its interpretability.
+
+Official assessment:
+https://www.canada.ca/en/environment-climate-change/services/species-risk-public-registry/cosewic-assessments-status-reports/yucca-moth-various-species-2013.html
+
 The public source summaries do **not** verify a fruit-level key linking
 dissected fruits to the marked clone/inflorescence and that marked unit's
 opening dates. The repository PDF retrieval failure is a runtime constraint,
@@ -56,7 +94,7 @@ The four accepted input objects, once located and confirmed in the
 | Input | Required normalized fields | Grain |
 |---|---|---|
 | \`marked_units.csv\` | \`year, clone_id, inflorescence_id, first_flower_date, last_flower_date\` | one marked inflorescence in a known year |
-| \`adult_census.csv\` | \`year, census_date, adult_moth_count\` | one independent adult census date at Onefour |
+| \`adult_census.csv\` | \`year, census_date, adult_moth_count\` | one within-flower adult census date at Onefour (optional `flowers_examined` effort) |
 | \`mature_fruits.csv\` | \`year, clone_id, inflorescence_id, fruit_id, viable_seeds\` | one dissected mature fruit, nested in the original marked unit |
 | \`provenance.json\` | schema below | explicit original-source locators and audit mode |
 
