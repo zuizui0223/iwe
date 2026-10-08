@@ -47,7 +47,7 @@ This is a high-provenance plant–antagonist timing coordinate because:
 
 1. adult timing is measured independently with pheromone traps;
 2. host susceptible timing is measured independently as BBCH 60;
-3. the interaction between those temporal coordinates is specified before the final seed-damage outcome;
+3. the two temporal measurements precede the final seed-damage assessment;
 4. predictive performance is evaluated by leave-one-out cross-validation on final seed damage.
 
 ## Why this is stronger than a calendar-only timing effect
@@ -62,6 +62,23 @@ This therefore supplies a second type of positive paired diagnostic beside Parki
 - pea moth: host flowering alone → **independent adult-arrival × flowering**.
 
 The two positives improve prediction at different causal layers.
+
+## Transportability and coordinate audit — 2026-10-08
+
+The comparison is real, but its ecological and predictive scope is narrower than an effective-window confirmation.
+
+- **Adult proxy:** first male capture in pheromone traps is an independently measured flight-onset proxy; it is not a directly observed female oviposition or larval-damage window.
+- **What is compared:** M1 uses flowering onset, whereas M3 is a statistical `moth × flowering` interaction. It is not a source-derived signed lag, measured overlap integral, or delayed consumer-stage coordinate. Table 3 does not provide an adult-arrival-only model.
+- **What cross-validation holds out:** the authors used leave-one-**field**-out validation on 88 fields pooled from 2016–2019. No leave-one-**year**-out result is reported. Year-specific mean infestation is highly uneven (2016 2.6%, 2017 11.3%, 2018 16.4%, 2019 4.4%), so spatial and interannual transport cannot be inferred from field-wise LOOCV alone.
+- **Can the missing comparison be calculated now?** The original article says the underlying data are available from the corresponding author on reasonable request. Field-level data are not supplied as an openly reproducible analysis table in the current IWE registry.
+
+The source therefore supports a specific positive result:
+
+> measured adult-arrival timing adds field-level information about final seed damage beyond host flowering onset in the same regional dataset.
+
+It does **not** establish that a host-filtered, stage-specific coordinate outperforms either flowering time or independent adult timing, nor that the gain generalizes to an unseen year.
+
+**Required future falsification:** using the original field rows, fit source-compatible models with flowering-only, adult-only, flowering + adult, and a separately pre-defined biologically stage-aligned timing variable; compare all under leave-one-year-out validation and a spatially blocked sensitivity. Do not infer an effective-stage variable from the outcome.
 
 ## Claim boundary
 
