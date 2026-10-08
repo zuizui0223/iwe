@@ -180,15 +180,17 @@ The propagation model records *how far and in what form* it reaches plant fitnes
 
 The paired-prediction evidence adds a third question: **which downstream gate actually contains new predictive information?** A deeper coordinate is not automatically better.
 
-## A response-independent phase coordinate
+## A response-independent phase-detection coordinate
 
-Where source timing allows it, developmental head start can be defined before inspecting final fitness.
+Where source timing allows it, a descriptive developmental lead can be computed before inspecting final fitness.
 
-For Kula 2012:
+For Kula 2012, the observable coordinate is:
 
-`phase safety margin = flower-to-first-larva delay - fruit maturation time`.
+`detection margin = first flower-to-detected mobile larva delay - mean fruit collection interval`.
 
-It is -11.3 d in 2008 and +0.3 d in 2009, matching the year-to-year reversal in the synchrony-predation sign.
+Its point estimates are **-11.3 d** (2008) and **+0.3 d** (2009), coincident with the year-to-year reversal in the synchrony-predation association. But the 2009 maturation-only ±2SE range is **-0.50 to +1.10 d** and crosses zero. Larvae were first observed when already mobile (approximately 10–15 mm) under a 2–4-day visit schedule, not at the onset of feeding.
+
+Consequently, the source supports an **increased developmental lead**, not a confirmed “maturation before damage” threshold. This descriptive two-year correspondence is not a prospective predictive test.
 
 For Cardamine, using the source-defined 7-d active-egg boundary as a descriptive ecotype reference:
 
