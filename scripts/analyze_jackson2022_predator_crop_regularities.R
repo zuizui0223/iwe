@@ -110,8 +110,43 @@ sens <- rbind(
   run_model(species,"equal_weight_primary"),
   run_model(species,"cap_sqrt_seed_count_weight",TRUE),
   run_model(subset(species,n_years>=10),"ten_plus_recorded_years"))
-sens$primary_species_bootstrap_lo <- c(interval[1],NA,NA)
-sens$primary_species_bootstrap_hi <- c(interval[2],NA,NA)
+# Confounder sensitivity was named BEFORE running the interaction:
+# existing single-predictor source frames also include seed mass and
+# local reproductive-conspecific density, each measured at species grain.
+# Do not combine columns from unrelated rows or silently drop cases.
+covar <- function(key) {
+  p <- panel(key)
+  test <- merge(v[,c("sp4","year","a_cv","v_cv")],
+    p,by=c("sp4","year"),all=FALSE)
+  if(any(test$a_cv!=test$abscised) || any(test$v_cv!=test$viable))
+    stop(paste("covariate source outcome misaligned:",key))
+  spl <- split(test,test$sp4)
+  if(any(vapply(spl,function(t) length(unique(t$trait))!=1L,logical(1))))
+    stop(paste("source covariate varies across years:",key))
+  data.frame(sp4=names(spl),
+    cov=as.numeric(vapply(spl,function(t) t$trait[1],character(1))),
+    stringsAsFactors=FALSE)
+}
+seed <- covar("seed_dry_log_cs")
+names(seed)[2] <- "seed_mass_z"
+abundance <- covar("bcireproductive_log_cs")
+names(abundance)[2] <- "local_abundance_z"
+adjusted <- merge(merge(species,seed,by="sp4"),abundance,by="sp4")
+if(nrow(adjusted)>=40 && all(table(adjusted$predator)>=10)) {
+  f_adjusted <- lm(logit_abscission ~ cvseed_cs*predator +
+      seed_mass_z + local_abundance_z,data=adjusted)
+  adjusted_row <- data.frame(model="seed_mass_and_local_density_adjusted",
+    n_species=nrow(adjusted),n_pred0=sum(adjusted$predator==0),
+    n_pred1=sum(adjusted$predator==1),
+    cv_x_pred=unname(coef(f_adjusted)[["cvseed_cs:predator"]]))
+} else {
+  adjusted_row <- data.frame(model="seed_mass_and_local_density_adjusted_NOT_IDENTIFIED",
+    n_species=nrow(adjusted),n_pred0=sum(adjusted$predator==0),
+    n_pred1=sum(adjusted$predator==1),cv_x_pred=NA_real_)
+}
+sens <- rbind(sens,adjusted_row)
+sens$primary_species_bootstrap_lo <- c(interval[1],NA,NA,NA)
+sens$primary_species_bootstrap_hi <- c(interval[2],NA,NA,NA)
 sens$note <- "source_model_frame_exploratory_not_independent_data_not_causal"
 write.csv(sens,file.path(outdir,"crop_regularities_predator_interaction.csv"),
           row.names=FALSE,na="")
