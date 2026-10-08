@@ -90,6 +90,28 @@ Final fitness integrates additional pathways, including direct phenology effects
 The long-term coefficients are stored in
 `data/source_reconstructions/valdes2021_lathyrus_longterm_boundary.csv`.
 
+## Opposite conditional host decision in barberry (new source audit)
+
+The *Berberis vulgaris–Rhagoletis meigenii* observations in Meyer et al.
+2014 (DOI `10.1086/675063`) are an independent ecological contrast:
+plant seed abortion is strongly conditional on whether a fruit has a
+second protectable seed. In pine-forest fruits with two developed
+ovules, exactly one seed was aborted in **61/80** punctured fruits
+versus **131/463** unpunctured fruits; among one-seeded fruits the
+sole seed was aborted in only **1/38** versus **16/418**.
+The observed fruit-state effect in dry scrub is different again,
+with high partial-abortion frequencies even without punctures.
+
+This contrasts with *Lathyrus* beetles targeting fruits unlikely to
+be aborted. Importantly, an antagonist's exploitation and a
+plant's protection are **not contradictory** if consumer cue quality,
+remaining sibling value and plant resource state differ.
+No common phenology-to-intact-seed effect estimate is recoverable
+from these source aggregate tables. Their contrasts motivate a
+crossed experiment of *host-filter predictability* and
+*protectable reproductive value*. See
+`LANDSCAPE_BERBERIS_LATHYRUS_FILTER_DEFENSE_OFFENSE.md`.
+
 ## Claim boundary
 
 Phenology is only one of several cues used by *B. atomarius*, and the study does not isolate a pure timing effect or manipulate the egg-to-seed developmental lag.
