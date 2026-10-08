@@ -1,0 +1,38 @@
+name: IWE opposing host fruit filters public archive provenance
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/probe_ostergard2007_meyer2014_archives.py
+      - tests/test_host_filter_open_archive_probe.py
+      - .github/workflows/host-filter-publisher-data-probe.yml
+
+permissions:
+  contents: read
+
+jobs:
+  public-archive-probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Source and safety contract
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_host_filter_open_archive_probe.py
+      - name: Check two exact publisher-cited public archive endpoints
+        run: >-
+          python -m scripts.probe_ostergard2007_meyer2014_archives
+          --output-dir /tmp/iwe-host-filter-open-archive-probe
+          --timeout 15
+      - name: Upload metadata manifest only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-filter-source-archive-metadata-only
+          path: /tmp/iwe-host-filter-open-archive-probe/manifest.json
+          if-no-files-found: warn
+          retention-days: 7
