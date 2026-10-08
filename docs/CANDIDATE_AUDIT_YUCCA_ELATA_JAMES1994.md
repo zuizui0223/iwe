@@ -75,6 +75,41 @@ per mature fruit. The paper's statement about weak moth-abundance
 association is an **observed lack of detected correlation**, not an
 equivalence test of plant reproduction with and without moths.
 
+## Independent companion experiment: two different time gates
+
+The same research group published a **separate 1993 manipulative
+pollination study** of *Y. elata* (James et al., *Oecologia* 93:512–517,
+DOI `10.1007/BF00328959`). They followed a population of 250 plants,
+with diel pollinator exclusions on 12 inflorescences:
+
+- **4,022 flowers** offered **daytime-only** visitation yielded **zero**
+  mature fruits;
+- **4,974 flowers** offered **nocturnal-only** visitation yielded **4.6%**
+  mature fruits, similar to open controls;
+- individual flowers were open for approximately **two days** but pollen
+  receptive only on the **first night**; experimental pollination
+  required pushing pollen into the stigmatic tube.
+
+This source independently supports a **sharp first-night pollination
+opportunity** within each flower. The 1994 dataset separately reports
+that, among many first-night-capable flowers on an inflorescence,
+those forming retained mature fruit are concentrated in a variably
+positioned **five-night run**. These are biologically **two distinct
+time filters**:
+
+`per-flower first-night successful pollination` versus
+`inflorescence-level multi-night selective fruit retention`.
+
+This pairing makes the host timing bottleneck unusually specific:
+adult moth visits can be necessary for fertilization but still fail
+to track which of the successfully exposed flowers remain as mature
+fruits. **Crucially, the experiments are from different papers**,
+not a same-flower joint dataset; no source-backed paired
+pollination-night/fruit-retention/larval-intact-seed outcome is created
+by citing them together. Do not reinterpret 12 bagged
+inflorescences, 38 observational inflorescences or thousands of
+flowers as a shared pool of independent treatments.
+
 ## Why this is scientifically consequential
 
 A strict synchrony model asks whether more overlap with adult moths
