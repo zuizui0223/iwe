@@ -112,3 +112,33 @@ Do not:
 The completion route is now classified `public_asset_runtime_blocked` with next action `retrieve_public_asset`.
 
 This does not promote the candidate and does not add evidence. It only prevents a premature move to email/contact while identified public assets remain uninspected outside the current runtime.
+
+## 2026-10-08 official publisher binary route: independently tested access
+
+To avoid repeated generic searching, the exact source-linked binary files now
+have one isolated, nonpromoting access audit:
+
+- 2024 Davies & Saccheri **Figure 4 PowerPoint**: the official Wiley
+  `action/downloadFigures` endpoint for `ece311330-fig-0004`;
+- 2019 Davies *Ecology* **Appendices S1–S3**: the three official
+  `ecy2612-sup-0001/0002/0003-AppendixS*.pdf` files.
+
+The repository code is `scripts/probe_cardamine_public_timing_assets.py`,
+its no-network tests are `tests/test_cardamine_public_timing_asset_probe.py`,
+and the one-time public retrieval is
+`.github/workflows/cardamine-publisher-asset-probe.yml`.
+
+The probe **does not digitize the figure**, infer a flight distribution from
+shapes or boxes, or treat an Office/PDF signature as numeric source data.
+For Office Open XML, it reports any `ppt/charts/` or
+`ppt/embeddings/` objects merely as *candidates to inspect*; an old binary
+OLE PowerPoint is classified as unknown numeric status even if downloaded.
+Source authenticity, chart-series identity, 2012–2014 year coverage,
+female capture-versus-recapture grain, and exact q10/q90 values all still
+require inspection before Cardamine's timing/final-fitness preflight.
+
+**Decision until the runner result is read:** strict-admissible 2012–2014
+female adult timing is **not recovered**. A successful CI step or a fetched
+PowerPoint file would not lift the P1 `blocked_timing_linkage` status. If
+all four publisher binaries are blocked or contain only figure artwork,
+stop this no-contact route rather than reusing egg timing or estimated pixels.
