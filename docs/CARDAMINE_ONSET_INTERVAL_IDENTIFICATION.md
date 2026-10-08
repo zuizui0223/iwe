@@ -78,3 +78,53 @@ cluster or admits a final-fitness prediction.
    onset date, and do not invent last-zero visits.
 
 Source: https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.11330
+
+## New SMD-level sensitivity (added 2026-10-08)
+
+`src/iwe/cardamine_onset_sensitivity.py` now re-evaluates actual
+within-year × ecotype `core_vs_early` and `core_vs_late` Hedges g
+after **response-blind classification** under four alternative exposure
+assignments:
+
+- `observed_point`: the original **first observed** flowering day, not
+  necessarily true onset;
+- `source_certified_only`: only groups robust to a separately
+  source-located inclusive onset interval; an unlocated late/core
+  plant is dropped even if its observed day lies late;
+- `scenario_stable_only`: only groups invariant under an explicitly
+  assumed maximum observation delay (0, 3, 5, 7, 10 and 14 days);
+- `scenario_earliest_all`: assign **all** plants the earliest day
+  permitted by that assumed delay. This is an adversarial
+  coherent-shift scenario, not an estimate of true onset.
+
+The direct timing, independent adult event records and outcomes are
+required as separate inputs. The module freezes all classifications
+without reading eggs, larval load or plant reproductive outcomes; only
+then does it join intact reproductive-unit fractions to calculate
+Hedges g and its working variance using the existing, unchanged
+`cardamine_smd_audit`/`cardamine_smd_effects` contract.
+
+`scripts/run_cardamine_preflight.py` additionally writes
+`onset_effect_sensitivity.csv`, including timing-group exclusion
+counts, estimability, g, and variance. An optional
+`--source-onset-bounds FILE.csv` accepts individual `earliest_possible_doy`
+and `source_locator` fields, but a locator by itself is **not**
+authenticated original data; independent human source validation is
+necessary. The status JSON accordingly records
+`original_lower_bound_locators_human_verified_by_pipeline=false`.
+
+**Interpretation stop rule:** a synthetic lag sensitivity, however
+stable, does not establish actual onset-day accuracy or admit H1
+effects. If the source-certified subset has fewer than two outcomes
+per group or zero variance, report `eligible_smd=false`, not an
+imputed or borrowed effect. A difference between observed-point and
+assumed-earliest g is evidence of **analysis sensitivity under an
+assumption**, not an observed population-level effect reversal.
+
+Source public Dryad sheets are **six plant transect workbooks**, not a
+numeric female flight-event dataset:
+https://doi.org/10.5061/dryad.v9s4mw741.
+The source README also records **half-day DOYs** for transects
+surveyed across two successive days; do not round dates before the
+timing audit. Female flight observations remain a distinct unrecovered
+data object.
