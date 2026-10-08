@@ -1,5 +1,7 @@
 # Hurlburt 2004: exact marked-unit to mature-fruit preflight
 
+> **Original-source update (2026-10-08):** The university-hosted `NQ95948.pdf` has now been downloaded and inspected. Physical PDF pp. 85–87 (printed pp. 73–75) directly confirm one-to-one flower-marking continuity through fruit retention/abscission and direct adult-moth census. The still-unverified link is **flower-date/ID → post-larval intact viable seeds with variance**, not whether flower IDs ever persisted to retained fruit. See `docs/HURLBURT2004_ORIGINAL_THESIS_SOURCE_AUDIT_20261008.md`. Earlier access failures and preliminary status statements below are historical.
+
 Date: 2026-10-08  
 Candidate: \`MIX002_HURLBURT_2004\`  
 Study system: *Yucca glauca × Tegeticula yuccasella*, Onefour, Alberta, 1999–2003  
