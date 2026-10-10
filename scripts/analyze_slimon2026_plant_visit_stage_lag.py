@@ -271,7 +271,7 @@ def run(outdir: Path) -> dict:
     md5 = hashlib.md5(raw).hexdigest()
     print("SOURCE_BYTES", len(raw), "SOURCE_MD5", md5,
           "METADATA_CHECKSUM", x[0].get("checksum"),
-          "HAS_ZIP_SIGNATURE", raw.startswith(b"PK\\x03\\x04"))
+          "HAS_ZIP_SIGNATURE", raw[:2] == b"PK")
     if md5 != EXPECTED_ZIP_MD5:
         # Retry only this exact source-pinned archive: a network/CDN
         # error page may be binary-sized. No biological computation
@@ -283,7 +283,7 @@ def run(outdir: Path) -> dict:
             raise RuntimeError("checksum failed and exact-source retry unavailable") from exc
         raw, md5 = fresh, hashlib.md5(fresh).hexdigest()
         print("RETRY_SOURCE_BYTES", len(raw), "RETRY_MD5", md5,
-              "RETRY_ZIP_SIGNATURE", raw.startswith(b"PK\\x03\\x04"))
+              "RETRY_ZIP_SIGNATURE", raw[:2] == b"PK")
     if md5 != EXPECTED_ZIP_MD5:
         raise ValueError("original ZIP MD5 differs from frozen Zenodo source; analysis blocked")
     with ZipFile(BytesIO(raw)) as zf:
