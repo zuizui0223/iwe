@@ -6,6 +6,9 @@ on:
     paths:
       - scripts/analyze_slimon2026_date_plant_controls.py
       - tests/test_slimon2026_date_plant_controls.py
+      - tests/test_slimon2026_date_plant_source_receipt.py
+      - data/source_reconstructions/slimon2026_date_plant_stage_confounding.csv
+      - docs/SLIMON2026_DATE_VS_PLANT_STAGE_CONTROL_20261010.md
       - .github/workflows/slimon2026-date-plant-controls.yml
 
 permissions:
