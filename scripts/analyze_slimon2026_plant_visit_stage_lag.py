@@ -199,6 +199,39 @@ def audit_experiment(zf: ZipFile, name: str) -> dict:
                 ).sum()),
             })
 
+    # A large number of no-open-flower Mompha-positive observations
+    # cannot be called stage preference without the zero-flower
+    # observation denominator. These are paired plant-*visits*, not
+    # independent moths, new oviposition dates, or independent plants.
+    n_zero = sum(q["n_plants_no_open_flower"] for q in per_survey)
+    n_all = sum(q["n_paired_plants"] for q in per_survey)
+    positive_zero = sum(
+        q["n_mompha_positive_without_open_flower"] for q in per_survey
+    )
+    positive_flower = sum(
+        q["n_mompha_positive_with_open_flower"] for q in per_survey
+    )
+    if n_all != len(data):
+        raise ValueError("plant-visit grain audit inconsistent")
+    flower_n = n_all - n_zero
+    snapshot = {
+        "no_open_flower": {
+            "plant_visits": n_zero,
+            "mompha_positive_visits": positive_zero,
+            "positivity_per_visit_descriptive": (
+                round(positive_zero / n_zero, 6) if n_zero else None
+            ),
+        },
+        "at_least_one_open_flower": {
+            "plant_visits": flower_n,
+            "mompha_positive_visits": positive_flower,
+            "positivity_per_visit_descriptive": (
+                round(positive_flower / flower_n, 6) if flower_n else None
+            ),
+        },
+        "not_stage_specific_oviposition_risk": True,
+        "repeated_plants_nonindependent": True,
+    }
     date_summary = {
         "experiment": name,
         "flowering_calendar_year": YEAR,
@@ -214,6 +247,7 @@ def audit_experiment(zf: ZipFile, name: str) -> dict:
         "n_negative_or_fractional_source_counts_rejected": abnormal_values,
         "exact_date_survey_results": per_survey,
         "recorded_window_stage_counts": stage,
+        "paired_visit_open_flower_baseline": snapshot,
         "plant_visits_are_not_independent_replicate_experiments": True,
         "mompha_new_visible_stage_is_not_oviposition_or_adult_flight": True,
         "zero_open_flower_plant_visits_do_not_imply_plant_no_ovules": True,
@@ -308,6 +342,8 @@ def run(outdir: Path) -> dict:
               x["n_exact_same_dates"], "PAIRED_VISITS",
               x["n_matched_plant_visits"],
               "REJECTED", x["n_negative_or_fractional_source_counts_rejected"])
+        print("OPEN_FLOWER_BASELINE", x["experiment"],
+              json.dumps(x["paired_visit_open_flower_baseline"]))
         print("STAGE", x["experiment"],
               json.dumps(x["recorded_window_stage_counts"], ensure_ascii=False))
         for entry in x["exact_date_survey_results"]:
