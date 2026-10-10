@@ -1,0 +1,5 @@
+source_doi,experiment,flowering_calendar_year,open_flower_snapshot_class,n_paired_plant_visits,n_mompha_positive_plant_visits,mompha_positive_fraction_per_visit,independent_plant_sample_size,oviposition_risk_identified,strict_h1_effect
+10.5281/zenodo.19488509,exp1,2023,no_open_flowers,1198,291,0.242905,not_independent_visits,no,no
+10.5281/zenodo.19488509,exp1,2023,at_least_one_open_flower,270,115,0.425926,not_independent_visits,no,no
+10.5281/zenodo.19488509,exp2,2023,no_open_flowers,877,188,0.214367,not_independent_visits,no,no
+10.5281/zenodo.19488509,exp2,2023,at_least_one_open_flower,110,36,0.327273,not_independent_visits,no,no
