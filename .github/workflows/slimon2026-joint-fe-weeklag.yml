@@ -6,6 +6,9 @@ on:
     paths:
       - scripts/analyze_slimon2026_joint_fe_weeklag.py
       - tests/test_slimon2026_joint_fe_weeklag.py
+      - tests/test_slimon2026_joint_fe_weeklag_source_receipt.py
+      - data/source_reconstructions/slimon2026_joint_fe_weeklag_source.csv
+      - docs/SLIMON2026_JOINT_PLANT_DATE_WEEKLAG_AUDIT_20261010.md
       - .github/workflows/slimon2026-joint-fe-weeklag.yml
 
 permissions:
@@ -22,7 +25,7 @@ jobs:
       - name: Test no borrowing dates and source biological units
         run: |
           python -m pip install -e '.[dev]'
-          python -m pytest -q tests/test_slimon2026_joint_fe_weeklag.py
+          python -m pytest -q tests/test_slimon2026_joint_fe_weeklag.py tests/test_slimon2026_joint_fe_weeklag_source_receipt.py
       - name: Audit exact original Mompha/flower ±7d status on common plants and dates
         run: >-
           python -m scripts.analyze_slimon2026_joint_fe_weeklag
