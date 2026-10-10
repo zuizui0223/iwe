@@ -54,7 +54,7 @@ def test_no_borrowed_nonsequential_doy_or_fake_zero():
     panel=_panel(n_plants=6)
     with pytest.raises(ValueError,match="repeated"):
         match_exact_flower_neighbours(pd.concat([panel,panel.iloc[[0]]]))
-    with pytest.raises(ValueError,match="7"):
+    with pytest.raises(ValueError,match="one-week"):
         match_exact_flower_neighbours(panel,lag_days=10)
 
 
