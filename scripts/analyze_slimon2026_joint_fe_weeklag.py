@@ -58,6 +58,7 @@ def match_exact_flower_neighbours(
                         how="inner", validate="one_to_one")
     joined = joined.merge(future, on=["source_plant_id", "doy"],
                           how="inner", validate="one_to_one")
+    joined = joined.rename(columns={"open_flower_snapshot": "current_open"})
     if joined.empty:
         raise ValueError("no original plant dates with both exact 7-day neighbours")
     for axis in TEMPORAL_AXES:
