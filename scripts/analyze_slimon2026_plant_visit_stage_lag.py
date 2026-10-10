@@ -150,7 +150,10 @@ def audit_experiment(zf: ZipFile, name: str) -> dict:
                     n_event_zero_flower += 1
                 else:
                     n_event_flowering += 1
-                if phase != "within_recorded_flower_window":
+                if phase in (
+                    "before_first_recorded_flower",
+                    "after_last_recorded_flower",
+                ):
                     event_counts_outside += mompha_n
             matched.append({
                 "source_plant_id": pid,
