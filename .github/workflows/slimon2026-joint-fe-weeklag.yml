@@ -1,0 +1,37 @@
+name: IWE Slimon two-way flower-stage lag controls
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/analyze_slimon2026_joint_fe_weeklag.py
+      - tests/test_slimon2026_joint_fe_weeklag.py
+      - .github/workflows/slimon2026-joint-fe-weeklag.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-weeklag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test no borrowing dates and source biological units
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_slimon2026_joint_fe_weeklag.py
+      - name: Audit exact original Mompha/flower ±7d status on common plants and dates
+        run: >-
+          python -m scripts.analyze_slimon2026_joint_fe_weeklag
+          --outdir /tmp/slimon2026-source-weeklag --boot 160
+      - name: Preserve source-only aggregate audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slimon2026-source-weeklag-original-audit
+          path: /tmp/slimon2026-source-weeklag/matched_weeklag_twfe.json
+          if-no-files-found: warn
+          retention-days: 7
