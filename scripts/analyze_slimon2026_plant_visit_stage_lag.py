@@ -17,6 +17,7 @@ import hashlib
 from io import BytesIO
 import json
 from pathlib import Path
+import time
 import re
 from zipfile import ZipFile
 
@@ -201,9 +202,9 @@ def audit_experiment(zf: ZipFile, name: str) -> dict:
         "source_dates_flower": len(dates_flower),
         "source_dates_mompha": len(dates_mompha),
         "n_exact_same_dates": len(same_date),
-        "flower_dates_only": [date(YEAR,1,1).toordinal() + d - 1
+        "flower_dates_only": [date.fromordinal(date(YEAR, 1, 1).toordinal()+d-1).isoformat()
                               for d in sorted(set(dates_flower)-set(dates_mompha))],
-        "mompha_dates_only": [date(YEAR,1,1).toordinal() + d - 1
+        "mompha_dates_only": [date.fromordinal(date(YEAR, 1, 1).toordinal()+d-1).isoformat()
                               for d in sorted(set(dates_mompha)-set(dates_flower))],
         "source_shared_plant_ids": len(common_ids),
         "n_matched_plant_visits": len(data),
@@ -236,11 +237,37 @@ def audit_experiment(zf: ZipFile, name: str) -> dict:
 
 def run(outdir: Path) -> dict:
     outdir.mkdir(parents=True, exist_ok=True)
-    record = json.loads(read_public(API).decode("utf-8"))
+    # Source service can transiently time out. Retries never widen
+    # search to another dataset. The original deposited byte MD5 is
+    # always verified before a biological value can be interpreted.
+    last_error = None
+    record = None
+    for attempt in range(3):
+        try:
+            record = json.loads(read_public(API, timeout=60).decode("utf-8"))
+            break
+        except (OSError, TimeoutError, ValueError) as exc:
+            last_error = exc
+            if attempt < 2:
+                print("Zenodo official metadata transient failure; retry", attempt + 1)
+                time.sleep(2)
+    if record is None:
+        raise RuntimeError("official metadata inaccessible; no data result") from last_error
     x = [v for v in file_info(record) if v["name"] == "Freese Stats.zip"]
     if len(x) != 1:
         raise ValueError("original source zip metadata missing")
-    raw = read_public(x[0]["url"])
+    raw = None
+    for attempt in range(3):
+        try:
+            raw = read_public(x[0]["url"], timeout=75)
+            break
+        except (OSError, TimeoutError, ValueError) as exc:
+            last_error = exc
+            if attempt < 2:
+                print("Zenodo pinned ZIP transient failure; retry", attempt + 1)
+                time.sleep(2)
+    if raw is None:
+        raise RuntimeError("original ZIP inaccessible; no reconstructed observation") from last_error
     md5 = hashlib.md5(raw).hexdigest()
     if md5 != EXPECTED_ZIP_MD5:
         raise ValueError("original Zip MD5 differs from frozen Zenodo source")
