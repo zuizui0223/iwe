@@ -51,7 +51,7 @@ def test_source_exact_panel_and_three_separate_estimands():
 
 def test_stratum_adjusted_does_not_conflate_different_calendar_times():
     # Two early vs late days with different plant resources. Raw
-    # difference is 3/4 - 2/4 = .25; within-date matches remove it.
+    # difference is 3/4 - 1/4 = .50; within-date matches remove it.
     p=pd.DataFrame([
       ("a", 195, 1, 1),("b",195,1,1),("c",195,1,1),("d",195,0,1),
       ("a", 225, 1, 0),("b",225,0,0),("c",225,0,0),("d",225,0,0),
@@ -61,7 +61,7 @@ def test_stratum_adjusted_does_not_conflate_different_calendar_times():
     # Within-date all observed positive at day 195 and none at 225,
     # so open-flower availability has zero within-date association.
     assert out["date_stratified_risk_difference"]["risk_difference"] == 0
-    assert out["naive_pooled_visit_risk_difference"] == 0.25
+    assert out["naive_pooled_visit_risk_difference"] == 0.5
     assert out["within_plant_risk_difference"]["n_comparable_strata"] > 0
 
 
