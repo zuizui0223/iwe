@@ -1,0 +1,40 @@
+name: IWE Slimon seasonal vs plant opportunity controls
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/analyze_slimon2026_date_plant_controls.py
+      - tests/test_slimon2026_date_plant_controls.py
+      - tests/test_slimon2026_date_plant_source_receipt.py
+      - data/source_reconstructions/slimon2026_date_plant_stage_confounding.csv
+      - docs/SLIMON2026_DATE_VS_PLANT_STAGE_CONTROL_20261010.md
+      - .github/workflows/slimon2026-date-plant-controls.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-stage-confounding:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run offline biological unit and confounding tests
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_slimon2026_date_plant_controls.py
+      - name: Read original verified source and stratify matched visits
+        run: >-
+          python -m scripts.analyze_slimon2026_date_plant_controls
+          --outdir /tmp/iwe-slimon2026-date-plant-controls --boot 400
+      - name: Upload derived summaries only (no original raw records)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slimon2026-seasonal-plant-adjustment-summary
+          path: /tmp/iwe-slimon2026-date-plant-controls/source_panel_stage_controls.json
+          if-no-files-found: warn
+          retention-days: 7
