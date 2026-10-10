@@ -85,6 +85,38 @@ official original archive using the included script and
 `.github/workflows/slimon2026-plant-visit-stage-lag.yml`.
 No original raw data are redistributed in this repository.
 
+## Necessary denominator check: many zero-flower observations
+
+Counting only Mompha-positive visits would misleadingly suggest that
+buds/no-open-flower snapshots were **preferred**. Because the flower
+surveys are discrete weekly snapshots, the baseline opportunity for
+each class must be included:
+
+| Original experiment | Positive / all visits with **zero open flowers** | Positive / all visits with **at least one open flower** |
+|---|---:|---:|
+| exp1 | **291 / 1,198 = 24.3%** | **115 / 270 = 42.6%** |
+| exp2 | **188 / 877 = 21.4%** | **36 / 110 = 32.7%** |
+
+Thus Mompha positivity at a weekly snapshot is **more frequent when
+there are open flowers**, in both experiments. This does not conflict
+with the known **bud-feeding** biology: open flowers may indicate
+overall reproductive activity and correlated bud abundance, while the
+visible Mompha stage may postdate oviposition. Crucially, these
+numbers also **rule out the unsupported claim that the majority of
+Mompha-positive no-open snapshots demonstrates preferential attack on
+flowerless plants**.
+
+The units of these comparisons are **repeated plant-visits**, not
+independent plants or independent adult moths. Calendar season,
+individual size, cumulative tissue exposure, shared environmental
+conditions, and source detection stages are not controlled. There
+is no valid source-certified hazard ratio or test of oviposition
+preference. This contrast is a diagnostic of **detection timing and
+resource opportunity**, not a causal biological preference estimate.
+
+Machine-readable four-row receipt:
+`data/source_reconstructions/slimon2026_plant_visit_open_flower_baseline.csv`.
+
 ### What the numbers support
 
 1. **Open flowers at a weekly census are an invalid necessary-stage
