@@ -187,6 +187,9 @@ def audit_experiment(zf: ZipFile, name: str) -> dict:
                 "phase": phase,
                 "plant_visits": len(sub),
                 "unique_plants": sub["source_plant_id"].nunique(),
+                "n_open_flower_positive_plant_visits": int(
+                    sub["flowers"].gt(0).sum()
+                ),
                 "n_mompha_positive_plant_visits": int(
                     sub["new_mompha_observation"].gt(0).sum()
                 ),
@@ -232,6 +235,21 @@ def audit_experiment(zf: ZipFile, name: str) -> dict:
         "not_stage_specific_oviposition_risk": True,
         "repeated_plants_nonindependent": True,
     }
+    cross_window_open_flower = {
+        "open_flower_visits_before_source_first": sum(
+            p["n_open_flower_positive_plant_visits"]
+            for p in stage if p["phase"] == "before_first_recorded_flower"
+        ),
+        "open_flower_visits_after_source_last": sum(
+            p["n_open_flower_positive_plant_visits"]
+            for p in stage if p["phase"] == "after_last_recorded_flower"
+        ),
+        "interpretation": (
+            "A nonzero value means source first/last date and original "
+            "wide weekly flower counts do not perfectly align; "
+            "never silently revise original source dates"
+        ),
+    }
     date_summary = {
         "experiment": name,
         "flowering_calendar_year": YEAR,
@@ -247,6 +265,7 @@ def audit_experiment(zf: ZipFile, name: str) -> dict:
         "n_negative_or_fractional_source_counts_rejected": abnormal_values,
         "exact_date_survey_results": per_survey,
         "recorded_window_stage_counts": stage,
+        "source_first_last_vs_weekly_count_discrepancy": cross_window_open_flower,
         "paired_visit_open_flower_baseline": snapshot,
         "plant_visits_are_not_independent_replicate_experiments": True,
         "mompha_new_visible_stage_is_not_oviposition_or_adult_flight": True,
@@ -344,6 +363,8 @@ def run(outdir: Path) -> dict:
               "REJECTED", x["n_negative_or_fractional_source_counts_rejected"])
         print("OPEN_FLOWER_BASELINE", x["experiment"],
               json.dumps(x["paired_visit_open_flower_baseline"]))
+        print("FIRST_LAST_WEEKLY_CHECK", x["experiment"],
+              json.dumps(x["source_first_last_vs_weekly_count_discrepancy"]))
         print("STAGE", x["experiment"],
               json.dumps(x["recorded_window_stage_counts"], ensure_ascii=False))
         for entry in x["exact_date_survey_results"]:
