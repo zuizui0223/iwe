@@ -58,3 +58,28 @@ def test_stage_count_receipt_no_h1_promotion_or_oviposition_inference():
     assert "SMD" in doc
     effects = pd.read_csv("data/extraction/direct_effects.csv")
     assert not effects.study_id.astype(str).str.contains("SLIMON", case=False).any()
+
+
+def test_correct_zero_open_snapshot_denominators_reverse_naive_preference_reading():
+    rows = pd.read_csv(
+        "data/source_reconstructions/slimon2026_plant_visit_open_flower_baseline.csv"
+    ).set_index(["experiment", "open_flower_snapshot_class"])
+    for exp, nzero, yzero, nopen, yopen in (
+        ("exp1", 1198, 291, 270, 115),
+        ("exp2", 877, 188, 110, 36),
+    ):
+        zero = rows.loc[(exp, "no_open_flowers")]
+        open_ = rows.loc[(exp, "at_least_one_open_flower")]
+        assert zero.n_paired_plant_visits == nzero
+        assert zero.n_mompha_positive_plant_visits == yzero
+        assert open_.n_paired_plant_visits == nopen
+        assert open_.n_mompha_positive_plant_visits == yopen
+        assert zero.mompha_positive_fraction_per_visit < (
+            open_.mompha_positive_fraction_per_visit
+        )
+        assert abs(zero.mompha_positive_fraction_per_visit
+                   - yzero / nzero) < 1e-6
+        assert abs(open_.mompha_positive_fraction_per_visit
+                   - yopen / nopen) < 1e-6
+    assert rows.oviposition_risk_identified.eq("no").all()
+    assert rows.strict_h1_effect.eq("no").all()
