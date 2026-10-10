@@ -49,11 +49,12 @@ def test_ecological_interpretation_explicitly_separates_bud_and_visible_mompha()
     report = Path(
         "docs/SLIMON2026_JOINT_PLANT_DATE_WEEKLAG_AUDIT_20261010.md"
     ).read_text(encoding="utf-8")
+    normalized = " ".join(report.lower().split())
     for term in (
         "oviposition", "susceptible buds", "complete-case source subset",
-        "not two independent", "cannot constitute a clean", "zero strict-H1"
+        "not two independent", "cannot constitute a clean", "zero strict-h1"
     ):
-        assert term.lower() in report.lower()
+        assert term.lower() in normalized
     original_effects = pd.read_csv("data/extraction/direct_effects.csv")
     assert not original_effects.study_id.astype(str).str.contains(
         "SLIMON", case=False
