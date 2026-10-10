@@ -17,7 +17,7 @@ windows are not interchangeable**.
 
 Independent source for the *M. stellella* **bud** versus *M.
 brevivittella* **developing fruit** contrast:
-[Emery et al. (2019), PLOS ONE,
+[Bruzzese et al. (2019), PLOS ONE,
 DOI 10.1371/journal.pone.0207833](https://doi.org/10.1371/journal.pone.0207833),
 section "Mompha and onagraceae".
 [Cook-Patton et al. (2017), Journal of Ecology,
