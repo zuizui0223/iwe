@@ -70,6 +70,34 @@ def stage_grain(rows: list[dict], stage: str) -> dict:
              if str(row.get("ID") or "").strip() not in ("","NA","NaN")]
     if not keyed:
         raise ValueError("original stage has no source plant IDs")
+    # A large export may contain rows with no original plant key.
+    # These are NEVER added as independent plants or silently mapped
+    # to another plant. Determine whether they contain observed stage
+    # values before any coverage claim about the original population.
+    unkeyed = [row for row in rows
+               if str(row.get("ID") or "").strip() in ("", "NA", "NaN")]
+    stage_cells_present = 0
+    unkeyed_positive_rows = 0
+    unkeyed_nonmissing_stage_rows = 0
+    unkeyed_nonempty_auxiliary_rows = 0
+    for row in unkeyed:
+        present = False
+        positive = False
+        for col in day_fields.values():
+            val = _num(row.get(col))
+            if np.isfinite(val):
+                present = True
+                stage_cells_present += 1
+                if val > 0:
+                    positive = True
+        if present:
+            unkeyed_nonmissing_stage_rows += 1
+        if positive:
+            unkeyed_positive_rows += 1
+        if any(str(val or "").strip() not in ("","NA","NaN")
+               for col,val in row.items()
+               if col not in day_fields.values() and col != "ID"):
+            unkeyed_nonempty_auxiliary_rows += 1
     by_id: dict[str,list[dict]] = {}
     for row in keyed:
         by_id.setdefault(str(row["ID"]).strip(), []).append(row)
@@ -91,6 +119,11 @@ def stage_grain(rows: list[dict], stage: str) -> dict:
         "original_row_count":len(rows),
         "source_rows_with_plant_id":len(keyed),
         "unique_original_plant_ids":len(by_id),
+        "source_rows_without_original_plant_id":len(unkeyed),
+        "unkeyed_rows_with_any_numeric_stage_value":unkeyed_nonmissing_stage_rows,
+        "unkeyed_rows_with_positive_stage_value":unkeyed_positive_rows,
+        "unkeyed_numeric_stage_cells":stage_cells_present,
+        "unkeyed_rows_with_nonempty_auxiliary_fields":unkeyed_nonempty_auxiliary_rows,
         "repeated_id_count":len(duplicates),
         "repeated_id_rows":sum(n-1 for n in duplicates.values()),
         "max_original_rows_per_plant":max(len(v) for v in by_id.values()),
@@ -165,6 +198,7 @@ def diagnostic(new: list[dict],old: list[dict]) -> dict:
         "new_source_grain":gn,
         "old_source_grain":go,
         "source_new_old_stage_labels_not_individual_moth_tracking":True,
+        "stage_estimates_source_scope":"original_plant_id_keyed_complete_case_only",
         "real_oviposition_date_identified":False,
         "source_bud_abundance_identified":False,
         "strict_h1_effects_admitted":0,
