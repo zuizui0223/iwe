@@ -6,6 +6,9 @@ on:
     paths:
       - scripts/analyze_slimon2026_mompha_persistence.py
       - tests/test_slimon2026_mompha_persistence.py
+      - tests/test_slimon2026_mompha_persistence_receipt.py
+      - data/source_reconstructions/slimon2026_prior_mompha_persistence.csv
+      - docs/SLIMON2026_PRIOR_MOMPHA_PERSISTENCE_20261011.md
       - .github/workflows/slimon2026-mompha-persistence.yml
 
 permissions:
@@ -22,7 +25,7 @@ jobs:
       - name: Test exact seven-day previous-stage joins and source units
         run: |
           python -m pip install -e '.[dev]'
-          python -m pytest -q tests/test_slimon2026_mompha_persistence.py
+          python -m pytest -q tests/test_slimon2026_mompha_persistence.py tests/test_slimon2026_mompha_persistence_receipt.py
       - name: Analyze original previous insect detections and log counts
         run: >-
           python -m scripts.analyze_slimon2026_mompha_persistence
