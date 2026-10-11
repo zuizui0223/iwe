@@ -1,0 +1,202 @@
+# James et al. (1994): host fruit-retention windows decouple moth exposure from reproduction
+
+Date: 2026-10-08
+Candidate: `MIX002_YUCCA_ELATA_JAMES1994`
+System: *Yucca elata* × *Tegeticula yuccasella* (name as used by the original authors)
+Source: James, Hoffman, Lightfoot, Forbes & Whitford (1994), *Oikos* 69:207–216,
+DOI [10.2307/3546140](https://doi.org/10.2307/3546140).
+
+**Important taxonomic boundary:** James et al. 1994 used the historical
+name *Tegeticula yuccasella* for moths associated with *Yucca elata*.
+Pellmyr's 1999 revision (DOI
+`10.1046/j.1365-3113.1999.00079.x`) split the former widespread
+*T. yuccasella* complex; *T. elatella* is the accepted host-associated
+pollinator of *Y. elata* in later work (e.g. Segraves et al. 2005,
+DOI `10.1098/rspb.2005.3201`). **The original 1994 specimens have
+not been reidentified here**, so source-label and contemporary
+host-associated taxonomy are retained separately. In particular, the
+1994 *Y. elata* moths must **not** be counted as the same nominal
+pollinator lineage as the *Y. glauca–T. yuccasella* studied by
+Jadeja et al. 2017. The comparison below is across distinct
+plant–pollinator systems, not within one animal species.
+
+**Decision:** independent, biologically unusual nursery-pollination candidate;
+**P2 blocked final-net-seed and same-unit quantitative linkage**, not an H1
+effect and **not** the second recovered independent mixed SMD cluster.
+
+## What is genuinely source-backed
+
+The source abstract, independently indexed by the original *Oikos* citation
+and institutional references, states that the authors monitored **38
+inflorescences in one flowering season**, recording nightly flower opening,
+relative adult yucca moth abundance, climate, and which flowers ultimately
+became mature fruit.
+
+| Published observation | Value / outcome |
+|---|---|
+| Monitored flowers | 11,786 |
+| Mature fruits | 699 |
+| Pooled fruit maturation fraction, 699/11,786 | **5.93%** (derived arithmetic) |
+| Published fruit maturation percentage | **6.6%** (1.4–15.1% among units, as reported) |
+| Fruit-setting run within an inflorescence | approximately **5 consecutive nights**, **36%** of its flowering duration |
+| Among inflorescences, later-season flowering | **Higher proportion of flowers matured as fruit**, according to source abstract |
+| Which part of anthesis the 5-night run occupies | variable across inflorescences: early, middle, or late |
+| Supplementary hand-pollination | **no significant increase** in final fruit fraction, as reported |
+| Moth relative abundance vs mature fruit production | **no correlation detected**, as reported |
+| Abortion among a separately observed moth-pollinated subset | approximately **90%** of **N=31** flowers |
+
+This is an unusually close architecture to IWE's causal chain:
+`nightly adult activity + opening flowers → host fruit-retention window → mature fruit`.
+
+**Two fractions are not automatically contradictory.** The pooled
+`699/11,786=5.93%` and the paper's `6.6%` might differ because the former
+weights every flower equally, whereas the latter may summarize
+inflorescence-level proportions differently. The abstract also reports
+that larger inflorescences had proportionally fewer mature fruits, which
+is compatible with this difference. This is a *possible explanation*,
+not verified without the exact Methods/table. Do not invent the 38
+individual denominators or test uncertainty from the 11,786 flowers.
+
+**Timing is structured differently at two spatial/temporal grains.**
+Across inflorescences, *later-season flowering inflorescences set a larger
+proportion of mature fruits than early flowering ones*. Within each
+inflorescence, however, the short five-night fruit-maturation window
+could appear at the beginning, middle or end of anthesis. This apparent
+combination of a *between-inflorescence seasonal direction* and
+*within-inflorescence unpredictability* is source reported, not a
+meta-analytic reversal. The first is an observational calendar effect;
+the second describes the location of fruit success inside an
+inflorescence's flowering sequence. Neither supplies the missing
+contemporaneous adult-moth synchrony-to-intact-seed matched effect.
+
+The **90% abortion** comes from a separately observed 31-flower subset,
+not 90% of the 11,786 flowers, and cannot be used to infer seeds destroyed
+per mature fruit. The paper's statement about weak moth-abundance
+association is an **observed lack of detected correlation**, not an
+equivalence test of plant reproduction with and without moths.
+
+## Independent companion experiment: two different time gates
+
+The same research group published a **separate 1993 manipulative
+pollination study** of *Y. elata* (James et al., *Oecologia* 93:512–517,
+DOI `10.1007/BF00328959`). They followed a population of 250 plants,
+with diel pollinator exclusions on 12 inflorescences:
+
+- **4,022 flowers** offered **daytime-only** visitation yielded **zero**
+  mature fruits;
+- **4,974 flowers** offered **nocturnal-only** visitation yielded **4.6%**
+  mature fruits, similar to open controls;
+- individual flowers were open for approximately **two days** but pollen
+  receptive only on the **first night**; experimental pollination
+  required pushing pollen into the stigmatic tube.
+
+This source independently supports a **sharp first-night pollination
+opportunity** within each flower. The 1994 dataset separately reports
+that, among many first-night-capable flowers on an inflorescence,
+those forming retained mature fruit are concentrated in a variably
+positioned **five-night run**. These are biologically **two distinct
+time filters**:
+
+`per-flower first-night successful pollination` versus
+`inflorescence-level multi-night selective fruit retention`.
+
+This pairing makes the host timing bottleneck unusually specific:
+adult moth visits can be necessary for fertilization but still fail
+to track which of the successfully exposed flowers remain as mature
+fruits. **Crucially, the experiments are from different papers**,
+not a same-flower joint dataset; no source-backed paired
+pollination-night/fruit-retention/larval-intact-seed outcome is created
+by citing them together. Do not reinterpret 12 bagged
+inflorescences, 38 observational inflorescences or thousands of
+flowers as a shared pool of independent treatments.
+
+## Why this is scientifically consequential
+
+A strict synchrony model asks whether more overlap with adult moths
+improves plant final reproduction. James et al. instead show that the
+**host's own postpollination retention window is very short and its
+location varies from one inflorescence to another**. An adult moth can
+be present and pollinate a flower that the host subsequently aborts,
+eliminating both that reproductive unit and any moth offspring it carried.
+
+The important biological question is **not** the well-known fact
+that fruit abortion occurs. It is:
+
+> When does host-state information make a pollinator's timing
+> predictable and exploitable, and when does a variable retention window
+> favor distributing oviposition risk over many flowers/nights instead?
+
+This is a *conditional mechanism hypothesis*, not a result derived
+from correlations in the one-season study. The authors suggested
+risk-spreading egg placement; the dataset summary does **not** itself
+show an experimentally demonstrated adaptive oviposition distribution.
+
+## Three contrasting Yucca regimes — hypothesis comparison, not pooled inference
+
+| Programme | Reported host filter | Ecological implication to test |
+|---|---|---|
+| James et al. 1994, *Y. elata* | A 5-night fruit-maturation run whose position is variable; added pollen does not significantly increase final fruit production | The same adult-visit timing may have very different offspring/female-fitness consequences across inflorescences |
+| Jadeja et al. 2017, *Y. glauca*, DOI 10.1002/ece3.3426 | Experimental basal-fruit cue reduces whether females oviposit in distal flowers (P=0.048), but the host-abortion gradient is attributed to unpublished work | Adult *site acceptance* may respond to a host cue; final offspring survival and plant intact-seed effects remain untested as a linked chain |
+| Hurlburt 2004 northern *Y. glauca*, DOI 10.7939/r3-fe1d-kj80, as summarized by 2013 COSEWIC reports | Fewer ovipositions or poorer pollen receipt associate with higher flower abortion | In pollen-limited settings, eggs may *index delivered service*, reversing the apparent egg–retention correlation without plants intrinsically favoring seed predators |
+
+**Jadeja stage qualification:** the 2017 paper reports no significant
+basal-fruit effect on egg number *conditional on at least one oviposition*
+(P=0.61), or on larval emergence from a separate observational collection
+of 243 top fruits (P>0.7). These nulls are not equivalent to proof that
+the host cue does not influence later performance. The basal-fruit
+retention-risk gradient itself is cited as unpublished data. Therefore
+we have evidence that moths change **site acceptance**, not a
+source-matched demonstration that they improve their own fitness or
+host mature seed output. See
+`LANDSCAPE_JADEJA2017_YUCCA_HOST_FILTER.md`.
+
+These studies involve different years, sites, species or methods and
+**cannot** be pooled as three independent estimates of one
+predictability effect. Different retention regimes and cues are
+possible explanations for the contrasting observations, not
+demonstrated adaptation or within-species sign switching. James 1994
+and Jadeja 2017 both involve resource-linked abortion but provide
+different evidence about whether its position is predictable.
+
+## Exact new P2 evidence gap
+
+This is not a currently SMD-ready mixed synchrony observation.
+
+- **Already source-described:** same-season moth activity measured
+  nightly (independent of egg receipt), flower-opening counts, and
+  final *mature fruit* retention monitored on 38 inflorescences.
+- **Missing in currently inspected accessible material:** a numerical
+  adult-moth activity curve indexed to the *same night* and
+  inflorescence/plant as the flowering cohort; mature-fruit identities
+  and source-defined seeds remaining **after larval consumption**,
+  including group summary/variance at independently sampled units.
+- **Biological finality warning:** a mature fruit can contain seeds
+  already destroyed by *Tegeticula* larvae; fruit number is not
+  automatically the post-seed-predation intact-seed endpoint.
+- **Dependence warning:** 11,786 flowers and 699 fruits are **not**
+  11,786 or 699 independent moth-window treatment replicates. The
+  38 inflorescences may themselves be nested in plants; the source
+  must identify unique plant/inflorescence units.
+- **Pre-analysis rule:** fix high- vs low-adult-availability timing
+  contrasts using the adult curve **before** examining mature-seed
+  responses. Do not bin nights on fruit outcomes or substitute
+  oviposition/fruit abundance for independent moth activity.
+
+A bibliographic path to the *Oikos* PDF is listed by the Jornada
+Experimental Range archive:
+`https://jornada.nmsu.edu/files/bibliography/94-Oikos-Whitford.pdf`.
+The public web environment returned 403 to direct PDF retrieval on
+2026-10-08, so **no full-text table was personally re-extracted**.
+The DOI-indexed abstract suffices to screen the system and set the
+stop rule, **not** to claim the missing raw archive/table is public
+or that the paper itself lacks more detailed tabulations.
+
+**Explicit unlock:** obtain and inspect full-text table/appendix and
+linked field notebooks for `plant ID / inflorescence ID / night / open
+flowers / adult moth count / final mature intact seed count`. If these
+source objects are not documented at that unit, retain this as
+strong host-filter *mechanism evidence* only, without strict SMD
+promotion.
+
+Recorded numerical source summary:
+`data/source_reconstructions/james1994_yucca_elata_source_summary.csv`.

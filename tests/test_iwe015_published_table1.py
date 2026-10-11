@@ -1,0 +1,179 @@
+"""Non-promoting source-table audit for Zhou et al. (2020) Table 1.
+
+Published group means are descriptive. The printed dispersions are labelled SE
+but cannot be interpreted as plant-level SE at the reported n; only raw Dryad
+verification can support quantitative strict-H1 readmission.
+"""
+
+from pathlib import Path
+from math import sqrt
+
+import pandas as pd
+
+
+TABLE_PATH = Path("data/source_reconstructions/iwe015_published_table1.csv")
+
+
+def _table() -> pd.DataFrame:
+    return pd.read_csv(TABLE_PATH)
+
+
+def test_published_groups_are_exactly_the_four_source_experiments():
+    t = _table().sort_values(["year", "period"]).reset_index(drop=True)
+    assert len(t) == 4
+    assert t[["year", "period"]].apply(tuple, axis=1).tolist() == [
+        (2012, "early"),
+        (2012, "late"),
+        (2013, "early"),
+        (2013, "late"),
+    ]
+    assert t["adult_plants"].tolist() == [59, 58, 55, 55]
+    assert set(t["printed_dispersion_label"]) == {"SE"}
+    for name in ("fruit_initiation_mean", "predation_rate_mean"):
+        assert t[name].between(0, 1).all()
+    assert t["successful_fruits_mean"].ge(0).all()
+
+
+def test_table_means_switch_the_yearwise_early_minus_late_direction():
+    t = _table().set_index(["year", "period"])
+    d_fruit_2012 = (
+        t.loc[(2012, "early"), "successful_fruits_mean"]
+        - t.loc[(2012, "late"), "successful_fruits_mean"]
+    )
+    d_fruit_2013 = (
+        t.loc[(2013, "early"), "successful_fruits_mean"]
+        - t.loc[(2013, "late"), "successful_fruits_mean"]
+    )
+    d_pred_2012 = (
+        t.loc[(2012, "early"), "predation_rate_mean"]
+        - t.loc[(2012, "late"), "predation_rate_mean"]
+    )
+    d_pred_2013 = (
+        t.loc[(2013, "early"), "predation_rate_mean"]
+        - t.loc[(2013, "late"), "predation_rate_mean"]
+    )
+    assert round(d_fruit_2012, 2) == -1.25
+    assert round(d_fruit_2013, 2) == +1.17
+    assert round(d_pred_2012, 2) == +0.18
+    assert round(d_pred_2013, 2) == +0.01
+    # A crossover of published group means, not a significance test.
+    assert d_fruit_2012 < 0 < d_fruit_2013
+
+
+def test_printed_proportion_dispersions_cannot_be_plant_level_se_at_reported_n():
+    # For n observations x_i in [0, 1] with mean mu:
+    # sample SE <= sqrt(mu * (1 - mu) / (n - 1)).
+    # This exact finite-n upper bound does not assume Bernoulli observations.
+    t = _table()
+    for _, row in t.iterrows():
+        n = int(row["adult_plants"])
+        assert n > 1
+        for metric in ("fruit_initiation", "predation_rate"):
+            mean = float(row[metric + "_mean"])
+            printed = float(row[metric + "_printed_dispersion"])
+            se_upper = sqrt(mean * (1 - mean) / (n - 1))
+            assert printed > se_upper + 0.005, (
+                row["year"], row["period"], metric, printed, se_upper
+            )
+    # No guessing SD, pooling years, or adding effects to strict H1 here.
+
+
+def test_within_early_egg_female_signal_stays_negative_when_group_mean_flips():
+    table = _table().set_index(["year", "period"])
+    source = pd.read_csv(
+        "data/source_reconstructions/iwe015_source_egg_fitness_correlations.csv"
+    ).set_index("year")
+    assert list(source.index) == [2012, 2013]
+    assert (source["egg_sampling_period"] == "early_only").all()
+    assert (source["egg_vs_female_fitness_spearman_r"] < 0).all()
+    assert (source["egg_vs_female_fitness_p"] < 0.05).all()
+    assert (source["egg_vs_male_fitness_result"] == "near_zero_not_significant").all()
+    assert source.loc[2012, "mean_eggs_per_flower"] == 1.04
+    assert source.loc[2013, "mean_eggs_per_flower"] == 0.55
+    assert table.loc[(2013, "early"), "successful_fruits_mean"] > (
+        table.loc[(2013, "late"), "successful_fruits_mean"]
+    )
+    # Different contrasts: group-level early/late versus within-early plants.
+    # Neither identifies egg causality, pollen service, or Simpson's paradox.
+
+
+def test_2013_tagged_flower_to_fruit_universe_remains_unresolved():
+    # The Methods identify these counts in the one-week tagged flower/fate
+    # study, not unambiguously as a separate trait-only subsample.
+    # If these are the same reproductive units counted in Table 1, the
+    # numbers conflict in BOTH 2013 windows.
+    df = pd.read_csv(
+        "data/source_reconstructions/iwe015_labelled_flower_denominator_audit.csv"
+    ).set_index(["year", "period"])
+    table = _table().set_index(["year", "period"])
+    assert len(df) == len(table) == 4
+    for key in table.index:
+        row = df.loc[key]
+        assert row["scope_reconciled"] == "not_yet"
+        assert int(row["adult_plants"]) == int(table.loc[key, "adult_plants"])
+        assert row["table1_successful_fruits_mean_per_plant"] == (
+            table.loc[key, "successful_fruits_mean"]
+        )
+    for period in ("early", "late"):
+        row = df.loc[(2013, period)]
+        labelled_per_plant = (
+            row["source_reported_measured_flowers"] / row["adult_plants"]
+        )
+        table_fruits_per_plant = row[
+            "table1_successful_fruits_mean_per_plant"
+        ]
+        assert table_fruits_per_plant > labelled_per_plant
+    # This is a fail-closed lineage/denominator audit, not proof of
+    # data error or eligibility for a fruit-set-rate model.
+
+
+def test_recovery_requires_an_explicit_sample_membership_reconciliation():
+    # Published Table 1 adult plants sum to 227. The paper reports
+    # F(3,224), which implies 228 observations in a simple one-way ANOVA.
+    # This is an open source-membership question, not a new pooled effect.
+    assert int(_table()["adult_plants"].sum()) == 227
+    reported_residual_df = 224
+    reported_model_df = 3
+    assert reported_residual_df + reported_model_df + 1 == 228
+
+
+def test_table1_overall_mean_cannot_be_group_weighted_at_reported_sample_sizes():
+    groups = _table()
+    overall = pd.read_csv(
+        "data/source_reconstructions/iwe015_table1_reported_overall.csv"
+    ).iloc[0]
+    n = int(groups["adult_plants"].sum())
+    assert n == int(overall["adult_plants"]) == 227
+    expected_mean = (
+        (groups["adult_plants"] * groups["successful_fruits_mean"]).sum() / n
+    )
+    # All four reported means and the overall number use two decimals.
+    # Even the most favorable rounding can shift either by at most 0.005.
+    assert round(expected_mean, 4) == 6.1413
+    assert overall["successful_fruits_mean"] == 6.36
+    assert abs(expected_mean - overall["successful_fruits_mean"]) > 2 * 0.005
+    # Does not prove the source's underlying rows are erroneous; the same
+    # biological units and missing-data conventions may not have been used.
+
+
+def test_group_implied_successful_fruits_exceed_tagged_flower_inventory():
+    groups = _table()
+    floral = pd.read_csv(
+        "data/source_reconstructions/iwe015_labelled_flower_denominator_audit.csv"
+    )
+    merged = groups.merge(
+        floral[["year", "period", "source_reported_measured_flowers"]],
+        on=["year", "period"], validate="one_to_one"
+    )
+    inferred_successes = (
+        merged["adult_plants"] * merged["successful_fruits_mean"]
+    ).sum()
+    measured = merged["source_reported_measured_flowers"].sum()
+    assert measured == 1094
+    assert inferred_successes > 1393
+    assert inferred_successes > measured + 0.005 * len(merged) * 60
+    # No one-week tagged flower can produce more than one mature fruit.
+    # Therefore these two published totals cannot describe *identical*
+    # labelled reproductive units, absent an undisclosed definition shift.
+    # The raw plant/flower join remains unresolved; no final-flower
+    # conversion denominator or timing SMD is reconstructed.

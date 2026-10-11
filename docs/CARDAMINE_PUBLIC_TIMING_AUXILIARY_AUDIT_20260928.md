@@ -112,3 +112,46 @@ Do not:
 The completion route is now classified `public_asset_runtime_blocked` with next action `retrieve_public_asset`.
 
 This does not promote the candidate and does not add evidence. It only prevents a premature move to email/contact while identified public assets remain uninspected outside the current runtime.
+
+## 2026-10-08 official publisher binary route: independently tested access
+
+To avoid repeated generic searching, the exact source-linked binary files now
+have one isolated, nonpromoting access audit:
+
+- 2024 Davies & Saccheri **Figure 4 PowerPoint**: the official Wiley
+  `action/downloadFigures` endpoint for `ece311330-fig-0004`;
+- 2019 Davies *Ecology* **Appendices S1–S3**: the three official
+  `ecy2612-sup-0001/0002/0003-AppendixS*.pdf` files.
+
+The repository code is `scripts/probe_cardamine_public_timing_assets.py`,
+its no-network tests are `tests/test_cardamine_public_timing_asset_probe.py`,
+and the one-time public retrieval is
+`.github/workflows/cardamine-publisher-asset-probe.yml`.
+
+The probe **does not digitize the figure**, infer a flight distribution from
+shapes or boxes, or treat an Office/PDF signature as numeric source data.
+For Office Open XML, it reports any `ppt/charts/` or
+`ppt/embeddings/` objects merely as *candidates to inspect*; an old binary
+OLE PowerPoint is classified as unknown numeric status even if downloaded.
+Source authenticity, chart-series identity, 2012–2014 year coverage,
+female capture-versus-recapture grain, and exact q10/q90 values all still
+require inspection before Cardamine's timing/final-fitness preflight.
+
+**Observed outcome (GitHub-hosted runner 2026-10-08):** the source-asset
+workflow [run 37752302689](https://github.com/zuizui0223/iwe/actions/runs/37752302689)
+passed **9 no-network tests**, but recovered **0/4 source files**. The 2024
+official Figure 4 PowerPoint and all three 2019 Ecology supporting PDFs
+independently returned **HTTP 403**. Workflow `success` describes robust
+probe execution, not successful document retrieval. The downloadable artifact
+contains an access manifest, **not the publication binary files**.
+
+This closes the identified **anonymous direct-publisher/GitHub-runner route
+in this environment** without establishing that the public materials are
+globally inaccessible or that they contain no embedded source data.
+The source-backed 2012–2014 female capture/recapture series and/or exact
+year-specific flight q10/q90 values remain **unrecovered**. P1
+`blocked_timing_linkage` and the frozen preflight are unchanged.
+The next legitimate step is a permitted institutional/library binary
+download or narrowly scoped archive request. Do not repeat anonymous
+downloads, digitize plot geometry, substitute egg receipt, or count
+the existing ecological stage/final-fate contrasts as a strict timing SMD.

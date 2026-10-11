@@ -1,0 +1,7 @@
+period,open_fruit_set_mean,open_se,moth_only_mean,moth_only_se,bee_only_mean,bee_only_se,pollen_supplemented_mean,pollen_supplemented_se,access_context
+ORPI_1997,25,2,17,3,6,2,39,4,"both moths and bees accessible; pollen limited"
+BK_May_1998,49,7,52,7,4,2,39,9,"moths accessible; bees weak contributors"
+BK_June_1998,33,4,25,8,0.5,0.5,,,"moths accessible; bee contribution near zero"
+BK_July_1998,0,0,,,,,22.5,6.6,"senita moths between cohorts; open flowers set no fruit"
+BK_1999,51,11,,,,,47,11,"flowers closed before sunrise; diurnal bees naturally excluded"
+BK_2000,55,8,,,,,66,4,"flowers closed before sunrise; diurnal bees naturally excluded"

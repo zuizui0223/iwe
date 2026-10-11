@@ -1,0 +1,7 @@
+year,contrast,n_cultivars,ear_emergence_window,adult_window_or_measure,synchrony,yield_loss_percent,source
+2012,max_overlap,23,22_Apr_to_28_Apr,yellow_sticky_traps_Apr_May,0.628,78.1,Wu_et_al_2015
+2012,min_overlap,3,28_Apr_to_02_May,yellow_sticky_traps_Apr_May,0.307,11.7,Wu_et_al_2015
+2013,max_overlap,3,04_May_to_11_May,adult_period_04_May_to_13_May,0.783,2.41,Wu_et_al_2015
+2013,min_overlap,11,15_Apr_to_25_Apr,adult_period_04_May_to_13_May,0.062,0.04,Wu_et_al_2015
+2012,bagged_flowering_stage,NA,flowering,adult_activity_monitored,NA,10.79,Wu_et_al_2015
+2012,bagged_ear_emergence_stage,NA,ear_emergence,adult_activity_monitored,NA,3.48,Wu_et_al_2015

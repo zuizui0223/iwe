@@ -1,0 +1,2 @@
+study_id,dependence_id,comparison,total_peak_z,effective_peak_z,peak_shift_z,total_sigma,effective_sigma,sigma_ratio,relative_narrowing,amplitude_ratio,interpretation
+IWE032,DEP_IWE032_CARDAMINE_DIBBINSDALE,active_vs_total_egg_load,-1.1000000000,-0.6100000000,0.4900000000,0.9200000000,0.6600000000,0.7173913043,0.2826086957,0.6962616822,Host-stage filtering shifts the effective antagonist window later and narrows it relative to all oviposition events.

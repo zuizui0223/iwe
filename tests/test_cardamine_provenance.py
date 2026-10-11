@@ -31,6 +31,10 @@ def _provenance(**overrides):
         "source_id": "author_archive:cardamine_2012_2014_female_mrr",
         "source_backed": True,
         "synthetic_fixture": False,
+        "adult_event_doy_basis": "calendar_day_of_year",
+        "plant_observation_doy_basis": "calendar_day_of_year",
+        "adult_calendar_origin_source_locator": "original 2012-2014 female capture/recapture calendar-date records",
+        "figure_digitization_performed": False,
     }
     item.update(overrides)
     return item
@@ -93,3 +97,38 @@ def test_fractional_years_do_not_truncate_to_focal_year():
     events.loc[0, "year"] = 2012.5
     errors = validate_cardamine_adult_provenance(_provenance(), events)
     assert any("integer years" in error for error in errors)
+
+
+def test_figure_day1_relative_records_are_not_calendar_DOY_even_if_numeric():
+    # All nominal days are 110 or 120 and hence pass basic numeric bounds.
+    errors = validate_cardamine_adult_provenance(
+        _provenance(adult_event_doy_basis="figure4_day1_relative"),
+        _events(),
+    )
+    assert any("Figure-4 relative Day 1" in e for e in errors)
+
+
+def test_undocumented_calendar_origin_fails_closed():
+    for override in (
+        {"adult_event_doy_basis": None},
+        {"plant_observation_doy_basis": "first_plant_flower_day1"},
+        {"adult_calendar_origin_source_locator": ""},
+        {"figure_digitization_performed": True},
+    ):
+        errors = validate_cardamine_adult_provenance(
+            _provenance(**override), _events()
+        )
+        assert errors
+
+
+def test_non_leap_calendar_day_366_is_not_admissible():
+    events = _events()
+    events.loc[events["year"].eq(2013), "event_doy"] = 366
+    errors = validate_cardamine_adult_provenance(_provenance(), events)
+    assert any("exceeds year=2013" in e for e in errors)
+
+
+def test_leap_year_2012_day_366_is_permitted_as_a_calendar_day():
+    events = _events()
+    events.loc[events["year"].eq(2012), "event_doy"] = 366
+    assert validate_cardamine_adult_provenance(_provenance(), events) == []

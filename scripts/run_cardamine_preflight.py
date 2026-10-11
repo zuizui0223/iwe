@@ -8,6 +8,8 @@ from pathlib import Path
 import pandas as pd
 
 from iwe.cardamine_pipeline import run_cardamine_preflight
+from iwe.cardamine_onset_audit import audit_cardamine_onset_intervals
+from iwe.cardamine_onset_sensitivity import cardamine_onset_effect_sensitivity
 
 
 def main() -> int:
@@ -22,6 +24,10 @@ def main() -> int:
     parser.add_argument("adult_provenance_json")
     parser.add_argument("plant_summaries_csv")
     parser.add_argument("output_dir")
+    parser.add_argument("--source-onset-bounds", default=None, help=(
+        "Optional originally source-located inclusive lower DOY per plant; "
+        "filenames/locators need independent human provenance review."
+    ))
     args = parser.parse_args()
 
     plant_timing = pd.read_csv(Path(args.plant_timing_csv))
@@ -30,6 +36,9 @@ def main() -> int:
         Path(args.adult_provenance_json).read_text(encoding="utf-8")
     )
     plant_summaries = pd.read_csv(Path(args.plant_summaries_csv))
+
+    source_bounds = (pd.read_csv(args.source_onset_bounds)
+                     if args.source_onset_bounds else None)
 
     exposure, audit, effects = run_cardamine_preflight(
         plant_timing,
@@ -41,6 +50,13 @@ def main() -> int:
     outdir = Path(args.output_dir)
     outdir.mkdir(parents=True, exist_ok=True)
     exposure.to_csv(outdir / "timing_exposure.csv", index=False)
+    onset_audit = audit_cardamine_onset_intervals(
+        plant_timing, adult_events, source_bounds)
+    onset_sensitivity = cardamine_onset_effect_sensitivity(
+        plant_timing, adult_events, plant_summaries,
+        source_lower_bounds=source_bounds)
+    onset_sensitivity.to_csv(outdir / "onset_effect_sensitivity.csv", index=False)
+    onset_audit.to_csv(outdir / "onset_interval_audit.csv", index=False)
     audit.to_csv(outdir / "outcome_smd_audit.csv", index=False)
     effects.to_csv(outdir / "smd_effects.csv", index=False)
 
@@ -52,6 +68,22 @@ def main() -> int:
         "adult_timing_source_backed": bool(adult_provenance["source_backed"]),
         "synthetic_fixture": bool(adult_provenance["synthetic_fixture"]),
         "timing_exposure_rows": int(len(exposure)),
+        "onset_interval_audit_rows": int(len(onset_audit)),
+        "onset_effect_sensitivity_rows": int(len(onset_sensitivity)),
+        "provided_bound_conditionally_estimable_smd_contrasts": int(onset_sensitivity.loc[
+            onset_sensitivity["assignment_method"] == "provided_bound_conditional_only",
+            "eligible_smd"
+        ].sum()) if not onset_sensitivity.empty else 0,
+        "assumed_lag_smd_is_not_h1_provenance": True,
+        "source_identified_onset_groups": int(onset_audit["source_identified_group"].isin(
+            ["early_refugium", "core_flight", "late_refugium"]
+        ).sum()),
+        "scenario_7day_boundary_sensitive_or_unresolved": int((
+            ~onset_audit["observed_group_scenario_stable"]
+        ).sum()),
+        "assumed_survey_lag_is_source_verified": False,
+        "onset_interval_audit_is_nonpromoting": True,
+        "original_lower_bound_locators_human_verified_by_pipeline": False,
         "directional_contrasts_audited": int(len(audit)),
         "eligible_smd_contrasts": eligible,
         "smd_effect_rows": int(len(effects)),
@@ -64,6 +96,8 @@ def main() -> int:
     print(
         f"Wrote Cardamine preflight outputs to {outdir}; "
         f"eligible directional contrasts={eligible}, SMD rows={len(effects)}. "
+        "First observed flowering may be left-censored; onset_interval_audit.csv "
+        "is a non-promoting observation-lag sensitivity. "
         "No row is promoted to the primary extraction table automatically."
     )
     return 0

@@ -1,0 +1,5 @@
+source_doi,comparison,response,source_result,interpretation
+10.4039/tce.2014.75,resistant_cultivars_adult_exposure_timing,seed_damage,"decreased as exposure to adult midge occurred later from spike emergence through anthesis","stage-specific adult exposure timing is preserved to seed damage"
+10.4039/tce.2014.75,susceptible_cultivars_emergence_vs_2plus_days,final_yield_loss,"spikes exposed two or more days after emergence had lower yield losses than spikes exposed at emergence","moving adult exposure away from the earliest susceptible spike stage lowers final yield loss"
+10.4039/tce.2014.75,Sm1_resistant_vs_susceptible,final_yield_loss,"resistant cultivars had significantly less yield loss than susceptible cultivars","host resistance modifies conversion of adult exposure into final loss"
+10.4039/tce.2014.75,Shaw_resistant_cultivar,larval_development,"no third instars on seed in both field and laboratory tests","host filter can block downstream consumer development"

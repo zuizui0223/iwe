@@ -1,0 +1,4 @@
+study_id,doi,stage,design,n_trials,n_positive_trials,n_fruits,endpoint,basal_fruit_association,reported_p,p_operator,final_plant_intact_seed_endpoint,source_scope
+JADEJA2017_YUCCA_GLAUCA,10.1002/ece3.3426,flower_acceptance,experimental_manipulated_basal_fruits,29,16,,fraction_of_distal_flowers_with_oviposition,negative,0.048,equals,no,behavioral_experiment
+JADEJA2017_YUCCA_GLAUCA,10.1002/ece3.3426,conditional_oviposition_intensity,experimental_positive_oviposition_trials,29,16,,ovipositions_per_positive_trial,not_significant,0.61,equals,no,behavioral_experiment
+JADEJA2017_YUCCA_GLAUCA,10.1002/ece3.3426,larval_emergence,observational_across_three_years,,,243,larvae_emerged_from_top_fruits,not_significant,0.7,greater_than,no,separate_observational_fruit_sample

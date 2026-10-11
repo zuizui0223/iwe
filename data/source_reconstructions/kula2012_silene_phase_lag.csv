@@ -1,0 +1,3 @@
+year,mean_synchrony,se_synchrony,mean_predation,se_predation,synchrony_predation_sign,synchrony_predation_chisq,synchrony_predation_p,first_flower_to_first_larva_days,first_egg_to_first_larva_days,fruit_maturation_days,fruit_maturation_se_days,source
+2008,0.16,0.01,0.34,0.03,positive,46.47,<0.0001,10,5,21.3,0.28,Kula_2012_Chapter3
+2009,0.32,0.03,0.46,0.04,negative,16.74,<0.0001,17,15,16.7,0.40,Kula_2012_Chapter3

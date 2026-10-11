@@ -29,6 +29,32 @@ jobs:
         run: python scripts/render_evidence_audit_status.py --check
       - name: Check systematic search coverage
         run: python scripts/render_search_coverage_status.py --check
+      - name: Check landscape pilot audit
+        run: python scripts/render_landscape_pilot_audit.py --check
+      - name: Check phase-alignment confirmatory gate
+        run: python scripts/render_phase_alignment_gate.py --check
+      - name: Check source-only Riemer paired classification bounds
+        run: python scripts/render_riemer_paired_bounds.py --check
+      - name: Check temporal signal-propagation audit
+        run: python scripts/render_temporal_signal_propagation.py --check
+      - name: Check propagation endpoint sensitivity
+        run: python scripts/render_propagation_endpoint_sensitivity.py --check
+      - name: Check IWE001 directional landscape
+        run: python scripts/build_iwe001_directional_landscape.py --check
+      - name: Check IWE011 plot-rank landscape
+        run: python scripts/build_iwe011_plot_rank_landscape.py --check
+      - name: Check Kula phase-safety margin
+        run: python scripts/build_kula2012_phase_margin.py --check
+      - name: Check Parkinsonia paired stage diagnostic
+        run: python scripts/build_vanklinken2008_paired_stage_diagnostic.py --check
+      - name: Check Parkinsonia exploratory conversion ablation
+        run: python scripts/build_vanklinken2008_conversion_ablation.py --check
+      - name: Check IWE032 effective cost window
+        run: python scripts/build_iwe032_effective_cost_window.py --check
+      - name: Check IWE032 effective fitness surface
+        run: python scripts/build_iwe032_effective_fitness_surface.py --check
+      - name: Check signed selection-shift pilot
+        run: python scripts/render_selection_shift_pilot.py --check
       - name: Validate synthetic extraction
         run: python scripts/validate_extraction.py examples/synthetic_effects.csv
       - name: Validate direct extraction
