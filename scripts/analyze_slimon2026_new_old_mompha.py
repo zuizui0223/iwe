@@ -40,6 +40,8 @@ SOURCE = {
     },
 }
 PREFIX = {"new": "mompha", "old": "OLDmompha"}
+BOOTSTRAPS = 120
+BOOTSTRAP_SEED = 20261011
 
 
 def _dated_columns(rows: list[dict], stage: str) -> dict[int, str]:
@@ -253,6 +255,37 @@ def diagnostic(new: list[dict],old: list[dict]) -> dict:
                 )
             }
         result["biological_stage_coefficients"]=fitted
+        # Re-sample original source plant clusters, never repeated
+        # plant-visits as if they were separate biological replicates.
+        # Percentiles show source-plant stability, not a validated
+        # causal CI or evidence of tracked insect maturation.
+        axes = models["joint_with_next_week_new"]
+        labels = np.unique(data["source_plant_id"].to_numpy())
+        rng = np.random.default_rng(BOOTSTRAP_SEED)
+        successes = []
+        for _ in range(BOOTSTRAPS):
+            sample = rng.integers(0, len(labels),size=len(labels))
+            weight = np.bincount(sample,minlength=len(labels)).astype(float)
+            try:
+                model = _weighted_fe_fit(data,axes,weight)
+            except RuntimeError:
+                continue
+            successes.append(model["coefficients"])
+        intervals = {}
+        for axis in axes:
+            vals = [m[axis] for m in successes]
+            if len(vals) >= int(.8*BOOTSTRAPS):
+                intervals[axis] = [
+                    round(float(v),6) for v in np.quantile(vals,[.025,.975])
+                ]
+            else:
+                intervals[axis] = None
+        result["joint_stage_source_plant_bootstrap_descriptive"] = {
+            "original_plant_resamples_requested": BOOTSTRAPS,
+            "n_successful_source_plant_resamples": len(successes),
+            "ranges_2_5_to_97_5_percentile": intervals,
+            "not_an_individual_moth_transition_ci": True,
+        }
     else:
         result["biological_stage_coefficients"]=None
         result["stage_fit_hold"]="too_little_outcome_or_source_stage_variation"
