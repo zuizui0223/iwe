@@ -71,7 +71,7 @@ def test_only_source_observed_days_and_no_fake_weekly_zero():
     for r in new:
         r["mompha_7_19"]=""  # missing is not zero
     panel=paired_source_stage_panel(new,old)
-    assert set(panel.doy)=={200,207,214}
+    assert set(panel.doy)=={207,214}
     assert panel.source_plant_id.nunique()==25
     for r in old:
         r.pop("OLDmompha_8_2")
