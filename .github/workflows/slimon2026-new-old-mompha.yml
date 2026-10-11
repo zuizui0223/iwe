@@ -1,0 +1,37 @@
+name: IWE Slimon new-old Mompha original biological grain gate
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/analyze_slimon2026_new_old_mompha.py
+      - tests/test_slimon2026_new_old_mompha.py
+      - .github/workflows/slimon2026-new-old-mompha.yml
+
+permissions:
+  contents: read
+
+jobs:
+  original-stage-grain:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check stage and duplicate-ID biological provenance before network use
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_slimon2026_new_old_mompha.py
+      - name: Audit exact original stage records from verified source ZIP
+        run: >-
+          python -m scripts.analyze_slimon2026_new_old_mompha
+          --outdir /tmp/iwe-slimon2026-new-old-stage
+      - name: Upload only source-derived stage and grain receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slimon2026-new-old-mompha-grain-audit
+          path: /tmp/iwe-slimon2026-new-old-stage/original_new_old_stage_grain.json
+          if-no-files-found: warn
+          retention-days: 7
