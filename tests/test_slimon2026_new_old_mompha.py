@@ -95,3 +95,26 @@ def test_source_stage_descriptive_fit_is_not_oviposition():
     assert "joint_with_next_week_new" in x["biological_stage_coefficients"]
     assert x["real_oviposition_date_identified"] is False
     assert x["source_bud_abundance_identified"] is False
+
+
+def test_unkeyed_stage_rows_are_audited_not_fabricated_as_plants():
+    new, old = fixture_rows()
+    old.append({
+        "ID": "", "OLDmompha_7_12": "7",
+        "OLDmompha_7_19": "",
+        "TRT": "unknown",
+    })
+    old.append({"ID": "", "OLDmompha_7_12": ""})
+    grain = stage_grain(old, "old")
+    assert grain["original_row_count"] == 27
+    assert grain["source_rows_without_original_plant_id"] == 2
+    assert grain["unkeyed_rows_with_positive_stage_value"] == 1
+    assert grain["unkeyed_rows_with_any_numeric_stage_value"] == 1
+    assert grain["unkeyed_rows_with_nonempty_auxiliary_fields"] == 1
+    assert grain["unique_original_plant_ids"] == 25
+    result = diagnostic(new, old)
+    assert result["stage_estimates_source_scope"] == (
+        "original_plant_id_keyed_complete_case_only"
+    )
+    assert result["n_source_plants"] == 25
+    assert result["strict_h1_effects_admitted"] == 0
