@@ -6,6 +6,10 @@ on:
     paths:
       - scripts/audit_slimon2026_old_mompha_stockflow.py
       - tests/test_slimon2026_old_mompha_stockflow.py
+      - tests/test_slimon2026_old_mompha_stockflow_receipt.py
+      - data/source_reconstructions/slimon2026_old_mompha_stock_flow.csv
+      - docs/SLIMON2026_OLD_MOMPHA_STOCK_FLOW_AUDIT_20261013.md
+      - docs/SLIMON2026_NEW_OLD_STAGE_PROVENANCE_20261011.md
       - .github/workflows/slimon2026-old-stage-stockflow.yml
 
 permissions:
@@ -22,7 +26,7 @@ jobs:
       - name: Check old-stage cumulative bookkeeping detection offline
         run: |
           python -m pip install -e '.[dev]'
-          python -m pytest -q tests/test_slimon2026_old_mompha_stockflow.py
+          python -m pytest -q tests/test_slimon2026_old_mompha_stockflow.py tests/test_slimon2026_old_mompha_stockflow_receipt.py
       - name: Inspect exact original new/old stock flow and R source locators
         run: >-
           python -m scripts.audit_slimon2026_old_mompha_stockflow
