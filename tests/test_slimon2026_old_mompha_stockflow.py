@@ -42,6 +42,8 @@ def test_literal_old_next_week_equals_old_now_plus_new_now_when_constructed():
         "old_following_equals_old_current_plus_new_current"
     ]
     assert formula["fraction_of_numeric_week_pairs"]==1.0
+    assert x["nontrivial_old_next_equals_old_now_plus_new_now"]["share"] == 1.0
+    assert x["nontrivial_stage_plant_weeks"] > 0
     assert not x["original_new_old_measurement_independence_verified"]
     assert not x["stock_flow_identity_is_developmental_tracking_evidence"]
     assert x["strict_h1_effects_admitted"]==0
@@ -91,3 +93,25 @@ def test_helper_grain_is_not_assumed_to_be_plant_id():
     assert x["source_ids"]==0
     assert x["source_headers"]==["jday","aggregate_mompha"]
     assert x["no_assumption_about_original_bud_or_larva_tracking"]
+
+
+
+def test_original_R_comments_support_tissue_stage_not_marked_moth_age():
+    from scripts.audit_slimon2026_old_mompha_stockflow import (
+        original_R_stage_semantics
+    )
+    b=BytesIO()
+    with ZipFile(b,"w") as z:
+        for experiment in ("exp1","exp2"):
+            z.writestr(
+                f"Freese Stats/{experiment}_time_series.R",
+                "# field gall count (mompha) and the desiccated bud count (OLDmompha), then\n"
+            )
+    with ZipFile(BytesIO(b.getvalue())) as source:
+        result=original_R_stage_semantics(source)
+    for item in result.values():
+        assert item[
+            "original_R_calls_mompha_field_gall_and_oldmompha_desiccated_bud"
+        ]
+        assert item["stage_definition_comment_source_line_numbers"] == [1]
+        assert item["authoritative_individual_moth_age_observed"] is False
