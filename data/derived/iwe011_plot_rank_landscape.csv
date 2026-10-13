@@ -1,0 +1,4 @@
+study_id,dependence_id,analysis,timing_axis,outcome,n_plots,spearman_rho,p_value_two_sided,inferential_status,notes
+IWE011,DEP_PEUCEDANUM_KUDO_PROGRAM,plot_rank_spearman,earlier_to_later_population_flowering,initial_fruit_set,5,-0.3162277660,0.6041813036,descriptive_five_plot_association,Plot is the analysis unit. Plant observation counts are not used as timing-exposure replication.
+IWE011,DEP_PEUCEDANUM_KUDO_PROGRAM,plot_rank_spearman,earlier_to_later_population_flowering,final_fruit_set,5,0.8000000000,0.1040880387,descriptive_five_plot_association,Plot is the analysis unit. Plant observation counts are not used as timing-exposure replication.
+IWE011,DEP_PEUCEDANUM_KUDO_PROGRAM,plot_rank_spearman,earlier_to_later_population_flowering,intact_fruit_number,5,0.8000000000,0.1040880387,descriptive_five_plot_association,Plot is the analysis unit. Plant observation counts are not used as timing-exposure replication.

@@ -1,0 +1,5 @@
+habitat,seeds_per_retained_fruit,abortion_state,n_without_puncture,n_with_puncture,p_without_puncture,p_with_puncture,descriptive_risk_difference_with_minus_without,nonaborted_seeds_per_retained_fruit_upper_bound_without,nonaborted_seeds_per_retained_fruit_upper_bound_with,nonaborted_upper_bound_difference_with_minus_without,source_inference_limit
+pine,1,single_seed_aborted,418,38,0.038278,0.026316,-0.011962,0.961722,0.973684,0.011962,observed_fruit_state_only_not_intact_seed_or_plant_fitness
+pine,2,exactly_one_of_two_seeds_aborted,463,80,0.282937,0.762500,0.479563,1.669546,1.187500,-0.482046,observed_fruit_state_only_not_intact_seed_or_plant_fitness
+dry_scrub,1,single_seed_aborted,120,194,0.033333,0.139175,0.105842,0.966667,0.860825,-0.105842,observed_fruit_state_only_not_intact_seed_or_plant_fitness
+dry_scrub,2,exactly_one_of_two_seeds_aborted,93,496,0.688172,0.717742,0.029570,1.204301,1.084677,-0.119624,observed_fruit_state_only_not_intact_seed_or_plant_fitness

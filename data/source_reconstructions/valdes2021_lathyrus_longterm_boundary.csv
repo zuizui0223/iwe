@@ -1,0 +1,9 @@
+quantity,estimate,se_or_ci,p_value,source
+seed_predation_temperature_March,-0.202,SE=0.072,0.005,Valdes_Ehrlen_2021_Table1
+seed_predation_temperature_May,0.469,SE=0.072,<0.001,Valdes_Ehrlen_2021_Table1
+seed_predation_temperature_June,0.415,SE=0.062,<0.001,Valdes_Ehrlen_2021_Table1
+seed_predation_FFD,0.031,SE=0.059,0.592,Valdes_Ehrlen_2021_Table1
+seed_predation_March_x_FFD,0.174,SE=0.082,0.033,Valdes_Ehrlen_2021_Table1
+seed_predation_April_x_FFD,-0.159,SE=0.067,0.017,Valdes_Ehrlen_2021_Table1
+selection_FFD_x_yearly_mean_seed_predation,0.003,"95% CI=-0.072,0.078",not_significant,Valdes_Ehrlen_2021_Table2
+selection_FFD_x_yearly_covariance_FFD_seed_predation,-0.033,"95% CI=-0.101,0.037",not_significant,Valdes_Ehrlen_2021_Table2

@@ -1,0 +1,60 @@
+name: IWE015 public Dryad archive access audit
+
+on:
+  pull_request:
+    paths:
+      - scripts/recover_iwe015_dryad.py
+      - tests/test_iwe015_dryad_recovery_probe.py
+      - .github/workflows/iwe015-dryad-probe.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  access-probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check non-network probe invariants
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_iwe015_dryad_recovery_probe.py
+      - name: Download six source files (manual, strict)
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          DRYAD_CLIENT_ID: ${{ secrets.DRYAD_CLIENT_ID }}
+          DRYAD_CLIENT_SECRET: ${{ secrets.DRYAD_CLIENT_SECRET }}
+          DRYAD_ACCESS_TOKEN: ${{ secrets.DRYAD_ACCESS_TOKEN }}
+        run: >-
+          python scripts/recover_iwe015_dryad.py
+          --output-dir /tmp/iwe015-dryad
+          --timeout 15
+          --strict
+      - name: Print archive access decision
+        if: ${{ always() && github.event_name == 'workflow_dispatch' }}
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("/tmp/iwe015-dryad/manifest.json")
+          if p.exists():
+              x = json.loads(p.read_text())
+              print(f"Archive status={x['status']}; files={x['files_downloaded']}/{x['files_expected']}; bearer_configured={x['bearer_auth_configured']}")
+              if x["status"] != "complete":
+                  print("::warning::Dryad source retrieval BLOCKED; no raw data or effect size is verified.")
+          else:
+              print("::warning::No manifest exists; download not verified.")
+          print("No strict effect promoted.")
+          PY
+      - name: Upload unreviewed source files and manifest
+        if: ${{ always() && github.event_name == 'workflow_dispatch' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe015-public-dryad-raw-unreviewed
+          path: /tmp/iwe015-dryad/
+          if-no-files-found: warn
+          retention-days: 7

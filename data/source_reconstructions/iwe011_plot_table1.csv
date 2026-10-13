@@ -1,0 +1,6 @@
+plot,phenology_rank_early_to_late,n_plant_observations,initial_fruit_set_mean,initial_fruit_set_sd,final_fruit_set_mean,final_fruit_set_sd,intact_fruit_number_mean,intact_fruit_number_sd,source
+HA,1,177,0.50,0.30,0.13,0.19,3.1,4.6,"Kudo & Shibata 2025 Table 1; phenology order from Figure 1"
+HL,2,89,0.52,0.23,0.32,0.24,11.8,9.5,"Kudo & Shibata 2025 Table 1; phenology order from Figure 1"
+HC,3,139,0.42,0.30,0.25,0.24,10.2,11.0,"Kudo & Shibata 2025 Table 1; phenology order from Figure 1"
+KD,4,135,0.52,0.29,0.48,0.28,18.5,12.8,"Kudo & Shibata 2025 Table 1; phenology order from Figure 1"
+HD,5,127,0.42,0.30,0.40,0.29,14.7,13.1,"Kudo & Shibata 2025 Table 1; phenology order from Figure 1"

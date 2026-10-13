@@ -101,3 +101,21 @@ def test_strict_extracted_requires_eligible_status():
     ] = "ineligible"
     errors = validate_adjudication_registry(adjudications)
     assert any("strict_extracted requires strict_h1_status=eligible" in e for e in errors)
+
+
+def test_iwe015_is_unresolved_until_matching_final_fruit_units_are_verified():
+    registry = pd.read_csv("data/registry/strict_h1_adjudications.csv")
+    sub = registry[registry["study_id"] == "IWE015"]
+    assert len(sub) == 2
+    assert set(sub["strict_h1_status"]) == {"unresolved"}
+    assert set(sub["quantitative_status"]) == {"pending"}
+    assert sub["expected_effect_id"].isna().all()
+    for note in sub["reason"]:
+        assert "linkage" in note
+        assert "variance" in note
+    effects = pd.read_csv("data/extraction/direct_effects.csv")
+    assert not effects.loc[
+        (effects["study_id"] == "IWE015")
+        & (effects["timing_analysis_class"] == "strict_window")
+    ].shape[0]
+    assert validate_effect_adjudications(effects, registry) == []

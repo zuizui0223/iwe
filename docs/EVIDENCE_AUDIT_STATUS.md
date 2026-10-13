@@ -31,38 +31,38 @@ The **2-cluster threshold is a discovery milestone only**; the current reference
 
 ## 3. Replication-candidate audit
 
-The replication ledger contains **50 candidate programmes/leads**. This is a discovery/completion ledger, not a count of unique screened publications.
+The replication ledger contains **51 candidate programmes/leads**. This is a discovery/completion ledger, not a count of unique screened publications.
 
-- **36 (72.0%)** are rejected under the frozen contracts.
-- **13 (26.0%)** remain biologically relevant but blocked by a specific missing timing/outcome/variance/source object.
+- **38 (74.5%)** are rejected under the frozen contracts.
+- **12 (23.5%)** remain biologically relevant but blocked by a specific missing timing/outcome/variance/source object.
 - **1 (2.0%)** are ready.
 
 | Candidate status | Count |
 |---|---:|
 | rejected_timing | 27 |
-| rejected_other | 8 |
+| rejected_other | 10 |
 | blocked_timing_linkage | 6 |
-| blocked_final_surface | 4 |
+| blocked_final_surface | 3 |
 | blocked_effect_form | 1 |
 | blocked_source_release | 1 |
 | blocked_summary_stats | 1 |
 | ready | 1 |
 | rejected_dependence | 1 |
 
-The dominant rejection is the **timing contract**: 27 of 50 candidate leads (54.0%) fail because partner activity is absent, imported from another season/study, or inferred from realized attack/egg receipt rather than measured independently.
+The dominant rejection is the **timing contract**: 27 of 51 candidate leads (52.9%) fail because partner activity is absent, imported from another season/study, or inferred from realized attack/egg receipt rather than measured independently.
 
 ## 4. Completion-route audit
 
-There are **10 unresolved completion routes**: 4 mixed-system and 6 antagonist routes.
-Public search is marked **exhausted for 8** routes and **monitor-only for 2**; there are **0 active generic public-search routes**.
+There are **11 unresolved completion routes**: 5 mixed-system and 6 antagonist routes.
+Public search is marked **exhausted for 9** routes and **monitor-only for 2**; there are **0 active generic public-search routes**.
 
 | Next action | Routes |
 |---|---:|
-| contact_or_archive | 4 |
-| retrieve_longform | 3 |
+| contact_or_archive | 5 |
+| retrieve_longform | 2 |
+| retrieve_public_asset | 2 |
 | monitor_repository | 1 |
 | monitor_source_release | 1 |
-| retrieve_public_asset | 1 |
 
 This means the remaining gap is no longer well described as simply "more literature searching." Most unresolved routes require a named long-form source, public binary asset, archive/raw table, or future repository release.
 

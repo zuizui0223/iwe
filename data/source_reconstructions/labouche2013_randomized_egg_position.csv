@@ -1,0 +1,4 @@
+study_id,doi,source_experiment,endpoint,egg_position_randomized,source_assignment_grain,n_inside_assigned,n_outside_assigned,n_inside_endpoint,n_outside_endpoint,inside_group_mean,inside_reported_se,outside_group_mean,outside_reported_se,measurement_unit,endpoint_day,source_reported_p,source_reported_f_test,post_assignment_selection,final_intact_seed_outcome
+LABOUCHE2013_SILENE_HADENA,10.1111/1365-2435.12062,experiment_2,successful_fruit_attack,yes,one_flower_per_female_plant,71,66,,,44,8,29,4,percent_population_means,10,0.033,LLRT_greater_9.18,no,no
+LABOUCHE2013_SILENE_HADENA,10.1111/1365-2435.12062,experiment_2,initial_fruit_development,yes,one_flower_per_female_plant,71,66,,,83,4,97,2,percent_population_means,10,0.005,LLRT_greater_15.88,no,no
+LABOUCHE2013_SILENE_HADENA,10.1111/1365-2435.12062,experiment_2,fruit_mass_among_developed,yes,one_flower_per_female_plant,71,66,63,59,511,26,576,24,milligrams,10,0.047,F_1_106_4.04,yes,no

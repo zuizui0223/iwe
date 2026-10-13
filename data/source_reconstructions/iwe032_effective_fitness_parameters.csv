@@ -1,0 +1,3 @@
+fecundity_class,R,I_minus,I_plus,active_amplitude,active_center_z,active_sigma,L,source
+high,29.8,0.3784,0.1206,2.00,-0.53,0.63,0.22,"Davies & Saccheri 2024 Eq.1; Table 1; Figure 6b; Figure 5a"
+medium,15.4,0.2829,0.0477,0.75,-0.76,0.78,0.22,"Davies & Saccheri 2024 Eq.1; Table 1; Figure 6b; Figure 5a"
