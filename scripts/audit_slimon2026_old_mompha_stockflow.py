@@ -13,7 +13,8 @@ maturation parameter. No personal data, raw file redistribution, H1.
 from __future__ import annotations
 
 import argparse
-from io import BytesIO
+import csv
+from io import BytesIO, StringIO
 import json
 from pathlib import Path
 import re
@@ -68,8 +69,13 @@ def cumulative_input_metadata(zf: ZipFile, experiment: str) -> dict:
     name = "Freese Stats/momphaCALC_" + experiment + ".csv"
     if name not in zf.namelist():
         return {"file": name, "status": "file_missing"}
-    rows = _load_rows(zf, name)
-    headers = list(rows[0]) if rows else []
+    # This is a *helper* long-format file. Unlike the source new/old
+    # stage tables, it need not have a canonical column named ID.
+    # Inventory its schema rather than pretending it shares a grain.
+    original_csv = zf.read(name).decode("utf-8-sig",errors="replace")
+    reader=csv.DictReader(StringIO(original_csv,newline=""))
+    rows=list(reader)
+    headers=list(reader.fieldnames or [])
     keyed = [
         str(row.get("ID", "")).strip()
         for row in rows if str(row.get("ID", "")).strip()
