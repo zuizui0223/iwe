@@ -139,6 +139,9 @@ def audit_stock_flow(new_rows: list[dict], old_rows: list[dict]) -> dict:
         "old_following_positive":0,
     }
     valid = 0
+    nontrivial = 0
+    nontrivial_identity = 0
+    all_stage_zero = 0
     delta_sum = 0.0
     new_sum = 0.0
     for plant in ids:
@@ -152,6 +155,12 @@ def audit_stock_flow(new_rows: list[dict], old_rows: list[dict]) -> dict:
             if any(x<0 or x%1 for x in (a,b,c,e)):
                 raise ValueError("original counted stages must be nonnegative integers")
             valid += 1
+            if a==0 and c==0 and e==0:
+                all_stage_zero += 1
+            else:
+                nontrivial += 1
+                if e == c+a:
+                    nontrivial_identity += 1
             delta_sum += e-c
             new_sum += a
             conditions = {
@@ -169,6 +178,12 @@ def audit_stock_flow(new_rows: list[dict], old_rows: list[dict]) -> dict:
             for key, match in conditions.items():
                 formula_counts[key] += int(match)
     info["numeric_consecutive_original_plant_weeks"]=valid
+    info["all_zero_stage_plant_weeks"]=all_stage_zero
+    info["nontrivial_stage_plant_weeks"]=nontrivial
+    info["nontrivial_old_next_equals_old_now_plus_new_now"]={
+        "matches":nontrivial_identity,
+        "share":round(nontrivial_identity/nontrivial,6) if nontrivial else None,
+    }
     info["sum_delta_old_stage_counts"]=round(delta_sum,4)
     info["sum_same_week_new_stage_counts"]=round(new_sum,4)
     info["arithmetic_identity_checks"]={
@@ -186,6 +201,32 @@ def audit_stock_flow(new_rows: list[dict], old_rows: list[dict]) -> dict:
     return info
 
 
+def original_R_stage_semantics(zf: ZipFile) -> dict:
+    """Verify stage labels from the source authors' R comments, not our guess."""
+    out = {}
+    for experiment in ("exp1","exp2"):
+        name=f"Freese Stats/{experiment}_time_series.R"
+        if name not in zf.namelist():
+            out[experiment]={"source_R_file":name,"status":"missing"}
+            continue
+        lines=zf.read(name).decode("utf-8-sig",errors="replace").splitlines()
+        evidence=[]
+        for i,line in enumerate(lines,1):
+            normalized=" ".join(line.lower().split())
+            if ("field gall count" in normalized and
+                    "desiccated bud count" in normalized and
+                    "oldmompha" in normalized):
+                evidence.append(i)
+        out[experiment]={
+            "source_R_file":name,
+            "stage_definition_comment_source_line_numbers":evidence,
+            "original_R_calls_mompha_field_gall_and_oldmompha_desiccated_bud":
+                bool(evidence),
+            "authoritative_individual_moth_age_observed":False,
+        }
+    return out
+
+
 def audit_archive(zf: ZipFile) -> dict:
     audit={}
     for exp,paths in SOURCE.items():
@@ -200,6 +241,7 @@ def audit_archive(zf: ZipFile) -> dict:
         "source_zip_md5":EXPECTED_ZIP_MD5,
         "experiment_results":audit,
         "source_R_code_locators":script_sources,
+        "original_R_stage_semantic_evidence":original_R_stage_semantics(zf),
         "empirical_biological_maturation_claim_admitted":False,
         "source_stage_count_derivation_authenticated":False,
         "direct_source_seeds_or_adults_recovered":False,
@@ -218,6 +260,8 @@ def run(outdir: Path) -> dict:
     )
     for exp, out in result["experiment_results"].items():
         print("SOURCE_STOCK_FLOW",exp,json.dumps(out,ensure_ascii=False))
+    print("ORIGINAL_SOURCE_STAGE_SEMANTICS",
+          json.dumps(result["original_R_stage_semantic_evidence"]))
     for filename,hits in result["source_R_code_locators"].items():
         print("ORIGINAL_R_SOURCE_LOCATOR",filename,
               json.dumps(hits[:10],ensure_ascii=False))
