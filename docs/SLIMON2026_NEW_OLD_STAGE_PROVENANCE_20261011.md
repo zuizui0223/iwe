@@ -51,6 +51,34 @@ Both experiments' source flowering records are dated
 **2023**, so they are two experimental components of **one
 programme**, not replicated independent flowering years.
 
+## Source-author clarification: new gall counts versus desiccated flower buds
+
+**Correction after original-R-code review (2026-10-13).**
+The authors' `exp1_time_series.R` (around source line 159)
+and `exp2_time_series.R` (around source line 119) explicitly
+describe the `mompha` field as a **field gall count** and the
+`OLDmompha` field as a **desiccated bud count**. The original
+README's `new Mompha` / `old Mompha` labels therefore do
+**not** certify successive *ages of individually observed
+moths or larvae*. They represent visible host-associated
+damage/tissue states. Even if a new gall is followed a week
+later by a desiccated bud on the same plant, this is not a
+tracked single gall or a measured larval maturation interval.
+
+Further, the original long-format `momphaCALC_exp1/2.csv`
+has columns describing increments, losses and cumulative
+Mompha accounting. A positive new–old lag association could
+partly reflect **damage-stock accounting and shared
+host-bud availability**, not independent measurements of
+insect development. See the source-only arithmetic audit
+`docs/SLIMON2026_OLD_MOMPHA_STOCK_FLOW_AUDIT_20261013.md`.
+
+**Admissible claim:** observed gall/damaged-bud timing is
+structured within individual plants across weeks.
+**Not established:** an individual insect's 7-day
+new-to-old stage transition, original egg placement date,
+or a directly measured final intact-seed outcome.
+
 ## The actual stage relation we could test
 
 On each original plant and *literal exact weekly* survey
