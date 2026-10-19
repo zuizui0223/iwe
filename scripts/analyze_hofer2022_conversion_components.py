@@ -35,12 +35,14 @@ from scripts.analyze_hofer2022_resource_limits import (
 
 SOURCE_DOI = "10.5281/zenodo.7335086"
 STAGE_NAMES = {
-    "pods_total": "log1p_pods_per_plant",
-    "pods_per_flower": "log1p_pods_per_total_recorded_flower",
+    "pods_total": "log1p_recorded_pods_per_plant",
     "seeds_per_pod": "log1p_source_average_seeds_per_pod",
-    "seeds_per_flower": "log1p_estimated_total_seeds_per_flower",
     "seed_total": "log1p_source_estimated_total_seeds",
 }
+# Source sumflower and pods are NOT demonstrated to be congruent
+# reproductive-unit counts: 47/50 observed source plants have pods
+# exceeding sumflower. Therefore pods/sumflower and seeds/sumflower
+# are strictly diagnostics of measurement mismatch, NOT stage outcomes.
 COMPARISON_MODELS = {
     "flowers": MODELS["M1_water_and_flowers"],
     "add_visits_per_flower_day": MODELS["M3_water_flowers_visitors"],
@@ -90,9 +92,7 @@ def stage_plants(sources: dict) -> tuple[list[dict], dict]:
         # use this identity as an independent biological confirmation.
         outcome = {
             "pods_total": log1p(pods),
-            "pods_per_flower": log1p(pods / flowers),
             "seeds_per_pod": log1p(seeds_per_pod),
-            "seeds_per_flower": log1p(x["estimatedTotalSeeds"] / flowers),
             "seed_total": x["outcome"],
         }
         records.append({
@@ -202,14 +202,28 @@ def main():
             "n_pods_exceed_source_total_flower": sum(
                 x["sourcePods"] > x["flowerCount"] for x in plants
             ),
+            "number_compared_with_pod_flower_counts": len(plants),
+            "pod_per_flower_not_admitted_as_conversion_endpoint": True,
+            "reason":
+                "most plants have more counted pods than sumflower; "
+                "the source flower count and total pods are not an "
+                "identified matching unit/complete opportunity denominator",
             "median_pods_x_avgseed_to_estimated_total_seed_ratio":
                 median(ratios) if ratios else None,
+            "n_exact_pods_x_avgseed_equals_estimated_total": sum(
+                abs(x["derivedExpectedSeedsFromPodAndAvg"] -
+                    x["estimatedTotalSeeds"]) <=
+                1e-6 * max(1.0, x["estimatedTotalSeeds"])
+                for x in plants
+            ),
             "ratio_is_not_independent_source_measurement": True,
         },
         "models": stage_validate(plants),
         "interpretation_contract": {
             "estimated_seeds_not_viable_recruits": True,
-            "pods_per_flower_not_binomial_flower_fate": True,
+            "pods_per_source_sumflower_invalid_fruit_conversion_ratio": True,
+            "reported_flower_variable_may_be_incomplete_observation_index":
+                True,
             "stage_outcomes_share_algebraic_inputs_not_independent_effects":
                 True,
             "season_aggregated_visitor_rows_not_partner_phenology": True,
