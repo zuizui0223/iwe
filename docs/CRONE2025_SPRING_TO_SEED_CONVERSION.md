@@ -58,6 +58,22 @@ The ordinal mean (none=0, low=1, medium=2, high=3) is **not observed flower numb
 
 The qualitative separation survives these alternative encodings, while its predictive gain is sensitive to the scaling. No scale is a measured adult–flowering phase or a tested larval timing coordinate.
 
+## Unit sensitivity: a typical seed is not a typical sampled tree
+
+The primary analysis asks about the **fraction of all classified samaras**, pooling naturally unequal numbers of harvested samaras from the sampled branches. A different target — the **mean of tree-year seed-state fractions** — gives each sampled tree equal influence. Both are descriptively useful, but they are biologically distinct estimands and should not be intermixed.
+
+| Year-held-out contrast | Nonempty / all classified | Intact / nonempty | Intact / all |
+|---|---:|---:|---:|
+| **Pooled samaras**: relative RMSE improvement | **−32.2%** (worse) | +48.4% | +40.4% |
+| **Equal tree weights**, with ≥1 classified samara/tree: improvement | **+10.4%** | +46.0% | +57.2% |
+| **Equal tree weights**, with ≥10 classified samaras/tree: improvement | **−26.1%** (worse) | +36.8% | +29.5% |
+
+The weak early/nonempty trend is **not invariant to the tree/seed denominator**: under equal-tree weights with only ≥1 samara, even nonempty fraction gains a little predictive skill. In 2016, an observed tree-year (HF12) has only **2 classified samaras**, both intact/filled. That tiny 100% case equals a tree with 42 samaras in the naïve equal-tree mean, inflating the 2016 typical-tree intact fraction from 13.2% (requiring ≥10 samaras/tree) to 34.9% (accepting ≥1). Two other sampled control trees in 2016 have **zero classified samaras** and cannot be used as zero-valued *fractions*. Missing tree outcomes are never filled with an assumed zero rate.
+
+Under the explicit ≥10-classified-samara sensitivity, the qualitative *relative* pattern (spring predicts conditional intact-seed conversion more usefully than initial nonempty fraction) remains, but the absolute gain is smaller and the restricted sampled-tree population is not a random forest sample. These thresholds were checked after seeing the data; none is a confirmatory significance criterion.
+
+**Consequences:** The current biological finding is not an identified stage-specific causal effect, nor an assertion that spring flowering leaves the pollination stage unchanged. It is a bounded **annual scale- and unit-sensitive temporal-information pattern** with a more persistent association to terminal seed states. This must be presented alongside the source's existing masting/seed-predator interpretation.
+
 ## Essential outcome and missingness limits
 
 1. **State and denominator**: `num.filled / total.seed` counts the proportion of **classified, harvested samaras** with intact filled seeds. It is not viable seed production per *tree*, and `total.seed` does not necessarily contain samaras missing during harvest. It should not be called maternal lifetime fitness.
