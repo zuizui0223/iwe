@@ -4,6 +4,7 @@ import pytest
 from scripts.analyze_demanincor2023_service_window import (
     PINNED_MD5, SOURCE_ROWS, ARENAS, source_rows, read_original,
     build_plants, evaluate, design, fit_ols, predict_row,
+    phase_shift_sensitivity, MODELS,
 )
 
 
@@ -71,6 +72,8 @@ def test_same_plant_original_stage_and_seedset_join():
     assert one["adultMean"] == pytest.approx(3.0)
     assert one["flowerBeeOverlap"] == pytest.approx(10 / 3)
     assert one["beeCoverage"] == 1.0
+    assert one["matchedBloomDOY"] == pytest.approx((2*109+110)/3)
+    assert one["overallBloomDOY"] == pytest.approx((2*109+110)/3)
     assert {x["arena"] for x in plants} == set(ARENAS)
     assert len(set(x["source_id"] for x in plants)) == len(plants)
 
@@ -104,6 +107,9 @@ def test_model_training_standardization_does_not_include_heldout_plant():
     assert len(beta) == len(X[0]) == len(T[0])
     assert 0 <= predict_row(T[0], beta) <= 1
     scores = evaluate(plants)
+    assert "M6_matched_day_calendar" in scores
+    assert "M9_calendar_coverage" in scores
+    assert "M10_calendar_coverage_overlap" in scores
     for value in scores.values():
         assert value["n_plants"] == 24
         assert value["n_arenas"] == 8
@@ -150,3 +156,31 @@ def test_original_tsv_empty_ovule_is_missing_not_shifted_or_zero():
     assert rows[1][12] == "0.000534518"
     assert rows[0][9] == "3"
     assert rows[0][10] == "0.85"
+
+
+def test_cyclic_shift_falsifier_preserves_source_calendar_and_zero_reference():
+    d = fixture()
+    plants, _ = build_plants(d)
+    report = phase_shift_sensitivity(d, plants)
+    assert report["n_original_census_days_per_arena"] == 2
+    assert report["same_shift_used_for_all_arenas"] is True
+    assert len(report["per_shift_diagnostics"]) == 2
+    assert report["per_shift_diagnostics"][0]["calendar_cyclic_shift"] == 0
+    direct = evaluate(plants, specs={
+        "M3_flower_bee_overlap": MODELS["M3_flower_bee_overlap"]
+    })["M3_flower_bee_overlap"]["equal_arena_rmse"]
+    assert report["original_zero_shift_equal_arena_rmse_M3"] == pytest.approx(
+        direct
+    )
+    assert 1 <= report["n_phase_shifts_better_or_equal_M3"] <= 2
+    assert math.isfinite(report["median_shifted_M10"])
+
+
+def test_shifting_bee_phase_requires_common_observation_day_support():
+    d = fixture()
+    plants, _ = build_plants(d)
+    # Break all bee exposure dates for one arena.
+    d["bee_density.txt"][0][1] = "999"
+    d["bee_density.txt"][1][1] = "998"
+    with pytest.raises(ValueError, match="missing original flower/bloom link"):
+        phase_shift_sensitivity(d, plants)
