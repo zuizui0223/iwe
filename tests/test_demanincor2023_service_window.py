@@ -184,3 +184,28 @@ def test_shifting_bee_phase_requires_common_observation_day_support():
     d["bee_density.txt"][1][1] = "998"
     with pytest.raises(ValueError, match="missing original flower/bloom link"):
         phase_shift_sensitivity(d, plants)
+
+
+def test_partial_original_fruit_sensitivity_keeps_only_known_seeds():
+    d = fixture()
+    # An additional separate fruit with unobserved seeds and ovules
+    # must not be silently substituted with zero counts.
+    extra = list(d["seeds.txt"][0])
+    extra[8] = "NA"
+    extra[9] = "NA"
+    d["seeds.txt"].append(extra)
+    strict, strict_excluded = build_plants(d)
+    partial, partial_excluded = build_plants(
+        d, allow_incomplete_fruit=True
+    )
+    assert len(strict) == 23
+    assert len(partial) == 24
+    assert strict_excluded["uncounted_original_fruit"] == 1
+    assert partial_excluded == {}
+    rescued = next(z for z in partial if z["source_id"] == "C1_CH_17")
+    assert rescued["n_fruit_records"] == 2
+    assert rescued["n_unmeasured_fruit_records"] == 1
+    # Even permissive mode does not create an extra unobserved seed:
+    assert rescued["sampled_seed_count"] == 4
+    assert rescued["sampled_ovule_count"] == 3
+    assert rescued["seed_set"] == pytest.approx(4/7)
