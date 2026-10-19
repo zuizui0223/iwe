@@ -6,6 +6,9 @@ on:
     paths:
       - scripts/probe_jadera2025_dryad_source.py
       - tests/test_jadera2025_dryad_source.py
+      - tests/test_jadera2025_original_access_receipt.py
+      - data/source_reconstructions/jadera2025_public_original_access_gate.csv
+      - docs/JADERA2025_MIXED_POLLINATION_SEED_COST_SOURCE_GATE_20261019.md
       - .github/workflows/jadera2025-source-original.yml
 
 permissions:
@@ -22,7 +25,7 @@ jobs:
       - name: Test exact public DOI-only source and experiment-unit contracts
         run: |
           python -m pip install -e '.[dev]'
-          python -m pytest -q tests/test_jadera2025_dryad_source.py
+          python -m pytest -q tests/test_jadera2025_dryad_source.py tests/test_jadera2025_original_access_receipt.py
       - name: Inventory original archived mixed partner experiments
         run: >-
           python -m scripts.probe_jadera2025_dryad_source
