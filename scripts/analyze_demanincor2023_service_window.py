@@ -161,7 +161,10 @@ def _assert_arena(cage: str, treatment: str) -> None:
         raise ValueError("unknown, duplicated or mismatched experimental arena")
 
 
-def build_plants(sources: dict[str, list[list[str]]]):
+def build_plants(
+    sources: dict[str, list[list[str]]],
+    allow_incomplete_fruit: bool = False,
+):
     """Return validated original plant records and explicit exclusion funnel."""
     orig = {}
     for a in sources["seeds.txt"]:
@@ -253,7 +256,7 @@ def build_plants(sources: dict[str, list[list[str]]]):
         if original["seeds"] != final_seed or original["ovules"] != final_ovule:
             excluded["raw_vs_summary_disagreement"] += 1
             continue
-        if original["missing"] > 0:
+        if original["missing"] > 0 and not allow_incomplete_fruit:
             excluded["uncounted_original_fruit"] += 1
             continue
         day = onset.get(key)
@@ -277,6 +280,7 @@ def build_plants(sources: dict[str, list[list[str]]]):
             "sampled_seed_count": final_seed,
             "sampled_ovule_count": final_ovule,
             "n_fruit_records": original["n"],
+            "n_unmeasured_fruit_records": original["missing"],
             "onset": day,
             "logFlowers": log1p(f["total"]),
             "flowerBeeOverlap": f["matchedBeeBlooms"] / f["matchedBlooms"],
@@ -550,6 +554,30 @@ def main():
     # Main comparison uses the identical original source-complete individuals
     # and unchanged eight arena holdouts for every model.
     audit["models"] = evaluate(plants)
+    # Sensitivity only: include records whose *known* sampled-fruit sums
+    # match the source summary, despite additional fruit rows with NA.
+    # This uses published observed seed counts, never imputes those
+    # unmeasured fruit outcomes, and is not a total-plant seed yield.
+    available_plants, available_exclusions = build_plants(
+        sources, allow_incomplete_fruit=True
+    )
+    partial_fits = evaluate(available_plants, specs={
+        key: MODELS[key] for key in (
+            "M0_host_context", "M1_host_calendar", "M2_adult_mean",
+            "M3_flower_bee_overlap", "M6_matched_day_calendar",
+            "M9_calendar_coverage", "M10_calendar_coverage_overlap",
+        )
+    })
+    audit["partial_raw_fruit_missingness_sensitivity"] = {
+        "eligible_source_plants": len(available_plants),
+        "excluded": available_exclusions,
+        "n_eligible_with_unmeasured_fruit_rows": sum(
+            x["n_unmeasured_fruit_records"] > 0
+            for x in available_plants
+        ),
+        "only_observed_summarized_fruit_seeds_used": True,
+        "models": partial_fits,
+    }
     audit["bee_phase_shift_placebo"] = phase_shift_sensitivity(sources, plants)
     audit["paired_per_arena_comparators"] = {
         key: {
@@ -616,6 +644,15 @@ def main():
         k: {"equal_arena_rmse": v["equal_arena_rmse"],
             "plant_rmse": v["plant_rmse"]}
         for k, v in audit["models"].items()
+    }, sort_keys=True))
+    print("DEMANINCOR_PARTIAL_FRUIT_SENSITIVITY", json.dumps({
+        "n": audit["partial_raw_fruit_missingness_sensitivity"]["eligible_source_plants"],
+        "excluded": audit["partial_raw_fruit_missingness_sensitivity"]["excluded"],
+        "n_extra": audit["partial_raw_fruit_missingness_sensitivity"]["n_eligible_with_unmeasured_fruit_rows"],
+        "equal_arena_rmse": {
+            k: v["equal_arena_rmse"] for k, v in
+            audit["partial_raw_fruit_missingness_sensitivity"]["models"].items()
+        }
     }, sort_keys=True))
     print("DEMANINCOR_PHASE_SHIFT_PLACEBO", json.dumps({
         k: v for k, v in audit["bee_phase_shift_placebo"].items()
