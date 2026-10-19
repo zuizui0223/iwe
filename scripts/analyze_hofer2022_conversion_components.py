@@ -6,15 +6,19 @@ study, NOT a temporal partner synchrony study. One plant per row, 15
 plots nested in five experimental water shelters, one source programme.
 
 Use original observed/estimated:
-  - total flower supply,
-  - pods per plant and pods/season-total-flower count,
+  - recorded season flower index (NOT a confirmed complete opportunity denominator),
+  - source counted pods per plant,
   - average seeds per pod,
-  - author-estimated seeds per plant,
-  - derived seeds/flower.
+  - author-estimated seeds per plant (a deterministic pod x average-seed product).
 
-Question: conditional on season-total flowers and water allocation,
-does visitor observation intensity add consistent out-of-shelter
-information about fruit formation or seeds within fruits?
+The original data show 47/50 plants with pods > the recorded sumflower
+index. The invalid pods/sumflower and seeds/sumflower ratios are never
+fitted as reproductive conversion probabilities. Only individual
+pods and mean seeds/pod are biological component outcomes.
+
+Question: conditional on the recorded flower index and water allocation,
+does observed visitor intensity add out-of-shelter information about
+pod numbers or per-pod seeds, without fabricating a followed-flower chain?
 
 No invented phenology, plant-by-plant actual viable seeds, mediation
 causality, treatment×visit randomization, or strict IWE H1 promotion.
