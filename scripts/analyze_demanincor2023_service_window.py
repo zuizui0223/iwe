@@ -171,7 +171,7 @@ def build_plants(sources: dict[str, list[list[str]]]):
     unique_plant_day = set()
     for a in sources["flower_count.txt"]:
         cage, trt, sp, ident = a[:4]
-        if trt not in ("ambient", "warmed") or cage[0] != trt[0].upper():
+        if trt not in ("ambient", "warmed") or cage[0] != {"ambient": "C", "warmed": "W"}[trt]:
             raise ValueError("flower treatment source mismatch")
         _assert_arena(cage, cage[0])
         day = int(a[7])
