@@ -8,6 +8,9 @@ on:
       - scripts/analyze_hofer2022_resource_limits.py
       - tests/test_hofer2022_resource_gate.py
       - tests/test_hofer2022_resource_limits.py
+      - docs/HOFER2022_RESOURCE_SERVICE_LIMITING_STAGE_AUDIT.md
+      - docs/CROSS_SCALE_TIME_REFERENCE_SYNTHESIS_20261019.md
+      - docs/INTERACTION_WINDOW_FITNESS_LANDSCAPE_PIVOT.md
       - .github/workflows/hofer2022-independent-resource-gate.yml
 
 permissions:
