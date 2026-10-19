@@ -58,6 +58,20 @@ The ordinal mean (none=0, low=1, medium=2, high=3) is **not observed flower numb
 
 The qualitative separation survives these alternative encodings, while its predictive gain is sensitive to the scaling. No scale is a measured adult–flowering phase or a tested larval timing coordinate.
 
+## A critical calendar-only falsifier: alternate bearing
+
+The original study identifies synchronous *alternate bearing* in sugar maple, creating a hard alternative explanation for any six-year spring-intensity association. Compare the earlier-recorded spring score with a simple **odd/even calendar year** indicator, whose value requires no spring field observation. Both are fitted using the same leave-one-year-out unweighted annual regressions; parity is **not** presented as a biological mechanism or a randomized treatment.
+
+| Endpoint | Spring-only LOYO RMSE | Odd/even year-only LOYO RMSE | Which predicts better? |
+|---|---:|---:|---|
+| Nonempty / classified | 0.0920 | **0.0663** | Year parity |
+| Intact / nonempty | **0.1511** | 0.1535 | Nearly tied |
+| Intact / classified | 0.1002 | **0.0815** | Year parity |
+
+**Scientific implication:** Even at the same site, the apparent spring-to-final seed association does **not** establish additional information beyond the known biennial calendar cycle. Conditional intact conversion is almost equally well predicted by year parity. An independent additional forest or longer independent series, with prior outcome-blind window definition, is needed before attributing a distinctive predictive contribution to measured spring flowering intensity. A two-term parity-plus-spring fit with six year points would be too unstable to promote as confirmation.
+
+This negative control directly limits the IWE claim: a biologically plausible early indicator must improve over **plausible simpler time coordinates**, not merely over a constant baseline.
+
 ## Unit sensitivity: a typical seed is not a typical sampled tree
 
 The primary analysis asks about the **fraction of all classified samaras**, pooling naturally unequal numbers of harvested samaras from the sampled branches. A different target — the **mean of tree-year seed-state fractions** — gives each sampled tree equal influence. Both are descriptively useful, but they are biologically distinct estimands and should not be intermixed.
