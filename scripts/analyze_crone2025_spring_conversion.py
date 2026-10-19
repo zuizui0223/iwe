@@ -327,6 +327,26 @@ def analyze(
         "postinit_intact_conditional": converted_y,
         "intact_fraction_all_classified": intact_y,
     }
+    # A hard negative-control comparator motivated by source-described
+    # alternate bearing: calendar odd/even year is known before spring.
+    # Six annual observations cannot establish incremental forecasting
+    # skill unless spring beats this simple time-cycle baseline.
+    parity_x = [r["year"] % 2 for r in control]
+    calendar_control = {
+        key: {
+            "loo_year_rmse_parity": round(
+                _loo_rmse(parity_x, y, linear=True), 6
+            ),
+            "loo_year_rmse_spring": round(
+                _loo_rmse(spring_x, y, linear=True), 6
+            ),
+            "spring_better_than_parity": (
+                _loo_rmse(spring_x, y, linear=True)
+                < _loo_rmse(parity_x, y, linear=True)
+            ),
+        }
+        for key, y in endpoint_y.items()
+    }
     alt_x = {
         "original_author_category_bud_proxy":
             [r["spring_author_bud_proxy_mean"] for r in control],
@@ -417,6 +437,9 @@ def analyze(
             key: _stage_test(spring_x, y)
             for key, y in endpoint_y.items()
         },
+        "source_described_alternate_bearing_calendar_parity_baseline":
+            calendar_control,
+        "calendar_parity_is_exploratory_not_a_causal_exposure": True,
         "spring_scale_sensitivity": {
             scale_name: {
                 endpoint: _stage_test(xs, y)
