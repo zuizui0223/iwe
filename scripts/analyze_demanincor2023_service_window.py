@@ -59,6 +59,27 @@ MODELS = {
         "treatment", "species", "logFlowers", "onset", "flowerBeeOverlap"
     ),
     "M5_realized_visits": ("treatment", "species", "logFlowers", "visrates"),
+    # Calendar/measurement negative controls added after the initial pilot.
+    # Compare matched-day seasonal position and bee-census coverage before
+    # claiming a biologically specific bee x plant overlap effect.
+    "M6_matched_day_calendar": (
+        "treatment", "species", "logFlowers", "matchedBloomDOY"
+    ),
+    "M7_calendar_and_overlap": (
+        "treatment", "species", "logFlowers",
+        "matchedBloomDOY", "flowerBeeOverlap"
+    ),
+    "M8_bee_day_coverage_only": (
+        "treatment", "species", "logFlowers", "beeCoverage"
+    ),
+    "M9_calendar_coverage": (
+        "treatment", "species", "logFlowers",
+        "matchedBloomDOY", "beeCoverage"
+    ),
+    "M10_calendar_coverage_overlap": (
+        "treatment", "species", "logFlowers",
+        "matchedBloomDOY", "beeCoverage", "flowerBeeOverlap"
+    ),
 }
 
 
@@ -188,6 +209,7 @@ def build_plants(sources: dict[str, list[list[str]]]):
     flowers = defaultdict(lambda: {
         "n_days": 0, "total": 0.0, "sumDay": 0.0,
         "matchedBlooms": 0.0, "matchedBeeBlooms": 0.0,
+        "matchedBloomDaySum": 0.0,
     })
     unique_plant_day = set()
     for a in sources["flower_count.txt"]:
@@ -209,6 +231,7 @@ def build_plants(sources: dict[str, list[list[str]]]):
         if bd is not None:
             z["matchedBlooms"] += count
             z["matchedBeeBlooms"] += count * bd
+            z["matchedBloomDaySum"] += count * day
 
     excluded = defaultdict(int)
     plants = []
@@ -259,6 +282,8 @@ def build_plants(sources: dict[str, list[list[str]]]):
             "flowerBeeOverlap": f["matchedBeeBlooms"] / f["matchedBlooms"],
             "adultMean": adult_mean[cage],
             "beeCoverage": f["matchedBlooms"] / f["total"],
+            "matchedBloomDOY": f["matchedBloomDaySum"] / f["matchedBlooms"],
+            "overallBloomDOY": f["sumDay"] / f["total"],
             "visrates": positive_number(vr, "individual visit-rate"),
         })
     if set(x["arena"] for x in plants) != set(ARENAS):
@@ -424,6 +449,24 @@ def main():
     # Main comparison uses the identical original source-complete individuals
     # and unchanged eight arena holdouts for every model.
     audit["models"] = evaluate(plants)
+    audit["paired_per_arena_comparators"] = {
+        key: {
+            "arena_mse_delta_window_minus_reference": {
+                arena: (
+                    audit["models"]["M3_flower_bee_overlap"]["per_arena_mse"][arena]
+                    - audit["models"][key]["per_arena_mse"][arena]
+                ) for arena in ARENAS
+            },
+            "n_arenas_window_better": sum(
+                audit["models"]["M3_flower_bee_overlap"]["per_arena_mse"][arena]
+                < audit["models"][key]["per_arena_mse"][arena]
+                for arena in ARENAS
+            ),
+        } for key in (
+            "M1_host_calendar", "M2_adult_mean",
+            "M6_matched_day_calendar", "M9_calendar_coverage"
+        )
+    }
     # Sparse common observation days are a genuine temporal measurement
     # limitation, not missing-zero bee abundance. Exclude, do not impute.
     high_cov = [x for x in plants if x["beeCoverage"] >= 0.50]
@@ -471,6 +514,18 @@ def main():
         k: {"equal_arena_rmse": v["equal_arena_rmse"],
             "plant_rmse": v["plant_rmse"]}
         for k, v in audit["models"].items()
+    }, sort_keys=True))
+    print("DEMANINCOR_COVERAGE_SENSITIVITY", json.dumps({
+        "n": audit["coverage_at_least_half"]["n"],
+        "arenas": audit["coverage_at_least_half"]["arenas"],
+        "equal_arena_rmse": {
+            k: v["equal_arena_rmse"] for k, v in
+            (audit["coverage_at_least_half"]["model_comparison"] or {}).items()
+        }
+    }, sort_keys=True))
+    print("DEMANINCOR_PAIRED_ARENA_SIGN_COUNTS", json.dumps({
+        k: v["n_arenas_window_better"]
+        for k, v in audit["paired_per_arena_comparators"].items()
     }, sort_keys=True))
     print("Never promote single-programme sampled-fruit seed set into strict H1")
     return 0
