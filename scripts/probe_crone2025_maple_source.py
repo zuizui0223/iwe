@@ -130,7 +130,9 @@ def audit()->dict:
     }
     try:
         data=json.loads(_get(API))
-        entries=data.get("files",{}).get("entries",{})
+        file_listing=data.get("files",{})
+        entries=(file_listing.get("entries",file_listing)
+                 if isinstance(file_listing,dict) else file_listing)
         if isinstance(entries,dict):
             files=list(entries.values())
         elif isinstance(entries,list):
