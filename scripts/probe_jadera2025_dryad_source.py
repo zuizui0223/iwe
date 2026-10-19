@@ -307,6 +307,11 @@ def main():
     print("JADERA_PUBLIC_SOURCE",report["status"],report.get("access_issue",""))
     print("JADERA_TITLE",report.get("original_title"))
     print("JADERA_COMPONENTS",report.get("number_source_components"))
+    print("JADERA_VERSION",report.get("original_version_locator"))
+    print("JADERA_BULK_ACCESS",report.get("bulk_source_access_issue"))
+    for original in report.get("original_file_access_receipts",[]):
+        print("JADERA_INDIVIDUAL_SOURCE_STATUS",original.get("path"),
+              original.get("status"),original.get("blocked_routes",[]))
     for item in report["observed_original_source_files"]:
         print("ORIGINAL_COMPONENT",item.get("name"),
               "ROWS",item.get("rows"),
