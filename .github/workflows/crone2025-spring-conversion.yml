@@ -1,0 +1,40 @@
+name: IWE spring-before-seed conversion original data check
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/analyze_crone2025_spring_conversion.py
+      - tests/test_crone2025_spring_conversion.py
+      - .github/workflows/crone2025-spring-conversion.yml
+      - scripts/probe_crone2025_maple_source.py
+
+permissions:
+  contents: read
+
+jobs:
+  early-flower-final-reproduction:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Source-grain and provenance software tests
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_crone2025_maple_source.py tests/test_crone2025_spring_conversion.py
+      - name: Fetch exact public Zenodo original files and recalculate stage conversion
+        run: >-
+          python -m scripts.analyze_crone2025_spring_conversion
+          --outdir /tmp/iwe-maple-spring-2025
+      - name: Save derived twelve yearly conversion rows and audit, never original individual branches
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: maple-annual-spring-conversion
+          path: |
+            /tmp/iwe-maple-spring-2025/annual_plant_conversion.csv
+            /tmp/iwe-maple-spring-2025/summary.json
+          if-no-files-found: warn
+          retention-days: 7
