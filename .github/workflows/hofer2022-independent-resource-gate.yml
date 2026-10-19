@@ -1,0 +1,37 @@
+name: IWE independent Sinapis resource-limited reproduction original source gate
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/probe_hofer2022_resource_gate.py
+      - tests/test_hofer2022_resource_gate.py
+      - .github/workflows/hofer2022-independent-resource-gate.yml
+
+permissions:
+  contents: read
+
+jobs:
+  original-sinapis-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test data-grain, missingness and source identity constraints
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_hofer2022_resource_gate.py
+      - name: Recover only original Zenodo record 7335086 source field schemas
+        run: >-
+          python -m scripts.probe_hofer2022_resource_gate
+          --outdir /tmp/iwe-hofer2022-original
+      - name: Save source metadata only, never distribute individual raw plant records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-hofer2022-source-variable-inventory
+          path: /tmp/iwe-hofer2022-original/verified_source_inventory.json
+          if-no-files-found: warn
+          retention-days: 7
