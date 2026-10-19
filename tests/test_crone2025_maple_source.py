@@ -7,6 +7,9 @@ from scripts.probe_crone2025_maple_source import (
 
 def test_zenodo_record_link_is_exact_not_arbitrary_data():
     assert _allowed(API)
+    # Zenodo supplies /api/files/<bucket>/<file> URLs for original
+    # record entries; this is not an external search or forged DOI.
+    assert _allowed("https://zenodo.org/api/files/UUID/from_exact_record.csv")
     assert _allowed(
         "https://zenodo.org/api/records/15090572/files/HFmaple.seedcounts.csv/content"
     )
