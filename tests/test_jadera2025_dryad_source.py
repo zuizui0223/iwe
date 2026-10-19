@@ -69,3 +69,12 @@ def test_source_code_leads_and_field_names_never_authenticate_adult_activity():
                         "readme.txt")
     assert lines[0]["line_number"]==1
     assert "UNKNOWN" in lines[0]["source_text_short"]
+
+
+def test_version_issued_file_ids_not_guessed_and_public_download_paths_guarded():
+    assert _allowed_url("https://datadryad.org/api/v2/versions/1234/files")
+    assert _allowed_url("https://datadryad.org/api/v2/files/812334/download")
+    assert _allowed_url("https://datadryad.org/stash/downloads/file_stream/812334")
+    assert not _allowed_url("https://datadryad.org/stash/downloads/file_stream/random")
+    assert not _allowed_url("https://datadryad.org/api/v2/versions/1/delete")
+    assert not _allowed_url("https://datadryad.org/api/v2/files/1")
