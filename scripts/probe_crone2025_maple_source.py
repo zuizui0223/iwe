@@ -37,7 +37,8 @@ def _allowed(url:str)->bool:
     p=urlsplit(url)
     return (p.scheme=="https" and p.hostname=="zenodo.org" and
             (p.path.startswith("/api/records/"+RECORD) or
-             p.path.startswith("/records/"+RECORD+"/files/")))
+             p.path.startswith("/records/"+RECORD+"/files/") or
+             p.path.startswith("/api/files/")))
 
 
 def _get(url:str)->bytes:
@@ -141,6 +142,10 @@ def audit()->dict:
             raise ValueError("source file metadata schema unresolved")
         named={i.get("key"):i for i in files}
         manifest["file_metadata_names"]=list(named)
+        manifest["original_file_url_paths"]={
+            key:urlsplit(item.get("links",{}).get("content","")).path[:180]
+            for key,item in named.items()
+        }
         if not EXPECTED_NAMES.issubset(named):
             raise ValueError("original file set is incomplete")
         original=[]
