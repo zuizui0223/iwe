@@ -197,6 +197,8 @@ def audit()->dict:
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--outdir",type=Path,required=True)
+    p.add_argument("--require-sources",action="store_true",
+                   help="Fail the source-only CI job when no original bytes were verified")
     x=p.parse_args()
     x.outdir.mkdir(parents=True,exist_ok=True)
     result=audit()
@@ -217,7 +219,7 @@ def main():
                 print("SOURCE_R_LINE",row["source_file"],
                       lead["original_line"],lead["short_source_expression"])
     print("Never promote annual masting as seasonal partner-adult synchrony")
-    return 0
+    return 0 if (result["source_retrieved"] or not x.require_sources) else 2
 
 
 if __name__=="__main__":
