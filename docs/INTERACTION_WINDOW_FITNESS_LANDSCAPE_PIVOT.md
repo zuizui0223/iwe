@@ -294,6 +294,16 @@ Caruso et al. 2019 already assembled 755 directional selection-gradient records 
 
 The Dryad manifest and workbook identities are verified, but current unauthenticated file-byte routes are access-limited. Until the non-duplicated workbook is lawfully ingested, Caruso is treated as a search universe rather than as new IWE quantitative evidence.
 
+## Original-data time-reference falsification audit (2026-10-19)
+
+Two new publicly archived independent original-data programmes test what an **earlier-recorded ecological time variable** adds over a simpler time reference. Neither is a strict H1 effect or a stage-specific larval-fate programme. See the separate [cross-scale evidence synthesis](CROSS_SCALE_TIME_REFERENCE_SYNTHESIS_20261019.md) for units, source hashes, results, null controls and limitations.
+
+- **Sugar maple (Crone & Rapp 2025):** Six independent annual flowering years; spring flowering intensity correlates positively with later classified intact seed fraction (Spearman +0.829, exact two-sided exploratory n=6 permutation p=0.0583). But a **known odd/even annual masting clock** predicts the final seed fraction better than the spring score under year-held-out comparison (RMSE **0.0815 vs 0.1002**). Spring information has not shown unique incremental reproductive value beyond the simpler cycle. This is an annual **plant-intensity** proxy, not adult/host synchrony.
+
+- **Three plants × Osmia lignaria (de Manincor et al. 2023):** 181 source-complete plants over eight independent warmed/control arenas. Exact-date open-flower-weighted **independently observed bee density** predicts sampled-fruit seed set with eight-arena-held-out RMSE **0.20605**, versus **0.21021** for first flowering date and **0.22138** for arena-mean bee density. The gain is only about **2% versus first flowering**, and occurs in **4/8 arenas**, with just **51.2%** common-date bloom coverage. It persists directionally with 228 plants that have partially missing original fruit records and in a calendar-shift diagnostic (true timing ranked **2/23**), but this remains an outcome-aware small exploratory positive. It does not measure the consumer-development or final net fitness stage.
+
+These comparisons strengthen the *research design*, not the quantitative claim about population-wide prevalence. The next generalizable test must compare source-defined calendar, adult-only, and conversion-filtered windows on the **same** final seed unit in an independently held-out year/area. The prior paper-only mechanistic examples remain mandatory positive and null boundaries; they should not be pooled with annual maple, seed-set percentages, or seed-damage-only endpoints.
+
 ## Success criterion
 
 Keep this pivot only if it achieves at least one of the following without relaxing source provenance:
