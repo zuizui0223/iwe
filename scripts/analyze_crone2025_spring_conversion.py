@@ -25,7 +25,7 @@ from collections import defaultdict
 from itertools import permutations
 from io import StringIO
 import json
-from math import sqrt
+from math import isfinite, sqrt
 from pathlib import Path
 from statistics import mean
 
@@ -115,7 +115,7 @@ def _spearman(x: list[float], y: list[float]) -> float:
     return num / denom if denom else float("nan")
 
 
-def _exact_permutation_p(x: list[float], y: list[float]) -> float:
+def _exact_permutation_p(x: list[float], y: list[float]) -> float | None:
     """Unadjusted two-sided 6! label-randomization diagnostic.
 
     This is exploratory (endpoints were selected after inspecting the
@@ -124,6 +124,8 @@ def _exact_permutation_p(x: list[float], y: list[float]) -> float:
     if len(x) != 6 or len(y) != 6:
         raise ValueError("exact diagnostic requires exactly six years")
     observed = abs(_spearman(x, y))
+    if not isfinite(observed):
+        return None
     number = 0
     exceed = 0
     for perm in permutations(y):
@@ -137,13 +139,16 @@ def _exact_permutation_p(x: list[float], y: list[float]) -> float:
 def _stage_test(x: list[float], y: list[float]) -> dict:
     baseline = _loo_rmse(x, y, linear=False)
     timed = _loo_rmse(x, y, linear=True)
+    rho = _spearman(x, y)
+    perm_p = _exact_permutation_p(x, y)
     return {
-        "spearman_annual": round(_spearman(x, y), 6),
+        "spearman_annual": round(rho, 6) if isfinite(rho) else None,
         "exact_permutation_two_sided_exploratory":
-            round(_exact_permutation_p(x, y), 6),
+            round(perm_p, 6) if perm_p is not None else None,
         "loo_year_rmse_intercept_only": round(baseline, 6),
         "loo_year_rmse_spring_linear": round(timed, 6),
-        "loo_year_relative_rmse_change": round((timed / baseline) - 1, 6),
+        "loo_year_relative_rmse_change":
+            round((timed / baseline) - 1, 6) if baseline else None,
     }
 
 
