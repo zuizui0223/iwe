@@ -57,6 +57,11 @@ def test_original_grain_and_stage_metadata_are_not_independent_effects():
     assert meta["initial_source_excluded"] == {}
     assert sum(meta["shelter_counts"].values()) == 53
     assert set(STAGE_NAMES) == set(plants[0]["stages"])
+    # Source sums of flower observations and pods are not guaranteed to
+    # share the same exposure denominator: never call ratio a fruit-set
+    # stage or a traced individual-flower fate.
+    assert "pods_per_flower" not in STAGE_NAMES
+    assert "seeds_per_flower" not in STAGE_NAMES
     x = next(z for z in plants if z["plant"] == "P0")
     assert x["sourcePods"] == 12
     assert x["sourceAvgSeedsPerPod"] == 10
@@ -125,3 +130,14 @@ def test_stage_count_must_not_create_fake_big_sample_from_taxa():
     assert len(set(x["plant"] for x in records)) == 53
     assert len(set(x["mother"] for x in records)) == 20
     assert len(set(x["shelter"] for x in records)) == 5
+
+
+def test_pods_exceed_recorded_flower_count_is_diagnostic_not_plant_fitness():
+    source = fixture()
+    source["Floral_traits.csv"][0]["pods"] = "200"
+    record, admission = stage_plants(source)
+    first = next(x for x in record if x["plant"] == "P0")
+    assert first["sourcePods"] > first["flowerCount"]
+    assert first["podsPerFlower"] > 1
+    assert "pods_per_flower" not in first["stages"]
+    assert len(stage_validate(record)) == 3  # 2 components + source total
