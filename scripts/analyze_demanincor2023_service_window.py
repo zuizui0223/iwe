@@ -401,6 +401,107 @@ def evaluate(plants, specs=MODELS):
     return predictions
 
 
+
+def phase_shift_sensitivity(sources, plants):
+    """Shift bee-abundance observations across *censused* DOYs within arena.
+
+    This is a mechanistic falsifier: changing the phase of observed bees
+    while preserving each arena's bee density distribution, flower dates,
+    monitored days, plant IDs, and eight hold-out groups. It is NOT a
+    confirmatory randomization p-value: a circular shift can break
+    seasonal autocorrelation across the wrap point, and the test was
+    developed after viewing the initial overlap result.
+    """
+    plant_ids = {x["source_id"] for x in plants}
+    bee_by_arena = defaultdict(dict)
+    for a in sources["bee_density.txt"]:
+        date, day, trt, num, density = a
+        cage = trt + num
+        _assert_arena(cage, trt)
+        doy = int(day)
+        if doy in bee_by_arena[cage]:
+            raise ValueError("duplicate arena-day density for phase placebo")
+        bee_by_arena[cage][doy] = positive_number(density, "bee density")
+    original_days = {cage: sorted(bee_by_arena[cage]) for cage in ARENAS}
+    if any(len(days) < 2 for days in original_days.values()):
+        raise ValueError("not enough independent bee survey days")
+    widths = set(len(days) for days in original_days.values())
+    if len(widths) != 1:
+        raise ValueError("incomparable original arena survey day counts")
+    shifts = next(iter(widths))
+    flower_weights = defaultdict(list)
+    for a in sources["flower_count.txt"]:
+        cage, _, species, ident = a[:4]
+        key = "_".join((cage, species, ident))
+        if key not in plant_ids:
+            continue
+        day = int(a[7])
+        count = positive_number(a[8], "bloom-weighted censor")
+        if day in bee_by_arena[cage] and count > 0:
+            flower_weights[key].append((day, count))
+    if set(flower_weights) != plant_ids:
+        raise ValueError("missing original flower/bloom link for phase placebo")
+    shifted_stats = []
+    for shift in range(shifts):
+        shifted_density = {}
+        for cage in ARENAS:
+            days = original_days[cage]
+            values = [bee_by_arena[cage][day] for day in days]
+            shifted_density[cage] = {
+                day: values[(j + shift) % len(days)]
+                for j, day in enumerate(days)
+            }
+        shifted_plants = []
+        for x in plants:
+            obs = flower_weights[x["source_id"]]
+            cage = x["arena"]
+            total = sum(count for _, count in obs)
+            matched = sum(
+                count * shifted_density[cage][day]
+                for day, count in obs
+            ) / total
+            shifted_plants.append({**x, "flowerBeeOverlap": matched})
+            if shift == 0 and abs(matched-x["flowerBeeOverlap"]) > 1e-10:
+                raise ValueError("original overlap does not match unshifted sources")
+        fits = evaluate(shifted_plants, specs={
+            "M3_flower_bee_overlap": MODELS["M3_flower_bee_overlap"],
+            "M10_calendar_coverage_overlap":
+                MODELS["M10_calendar_coverage_overlap"],
+        })
+        shifted_stats.append({
+            "calendar_cyclic_shift": shift,
+            "equal_arena_rmse_M3":
+                fits["M3_flower_bee_overlap"]["equal_arena_rmse"],
+            "equal_arena_rmse_M10":
+                fits["M10_calendar_coverage_overlap"]["equal_arena_rmse"],
+        })
+    original = shifted_stats[0]
+    return {
+        "status": "exploratory_circular_bee_calendar_shift_not_randomization",
+        "n_original_census_days_per_arena": shifts,
+        "same_shift_used_for_all_arenas": True,
+        "original_zero_shift_equal_arena_rmse_M3":
+            original["equal_arena_rmse_M3"],
+        "n_phase_shifts_better_or_equal_M3": sum(
+            z["equal_arena_rmse_M3"]
+            <= original["equal_arena_rmse_M3"] + 1e-12
+            for z in shifted_stats
+        ),
+        "n_phase_shifts_better_or_equal_M10": sum(
+            z["equal_arena_rmse_M10"]
+            <= original["equal_arena_rmse_M10"] + 1e-12
+            for z in shifted_stats
+        ),
+        "median_shifted_M3": median(
+            z["equal_arena_rmse_M3"] for z in shifted_stats[1:]
+        ),
+        "median_shifted_M10": median(
+            z["equal_arena_rmse_M10"] for z in shifted_stats[1:]
+        ),
+        "per_shift_diagnostics": shifted_stats,
+    }
+
+
 def source_audit(sources, plants, excluded):
     counts = {name: len(rows) for name, rows in sources.items()}
     if counts != SOURCE_ROWS:
@@ -449,6 +550,7 @@ def main():
     # Main comparison uses the identical original source-complete individuals
     # and unchanged eight arena holdouts for every model.
     audit["models"] = evaluate(plants)
+    audit["bee_phase_shift_placebo"] = phase_shift_sensitivity(sources, plants)
     audit["paired_per_arena_comparators"] = {
         key: {
             "arena_mse_delta_window_minus_reference": {
@@ -514,6 +616,10 @@ def main():
         k: {"equal_arena_rmse": v["equal_arena_rmse"],
             "plant_rmse": v["plant_rmse"]}
         for k, v in audit["models"].items()
+    }, sort_keys=True))
+    print("DEMANINCOR_PHASE_SHIFT_PLACEBO", json.dumps({
+        k: v for k, v in audit["bee_phase_shift_placebo"].items()
+        if k != "per_shift_diagnostics"
     }, sort_keys=True))
     print("DEMANINCOR_COVERAGE_SENSITIVITY", json.dumps({
         "n": audit["coverage_at_least_half"]["n"],
