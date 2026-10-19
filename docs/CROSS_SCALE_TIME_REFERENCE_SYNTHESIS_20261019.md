@@ -30,6 +30,20 @@ Biological hierarchy is **not** a claim that every downstream variable must outp
 | Design/robustness | n=6, Spearman spring/intact +0.829, exact 2-sided label permutation **p=0.0583**; tree/seed weighting and missing samaras sensitive | Only **4/8** arenas better than first flowering; true phase ranks **2/23** among cyclic census-index shifts, 51.2% bloom observation covered, matched 228-record partial-fruit scenario retains small advantage |
 | Strict IWE H1 class effect | **Zero new clusters** | **Zero new clusters** |
 
+### Third analysis, same maple programme: a different endpoint changes the clock ranking
+
+PR [#101](https://github.com/zuizui0223/iwe/pull/101) recovered and tested **2012–2024** spring tree flowering against standardized **30-second autumn seed counts** at matched tree × year grain: **259 paired tree-years across 13 years** in **the same Harvard Forest programme**. This is NOT an independent new plant–animal interaction programme, nor an independently validated intact/viable-seed fitness endpoint. The 2012–2017 samara-classification analysis above is a distinct sampling frame/outcome and should not be numerically merged with these annual seed counts.
+
+| Same maple programme, different sampled output | Validation / denominator | Spring-only RMSE | Simpler odd/even calendar RMSE | Legitimate inference |
+|---|---|---:|---:|---|
+| **2012–2017** fraction of *classified harvested samaras* with intact filled seed | 6 years, leave-year-out; year-aggregated rates | 0.1002 | **0.0815** | Spring category does **not** outperform alternate-bearing calendar for this **conditional harvested-seed fraction** |
+| **2012–2024** log1p(standardized autumn *seed count*) | 259 tree-years, 13 held-out annual blocks | **1.2941** | 1.4630 | Individual spring **flowering effort** predicts later *sampled seed rain* better than parity in this source |
+| **Actively flowering restriction** of above autumn count response | 179 tree-years across 10 seasonal blocks, bloom-positive plants and years | **1.5498** | 1.6796 | Spring signal is not only a trivial absence-of-flowers versus absence-of-seeds result; the restriction was nevertheless constructed in this retrospective analysis |
+
+Additional diagnostics in [the exact long-term original source audit](MAPLE_LONGTERM_TEMPORAL_GRAIN_2012_2024.md): for 179 actively flowering tree-years, adding the *other 19 trees' spring mean* to focal spring reduces leave-year-out RMSE **1.5498 → 1.5002** (about **3.2%**, modest and not a demonstrated pollination-synchrony effect). A fixed historical 2012–2017 fit applied to later actively flowering years 2019–2021/2023 (76 tree-years) gives focal flowering alone **1.5140**, focal+other trees **1.5007**, focal+previous autumn count **1.4401**. The source records no independent adult availability, consumer-stage clock, or direct viable seed output per tree.
+
+**Scientific consequence:** The statement "spring phenology adds no information beyond a two-year clock" would be **false across reproductive endpoints**. The narrower and correct finding is: an earlier plant-state indicator can contain distinct information about *sampled seed production*, but may not improve prediction of the *fraction of sampled seeds that survive intact*. This is a potentially useful **quantity-versus-quality propagation contrast**, but it does not establish a causal conversion bottleneck: the endpoints come from different sampling programmes/years and do not trace the same tagged reproductive units. Treat all three panels above as **one dependence programme** with different observational outputs, not three independent tests.
+
 These are **different estimands and different temporal scales** and their RMSE values must never be pooled or used as direct evidence that one biological system has a stronger effect. Their joint contribution is a **methodologically explicit ecological falsification principle**: a biologically richer time reference must beat plausible simpler clocks before it can be claimed to add reproductive information.
 
 Frozen original-source audits:
@@ -57,7 +71,7 @@ The specific, falsifiable extension beyond generic "timing matters" is:
 
 > **Conditional timing-information hypothesis:** in an independently validated dataset with the same reproductive endpoint, a biologically matched interaction coordinate should add predictive information over season/calendar and time-averaged partner availability **only when the matching window contains an exposure-to-fitness conversion step not already saturated or compensated at a later stage**.
 
-This is a *candidate* generalization. At present only de Manincor provides a small original-data within-programme positive test against adult-mean, calendar, coverage, and shifted-phase controls; it does not measure a delayed antagonist stage. The maple counterexample shows how an apparently persuasive spring-to-seed relationship loses uniqueness to a simpler known biennial clock. The Cardamine and Gols evidence motivates *where* conversion occurs, but not a cross-programme predictive-superiority claim.
+This is a *candidate* generalization. At present only de Manincor provides a small original-data within-programme positive test against adult-mean, calendar, coverage, and shifted-phase controls; it does not measure a delayed antagonist stage. The maple **2012–2017 intact-seed-fraction** analysis shows how an apparent spring-to-seed relationship loses uniqueness to a simpler known biennial clock, whereas the **13-year sampled seed-count** analysis shows that spring flowering effort *can* carry more year-held-out predictive information than that same simple clock for a distinct output. Their difference emphasizes endpoint grain rather than establishing a general stage-filtering law. The Cardamine and Gols evidence motivates *where* conversion occurs, but not a cross-programme predictive-superiority claim.
 
 ### Mandatory falsifiers of this candidate hypothesis
 
@@ -70,7 +84,7 @@ This is a *candidate* generalization. At present only de Manincor provides a sma
 ## State of the project and next decisive source
 
 - **Frozen strict H1 on main:** 2 mutualist independent SMD clusters, **0 antagonist / 0 mixed**. These studies do not change that.
-- **Exploratory landscape on pivot:** original source retrieval and controlled model comparisons have succeeded for maple and three-plant bee systems. Both have strict claim ceilings and CI-produced audit receipts. No causal stage-generalization estimate has been obtained.
+- **Exploratory landscape on pivot:** original source retrieval and controlled model comparisons have succeeded for maple (six-year intact-fraction and **13-year seed-count** distinct endpoints) and three-plant bee systems. Both have strict claim ceilings and CI-produced audit receipts. No causal stage-generalization estimate has been obtained.
 - **Next required dataset:** multiple independent years/sites with independently dated adult partner availability, directly observed pre-outcome host susceptibility and effective consumer/service state, and **mature intact seeds on the SAME tagged reproductive units**. Predeclare matching models: context/calendar; adult-only; host-sensitive window; conversion-filter-only; matched window × filter. Use held-out years or programmes for comparison.
 - **Priority among already screened sources:** numeric 2012–2014 female Anthocharis flight data for the Cardamine same-year comparison, or a linked Hurlburt Yucca flowering-date-to-mature-fruit record; neither may be imputed from eggs, post-harvest damage or other units. A new independently sourced open dataset meeting this contract is preferable to repeated recovery attempts that cannot unlock the join.
 
