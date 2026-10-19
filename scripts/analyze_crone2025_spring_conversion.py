@@ -180,6 +180,9 @@ def analyze(
         raise ValueError("no original pollen-exclusion branch records")
 
     groups = {}
+    # Keep repeated branch rows nested in their original tree/year.
+    # Tree means and pooled seed fractions answer different questions.
+    tree_groups = {}
     unobserved_branches = defaultdict(int)
     for raw in exclusion_rows:
         year = int(raw["year"])
@@ -209,6 +212,15 @@ def analyze(
         non_missing_sum = sum(v for v in observed.values() if v is not None)
         if non_missing_sum != reported_total:
             raise ValueError("original seed-state totals fail closure")
+        tk = (year, treatment, tree)
+        tg = tree_groups.setdefault(
+            tk, {"n_branches": 0, "classified": 0,
+                 "filled": 0, "empty": 0}
+        )
+        tg["n_branches"] += 1
+        tg["classified"] += reported_total
+        tg["filled"] += observed["num.filled"]
+        tg["empty"] += observed["num.empty"]
         reported_missing = _count(raw, "num.missing", allow_na=True)
         mast = float(raw["mast.index"])
         key = (year, treatment)
@@ -321,6 +333,57 @@ def analyze(
         "fraction_high_flowering_trees":
             [r["spring_fraction_high"] for r in control],
     }
+    # Audit whether the conclusion changes when the unit is a typical
+    # sampled tree, rather than a typical *classified samara*. Tree-year
+    # ratios with only 2 seeds are intrinsically unstable; repeat after
+    # a transparent 10-classified-samara eligibility sensitivity.
+    tree_sensitivity = {}
+    for minimum in (1, 10):
+        stage_year_means = {name: [] for name in endpoint_y}
+        included_trees = {}
+        zero_classified_trees = {}
+        for year in YEARS:
+            tx = [v for (y, tr, _), v in tree_groups.items()
+                  if y == year and tr == "control"]
+            zero_classified_trees[year] = sum(
+                v["classified"] == 0 for v in tx
+            )
+            eligible = [v for v in tx if v["classified"] >= minimum]
+            included_trees[year] = len(eligible)
+            if not eligible:
+                raise ValueError(f"no tree-year seed fraction in {year}")
+            stage_year_means["initial_nonempty_proxy"].append(
+                mean((v["classified"] - v["empty"])/v["classified"]
+                     for v in eligible)
+            )
+            positive = [v for v in eligible
+                        if v["classified"] > v["empty"]]
+            if not positive:
+                raise ValueError(f"no nonempty original samaras in {year}")
+            stage_year_means["postinit_intact_conditional"].append(
+                mean(v["filled"]/(v["classified"] - v["empty"])
+                     for v in positive)
+            )
+            stage_year_means["intact_fraction_all_classified"].append(
+                mean(v["filled"]/v["classified"] for v in eligible)
+            )
+        tree_sensitivity[f"minimum_classified_samaras_{minimum}"] = {
+            "tree_sample_count_by_year": included_trees,
+            "trees_with_zero_classified_samaras_by_year":
+                zero_classified_trees,
+            "yearwise_tree_mean_stages": {
+                key: {
+                    str(year): round(value, 8)
+                    for year, value in zip(YEARS, values)
+                }
+                for key, values in stage_year_means.items()
+            },
+            "stage_comparisons": {
+                key: _stage_test(spring_x, values)
+                for key, values in stage_year_means.items()
+            },
+        }
+
     # The >=2 exploratory split represents >=medium mean flowering, not
     # a preregistered threshold or a randomized exposure.
     high = [r for r in control if r["spring_intensity_mean_0to3"] >= 2]
@@ -361,6 +424,8 @@ def analyze(
             }
             for scale_name, xs in alt_x.items()
         },
+        "tree_vs_samara_unit_sensitivity": tree_sensitivity,
+        "tree_balanced_estimate_is_typical_sampled_tree_not_typical_seed": True,
         "spring_proxy_is_ordinal_flowering_effort_not_phase": True,
         "initial_nonempty_is_pollen_or_seed_initiation_proxy": True,
         "postinit_conversion_is_not_direct_predator_survival": True,
