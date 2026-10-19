@@ -71,9 +71,11 @@ def _reader(raw: bytes):
     # Never infer empty cells as measured zero. Preserve source delimiter
     # and file-native column labels as the author supplied them.
     text = raw.decode("utf-8-sig")
-    head = text[:3000]
-    dialect = csv.Sniffer().sniff(head, delimiters=",;\t")
-    reader = csv.DictReader(StringIO(text), dialect=dialect)
+    first_line = text.splitlines()[0]
+    delimiter = max((",", ";", "\t"), key=first_line.count)
+    if not first_line.count(delimiter):
+        raise ValueError("unresolved source CSV delimiter")
+    reader = csv.DictReader(StringIO(text), delimiter=delimiter)
     if not reader.fieldnames:
         raise ValueError("no source header")
     fields = reader.fieldnames
@@ -82,7 +84,7 @@ def _reader(raw: bytes):
     rows = list(reader)
     if any(None in row for row in rows):
         raise ValueError("extra source CSV cells")
-    return fields, rows, dialect.delimiter
+    return fields, rows, delimiter
 
 
 def inspect_original(name: str, raw: bytes):
