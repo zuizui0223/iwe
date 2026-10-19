@@ -42,7 +42,7 @@ MODELS = {
 RIDGE = 0.05
 
 
-def _finite(raw, field, allow_zero=True):
+def _finite(raw, field, allow_zero=True, allow_negative=False):
     s = str(raw.get(field, "")).strip()
     if s.upper() in ("", "NA", "NAN"):
         return None
@@ -50,7 +50,7 @@ def _finite(raw, field, allow_zero=True):
         x = float(s)
     except ValueError as exc:
         raise ValueError("nonnumeric original value: " + field) from exc
-    if not isfinite(x) or x < 0 or (x == 0 and not allow_zero):
+    if not isfinite(x) or (x < 0 and not allow_negative) or (x == 0 and not allow_zero):
         raise ValueError("invalid negative/nonfinite: " + field)
     return x
 
@@ -118,7 +118,7 @@ def link_plants(sources):
         seeds = _finite(a, "seedsperplant")
         nflower = _finite(a, "sumflower")
         duration = _finite(a, "floweringtime")
-        water = _finite(a, "SWP")
+        water = _finite(a, "SWP", allow_negative=True)
         visitrates = [_finite(r, "NrInt_day_flower") for r in visitrows]
         # The author report gives a rate by visitor group, normalized by
         # monitoring days and plant flower abundance; summing these
