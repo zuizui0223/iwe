@@ -17,7 +17,8 @@ def synthetic_source():
             tree = f"HF{i}"
             category = (
                 "none" if year in (2018, 2022, 2024)
-                else ("none", "low", "medium", "high")[(i + year) % 4]
+                else ("high" if i <= (year % 6) + 1
+                      else ("none", "low", "medium", "high")[(i + year) % 4])
             )
             if year >= 2012:
                 flowers.append({
