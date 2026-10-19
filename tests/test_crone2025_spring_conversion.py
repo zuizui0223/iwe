@@ -156,3 +156,34 @@ def test_six_year_exact_permutation_is_not_asymptotic_significance_claim():
                                 [1, 2, 3, 4, 5, 6]) == pytest.approx(2/720)
     assert _stage_test([1]*6, [2]*6)["spearman_annual"] is None
     assert _stage_test([1]*6, [2]*6)["loo_year_relative_rmse_change"] is None
+
+
+def test_tree_weighting_and_two_samara_sensitivity_are_not_equivalent():
+    spring, branches = fixture()
+    for year in YEARS:
+        # One tiny second tree has perfect intact seed fraction.
+        # In a typical-tree mean, this 2-samara tree counts as much
+        # as the 10-samara original tree; in a samara fraction it doesn't.
+        branches.append({
+            "year": str(year), "tree": "HF2", "branch": "B",
+            "treatment": "control",
+            "num.filled": "2", "num.empty": "0", "num.grub": "0",
+            "num.wrinkle": "0", "num.small": "0", "num.moldy": "0",
+            "num.exit": "0", "num.missing": "0",
+            "total.seed": "2", "mast.index": str(year - 2011),
+        })
+    annual, out = analyze(spring, branches, expected_tree_count=2)
+    row = next(r for r in annual if r["year"] == 2012
+               and r["treatment"] == "control")
+    assert row["p_intact_among_classified"] == round(7/12, 8)
+    ty = out["tree_vs_samara_unit_sensitivity"]
+    all_tree = ty["minimum_classified_samaras_1"]
+    ten_seed = ty["minimum_classified_samaras_10"]
+    assert all_tree["tree_sample_count_by_year"][2012] == 2
+    assert ten_seed["tree_sample_count_by_year"][2012] == 1
+    assert all_tree["yearwise_tree_mean_stages"][
+        "intact_fraction_all_classified"
+    ]["2012"] == 0.75
+    assert ten_seed["yearwise_tree_mean_stages"][
+        "intact_fraction_all_classified"
+    ]["2012"] == 0.5
