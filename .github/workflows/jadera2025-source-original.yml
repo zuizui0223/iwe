@@ -1,0 +1,37 @@
+name: IWE Jadera 2025 source-original mixed partner archive screen
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/probe_jadera2025_dryad_source.py
+      - tests/test_jadera2025_dryad_source.py
+      - .github/workflows/jadera2025-source-original.yml
+
+permissions:
+  contents: read
+
+jobs:
+  mixed-original-stage-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test exact public DOI-only source and experiment-unit contracts
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_jadera2025_dryad_source.py
+      - name: Inventory original archived mixed partner experiments
+        run: >-
+          python -m scripts.probe_jadera2025_dryad_source
+          --outdir /tmp/iwe-jadera2025-mixed-source
+      - name: Save source metadata and schema only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jadera2025-mixed-original-source-inventory
+          path: /tmp/iwe-jadera2025-mixed-source/original_source_inventory.json
+          if-no-files-found: warn
+          retention-days: 7
