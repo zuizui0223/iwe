@@ -47,7 +47,7 @@ def test_same_calendar_year_and_source_tree_join_without_branch_pseudoreplicatio
     assert out["late_seed_mast_index_only_retrospective"] is True
     assert out["total_evaluated_branch_rows"] == 12
     assert out["total_unobserved_all_NA_branch_rows"] == 0
-    assert row["p_intact_among_nonempty_classified"] == 0.5
+    assert row["p_intact_among_nonempty_classified"] == 1.0  # all 5 nonempty are filled
     # All years in this synthetic fixture have the same spring index and
     # identical reproductive fractions. There is no defined Spearman rho.
     assert out["endpoint_comparisons"]["initial_nonempty_proxy"][
