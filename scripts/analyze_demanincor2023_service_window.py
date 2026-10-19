@@ -82,27 +82,48 @@ def read_original(name: str) -> bytes:
 
 
 def source_rows(raw: bytes, name: str) -> list[list[str]]:
-    lines = [x.strip() for x in raw.decode("utf-8-sig").splitlines()
-             if x.strip()]
+    # Authors explicitly deposited tab-separated text. IMPORTANT: some
+    # seeds.txt rows have an *empty ovule field between two TABs*.
+    # Splitting on arbitrary whitespace deletes that field and shifts
+    # the seed-set/weight columns into the wrong biological quantities.
+    lines = [line.rstrip("\r\n")
+             for line in raw.decode("utf-8-sig").splitlines()
+             if line.strip()]
     if not lines:
         raise ValueError("empty original file: " + name)
-    head = lines.pop(0).split()
-    # Original author header has TWO words "plant sp" for one field;
-    # rows themselves have eight fields. Never silently shift the columns.
+    header_line = lines.pop(0)
+    is_tsv = "\t" in header_line
+    if is_tsv:
+        head = [x.strip() for x in header_line.split("\t")]
+        rows = [
+            ["NA" if v.strip() == "" else v.strip()
+             for v in line.split("\t")]
+            for line in lines
+        ]
+    else:
+        # Whitespace fallback only for original files without tab
+        # separators; missing in-between fields cannot be reconstructed.
+        head = header_line.split()
+        rows = [line.split() for line in lines]
     if name == "seedset_flowervisit.txt":
-        if head != ["sp_id", "trtm", "cage", "plant", "sp", "ID",
-                    "visrates", "seeds", "ovules"]:
+        # One author's header contains the literal combined label
+        # "plant sp" whereas other views display 2 whitespace tokens.
+        recognized_headers = (
+            ["sp_id", "trtm", "cage", "plant sp", "ID",
+             "visrates", "seeds", "ovules"],
+            ["sp_id", "trtm", "cage", "plant", "sp", "ID",
+             "visrates", "seeds", "ovules"],
+        )
+        if head not in recognized_headers:
             raise ValueError("unexpected original source header")
         expected_width = 8
     else:
         expected_width = len(head)
-    rows = [line.split() for line in lines]
-    if any(len(x) != expected_width for x in rows):
+    if any(len(row) != expected_width for row in rows):
         raise ValueError("malformed original source row width: " + name)
     if name in SOURCE_ROWS and len(rows) != SOURCE_ROWS[name]:
         raise ValueError("original source file row count drift: " + name)
     return rows
-
 
 def positive_number(token: str, label: str, allow_zero: bool = True) -> float:
     try:
