@@ -1,0 +1,5 @@
+year,evidence_object,response,predictor_or_interaction,statistic_type,statistic,estimate,direction,sample_scope,source
+2010,fitness_selection_shift,intact_fruit_relative_fitness,predation_x_flowering_phenology,wald_chi_square,15.38,,predator_presence_changes_flowering_time_selection,"2000 plants; 20 populations",10.1002/ecy.1633 Table 2
+2011,fitness_selection_shift,intact_fruit_relative_fitness,predation_x_flowering_phenology,wald_chi_square,14.95,,predator_presence_changes_flowering_time_selection,"1598 plants; 16 populations",10.1002/ecy.1633 Table 2
+2010,attack_probability,probability_of_Phengaris_attack,early_flowering,chi_square,38.84,0.300,earlier_flowering_increases_attack_probability,"1000 plants; 10 predator-present populations",10.1002/ecy.1633 Table 3
+2011,attack_probability,probability_of_Phengaris_attack,early_flowering,chi_square,38.24,0.968,earlier_flowering_increases_attack_probability,"1099 plants; 11 predator-present populations",10.1002/ecy.1633 Table 3

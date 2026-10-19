@@ -1,0 +1,9 @@
+study_id,source_doi,habitat,oviposition_puncture,source_treatment,seeds_per_fruit,F0_two_aborted,F1_one_aborted,F2_zero_aborted,f0_single_aborted,f1_single_not_aborted,fruits_n,nonaborted_contains_predated_seed,original_outcome_description
+MEYER2014_BERBERIS,10.1086/675063,pine,absent,P_minus,2,11,131,321,,,463,yes,source_fruit_state_not_verified_intact_seed
+MEYER2014_BERBERIS,10.1086/675063,pine,present,P_plus,2,2,61,17,,,80,yes,source_fruit_state_not_verified_intact_seed
+MEYER2014_BERBERIS,10.1086/675063,dry_scrub,absent,S_minus,2,5,64,24,,,93,yes,source_fruit_state_not_verified_intact_seed
+MEYER2014_BERBERIS,10.1086/675063,dry_scrub,present,S_plus,2,49,356,91,,,496,yes,source_fruit_state_not_verified_intact_seed
+MEYER2014_BERBERIS,10.1086/675063,pine,absent,P_minus,1,,,,16,402,418,yes,source_fruit_state_not_verified_intact_seed
+MEYER2014_BERBERIS,10.1086/675063,pine,present,P_plus,1,,,,1,37,38,yes,source_fruit_state_not_verified_intact_seed
+MEYER2014_BERBERIS,10.1086/675063,dry_scrub,absent,S_minus,1,,,,4,116,120,yes,source_fruit_state_not_verified_intact_seed
+MEYER2014_BERBERIS,10.1086/675063,dry_scrub,present,S_plus,1,,,,27,167,194,yes,source_fruit_state_not_verified_intact_seed

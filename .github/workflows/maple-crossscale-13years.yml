@@ -1,0 +1,40 @@
+name: IWE original maple 13-year cross-scale test
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/analyze_maple_crossscale_2012_2024.py
+      - tests/test_maple_crossscale_2012_2024.py
+      - .github/workflows/maple-crossscale-13years.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-annual-grain-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install and verify unit/provenance controls
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_maple_crossscale_2012_2024.py
+      - name: Refetch pinned original Zenodo flowering/seed-count files and verify MD5
+        run: >-
+          python -m scripts.analyze_maple_crossscale_2012_2024
+          --outdir /tmp/maple-crossscale
+      - name: Upload only aggregate 13-year results, never source trees
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-maple-13year-original-source-summary
+          path: |
+            /tmp/maple-crossscale/crossscale_summary.json
+            /tmp/maple-crossscale/annual_summary.csv
+          if-no-files-found: warn
+          retention-days: 7

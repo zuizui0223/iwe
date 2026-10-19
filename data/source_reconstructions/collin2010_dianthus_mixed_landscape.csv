@@ -1,0 +1,10 @@
+year,response,time_effect_or_slope,se_or_test,interpretation,source
+2001,relative_reproductive_success,-0.037,SE=0.009,"later flowering lowers percentage of flowers producing unattacked fruits with mature dispersal-ready seeds",Collin_Shykoff_2010
+2003,relative_reproductive_success,-0.076,SE=0.030,"later flowering lowers percentage of flowers producing unattacked fruits with mature dispersal-ready seeds",Collin_Shykoff_2010
+2001,fruit_set,time_effect,F=7.01; p<0.01,"fruit set changes over flowering onset",Collin_Shykoff_2010_Table1
+2001,secondary_predation,time_effect,F=8.17; p<0.01,"secondary Hadena predation changes over flowering onset",Collin_Shykoff_2010_Table1
+2001,relative_reproductive_success,time_effect,F=14.24; p<0.001,"net final reproductive success changes over flowering onset",Collin_Shykoff_2010_Table1
+2003,fruit_set,time_effect,F=2.49; not significant,"fruit set has no significant linear time effect",Collin_Shykoff_2010_Table1
+2003,secondary_predation,time_effect,F=8.02; p<0.01,"secondary predation changes over flowering onset",Collin_Shykoff_2010_Table1
+2003,secondary_predation,time_squared,F=6.81; p<0.05,"secondary predation peaks mid-season",Collin_Shykoff_2010_Table1
+2003,relative_reproductive_success,time_effect,F=5.62; p<0.05,"net final reproductive success declines over flowering onset",Collin_Shykoff_2010_Table1

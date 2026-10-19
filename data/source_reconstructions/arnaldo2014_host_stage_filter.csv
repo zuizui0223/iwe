@@ -1,0 +1,8 @@
+record_type,period,shoots_n,apical_bud_length_mean,apical_bud_length_sd,eggs_per_shoot_mean,eggs_per_shoot_sd,predictor,response,estimate,p_value,source
+period_summary,1,39,1.59,0.81,8.87,8.14,,,,,"Arnaldo et al. 2014 field-study table"
+period_summary,2,41,1.86,0.88,6.00,6.36,,,,,"Arnaldo et al. 2014 field-study table"
+period_summary,3,47,2.60,1.04,5.21,5.30,,,,,"Arnaldo et al. 2014 field-study table"
+glm_survival,,,,,,,flower_bud_length,offspring_survival,0.350,0.017,"Arnaldo et al. 2014 GLM table"
+glm_survival,,,,,,,flower_development_stage,offspring_survival,-1.088,0.005,"Arnaldo et al. 2014 GLM table"
+glm_survival,2,,,,,,oviposition_period,offspring_survival,-0.881,<0.001,"Arnaldo et al. 2014 GLM table; period 1 reference"
+glm_survival,3,,,,,,oviposition_period,offspring_survival,-0.536,0.033,"Arnaldo et al. 2014 GLM table; period 1 reference"
