@@ -28,6 +28,7 @@ def fixture():
             "floweringtime": str(14 + i % 12),
             "seedsperplant": str(flowers * (i % 5 + 10)),
             "SWP": str(-0.08 - i % 7 / 100),
+            "pollenstigma": str(150 + i % 7 * 20),
         })
         source["Plantlist.csv"].append({
             "plantID": plant, "motherID": mother, "treatment": water,
@@ -40,6 +41,7 @@ def fixture():
                 "shelter": shelter, "plotID": plot,
                 "visitorgroup": f"G{g}",
                 "NrInt_day_flower": str(visit / 8),
+                "NrInt_day": str(visit * flowers / 8),
             })
     return source
 
@@ -56,6 +58,8 @@ def test_53_original_plant_id_join_and_source_grain_not_427_experiments():
     assert sum(x["visitGroupRows"] for x in plants) == 427
     assert plants[0]["waterPotential"] < 0
     assert all(x["estimatedTotalSeeds"] > 0 for x in plants)
+    assert all(x["pollenStigma"] is not None for x in plants)
+    assert all(x["visitorRatePerDay"] > 0 for x in plants)
 
 
 def test_shelter_heldout_models_and_no_separate_visitor_group_replication():
@@ -104,3 +108,27 @@ def test_single_plant_group_labels_should_not_create_source_independence():
     plants, _, repeated = link_plants(s)
     assert repeated == 1
     assert len(plants) == 53
+
+
+def test_per_day_and_per_flower_rate_are_distinct_inputs():
+    s = fixture()
+    plants, _, _ = link_plants(s)
+    one = next(x for x in plants if x["plant"] == "P0")
+    assert one["visitorRatePerDay"] == pytest.approx(
+        one["visitPerFlowerDay"] * one["flowerCount"]
+    )
+    # A different measured count proxy remains evaluable on the same
+    # source plants with exactly 5 physically independent shelters.
+    models = validate(plants)
+    assert ("M6_water_flowers_visitor_rate_per_day" in models)
+    assert models["M6_water_flowers_visitor_rate_per_day"]["n_plants"] == 53
+
+
+def test_missing_pollen_receipt_does_not_delete_primary_seed_outcome():
+    s = fixture()
+    s["Floral_traits.csv"][0]["pollenstigma"] = "NA"
+    plants, _, _ = link_plants(s)
+    assert len(plants) == 53
+    assert sum(z["pollenStigma"] is None for z in plants) == 1
+    assert len([z for z in plants if z["pollenStigma"] is not None]) == 52
+    assert len(validate(plants)) == len(MODELS)
