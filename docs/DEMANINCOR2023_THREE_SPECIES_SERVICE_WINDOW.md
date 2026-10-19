@@ -25,7 +25,7 @@ Source files, each retrieved from the exact frozen Zenodo record and verified by
 
 ## Original source-integrity funnel
 
-The original `seedset_flowervisit.txt` **header contains nine whitespace tokens for eight-column source rows**. Its combined `plant sp` header must be read explicitly, rather than shifting seed and ovule columns. The script enforces the exact source schema and joins on **arena × plant species × original plant ID**.
+The original `seedset_flowervisit.txt` **header contains nine whitespace tokens for eight-column source rows**. Its combined `plant sp` header must be read explicitly, rather than shifting seed and ovule columns. The original `seeds.txt` also has **four rows with an empty, TAB-delimited ovule field**, while its seed-set and seed-mass fields remain present. Whitespace-splitting would shift columns and corrupt both fitness and model training: the corrected reader preserves all original TSV fields and treats the empty biological cell as missing, never as zero. The script enforces source checksum and schema and joins by **arena × plant species × original plant ID**.
 
 Initial original-source reconciliation:
 
@@ -49,6 +49,11 @@ Every model uses the same 181 individuals and the same eight held-out arena fold
 - **M3:** M0 + **open-flower-count-weighted bee density on the exact matching census DOYs** (adult–host timing window)
 - **M4:** M0 + first flowering DOY + window density
 - **M5:** M0 + directly realized visits per plant, a different downstream observation
+- **M6:** M0 + open-flower-weighted mean DOY **on the same dates with a bee census** (temporal calendar-only control)
+- **M7:** M0 + matched-day mean DOY + matched bloom×bee density
+- **M8:** M0 + fraction of recorded open flowers on days with bee-density observations (coverage-only control)
+- **M9:** M0 + matched-day mean DOY + coverage fraction
+- **M10:** M0 + matched-day mean DOY + coverage fraction + matched bloom×bee density
 
 The new key *falsification* is whether **M3 improves on M2**, not merely on M0/M1. If the observed adult density averaged throughout the arena predicts just as well, an apparent plant-specific interaction-window benefit may be explained by a baseline abundance proxy, not special temporal alignment.
 
@@ -58,21 +63,50 @@ Window density is:
 
 over **exact days observed in both source files**. It is an *abundance-weighted bloom exposure*, not a signed plant/animal onset lag, verified pollen transfer per flower, or later reproductive stage. Missing bee-count days are excluded, **never** imputed as zero abundance.
 
-## Initial non-confirmatory screening result
+## MD5-verified empirical results (independent original Zenodo data)
 
-An independently calculated original-rows pilot, before the committed source-hashed CI run, yielded:
+The dedicated GitHub Actions original-data run now passes, independently reproducing the exact 181-plant original-data join and all model comparisons. Evidence is [source run 39222729826](https://github.com/zuizui0223/iwe/actions/runs/39222729826) and the full IWE software suite [CI 39222780364](https://github.com/zuizui0223/iwe/actions/runs/39222780364). **These are exploratory, response-exposed model choices, not a prospective held-out-study performance estimate.**
 
-| Comparable model | Equal-arena held-out RMSE |
+| Fixed source-comparable prediction model | Leave-one-ARENA-out RMSE, equal arena weights |
 |---|---:|
-| M0 context | 0.21081 |
-| M1 + calendar flowering date | 0.21021 |
-| M3 + bloom-weighted bee density | **0.20605** |
-| M4 + calendar and bloom-weighted bee density | 0.20609 |
-| M5 + realized visits | 0.21130 |
+| M0 species + warming + total flowering | 0.21081 |
+| M1 + first flowering DOY | 0.21021 |
+| M2 + **adult bee mean density alone** | **0.22138** |
+| M3 + **open-flower × actual bee census DOY** | **0.20605** |
+| M4 + first flowering DOY + bloom×bee | 0.20609 |
+| M5 + measured visits to individual plant | 0.21130 |
+| M6 + **bloom center DOY on observed bee-census dates** | 0.21473 |
+| M7 + observed-day bloom center DOY + bloom×bee | 0.21084 |
+| M8 + fraction of flowering observed on bee census dates | 0.20962 |
+| M9 + observed-day bloom center DOY + coverage | 0.21374 |
+| M10 + calendar DOY + coverage + bloom×bee | 0.21127 |
 
-The improvement of M3 versus M1 is **0.00415 on a 0–1 seed-set scale (~2% relative)**. This is small, one programme, eight arenas only. The critical M2 comparison (non-window adult mean density) and ≥50% source-observed-flowering-coverage subset are computed by the new executable; do not promote the apparent timing-specific improvement until both are inspected.
+The M3 interaction-window measure predicts sampled fruit seed formation **better than** an adult-abundance-only reference (M2), absolute first flowering day (M1), and calendar position on the **same bee-census days** (M6), under a fixed identical plant subset and leave-one-arena-out workflow. Relative to M1 the M3 RMSE reduction is **1.98%**; versus M2 **6.92%**. The gain is small, and adding the other predictors (M7/M10) *worsens* held-out accuracy relative to M3, so "more temporal detail always improves reproduction prediction" is directly unsupported.
 
-**Major observation gap:** only approximately **51.2% of observed open-flower counts** fall on dates for which the same arena has a recorded bee-density observation, averaged across eligible plants. Missing census days cannot be treated as bees absent. The eight arenas were planted with three species simultaneously, so species-specific plant rows do not create three independent community-level experiments.
+The gain is heterogeneous among the eight true grouped validation units. M3 has smaller within-arena MSE than M1 in **4/8 arenas**, versus M2 in **5/8**, and versus M6 in **4/8**. These arena signs forbid a universal treatment/plant-species conclusion. They are not 181 independent confirmations, nor three independent experimental programmes.
+
+### A stricter calendar-shift falsifier
+
+Within each of eight arenas, cyclically shift the bee-density values over the original **23 bee-census dates** without changing the plants' flowering dates, original observation coverage, abundance distribution, source outcome, or leave-one-arena-out folds. The same survey-index shift is applied across all arenas.
+
+- Unshifted genuine bloom×bee M3 RMSE: **0.20605**
+- Median M3 RMSE among the **22 nonzero shifts**: **0.21280**
+- Unshifted phase ranked **2nd of 23** in the sense that two shifts (including the true one) yield equal or better error
+- With matched calendar and coverage controls M10, **3/23** shifts yield equal or better error than the true alignment
+
+The real alignment is unusually good **within this small diagnostic set**, but this is not a valid randomly assigned treatment, preregistered shuffle test or calibrated P-value. Cyclic wrapping may break continuous seasonality, source coverage is sparse, and the study was selected after reviewing the outcomes.
+
+### Incomplete sampled fruits and sparse bee-census day sensitivity
+
+**Original strict complete-case**: 181 plants, 66 *Collinsia*, 57 *Nemophila*, 58 *Phacelia*. The observed fraction of each plant's recorded flowering represented on a bee census date averages **51.2%**. No missing bee density is set to zero.
+
+Restricting to plants with at least **50%** of flowering observations on coincident bee days produces **87 plants in all eight arenas**; the M3 leave-one-arena-out RMSE is **0.18646**, versus M1 **0.19621**, M2 **0.21702** and M6 **0.20191**. The sample is selected after source observation and not a randomized robustness trial.
+
+**Partly missing original sampled fruits**: exactly **47** additional plants have one or more fruit rows with unknown raw seed/ovule counts, but their *available raw fruit sums still match the author's summarized observed outcome*. Including only these recorded observed totals as a sensitivity (never inventing any missing seeds) expands the dataset to **228 plants** from the same eight arenas. On this broader observed-output basis, M3 RMSE is **0.19495**, versus M1 **0.19800**, M2 **0.20063**, M6 **0.20118** and M9 **0.20045**. The direction of the small gain survives this missingness scenario, but the true unobserved fruit outcomes remain unidentified; these 228 are not 228 plants with complete lifetime reproduction.
+
+### Ecological interpretation
+
+The direct and novel-to-IWE comparison is not that warming changes phenology, visits, or seed set — the original article already establishes such effects. It is a **time-reference test**: in this experimental community, an independently observed bee census weighted by the dates flowers are receptive explains a little more held-out sampled-fruit reproduction than abundance averaged across the whole observed season, or absolute flowering calendar position. A strong mechanistic/causal interpretation remains open because the same paper supplies **one community, one year, eight arenas**, and abundance, resource supply, flower-stage effects, and treatment differences coexist. It is an **adult-service timing test**, not the downstream larval conversion bottleneck proposed for antagonists and mixed seed predators.
 
 ## Current claim ceiling
 
@@ -80,7 +114,7 @@ What is directly source-supported:
 
 1. Multiple plants and three taxa share an experimentally established source design with open-flower calendars, independent bee-density dates and terminal sampled-fruit seed set on linkable biological IDs.
 2. The adult-density × host-bloom predictor can be evaluated under identical sample/outcome and held-out arena groups against calendar and adult-density baselines.
-3. An initial association of modest positive direction exists, subject to source-integrity execution, common-date observational gaps, alternate reference and missing-fruit selection.
+3. The MD5-verified original-data source run shows a **small** positive predictive difference that survives the mean adult-density, matched-day calendar, bee-census coverage, phase-shift and partial-fruit-record sensitivity checks, but does not repeat in every arena.
 
 **Not supported:** a statistically general advantage of deeper stage-specific timing, a causal role for floral overlap independent of temperature, a species-independent adaptive rule, an adult–larva phase model, a measured net plant lifetime fitness effect, or strict IWE H1 admission. The original article has already examined warming, phenology, visitation and reproduction; any apparent prediction improvement here is an exploratory *IWE time-reference and out-of-arena comparator*, not a new claim that warming depresses seed set.
 
