@@ -38,6 +38,24 @@ MODELS = {
     "M5_water_flowers_flowering_duration": (
         "treatment", "logFlowers", "floweringDuration"
     ),
+    # Essential falsifier: visitors per observation day, not divided by
+    # number of flowers. If only a ratio-containing predictor improves
+    # prediction, a source denominator artifact remains plausible.
+    "M6_water_flowers_visitor_rate_per_day": (
+        "treatment", "logFlowers", "logVisitorsPerDay"
+    ),
+}
+POLLEN_MODELS = {
+    "P0_water_and_flowers": ("treatment", "logFlowers"),
+    "P1_add_visitor_per_flower_day": (
+        "treatment", "logFlowers", "logVisitation"
+    ),
+    "P2_add_actual_pollen_grains_on_stigma": (
+        "treatment", "logFlowers", "logPollenStigma"
+    ),
+    "P3_add_both_visitor_and_pollen": (
+        "treatment", "logFlowers", "logVisitation", "logPollenStigma"
+    ),
 }
 RIDGE = 0.05
 
@@ -120,11 +138,13 @@ def link_plants(sources):
         duration = _finite(a, "floweringtime")
         water = _finite(a, "SWP", allow_negative=True)
         visitrates = [_finite(r, "NrInt_day_flower") for r in visitrows]
+        dayrates = [_finite(r, "NrInt_day") for r in visitrows]
+        pollen_stigma = _finite(a, "pollenstigma")
         # The author report gives a rate by visitor group, normalized by
         # monitoring days and plant flower abundance; summing these
         # visitor-type rates is a plant-level observation aggregate.
         if None in (seeds, nflower, duration, water) or any(
-            r is None for r in visitrates
+            r is None for r in (*visitrates, *dayrates)
         ):
             excluded["required_plant_or_visit_data_missing"] += 1
             continue
@@ -149,6 +169,11 @@ def link_plants(sources):
             )) != len(visitrows),
             "visitPerFlowerDay": sum(visitrates),
             "logVisitation": log1p(sum(visitrates)),
+            "visitorRatePerDay": sum(dayrates),
+            "logVisitorsPerDay": log1p(sum(dayrates)),
+            "pollenStigma": pollen_stigma,
+            "logPollenStigma":
+                log1p(pollen_stigma) if pollen_stigma is not None else None,
             "estimatedTotalSeeds": seeds,
             "outcome": log1p(seeds),
         })
@@ -243,8 +268,21 @@ def main():
     parser.add_argument("--outdir", type=Path, required=True)
     args = parser.parse_args()
     plants, excluded, repeated = link_plants(load_sources())
+    pollen_plants = [x for x in plants
+                     if x["logPollenStigma"] is not None]
+    pollen_fits = (
+        validate(pollen_plants, models=POLLEN_MODELS)
+        if len({x["shelter"] for x in pollen_plants}) == 5
+        and len(pollen_plants) >= 25 else None
+    )
+    comparison = validate(plants)
+    def shelter_wins(candidate, reference):
+        a, b = comparison[candidate]["by_shelter_mse"], (
+            comparison[reference]["by_shelter_mse"]
+        )
+        return sum(a[k] < b[k] for k in a)
     result = {
-        "schema": "iwe_hofer2022_resource_v_service_limit_v1",
+        "schema": "iwe_hofer2022_resource_v_service_limit_v2",
         "source_doi": DOC_DOI,
         "n_source_matched_plant_trajectories": len(plants),
         "n_independent_shelters": len(set(x["shelter"] for x in plants)),
@@ -260,8 +298,22 @@ def main():
         "not_prospective_predictive_comparison": True,
         "estimated_effect_strict_h1": False,
         "source_body_md5_guard": True,
+        "paired_shelter_win_counts": {
+            "flower_plus_perflower_visits_over_flower_only":
+                shelter_wins("M3_water_flowers_visitors",
+                             "M1_water_and_flowers"),
+            "flower_plus_perday_visits_over_flower_only":
+                shelter_wins("M6_water_flowers_visitor_rate_per_day",
+                             "M1_water_and_flowers"),
+        },
+        "pollen_receipt_stage_subset": {
+            "n_plants_with_source_pollen_stigma": len(pollen_plants),
+            "n_shelters": len({x["shelter"] for x in pollen_plants}),
+            "measured_stage": "pollen_grains_on_stigma_no_validated_date_before_outcome",
+            "models": pollen_fits,
+        },
         "claim_ceiling": "single_programme_5_shelters_nonstrict_limiting_stage_diagnostic",
-        "models": validate(plants),
+        "models": comparison,
     }
     args.outdir.mkdir(parents=True, exist_ok=True)
     (args.outdir/"resource_service_plant_audit.json").write_text(
@@ -280,6 +332,17 @@ def main():
                "n_shelters": v["n_shelters"]}
         for name, v in result["models"].items()
     }, sort_keys=True))
+    print("HOFER_POLLEN_STAGE", json.dumps({
+        "n": len(pollen_plants),
+        "shelters": sorted({x["shelter"] for x in pollen_plants}),
+        "shelter_rmse": {
+            name: v["mean_shelter_rmse"]
+            for name, v in (pollen_fits or {}).items()
+        },
+    }, sort_keys=True))
+    print("HOFER_SHELTER_WINS", json.dumps(
+        result["paired_shelter_win_counts"], sort_keys=True
+    ))
     print("No date-specific visitor availability or IWE strict-H1 synchrony")
     return 0
 
