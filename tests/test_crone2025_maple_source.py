@@ -1,7 +1,8 @@
 """Independent Acer mast/pollinator/exclusion archive is not IWE strict H1."""
 import pytest
 from scripts.probe_crone2025_maple_source import (
-    API,_allowed,source_csv,source_R_code,EXPECTED_NAMES
+    API,_allowed,source_csv,source_R_code,EXPECTED_NAMES,
+    SOURCE_MD5,original_file_url
 )
 
 
@@ -43,3 +44,15 @@ def test_expected_archive_has_independent_year_and_exclusion_approaches():
     assert "HFmaple.pollenexclusion.2012_2017.csv" in EXPECTED_NAMES
     assert "HFmaple.seedcounts.2011_2024.csv" in EXPECTED_NAMES
     assert "HFmaple.flowering.qual.2011_2024.csv" in EXPECTED_NAMES
+
+
+def test_record_pinned_source_urls_and_checksums():
+    assert set(SOURCE_MD5)==EXPECTED_NAMES
+    url=original_file_url("EOS only.R")
+    assert url=="https://zenodo.org/records/15090572/files/EOS%20only.R?download=1"
+    assert _allowed(url)
+    assert SOURCE_MD5["HFmaple.pollenexclusion.2012_2017.csv"] == (
+        "ce3ac3911f898d84743f850485ce2c2e"
+    )
+    with pytest.raises(ValueError,match="not in the frozen"):
+        original_file_url("../an-unrelated-file")
