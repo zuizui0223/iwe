@@ -28,7 +28,7 @@ For 2018–2024 evaluation, hold out all later calendar years when fitting on 20
 |---|---:|
 | Constant | 1.75779 |
 | Calendar odd/even parity | 1.46302 |
-| Population spring category alone | 1.37419 |
+| Other 19 trees' spring category alone | 1.38850 |
 | **Focal spring category alone** | **1.29410** |
 | Focal + odd/even parity | 1.28718 |
 | Focal + other-tree spring | 1.28552 |
@@ -44,7 +44,7 @@ Before examining autumn seed outcomes, use spring observations to require: (1) a
 |---|---:|
 | Constant | 1.84891 |
 | Calendar parity alone | 1.67956 |
-| Population spring category alone | 1.58575 |
+| Other 19 trees' spring category alone | 1.60279 |
 | **Focal spring category alone** | **1.54977** |
 | Focal + parity | 1.53353 |
 | Focal + other-tree spring | **1.50022** |
