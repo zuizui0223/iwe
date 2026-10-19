@@ -22,6 +22,7 @@ import argparse
 import csv
 import hashlib
 from collections import defaultdict
+from itertools import permutations
 from io import StringIO
 import json
 from math import sqrt
@@ -35,6 +36,8 @@ from scripts.probe_crone2025_maple_source import (
 SPRING_NAME = "HFmaple.flowering.qual.2011_2024.csv"
 EXCLUSION_NAME = "HFmaple.pollenexclusion.2012_2017.csv"
 SCORE = {"none": 0, "low": 1, "medium": 2, "high": 3}
+# Authors' descriptive flower-bud category midpoints; not observed flower counts.
+BUD_PROXY = {"none": 0, "low": 500, "medium": 5000, "high": 25000}
 YEARS = tuple(range(2012, 2018))
 TREATMENTS = ("control", "exclusion")
 CATS = (
@@ -85,7 +88,7 @@ def _spring_by_year(rows: list[dict], expected_tree_count: int = 20) -> dict:
             raise ValueError("unknown original spring flowering category / tree")
         if tree in by_year[year]:
             raise ValueError("duplicated original tree-year spring score")
-        by_year[year][tree] = SCORE[category]
+        by_year[year][tree] = category
     if set(by_year) != set(YEARS):
         raise ValueError("incomplete 2012-2017 early flowering years")
     for year, trees in by_year.items():
@@ -110,6 +113,38 @@ def _spearman(x: list[float], y: list[float]) -> float:
     denom = sqrt(sum((u - ma) ** 2 for u in a)
                  * sum((v - mb) ** 2 for v in b))
     return num / denom if denom else float("nan")
+
+
+def _exact_permutation_p(x: list[float], y: list[float]) -> float:
+    """Unadjusted two-sided 6! label-randomization diagnostic.
+
+    This is exploratory (endpoints were selected after inspecting the
+    source). Never interpret it as a preregistered discovery threshold.
+    """
+    if len(x) != 6 or len(y) != 6:
+        raise ValueError("exact diagnostic requires exactly six years")
+    observed = abs(_spearman(x, y))
+    number = 0
+    exceed = 0
+    for perm in permutations(y):
+        number += 1
+        if abs(_spearman(x, list(perm))) >= observed - 1e-12:
+            exceed += 1
+    assert number == 720
+    return exceed / number
+
+
+def _stage_test(x: list[float], y: list[float]) -> dict:
+    baseline = _loo_rmse(x, y, linear=False)
+    timed = _loo_rmse(x, y, linear=True)
+    return {
+        "spearman_annual": round(_spearman(x, y), 6),
+        "exact_permutation_two_sided_exploratory":
+            round(_exact_permutation_p(x, y), 6),
+        "loo_year_rmse_intercept_only": round(baseline, 6),
+        "loo_year_rmse_spring_linear": round(timed, 6),
+        "loo_year_relative_rmse_change": round((timed / baseline) - 1, 6),
+    }
 
 
 def _loo_rmse(x: list[float], y: list[float], linear: bool) -> float:
@@ -140,6 +175,7 @@ def analyze(
         raise ValueError("no original pollen-exclusion branch records")
 
     groups = {}
+    unobserved_branches = defaultdict(int)
     for raw in exclusion_rows:
         year = int(raw["year"])
         treatment = raw["treatment"].strip().lower()
@@ -148,11 +184,23 @@ def analyze(
             raise ValueError("unexpected source year/treatment")
         if tree not in spring[year]:
             raise ValueError("branch tree lacks observed earlier spring flowering")
+        reported_total = _count(raw, "total.seed")
+        literal_state = {
+            col: str(raw.get(col, "")).strip() for col in CATS
+        }
+        if all(v in ("", "NA") for v in literal_state.values()):
+            # Five original 2016 branch rows have all seed states NA,
+            # num.missing=NA and an exported total.seed=0. There is NO
+            # measured zero-seed outcome on these branches. The paper
+            # explicitly analyzes 154 of the 159 recorded branch rows.
+            if reported_total != 0:
+                raise ValueError("unobserved branch with positive seed total")
+            unobserved_branches[(year, treatment)] += 1
+            continue
         observed = {
             col: _count(raw, col, allow_na=(col in OPTIONAL))
             for col in CATS
         }
-        reported_total = _count(raw, "total.seed")
         non_missing_sum = sum(v for v in observed.values() if v is not None)
         if non_missing_sum != reported_total:
             raise ValueError("original seed-state totals fail closure")
@@ -206,9 +254,18 @@ def analyze(
         row = {
             "year": year,
             "treatment": treatment,
-            "spring_intensity_mean_0to3": round(mean(spring[year].values()), 6),
+            "spring_intensity_mean_0to3": round(
+                mean(SCORE[v] for v in spring[year].values()), 6),
+            "spring_author_bud_proxy_mean": round(
+                mean(BUD_PROXY[v] for v in spring[year].values()), 6),
+            "spring_fraction_high": round(
+                mean(v == "high" for v in spring[year].values()), 6),
             "spring_tree_n": len(spring[year]),
-            "source_branch_rows": g["source_branch_rows"],
+            "source_branch_rows": g["source_branch_rows"]
+                + unobserved_branches[(year, treatment)],
+            "observed_branch_rows": g["source_branch_rows"],
+            "unobserved_all_NA_branch_rows":
+                unobserved_branches[(year, treatment)],
             "distinct_branch_trees": len(g["tree_set"]),
             "classified_pods": count,
             "intact_filled": g["intact_filled"],
@@ -220,6 +277,9 @@ def analyze(
             "missing_unknown_rows": g["missing_unknown_rows"],
             "p_intact_among_classified": round(g["intact_filled"] / count, 8),
             "p_nonempty_among_classified": round(nonempty / count, 8),
+            "p_intact_among_nonempty_classified":
+                round(g["intact_filled"] / nonempty, 8)
+                if nonempty else None,
             "p_predation_among_nonempty_recorded":
                 round(g["recorded_predation"] / nonempty, 8)
                 if nonempty else None,
@@ -238,9 +298,24 @@ def analyze(
     control = [r for r in annual if r["treatment"] == "control"]
     spring_x = [r["spring_intensity_mean_0to3"] for r in control]
     intact_y = [r["p_intact_among_classified"] for r in control]
+    initiated_y = [r["p_nonempty_among_classified"] for r in control]
+    converted_y = [r["p_intact_among_nonempty_classified"] for r in control]
     predator_y = [r["p_predation_among_nonempty_recorded"] for r in control]
-    if len(control) != len(YEARS) or any(v is None for v in predator_y):
+    if len(control) != len(YEARS) or any(
+        v is None for v in (*predator_y, *converted_y)
+    ):
         raise ValueError("incomplete annual control timing/response comparison")
+    endpoint_y = {
+        "initial_nonempty_proxy": initiated_y,
+        "postinit_intact_conditional": converted_y,
+        "intact_fraction_all_classified": intact_y,
+    }
+    alt_x = {
+        "original_author_category_bud_proxy":
+            [r["spring_author_bud_proxy_mean"] for r in control],
+        "fraction_high_flowering_trees":
+            [r["spring_fraction_high"] for r in control],
+    }
     # The >=2 exploratory split represents >=medium mean flowering, not
     # a preregistered threshold or a randomized exposure.
     high = [r for r in control if r["spring_intensity_mean_0to3"] >= 2]
@@ -254,6 +329,15 @@ def analyze(
         "experimental_years": list(YEARS),
         "independent_year_clusters": len(control),
         "total_original_exclusion_rows": len(exclusion_rows),
+        "total_evaluated_branch_rows": sum(
+            g["source_branch_rows"] for g in groups.values()
+        ),
+        "total_unobserved_all_NA_branch_rows": sum(
+            unobserved_branches.values()
+        ),
+        "unobserved_branch_years": sorted({
+            year for (year, _), n in unobserved_branches.items() if n
+        }),
         "spring_trees_per_year": expected_tree_count,
         "raw_rows_not_independent_exposure_replicates": True,
         "true_partner_adult_window_measured": False,
@@ -261,6 +345,20 @@ def analyze(
         "final_fitness_definition":
             "intact filled samaras / classified harvested samaras, not total viable seeds per plant",
         "late_seed_mast_index_only_retrospective": True,
+        "endpoint_comparisons": {
+            key: _stage_test(spring_x, y)
+            for key, y in endpoint_y.items()
+        },
+        "spring_scale_sensitivity": {
+            scale_name: {
+                endpoint: _stage_test(xs, y)
+                for endpoint, y in endpoint_y.items()
+            }
+            for scale_name, xs in alt_x.items()
+        },
+        "spring_proxy_is_ordinal_flowering_effort_not_phase": True,
+        "initial_nonempty_is_pollen_or_seed_initiation_proxy": True,
+        "postinit_conversion_is_not_direct_predator_survival": True,
         "spearman_spring_vs_classified_intact_year_means":
             round(_spearman(spring_x, intact_y), 6),
         "spearman_spring_vs_recorded_predation_year_means":
@@ -320,6 +418,8 @@ def main() -> int:
     for row in annual:
         print("SPRING_CONVERSION", row["year"], row["treatment"],
               "spring", row["spring_intensity_mean_0to3"],
+              "branches_observed", row["observed_branch_rows"],
+              "branches_all_NA", row["unobserved_all_NA_branch_rows"],
               "pods", row["classified_pods"],
               "intact", row["p_intact_among_classified"],
               "pred", row["p_predation_among_nonempty_recorded"],
