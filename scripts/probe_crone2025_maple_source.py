@@ -16,7 +16,7 @@ from io import StringIO
 import json
 from pathlib import Path
 import re
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit
 from urllib.request import Request,urlopen
 
 RECORD="15090572"
@@ -31,6 +31,23 @@ EXPECTED_NAMES={
     "mast patterns only.R",
 }
 MAX_BYTES=100_000
+# Record-locked original byte checksums as published on Zenodo record 15090572.
+# The static per-file route avoids third-party storage URLs in API file metadata.
+SOURCE_MD5={
+    "EOS only.R": "dab2f1dde3038387fab3c6f71a1d1b43",
+    "HFmaple.flowering.qual.2011_2024.csv": "902af659582cbaf0a9f36db95abb3961",
+    "HFmaple.pollenexclusion.2012_2017.csv": "ce3ac3911f898d84743f850485ce2c2e",
+    "HFmaple.seedcounts.2011_2024.csv": "cd55152d159ca4de2ab928f0fc40cdcd",
+    "HFmaple.seedfilling.2012_2014.csv": "3d7a2623308e6c1e548ad5d73170ca62",
+    "mast patterns only.R": "1e8b8e379383f71c6c2340f95aba089f",
+}
+
+
+def original_file_url(filename: str) -> str:
+    if filename not in SOURCE_MD5:
+        raise ValueError("file is not in the frozen record manifest")
+    return ("https://zenodo.org/records/"+RECORD+"/files/"
+            +quote(filename, safe="")+"?download=1")
 
 
 def _allowed(url:str)->bool:
@@ -151,12 +168,17 @@ def audit()->dict:
         original=[]
         for filename in sorted(EXPECTED_NAMES):
             item=named[filename]
-            source_url=item.get("links",{}).get("content")
+            # Source metadata sometimes exposes file-content URLs on
+            # storage domains outside our approved Zenodo record. Do not
+            # loosen the allowlist: use this exact public original record.
+            source_url=original_file_url(filename)
             raw=_get(source_url)
             md5=hashlib.md5(raw).hexdigest()
             reported=str(item.get("checksum","")).lower()
+            if md5!=SOURCE_MD5[filename]:
+                raise ValueError("frozen original "+filename+" checksum mismatch")
             if reported and reported not in ("md5:"+md5,md5):
-                raise ValueError("original "+filename+" checksum mismatch")
+                raise ValueError("metadata "+filename+" checksum mismatch")
             if filename.endswith(".csv"):
                 rec=source_csv(raw,filename)
             else:
