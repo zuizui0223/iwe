@@ -27,6 +27,7 @@ jobs:
         run: >-
           python -m scripts.probe_crone2025_maple_source
           --outdir /tmp/iwe-crone2025-original
+          --require-sources
       - name: Save source field and provenance inventory only
         if: always()
         uses: actions/upload-artifact@v4
