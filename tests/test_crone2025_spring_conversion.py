@@ -187,3 +187,30 @@ def test_tree_weighting_and_two_samara_sensitivity_are_not_equivalent():
     assert ten_seed["yearwise_tree_mean_stages"][
         "intact_fraction_all_classified"
     ]["2012"] == 0.5
+
+
+def test_calendar_alternation_can_outpredict_spring_on_six_years():
+    # Frozen *derived annual fractions* from the published-source
+    # audit; these are not synthetic branch-level replications.
+    spring = [0.50, 2.25, 1.30, 1.55, 1.90, 3.00]
+    odd_year = [0, 1, 0, 1, 0, 1]
+    final = [13/100, 153/340, 22/108, 57/176, 16/104, 134/274]
+    nonempty = [50/100, 170/340, 47/108, 85/176, 37/104, 146/274]
+    converted = [
+        13/50, 153/170, 22/47, 57/85, 16/37, 134/146
+    ]
+    assert _loo_rmse(odd_year, final, linear=True) == pytest.approx(
+        0.08155, abs=1e-5
+    )
+    assert _loo_rmse(spring, final, linear=True) == pytest.approx(
+        0.10024, abs=1e-5
+    )
+    assert _loo_rmse(odd_year, converted, linear=True) == pytest.approx(
+        0.15345, abs=1e-5
+    )
+    assert _loo_rmse(spring, converted, linear=True) == pytest.approx(
+        0.15108, abs=1e-5
+    )
+    assert _loo_rmse(odd_year, nonempty, linear=True) == pytest.approx(
+        0.06630, abs=1e-5
+    )
