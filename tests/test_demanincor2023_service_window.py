@@ -123,3 +123,30 @@ def test_off_source_bytes_fail_md5_before_decoding(monkeypatch):
         read_original("seeds.txt")
     with pytest.raises(ValueError, match="not in frozen"):
         read_original("unregistered_raw_binary_file")
+
+
+def test_original_tsv_empty_ovule_is_missing_not_shifted_or_zero():
+    header = (
+        "Cage\tTRTMT\tSpecies\tID\tDate\tSampling\tDOY\tFruits\t"
+        "Seeds\tOvules\tSeed_set\tWeight_tot\tWeight_seed\n"
+    )
+    regular = (
+        "C1\tC\tCH\t13\t14-June\t3\t165\t1\t17\t3\t0.85\t"
+        "0.0016\t0.000114286\n"
+    )
+    # Missing ovules, but Seed_set and both weights are present:
+    broken = (
+        "C2\tC\tPC\t114\t3-June\t2\t154\t4\t197\t\t1\t"
+        "0.1053\t0.000534518\n"
+    )
+    raw = (header + regular + broken * 599).encode()
+    rows = source_rows(raw, "seeds.txt")
+    assert len(rows) == 600
+    assert len(rows[1]) == 13
+    assert rows[1][8] == "197"
+    assert rows[1][9] == "NA"  # missing exact fruit ovule count
+    assert rows[1][10] == "1"  # author's recorded seed-set field
+    assert rows[1][11] == "0.1053"  # author seed mass; not ovules
+    assert rows[1][12] == "0.000534518"
+    assert rows[0][9] == "3"
+    assert rows[0][10] == "0.85"
