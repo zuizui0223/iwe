@@ -51,7 +51,13 @@ def _allowed_url(url: str) -> bool:
     if p.scheme!="https":
         return False
     if host=="datadryad.org":
-        return p.path.startswith("/api/v2/datasets/"+ENCODED)
+        path=p.path.lower()
+        return (
+            path.startswith(("/api/v2/datasets/"+ENCODED).lower())
+            or bool(re.fullmatch(r"/api/v2/versions/[0-9]+/files", path))
+            or bool(re.fullmatch(r"/api/v2/files/[0-9]+/download", path))
+            or bool(re.fullmatch(r"/stash/downloads/file_stream/[0-9]+", path))
+        )
     # Dryad's official public object downloads can redirect to its
     # cloud storage; never follow to arbitrary external providers.
     return (
@@ -156,6 +162,80 @@ def _inspect_zip(raw: bytes, prefix: str, depth: int)->list[dict]:
     return out
 
 
+def _public_original_individual_files(dataset: dict)->tuple[list[dict],list[dict]]:
+    """Only original version-issued file IDs; never create guessed URLs."""
+    href=dataset.get("_links",{}).get("stash:version",{}).get("href","")
+    match=re.fullmatch(r"/api/v2/versions/([0-9]+)",href)
+    if match is None:
+        raise ValueError("Dryad original version ID unavailable")
+    # File listing is public even if bulk packaged download fails (401).
+    root="https://datadryad.org"
+    version_id=match.group(1)
+    listing=json.loads(_source_get(
+        root+"/api/v2/versions/"+version_id+"/files",
+        maxbytes=200_000
+    )[0].decode("utf-8"))
+    items=listing.get("_embedded",{}).get("stash:files",[])
+    if not items:
+        raise ValueError("Dryad original file list absent")
+    if listing.get("total",len(items))>len(items):
+        raise ValueError("Dryad listed files span pages; source manifest incomplete")
+    files,attempts=[],[]
+    for item in items:
+        title=item.get("path","")
+        original_link=item.get("_links",{}).get("stash:download",{}).get("href","")
+        m=re.fullmatch(r"/api/v2/files/([0-9]+)/download",original_link)
+        if not title or m is None:
+            raise ValueError("Dryad original file link not source validated")
+        file_id=m.group(1)
+        record={"path":title,"source_file_id":file_id,
+                "source_digest":item.get("digest"),
+                "source_digest_type":item.get("digestType"),
+                "original_size":item.get("size")}
+        content=None
+        for url in (root+original_link,
+                    root+"/stash/downloads/file_stream/"+file_id):
+            try:
+                content,final=_source_get(url)
+                record["route"]=url.split("/api/v2/")[-1].split(
+                    "/stash/downloads/")[-1][:90]
+                break
+            except (HTTPError,URLError,TimeoutError,ValueError,OSError) as exc:
+                record.setdefault("blocked_routes",[]).append(
+                    type(exc).__name__+":"+
+                    (str(exc.code) if isinstance(exc,HTTPError) else str(exc)[:50])
+                )
+        if content is None:
+            record["status"]="public_original_file_access_blocked"
+            attempts.append(record)
+            continue
+        digest=hashlib.sha256(content).hexdigest()
+        record["sha256"]=digest
+        if (str(item.get("digestType","")).lower() in
+              ("sha-256","sha256") and
+                item.get("digest","").lower()!=digest.lower()):
+            record["status"]="original_file_digest_mismatch"
+            attempts.append(record)
+            continue
+        ext=Path(title).suffix.lower()
+        if ext==".zip":
+            parts=_inspect_zip(content,"dryad::"+title,1)
+        elif ext in (".csv",".tsv"):
+            parts=[_parse_csv_field_info(content,"dryad::"+title)]
+        elif ext in (".txt",".md",".r",".rmd"):
+            parts=[{"name":"dryad::"+title,"original_bytes":len(content),
+                    "original_sha256":digest,
+                    "source_line_leads":_source_lines(content,title)}]
+        else:
+            parts=[{"name":"dryad::"+title,"original_bytes":len(content),
+                    "sha256":digest,"extension":ext,
+                    "source_text_not_reviewed":True}]
+        record["status"]="original_file_digest_verified"
+        files.extend(parts)
+        attempts.append(record)
+    return files,attempts
+
+
 def source_inventory() -> dict:
     record={
         "schema":"iwe_jadera2025_dryad_original_source_inventory_v1",
@@ -175,13 +255,27 @@ def source_inventory() -> dict:
         record["original_identifier"]=obj.get("identifier","")
         version=obj.get("_links",{}).get("stash:version",{})
         record["original_version_locator"]=version.get("href")
-        archive,final=_source_get(ZIP_URL)
-        if not archive.startswith(b"PK"):
-            raise ValueError("Dryad download not a ZIP archive")
-        record["source_archive_sha256"]=hashlib.sha256(archive).hexdigest()
-        record["source_zip_bytes"]=len(archive)
-        record["source_retrieved"]=True
-        results=_inspect_zip(archive,"dryad_package",0)
+        results=[]
+        try:
+            archive,final=_source_get(ZIP_URL)
+            if not archive.startswith(b"PK"):
+                raise ValueError("Dryad bulk response is not ZIP")
+            record["source_archive_sha256"]=hashlib.sha256(archive).hexdigest()
+            record["source_zip_bytes"]=len(archive)
+            results=_inspect_zip(archive,"dryad_package",0)
+            record["source_access_route"]="bulk_original_dataset_zip"
+        except (HTTPError,URLError,TimeoutError,ValueError,OSError) as exc:
+            record["bulk_source_access_issue"]=(
+                type(exc).__name__+":"+
+                (str(exc.code) if isinstance(exc,HTTPError) else str(exc)[:75])
+            )
+            results,files=_public_original_individual_files(obj)
+            record["original_file_access_receipts"]=files
+            record["source_access_route"]="original_version_issued_individual_files"
+            record["original_file_accessible_count"]=sum(
+                x["status"]=="original_file_digest_verified" for x in files
+            )
+        record["source_retrieved"]=bool(results)
         record["observed_original_source_files"]=results
         record["number_source_components"]=len(results)
         record["source_target_names_present"]=[
@@ -189,10 +283,11 @@ def source_inventory() -> dict:
             if any(x.lower() in str(f.get("name","")).lower()
                    for f in results)
         ]
-        # Original unit correspondence still needs a human-read
-        # source dictionary and exact per-file plant/partner ID join.
         record["mixed_lifecycle_stage_benefit_and_cost_distinct"]=True
-        record["status"]="source_original_archive_inventory_recovered"
+        record["status"]=(
+            "source_original_files_inventory_recovered" if results
+            else "source_access_blocked_no_verified_original_bytes"
+        )
     except (OSError,TimeoutError,ValueError,TypeError,
             json.JSONDecodeError,HTTPError,URLError) as exc:
         record["status"]="source_access_blocked"
