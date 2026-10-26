@@ -121,8 +121,10 @@ def test_400_independent_nectar_flower_records_remain_40_paired_shrubs():
     assert res["source_same_focal_shrubs_used_for_nectar_and_seeds"] is True
     assert res["source_same_tagged_flowers_for_nectar_and_seed_fates"] is False
     assert res["n_shrubs_five_numeric_nectar_observations_in_both_statuses"] == 40
+    # A synthetic fixture with constant nectar loss across shrubs has
+    # no defined rank correlation. That is not biological support for 0.
     assert res["exploratory_95pct_paired_shrub_bootstrap_spearman"][
-        "status"] == "exploratory_paired_shrub_rank_uncertainty"
+        "status"] == "insufficient_variation_in_resampled_shrubs"
 
 
 def test_missing_nectar_is_not_assumed_zero_and_unknown_shrub_rejected():
