@@ -68,6 +68,23 @@ A **four-room-out extrapolation**, necessarily omitting any held-out room catego
 
 The authors' 2021 cohort showed a small within-arena positive for sampled fruit seed fraction, but different source endpoints, room protocols, sampling windows and validation groups make a formal "2021 positive / 2022 negative" effect-size meta comparison indefensible. **Do not infer an identified causal year reversal.** See [exact original source, group and model gates](DEMANINCOR2022_REPRODUCTIVE_STAGE_SOURCE_GATE.md). This contributes **zero** new strict H1 effects and no downstream antagonist/mixed stage test.
 
+## Direct two-cohort transfer test: harmonize the observed sampled-fruit endpoint first
+
+A new **source-original, cross-cohort** audit was executed using 2021 [Zenodo 7264150](https://zenodo.org/records/7264150) and 2022 [Zenodo 17830772](https://zenodo.org/records/17830772), as an additional check on *standalone date-matched bee exposure*. The two cohorts involve the **same three hosts, same Osmia pollinator and substantially the same lab**, with different bloom census, greenhouse warming and reproductive sampling. These are **not independent research programmes for meta replication**.
+
+Before fitting, the 2021 source's 181 fully observed plant fruit outcomes were aggregated into **24 arena × plant-species units** (8 arenas), the 2022 original 208 sampled flower/fruits into **60 arena × plant-species units** (20 arenas). The response is identical in both cohorts, **source-reconciled sampled fruit seeds divided by sampled total ovules**, not F1 germination or any tagged maternal lifetime fitness. A 2021 228 observed-fruit partial-missingness sensitivity is separate. All source original bytes and checksums are re-validated and original bloom/bee series recomputed.
+
+| Trained entirely on the other cohort | Species + flower share | Flowering calendar | Mean adult bees | Real dated bee×bloom | Mean bees + dated bee×bloom |
+|---|---:|---:|---:|---:|---:|
+| 2021 → 2022 (20 arenas) | 0.18186 | 0.19462 | **0.17041** | 0.17179 | 0.16706 |
+| 2022 → 2021 (8 arenas) | 0.14912 | 0.15341 | 0.14700 | 0.13118 | **0.13019** |
+
+The quantity is equal-held-arena **sampled-fruit seed-fraction RMSE**. A source-year bloom-relative/calendar- and adult-abundance scale normalizes **predictors only**, after the target bloom season: this is a retrospective transport diagnostic, not a future real-time production forecast.
+
+The apparent cross-cohort success of the richer bee model has **two essential negative controls**. First, the stand-alone real-window predictor in the 2021 → 2022 transfer is **slightly worse** than season-mean adult density; the extra time information is not unambiguously superior to mean abundance alone. Second, a model that includes **both** season-mean bees and same-day bee exposure (M7) improves adult-mean RMSE across both cohort transfers but **worsens** adult-mean RMSE in **both separate within-year leave-arena-out tests**: 2021 M2 **0.14553** versus M7 **0.17103**, and 2022 M2 **0.15821** versus M7 **0.16015**. Changes in 2021 source fruit missingness alter model ranking further. Therefore **the incremental information value of timing is context-, training-domain- and outcome-grain-dependent**, not a transported universal law.
+
+This adds **zero strict H1 effects** and **zero independent taxonomic programmes**. It is also not a tagged flower→pollination→viable offspring chain. See [cross-cohort source and claims contract](OSMIA_2021_2022_CROSSCOHORT_TRANSPORT.md).
+
 ## Already documented multi-stage positive results and counterexamples
 
 | Programme | Source-backed finding | What survives to plant outcome? | Identification boundary |
