@@ -262,7 +262,8 @@ def main():
     )
     print("PHYSALIS2026_SOURCE_GATE",outcome["status"],
           "original_files",outcome["original_source_files_retrieved"],
-          "manifest",outcome["published_original_source_manifest_verified"])
+          "manifest",outcome["published_original_source_manifest_verified"],
+          "error",outcome.get("original_source_error"))
     for v in outcome.get("source_attempts",[]):
         print("PHYSALIS2026_ORIGINAL_FILE",v["path"],v["status"],
               v.get("blocked_source_routes",[]))
