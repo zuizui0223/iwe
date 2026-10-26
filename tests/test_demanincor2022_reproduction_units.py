@@ -68,8 +68,16 @@ def test_source_missing_is_not_observed_zero():
 def test_never_promote_synthetic_short_table_as_real_208_fate_records():
     with pytest.raises(ValueError,match="unexpected original source row counts"):
         audit_source_tables({
-            "data_seeds_germ_pSEM.txt":[{"trtmt":"A"}],
-            "data_bee_nest_pSEM.txt":[{"trtmt":"A"}],
+            "data_seeds_germ_pSEM.txt":[{
+                "trtmt":"A","arena":"1","sp":"CH","plant_flwr_ID":"39_a",
+                "seeds":"13","ovules":"2","ovules_tot":"15",
+                "seed_set":"0.866666667","seeds_sown":"6",
+                "germ":"3","germ_prop":"0.5","cotyl":"2",
+                "cotyl_prop":"0.333333333"
+            }],
+            "data_bee_nest_pSEM.txt":[{
+                "trtmt":"A","arena":"1","sp":"CH","plant_flwr_ID":"39_a"
+            }],
             "bee_abund_2022.txt":[],
             "flwrcount_temp2022.txt":[],
         })
