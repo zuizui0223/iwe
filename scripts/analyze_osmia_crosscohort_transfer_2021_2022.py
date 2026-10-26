@@ -80,6 +80,21 @@ MODELS = {
         "flowerShare", "relativeBloomCalendar",
         "relativeBloomBeeDensity"
     ),
+    # Critical ablation: does timing have value after seasonal mean
+    # adult availability is already observed? M3 vs M2 alone is not a
+    # nested test, but M7 vs M2 uses the same additional timing input.
+    "M7_adult_mean_plus_bee_window": (
+        "flowerShare", "scaledMeanBeeDensity",
+        "scaledBloomBeeDensity"
+    ),
+    "M8_adult_mean_plus_relative_window": (
+        "flowerShare", "scaledMeanBeeDensity",
+        "relativeBloomBeeDensity"
+    ),
+    "M9_adult_mean_and_calendar": (
+        "flowerShare", "scaledMeanBeeDensity",
+        "relativeBloomCalendar"
+    ),
 }
 
 
@@ -339,6 +354,16 @@ def compare(records):
                 contrasts["M3_real_bee_window"]["per_arena_mse"][a]
                 < reference[a] for a in reference
             ),
+            "incremental_bee_window_after_season_mean": {
+                "rmse_delta_M7_minus_M2":
+                    contrasts["M7_adult_mean_plus_bee_window"]["equal_arena_rmse"]
+                    - contrasts["M2_mean_bee_density"]["equal_arena_rmse"],
+                "n_arenas_M7_better_than_M2":sum(
+                    contrasts["M7_adult_mean_plus_bee_window"]["per_arena_mse"][a]
+                    < contrasts["M2_mean_bee_density"]["per_arena_mse"][a]
+                    for a in reference
+                ),
+            },
         }
     # Identical source-level output and predictors with within-cohort
     # held-out experimental ARENAS, not plants inside those arenas.
