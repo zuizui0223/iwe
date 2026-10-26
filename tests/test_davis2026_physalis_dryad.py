@@ -6,9 +6,12 @@ from urllib.error import HTTPError
 import scripts.probe_davis2026_physalis_dryad as davis
 
 
-def fake_manifest():
+def fake_manifest(include_seed_quality=False):
     files=[]
-    for idx,name in enumerate(sorted(davis.TARGET_SOURCE_FILES),1):
+    names=sorted(davis.TARGET_SOURCE_FILES)
+    if include_seed_quality:
+        names.append("Oikos_2021_seeds_fruit_sugar.csv")
+    for idx,name in enumerate(names,1):
         files.append({
             "path":name,"size":100,"digestType":"sha-256",
             "digest":None,
@@ -107,3 +110,22 @@ def test_public_metadata_without_original_bytes_is_not_source_fit(monkeypatch):
     assert r["model_estimated"] is False
     assert r["strict_iwe_h1_added"] is False
     assert len(r["source_attempts"])==8
+
+
+def test_author_source_version_can_contain_additional_seed_quality_file(
+    monkeypatch,
+):
+    monkeypatch.setattr(
+        davis,"fetch_original",
+        lambda uri,cap: json.dumps(
+            fake_manifest(include_seed_quality=True)
+        ).encode()
+    )
+    ref,files=davis.original_version_file_listing({
+        "_links":{"stash:version":{"href":"/api/v2/versions/925384"}}
+    })
+    assert len(files)==9
+    assert len({f["path"] for f in files})==9
+    assert "Oikos_2021_seeds_fruit_sugar.csv" in {
+        f["path"] for f in files
+    }
