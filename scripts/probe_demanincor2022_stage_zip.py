@@ -278,9 +278,34 @@ def profile_zip_tables(raw: bytes) -> dict:
             if not headers or len(headers) != len(set(headers)):
                 raise ValueError("missing/repeated original source header")
             rows = list(reader)
-            if any(None in r for r in rows):
-                raise ValueError("original source stage contains extra cells")
-            out[name] = _profile_rows(rows, headers)
+            # Some original tables may have more tab fields than their
+            # source headers. Never silently shift named responses or
+            # promote the mismatched rows as a linked biological stage.
+            rows_with_extra = [
+                r.get(None, []) for r in rows if None in r
+            ]
+            rows_with_short = [
+                r for r in rows
+                if any(v is None for k, v in r.items() if k is not None)
+            ]
+            original_profile = _profile_rows([
+                {k: v for k, v in r.items() if k is not None}
+                for r in rows
+            ], headers)
+            original_profile["original_header_width_anomalies"] = {
+                "rows_with_extra_fields": len(rows_with_extra),
+                "rows_with_missing_trailing_fields": len(rows_with_short),
+                "extra_nonempty_field_rows": sum(
+                    any(_nonmissing(v) for v in values)
+                    for values in rows_with_extra
+                ),
+                "extra_field_count_distribution":
+                    dict(Counter(len(values) for values in rows_with_extra)),
+            }
+            original_profile["source_row_alignment_verified"] = (
+                not rows_with_extra and not rows_with_short
+            )
+            out[name] = original_profile
     return out
 
 
@@ -327,8 +352,10 @@ def main() -> int:
     if "archive" in report:
         print("DEMANINCOR2022_SOURCE_MEMBERS",
               json.dumps(report["archive"], ensure_ascii=False)[:55000])
-        print("DEMANINCOR2022_SOURCE_UNIT_PROFILES",
-              json.dumps(report["source_stage_tables"], ensure_ascii=False)[:60000])
+        if "source_stage_tables" in report:
+            print("DEMANINCOR2022_SOURCE_UNIT_PROFILES",
+                  json.dumps(report["source_stage_tables"],
+                             ensure_ascii=False)[:60000])
         print("DEMANINCOR2022_R_METHOD_REFERENCES",
               json.dumps(report["analysis_script"]["source_stage_or_join_expressions"],
                          ensure_ascii=False)[:13000])
