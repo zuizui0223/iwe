@@ -37,8 +37,11 @@ FILES = {
         ("9347d7e1733ce4274a7551775ee5a71f", 250_000),
 }
 MAX_MEMBERS = 150
-MAX_MEMBER_BYTES = 20_000_000
-MAX_EXPANDED_BYTES = 80_000_000
+# Only read small text members, no large scientific binary is loaded.
+# A compressed 4.3 MB R dataset can expand to >100 MB legitimately.
+MAX_MEMBER_BYTES = 300_000_000
+MAX_EXPANDED_BYTES = 500_000_000
+MAX_TEXT_READ_BYTES = 2_000_000
 HEADERS = (
     "date", "day", "doy", "plant", "flower", "bee", "abund", "visit",
     "seed", "germ", "surviv", "arena", "room", "temperature", "temp",
@@ -132,7 +135,7 @@ def inspect_archive(raw: bytes) -> dict:
             if inf.is_dir():
                 continue
             if inf.file_size > MAX_MEMBER_BYTES:
-                raise ValueError("oversized uncompressed member")
+                raise ValueError("implausibly oversized archive member")
             total += inf.file_size
             if total > MAX_EXPANDED_BYTES:
                 raise ValueError("original archive uncompressed size cap")
@@ -142,10 +145,12 @@ def inspect_archive(raw: bytes) -> dict:
                 "source_member_name": name,
                 "byte_size": inf.file_size,
                 "file_type": suffix or "unknown",
+                "member_data_loaded": False,
             }
             # Only metadata of source tables. Never execute archived scripts.
-            if suffix in TRUSTED_TEXT_SUFFIXES and inf.file_size < 2_000_000:
+            if suffix in TRUSTED_TEXT_SUFFIXES and inf.file_size < MAX_TEXT_READ_BYTES:
                 body = z.read(inf)
+                item["member_data_loaded"] = True
                 if suffix in (".csv", ".tsv"):
                     item["table_profile"] = sniff_csv_headers(body, name)
                 else:
@@ -207,9 +212,9 @@ def audit() -> dict:
     try:
         archive = fetch_original("deManincor-et-al.2025_data_pSEM.zip")
         code = fetch_original("deManincor-et-al.2025_Warming_RScripts.txt")
-        output["source_verified"] = True
         output["archive"] = inspect_archive(archive)
         output["analysis_script"] = inspect_analysis_script(code)
+        output["source_verified"] = True
         output["status"] = "source_manifest_verified_join_unresolved"
     except (OSError, TimeoutError, ValueError, BadZipFile, UnicodeError) as e:
         output["status"] = "source_unavailable_or_source_shape_changed"
