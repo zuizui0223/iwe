@@ -106,7 +106,11 @@ def audit_source_tables(d: dict[str, list[dict]]) -> dict:
     source_ids = set()
     maternal_keys = set()
     orphan_source_ids = []
-    wrong_ovule_closure = []
+    wrong_ovule_closure = set()
+    wrong_seed_fraction = set()
+    seed_above_ovule_total = set()
+    mismatches_by_species = Counter()
+    mismatches_by_treatment = Counter()
     wrong_germ_closure = []
     wrong_cotyl_closure = []
     germ_after_cotyl = []
@@ -124,9 +128,15 @@ def audit_source_tables(d: dict[str, list[dict]]) -> dict:
         total = numeric(r, "ovules_tot")
         seedprop = numeric(r, "seed_set")
         if abs((seeds+undeveloped)-total) > 1e-6:
-            wrong_ovule_closure.append(source_id)
+            wrong_ovule_closure.add(source_id)
         if total > 0 and abs(seedprop-seeds/total) > 1e-5:
-            wrong_ovule_closure.append(source_id)
+            wrong_seed_fraction.add(source_id)
+        if seeds > total:
+            seed_above_ovule_total.add(source_id)
+        if (source_id in wrong_ovule_closure
+                or source_id in wrong_seed_fraction):
+            mismatches_by_species[key[2]] += 1
+            mismatches_by_treatment[key[0]] += 1
         sown = numeric(r, "seeds_sown")
         germ = numeric(r, "germ")
         cotyl = numeric(r, "cotyl")
@@ -214,7 +224,23 @@ def audit_source_tables(d: dict[str, list[dict]]) -> dict:
             for col in ("seeds_sown","germ","cotyl","germ_prop","cotyl_prop")
         },
         "fatal_sown_germ_cotyl_order_violations": len(germ_after_cotyl),
-        "seedset_ovule_arithmetic_violations": len(wrong_ovule_closure),
+        "source_seed_arithmetic_audit": {
+            "n_fruit_rows_sum_seed_plus_undeveloped_not_total":
+                len(wrong_ovule_closure),
+            "n_fruit_rows_seed_fraction_not_seeds_divided_by_total":
+                len(wrong_seed_fraction),
+            "n_fruit_rows_seeds_exceed_total_ovules":
+                len(seed_above_ovule_total),
+            "n_distinct_original_fruits_with_either_arithmetic_flag":
+                len(wrong_ovule_closure | wrong_seed_fraction),
+            "flagged_by_species": dict(mismatches_by_species),
+            "flagged_by_room": dict(mismatches_by_treatment),
+            "unresolved_fruit_rows_not_admitted_to_seeds_from_ovules_model":
+                True,
+        },
+        "n_unique_original_germination_seeds_sown": sum(
+            numeric(v[0], "seeds_sown") for v in groups.values()
+        ),
         "germ_fraction_arithmetic_violations": len(wrong_germ_closure),
         "cotyl_fraction_arithmetic_violations": len(wrong_cotyl_closure),
         "same_ids_in_bee_nest_psem": nest_summary,
