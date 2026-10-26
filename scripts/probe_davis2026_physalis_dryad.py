@@ -162,11 +162,17 @@ def original_version_file_listing(metadata: dict) -> tuple[str,list[dict]]:
     if not listed or data.get("total",len(listed)) > len(listed):
         raise ValueError("Dryad original version file inventory is incomplete")
     records=[]
+    if len(listed)>20:
+        raise ValueError("implausible number of source files in version")
     for item in listed:
         path=item.get("path","")
         uri=item.get("_links",{}).get("stash:download",{}).get("href","")
-        if path not in TARGET_SOURCE_FILES:
-            raise ValueError("new unreviewed file in source archive: " + path)
+        # The official Dryad file inventory can exceed files printed in
+        # a short public landing-page preview (e.g., source seed/fruit
+        # quality endpoints). Permit only provenance-issued, precisely
+        # named author Oikos 2020/2021 CSVs, and list each extra file.
+        if re.fullmatch(r"Oikos_202[01]_[A-Za-z0-9_]+\.csv",path) is None:
+            raise ValueError("off-contract non-Oikos original file: " + path)
         if re.fullmatch(r"/api/v2/files/[0-9]+/download",uri) is None:
             raise ValueError("published file direct source link missing")
         records.append({
@@ -176,8 +182,11 @@ def original_version_file_listing(metadata: dict) -> tuple[str,list[dict]]:
             "original_digest":item.get("digest"),
             "digest_type":item.get("digestType"),
         })
-    if set(z["path"] for z in records) != TARGET_SOURCE_FILES:
-        raise ValueError("published source filenames changed")
+    names={z["path"] for z in records}
+    if not TARGET_SOURCE_FILES.issubset(names):
+        raise ValueError("previously documented original files missing")
+    if len(names)!=len(records):
+        raise ValueError("duplicate published original filenames")
     return reference,records
 
 
@@ -201,6 +210,10 @@ def audit() -> dict:
         original_version,files=original_version_file_listing(metadata)
         report["published_original_source_manifest_verified"]=True
         report["original_version_link"]=original_version
+        report["n_original_version_files"]=len(files)
+        report["additional_original_version_files"]=sorted({
+            z["path"] for z in files
+        }-TARGET_SOURCE_FILES)
         attempts=[]
         profiles=[]
         for item in files:
