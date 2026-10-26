@@ -51,9 +51,23 @@ Responses (never pooled numerically):
 
 Interpret only **within-response** RMSE. M3 alone does not improve the M1 flowering-calendar benchmark in any of the three 2022 outcomes; it is worse in **12, 14 and 13 of the 20 arena folds** (seed fraction, germination, cotyledon survival respectively). The detailed win counts are 8/20, 6/20 and 7/20. A model containing both M1 calendar and M3 matched bees has a *tiny* advantage for F1 germination (0.19453 vs M1 0.19683), but not the other responses. Seven compared models, one experimental cohort and outcome-exposed choices preclude confirmatory significance claims.
 
+## A stricter held-out ROOM/temperature stress test
+
+The exact same 60 biological group responses were tested again by leaving an **entire original temperature room** out, with 4 folds (each holds 5 arenas × 3 species = 15 groups). **Room dummy predictors are removed from every comparator**, because a withheld room is an unseen treatment level. This tests transport across temperature/room domains but **cannot identify temperature causality**: one room per temperature remains completely confounded.
+
+| Source outcome, room-held-out RMSE | M1 flowering calendar | M2 adult mean | M3 matched bloom×bee | M4 calendar + matched bloom×bee |
+|---|---:|---:|---:|---:|
+| Sampled-fruit seed fraction | 0.21096 | 0.19810 | **0.19255** | 0.20407 |
+| F1 germination / six sown | 0.23607 | 0.25103 | 0.25877 | **0.22288** |
+| F1 cotyledon survival / six sown | **0.23882** | 0.25822 | 0.26621 | 0.24142 |
+
+**Sensitivity is biologically important:** On this different validation target, M3 alone *does* predict sampled-fruit seed fraction better than M1 and M2 (whereas it did not in leave-arena-out folds), but does NOT improve either germination or cotyledon survival. The calendar-plus-overlap model has its best F1 germination score, yet it adds parameters in only four independent room holdouts and model choices were response-aware.
+
+Therefore **do not generalize the within-room negative result to a universal absence of flower–bee timing information**. The safer result is stage- and validation-grain dependence: any modest temporal exposure signal that appears in some fruit-seed predictions is not a stable standalone predictor of downstream offspring survival. Both evaluations use the same research programme, not independent replications. Never compare the RMSE magnitudes directly across the two distinct validation designs.
+
 ## Interpretation with the 2021 experiment
 
-In the authors' 2021 greenhouse experiment (public Zenodo 7264150; IWE PR #102), matched-date bloom×bee density reduced **sampled-fruit seed formation RMSE** relative to plant flowering calendar by around 2% in a **different eight-arena design**. In 2022, at **60 grouped plant × arena × species units with F1 seeds**, a matched-date bee-window variable **fails** to beat the simpler calendar reference in any of three observed reproductive endpoints.
+In the authors' 2021 greenhouse experiment (public Zenodo 7264150; IWE PR #102), matched-date bloom×bee density reduced **sampled-fruit seed formation RMSE** relative to plant flowering calendar by around 2% in a **different eight-arena design**. In 2022, at **60 grouped plant × arena × species units with F1 seeds**, the matched-date bee-window variable **fails** to beat a simpler calendar reference under **20 within-room arena holdouts**, while a different **four-room-out extrapolation** gives a modest gain for sampled-fruit seed fraction but **not** downstream germination or seedling survival.
 
 The data therefore supply a **new directly source-tested boundary**: *temporal overlap can be well observed but offer no reproducible standalone incremental reproductive information beyond a simpler plant clock*. This is compatible with the 2026 author's demonstration that temporal synchrony alone need not sustain functional mutualism. The two years do NOT constitute a controlled paired two-year test of the same identical outcome/protocol, so **do not infer a statistically significant year interaction or a universal reversal**.
 
