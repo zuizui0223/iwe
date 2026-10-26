@@ -39,7 +39,19 @@ Original published no-significance p values are not automatically source-confirm
 
 These **wide intervals neither show a biologically important reduction nor rule one out**; failure to reject a null is not an equivalence demonstration. The original shrub-paired counts include many zeros/skewed seeds. Notably the naturally robbed, already-open flower (+P+R) was *selected because it was already perforated*, whereas deterrent tape was applied to a separate bud *before opening*. Different flower-selection and anthesis histories prevent causal identification of the effect of robbery from this comparison.
 
-A separate source-hashed follow-up reads the literal 400 nectar observations (source levels `Robada` and `No dañada`) and will quantify within-shrub reward reduction without treating the nectar-sampled flowers as the same final seed flowers. Do not report new nectar difference or same-flower mediation before its source run succeeds.
+### Same-shrub nectar reward difference is also now source-verified
+
+[Original source execution 40282515054](https://github.com/zuizui0223/iwe/actions/runs/40282515054) verified the literal nectar status levels `Robada` (200 flowers) and `No dañada` (200 flowers), matching **40 original shrub IDs** also present in the seed experiment.
+
+Only **186 robbed and 180 undamaged flowers** have recorded numeric nectar volumes (14 and 20 source missing volumes respectively). Missing floral reward observations were **not imputed to zero**. On the 40 original shrubs, using each shrub's mean observed volume per status:
+
+- Mean pierced-flower nectar **0.481025 µL**; mean intact-flower nectar **4.448854 µL** — **9.249× more standing nectar** in intact flowers.
+- Paired shrub-mean difference **pierced − intact = −3.967829 µL**, shrub-resampled 95% nonparametric bootstrap interval **−5.379825 to −2.553392 µL**.
+- An exploratory *between-shrub* rank correlation of recorded nectar depletion with the completely different experimental flowers' seed-count contrast (robber permitted − robber deterred) was **Spearman ρ=+0.1381**. It is a selected, descriptive association, **not** a measured same-flower nectar→seed mediation pathway, an equivalence result, or evidence that losses in one flower cause higher/lower seeds in another.
+
+**What this establishes:** an individually sourced, **large proximal nectar reward loss** exists in the same focal shrub population for which a mature seed-count contrast is much more uncertain. Legitimate pollinator access strongly contributes to seed formation. **It does not establish that robbery has literally zero reproductive cost or that a plant compensates by a measured developmental mechanism.** Additional independently paired or experimentally randomized flower reward restoration and time-specific pollinator access would be needed to identify the conversion/buffering process.
+
+Source outcomes are 40 *paired shrubs*, NOT 400 experimentally replicated seed fates or 120 independent plant treatments.
 
 ### Reproduction
 
