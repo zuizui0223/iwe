@@ -194,6 +194,96 @@ def inspect_analysis_script(raw: bytes) -> dict:
     }
 
 
+
+PROFILED_MEMBERS = (
+    "data_seeds_germ_pSEM.txt",
+    "data_bee_nest_pSEM.txt",
+    "bee_abund_2022.txt",
+    "flwrcount_temp2022.txt",
+    "imputed_temporal_vars_T.txt",
+)
+
+
+def _nonmissing(value: object) -> bool:
+    return str(value if value is not None else "").strip().lower() not in (
+        "", "na", "nan", "null", "none", "."
+    )
+
+
+def _profile_rows(rows: list[dict[str, str]], headers: list[str]) -> dict:
+    shape = {}
+    for name in headers:
+        if (any(x in name.lower() for x in HEADERS)
+                or name.lower() in ("sp", "germ", "cotyl", "seeds",
+                                    "ovules", "ovules_tot", "mort")):
+            values = [str(row.get(name, "")).strip() for row in rows]
+            actual = [v for v in values if _nonmissing(v)]
+            shape[name] = {
+                "n_nonmissing": len(actual),
+                "n_distinct_nonmissing": len(set(actual)),
+                "first_distinct_literals": list(dict.fromkeys(actual))[:10],
+            }
+            if name.lower() in ("germ", "cotyl", "seeds", "ovules",
+                                "ovules_tot", "mort", "doy", "day",
+                                "flwr_count", "bees", "seed_set"):
+                try:
+                    numeric = [float(v) for v in actual]
+                    shape[name]["numeric_min_max"] = [
+                        min(numeric), max(numeric)
+                    ] if numeric else None
+                except ValueError:
+                    shape[name]["not_uniformly_numeric"] = True
+    candidate = (
+        ("trtmt", "arena", "sp", "plant_flwr_ID"),
+        ("trtmt", "arena", "sp"),
+        ("trtmt", "arena", "DOY"),
+        ("trtmt_arena", "species", "DOY"),
+        ("doy", "trtmt", "sp", "arena"),
+    )
+    by_key = []
+    for keys in candidate:
+        if all(k in headers for k in keys):
+            values = [tuple(r.get(k, "") for k in keys) for r in rows]
+            by_key.append({
+                "original_source_key_columns": list(keys),
+                "n_unique_keys": len(set(values)),
+                "n_repeated_rows_at_key": len(values)-len(set(values)),
+                "keys_with_unrecorded_missing": sum(
+                    not all(_nonmissing(r.get(k)) for k in keys)
+                    for r in rows
+                ),
+            })
+    return {
+        "n_rows": len(rows),
+        "headers": headers,
+        "timing_unit_and_fate_column_support": shape,
+        "candidate_grains": by_key,
+    }
+
+
+def profile_zip_tables(raw: bytes) -> dict:
+    """Validate and profile original source stage rows without redistributing."""
+    out = {}
+    with ZipFile(BytesIO(raw)) as z:
+        files = set(z.namelist())
+        for name in PROFILED_MEMBERS:
+            if name not in files:
+                raise ValueError("essential original source stage missing: " + name)
+            inf = z.getinfo(name)
+            if inf.file_size > 2_000_000:
+                raise ValueError("unexpected original stage source table size")
+            text = z.read(inf).decode("utf-8-sig", errors="strict")
+            reader = csv.DictReader(StringIO(text), delimiter="\t")
+            headers = reader.fieldnames or []
+            if not headers or len(headers) != len(set(headers)):
+                raise ValueError("missing/repeated original source header")
+            rows = list(reader)
+            if any(None in r for r in rows):
+                raise ValueError("original source stage contains extra cells")
+            out[name] = _profile_rows(rows, headers)
+    return out
+
+
 def audit() -> dict:
     output = {
         "schema": "iwe_2022_warming_stage_original_source_gate_v1",
@@ -213,6 +303,7 @@ def audit() -> dict:
         archive = fetch_original("deManincor-et-al.2025_data_pSEM.zip")
         code = fetch_original("deManincor-et-al.2025_Warming_RScripts.txt")
         output["archive"] = inspect_archive(archive)
+        output["source_stage_tables"] = profile_zip_tables(archive)
         output["analysis_script"] = inspect_analysis_script(code)
         output["source_verified"] = True
         output["status"] = "source_manifest_verified_join_unresolved"
@@ -236,6 +327,8 @@ def main() -> int:
     if "archive" in report:
         print("DEMANINCOR2022_SOURCE_MEMBERS",
               json.dumps(report["archive"], ensure_ascii=False)[:55000])
+        print("DEMANINCOR2022_SOURCE_UNIT_PROFILES",
+              json.dumps(report["source_stage_tables"], ensure_ascii=False)[:60000])
         print("DEMANINCOR2022_R_METHOD_REFERENCES",
               json.dumps(report["analysis_script"]["source_stage_or_join_expressions"],
                          ensure_ascii=False)[:13000])
