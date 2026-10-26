@@ -50,6 +50,24 @@ Frozen original-source audits:
 - [Harvard maple](CRONE2025_SPRING_TO_SEED_CONVERSION.md), merged by IWE PRs #98/#100.
 - [Three plant species × Osmia](DEMANINCOR2023_THREE_SPECIES_SERVICE_WINDOW.md), merged by PR #102.
 
+## Separate 2022 cohort: high observed synchrony need not carry reproductive information
+
+A second greenhouse experiment from the **same de Manincor/Fisogni/Rafferty group and identical three plants + Osmia pollinator** was published in 2026 (Global Change Biology, DOI 10.1111/gcb.71074; original public data Zenodo 10.5281/zenodo.17830772). It is a **different year/cohort**, not a new independent taxon-level programme. The authors found that warming preserved phenological synchrony but reduced interactions and multiple reproductive success components. Our source-level original-data reanalysis adds a prospective-in-measurement-order, yet outcome-exposed, paired calendar/bee-window comparison.
+
+**Exact source units:** 208 fruit records (120 plant-prefix group IDs), within 60 **room × arena × species** units in 20 real arenas. All F1 germination/cotyledon outcomes come from **six seeds per group**, totalling **360** measured seeds; the group values are repeated across 208 fruit rows, not 208 independent F1 trials. Original 2022 seed/ovule raw counts close for all 208 fruit rows but their derived `seed_set` is inconsistent on **31/208**; the IWE response is recomputed from the original seed and ovule counts. Daily bee census covers **96.4%** of observed flowering on average on same days.
+
+| Distinct stage (same 60 original source groups) | Leave-one-arena-out calendar model RMSE | Bloom-weighted same-day bee exposure RMSE |
+|---|---:|---:|
+| Sampled-fruit seed fraction | **0.13719** | 0.14010 |
+| F1 germination / six sown | **0.19683** | 0.20968 |
+| F1 cotyledon survival / six sown | **0.22184** | 0.23882 |
+
+In *20 within-room arena holdouts*, bloom×bee exposure alone **does not** beat the flowering calendar at any of these stage outputs (better in 8/20, 6/20, 7/20 arenas respectively). This is an empirically grounded counterexample to **guaranteed predictive benefit** from a better measured synchrony window.
+
+A **four-room-out extrapolation**, necessarily omitting any held-out room categorical term, gives a different answer for sampled fruits: bloom×bee RMSE **0.19255**, versus calendar **0.21096** and adult mean **0.19810**. Yet it still worsens F1 germination (0.25877 vs calendar 0.23607) and cotyledon survival (0.26621 vs 0.23882). Each treatment has **only one physical room**; these four folds are a stringent domain shift, *not* independently randomized warming-treatment replications. Predictor ranking is thus **sensitive to the validation scale and the reproductive endpoint**, as expected under a conditional information-conversion hypothesis.
+
+The authors' 2021 cohort showed a small within-arena positive for sampled fruit seed fraction, but different source endpoints, room protocols, sampling windows and validation groups make a formal "2021 positive / 2022 negative" effect-size meta comparison indefensible. **Do not infer an identified causal year reversal.** See [exact original source, group and model gates](DEMANINCOR2022_REPRODUCTIVE_STAGE_SOURCE_GATE.md). This contributes **zero** new strict H1 effects and no downstream antagonist/mixed stage test.
+
 ## Already documented multi-stage positive results and counterexamples
 
 | Programme | Source-backed finding | What survives to plant outcome? | Identification boundary |
@@ -81,7 +99,7 @@ The specific, falsifiable extension beyond generic "timing matters" is:
 
 > **Conditional timing-information hypothesis:** in an independently validated dataset with the same reproductive endpoint, a biologically matched interaction coordinate should add predictive information over season/calendar and time-averaged partner availability **only when the matching window contains an exposure-to-fitness conversion step not already saturated or compensated at a later stage**.
 
-This is a *candidate* generalization. At present only de Manincor provides a small *date-matched adult–flower* original-data positive test against adult-mean, calendar, coverage, and shifted-phase controls. Höfer offers a separately replicated **resource-conditioned visitor-information** diagnostic without date-specific animal timing; neither measures a delayed antagonist stage. The maple **2012–2017 intact-seed-fraction** analysis shows how an apparent spring-to-seed relationship loses uniqueness to a simpler known biennial clock, whereas the **13-year sampled seed-count** analysis shows that spring flowering effort *can* carry more year-held-out predictive information than that same simple clock for a distinct output. Their difference emphasizes endpoint grain rather than establishing a general stage-filtering law. The Cardamine and Gols evidence motivates *where* conversion occurs, but not a cross-programme predictive-superiority claim.
+This is a *candidate* generalization. The de Manincor **2021 cohort** provides a small *date-matched adult–flower* original-data positive test against adult-mean, calendar, coverage, and shifted-phase controls, while the **2022 separate cohort** shows that this predictive advantage is not invariant to reproductive stage or arena-versus-room holdout design. Höfer offers a separately replicated **resource-conditioned visitor-information** diagnostic without date-specific animal timing; neither measures a delayed antagonist stage. The maple **2012–2017 intact-seed-fraction** analysis shows how an apparent spring-to-seed relationship loses uniqueness to a simpler known biennial clock, whereas the **13-year sampled seed-count** analysis shows that spring flowering effort *can* carry more year-held-out predictive information than that same simple clock for a distinct output. Their difference emphasizes endpoint grain rather than establishing a general stage-filtering law. The Cardamine and Gols evidence motivates *where* conversion occurs, but not a cross-programme predictive-superiority claim.
 
 ### Mandatory falsifiers of this candidate hypothesis
 
@@ -94,7 +112,7 @@ This is a *candidate* generalization. At present only de Manincor provides a sma
 ## State of the project and next decisive source
 
 - **Frozen strict H1 on main:** 2 mutualist independent SMD clusters, **0 antagonist / 0 mixed**. These studies do not change that.
-- **Exploratory landscape on pivot:** original source retrieval and controlled model comparisons have succeeded for maple (six-year intact-fraction and **13-year seed-count** distinct endpoints), three-plant bee source (date-matched adult service), and *Sinapis* (season-aggregated resource-versus-visitors boundary). These are **three source programmes, with separate response grains**, not exchangeable effects. Both have strict claim ceilings and CI-produced audit receipts. No causal stage-generalization estimate has been obtained.
+- **Exploratory landscape on pivot:** original source retrieval and controlled model comparisons have succeeded for maple (six-year intact-fraction and **13-year seed-count** distinct endpoints), three-plant bee source (date-matched adult service), and *Sinapis* (season-aggregated resource-versus-visitors boundary). These are **three taxonomically distinct source programmes including two de Manincor annual cohorts, with separate response grains**, not exchangeable effects. All have strict claim ceilings and original-source audit receipts. No causal stage-generalization estimate has been obtained.
 - **Next required dataset:** multiple independent years/sites with independently dated adult partner availability, directly observed pre-outcome host susceptibility and effective consumer/service state, and **mature intact seeds on the SAME tagged reproductive units**. Predeclare matching models: context/calendar; adult-only; host-sensitive window; conversion-filter-only; matched window × filter. Use held-out years or programmes for comparison.
 - **Priority among already screened sources:** numeric 2012–2014 female Anthocharis flight data for the Cardamine same-year comparison, or a linked Hurlburt Yucca flowering-date-to-mature-fruit record; neither may be imputed from eggs, post-harvest damage or other units. A new independently sourced open dataset meeting this contract is preferable to repeated recovery attempts that cannot unlock the join.
 
