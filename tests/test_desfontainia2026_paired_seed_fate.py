@@ -185,3 +185,22 @@ def test_nectar_design_exactly_five_each_and_unique_flower_ids_required():
     vals[1]["Status"]="No dañada" # make 198/202, also fail
     with pytest.raises(ValueError,match="unexpected 200 robbed"):
         m.paired_nectar_volume(vals,shrubs)
+
+
+def test_ornamental_flower_number_reuse_between_status_is_valid():
+    shrubs=m.paired_shrub_records(synthetic_shrubs())
+    # Author labels can restart at 1 in each nectar status, and those
+    # are separate selected flowers on the same shrub.
+    vals=[
+        {"Plant":str(shrub),"Flower":str((flower-1)%5+1),
+         "Status":"Robada" if flower<=5 else "No dañada",
+         "Nectar volumen (microliter)":
+             "0.1" if flower<=5 else "2.0",
+         "Nectar concentration (% w/w)":"NA"}
+        for shrub in range(1,41)
+        for flower in range(1,11)
+    ]
+    out=m.paired_nectar_volume(vals,shrubs)
+    assert out["source_design_exactly_five_of_each_status_per_shrub"]
+    assert out["n_same_shrub_flower_labels_reused_across_statuses"]==200
+    assert out["paired_shrubs_with_nectar_and_seed_outcomes"]==40
