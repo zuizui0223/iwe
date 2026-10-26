@@ -314,6 +314,7 @@ def paired_nectar_volume(rows,paired_seed_rows):
     raw_status=Counter()
     original_shrub_status_rows=Counter()
     flower_ids=set()
+    labels_across_status=defaultdict(set)
     for r in rows:
         shrub=_nonnegative_integer(r.get("Plant"),"nectar source shrub ID")
         if shrub not in shrub_ids:
@@ -323,9 +324,15 @@ def paired_nectar_volume(rows,paired_seed_rows):
         if status not in expected_status:
             raise ValueError("unrecognized original Spanish floral status")
         flower_id=_nonnegative_integer(r.get("Flower"),"original nectar flower ID")
-        if (shrub,flower_id) in flower_ids:
-            raise ValueError("duplicate original nectar flower ID within shrub")
-        flower_ids.add((shrub,flower_id))
+        # Original Flower labels can restart at 1 for each floral
+        # status. Only (shrub, robbed-vs-healthy, flower-label) is a
+        # candidate unique measurement, never the shrub-wide Flower
+        # number by itself.
+        key=(shrub,status,flower_id)
+        if key in flower_ids:
+            raise ValueError("duplicate original nectar flower label WITHIN status")
+        flower_ids.add(key)
+        labels_across_status[(shrub,flower_id)].add(status)
         original_shrub_status_rows[(shrub,status)]+=1
         val=_numeric_nectar(r.get("Nectar volumen (microliter)"))
         if val is None:
@@ -385,6 +392,10 @@ def paired_nectar_volume(rows,paired_seed_rows):
         "paired_shrubs_with_nectar_and_seed_outcomes":len(per_shrub),
         "original_flower_status_counts":dict(raw_status),
         "source_design_exactly_five_of_each_status_per_shrub":True,
+        "flower_label_unique_only_with_shrub_and_status":True,
+        "n_same_shrub_flower_labels_reused_across_statuses":sum(
+            len(states)>1 for states in labels_across_status.values()
+        ),
         "n_shrubs_five_numeric_nectar_observations_in_both_statuses":
             len(complete),
         "source_same_focal_shrubs_used_for_nectar_and_seeds":
