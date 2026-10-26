@@ -117,6 +117,12 @@ def test_400_independent_nectar_flower_records_remain_40_paired_shrubs():
     assert res["n_pierced_with_numeric_nectar"]==200
     assert res["n_healthy_with_numeric_nectar"]==200
     assert res["no_individual_flower_nectar_to_seed_fate_join"] is True
+    assert res["source_design_exactly_five_of_each_status_per_shrub"] is True
+    assert res["source_same_focal_shrubs_used_for_nectar_and_seeds"] is True
+    assert res["source_same_tagged_flowers_for_nectar_and_seed_fates"] is False
+    assert res["n_shrubs_five_numeric_nectar_observations_in_both_statuses"] == 40
+    assert res["exploratory_95pct_paired_shrub_bootstrap_spearman"][
+        "status"] == "exploratory_paired_shrub_rank_uncertainty"
 
 
 def test_missing_nectar_is_not_assumed_zero_and_unknown_shrub_rejected():
@@ -143,3 +149,39 @@ def test_missing_nectar_is_not_assumed_zero_and_unknown_shrub_rejected():
 def test_rank_correlation_uses_same_original_shrub_order():
     assert m.spearman_paired_shrubs([0,2,5,7],[7,5,2,0])==-1
     assert m.spearman_paired_shrubs([1,1,1,1],[0,3,2,4]) is None
+
+
+def test_bootstrap_rank_ci_uses_shrubs_not_400_plant_duplicated_flowers():
+    boot=m.bootstrap_spearman_paired_shrubs(
+        list(range(10)),list(reversed(range(10))),reps=300,seed=12
+    )
+    assert boot["valid_bootstrap_samples"]>=270
+    assert boot["confidence_interval"]==pytest.approx([-1,-1])
+    none=m.bootstrap_spearman_paired_shrubs([1]*10,list(range(10)),
+                                          reps=300,seed=3)
+    assert none["confidence_interval"] is None
+    assert none["status"]=="insufficient_variation_in_resampled_shrubs"
+
+
+def test_nectar_design_exactly_five_each_and_unique_flower_ids_required():
+    shrubs=m.paired_shrub_records(synthetic_shrubs())
+    vals=[
+        {"Plant":str(shrub),"Flower":str(flower),
+         "Status":"Robada" if flower<=5 else "No dañada",
+         "Nectar volumen (microliter)":"1",
+         "Nectar concentration (% w/w)":"NA"}
+        for shrub in range(1,41)
+        for flower in range(1,11)
+    ]
+    vals[0]["Flower"]=vals[1]["Flower"]
+    with pytest.raises(ValueError,match="duplicate original nectar flower"):
+        m.paired_nectar_volume(vals,shrubs)
+    vals[0]["Flower"]="1"
+    vals[0]["Status"]="No dañada"
+    # Globally 201 untouched (not 200), or even if counterbalanced,
+    # wrong within-shrub 5:5 must never pass as matched sample design.
+    with pytest.raises(ValueError,match="unexpected 200 robbed"):
+        m.paired_nectar_volume(vals,shrubs)
+    vals[1]["Status"]="No dañada" # make 198/202, also fail
+    with pytest.raises(ValueError,match="unexpected 200 robbed"):
+        m.paired_nectar_volume(vals,shrubs)
