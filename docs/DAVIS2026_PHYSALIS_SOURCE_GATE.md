@@ -14,7 +14,7 @@ Crucially, the study is NOT a pollinating seed predator or a within-lineage adul
 
 ## Original Dryad files and possible biological joins
 
-The publicly displayed archive describes exactly eight raw sources:
+The original article's source description identifies eight experiment CSVs, but the **authoritative Dryad published-version file inventory contains 10 files**: those eight experiment CSVs, an additional `Oikos_2021_seeds_fruit_sugar.csv`, and `README.md`. The extra seed/fruit/sugar file is a potential reproductive-quality endpoint, but its raw columns and biological join keys have **not** been inspected.
 
 - 2021: `Oikos_2021_fruit_set_poll_obs.csv` — **single visit** fruit set outcome (0/1), treatment, bee morphospecies, date (`julian_date`), sampled `plant_id`, spatial `block`, visit duration and floral anther state.
 - 2021: `Oikos_2021_fruit_weight_poll_obs.csv` — harvested fruit weight (g), treatment, pollinator, `plant_id` and spatial `block`, `days_to_harvest`, foraging covariates.
@@ -32,6 +32,19 @@ Pre-define the response as original source **fruit set per documented single vis
 Then compare the original fruit-weight endpoint only where a source-validated unique visit→fruit key exists, and use 2020 plant yield data only as a **different programme-year stage**, not a 2021 descendant. Published contrasts alone cannot establish a time-dependent conditional filtering effect.
 
 The true physical treatment randomization unit (field plant versus block) and actual date-specific adult bee abundance must be source-verified. The 2021 per-visit observations are realized interactions, **not unconditional bee availability on absent-visit days**, so this programme can test service-context response but might remain below the strict timing H1 and phase-alignment claims.
+
+## Verified Dryad source-access receipt (2026-10-26)
+
+**Machine-executed source gate succeeded, but original data retrieval did not.** The official Dryad REST dataset metadata and **version-issued manifest of 10 author-deposited files** were retrieved and verified structurally. Exact official file routes were attempted for *each* of the 10 filenames without author contact or guessed third-party access:
+- **10/10 REST file downloads returned HTTP 401**.
+- **10/10 public file-stream downloads returned HTTP 403**.
+- **0/10 original CSV/README file bodies recovered**. Consequently **zero source rows, IDs, observed visits, final fruit weights or seed-quality outcomes were inspected or estimated**.
+- The extra `Oikos_2021_seeds_fruit_sugar.csv` is visible by its filename in the official manifest only. Its actual contents cannot establish a novel seed-quality result, a tagged fruit-to-seed identity join or a later developmental stage.
+- This is a source-access **environment/authorization blocker**, *not* evidence that source observations are missing, that plant seed output is zero, or that the ecology has no signal.
+
+GitHub reproducibility receipts: [original-source run 40280511313](https://github.com/zuizui0223/iwe/actions/runs/40280511313) (six software tests passed; manifest verified; 10 blocked downloads recorded) and [full repo CI 40280511322](https://github.com/zuizui0223/iwe/actions/runs/40280511322) (passed). The source probe's success means **receipt produced**, not an admitted biological effect. Source binary routes had already been tested twice per file; do not invent alternate endpoints, try arbitrary retries, or infer a fit from filename/title.
+
+**Admission decision: `blocked_original_raw_bytes`.** Retain this independently described antagonist-induced service-filtering programme as a candidate, but it contributes **zero additional independent source-quantified reproductive effects, zero stage-complete forecasts and zero strict H1 clusters**. Reopen only if an independently lawful original-data copy becomes available with uniquely keyed flower/date/fruit endpoints and credible experimental replication.
 
 ## Current finite original-source retrieval
 
