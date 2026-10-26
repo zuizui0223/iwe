@@ -209,7 +209,7 @@ def solve_linear(A,b):
     return [row[-1] for row in aug]
 
 
-def design(train,test,variables):
+def design(train,test,variables,include_room=True):
     means={k:mean(x[k] for x in train) for k in variables}
     std={k:sqrt(mean((x[k]-means[k])**2 for x in train)) or 1
          for k in variables}
@@ -217,7 +217,8 @@ def design(train,test,variables):
         return [
             [1.0]+
             [float(x["sp"]==sp) for sp in SPECIES[1:]]+
-            [float(x["room"]==room) for room in ROOMS[1:]]+
+            ([float(x["room"]==room) for room in ROOMS[1:]]
+             if include_room else [])+
             [(x[k]-means[k])/std[k] for k in variables]
             for x in rows
         ]
@@ -283,6 +284,52 @@ def evaluate(records,models=MODEL_SPECS):
     return outputs
 
 
+
+def room_holdout_sensitivity(records,models=MODEL_SPECS):
+    """Deliberately difficult extrapolation: one entire original room out.
+
+    Room and temperature treatment are one-to-one, thus room categorical
+    indicators are NOT estimable on an unseen fourth room. Remove room
+    dummies from all models symmetrically. Four folds are NOT causal
+    treatment replicates or independent experimental years.
+    """
+    if {x["room"] for x in records} != set(ROOMS):
+        raise ValueError("four original temperature rooms required")
+    outputs={}
+    for outcome in OUTCOMES:
+        results={}
+        for model,spec in models.items():
+            errors={}
+            for held in ROOMS:
+                train=[x for x in records if x["room"]!=held]
+                test=[x for x in records if x["room"]==held]
+                if len(test)!=15:
+                    raise ValueError("room must contain 5 arenas × 3 species")
+                X,T=design(train,test,spec,include_room=False)
+                beta=ridge_fit(X,[x[outcome] for x in train])
+                errors[held]=mean(
+                    (x[outcome]-max(0.,min(1.,sum(v*b for v,b in zip(feat,beta)))))**2
+                    for x,feat in zip(test,T)
+                )
+            results[model]={
+                "equal_room_rmse":sqrt(mean(errors.values())),
+                "n_held_out_rooms":4,
+                "per_room_mse":errors,
+            }
+        outputs[outcome]={
+            "models":results,
+            "window_minus_calendar_rmse":
+                results["M3_date_matched_bee_window"]["equal_room_rmse"]-
+                results["M1_flowering_calendar"]["equal_room_rmse"],
+            "window_minus_adult_mean_rmse":
+                results["M3_date_matched_bee_window"]["equal_room_rmse"]-
+                results["M2_time_averaged_bees"]["equal_room_rmse"],
+            "interpretation":
+                "out_of_temperature_room_domain_extrapolation_not_causal"
+        }
+    return outputs
+
+
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("--outdir",type=Path,required=True)
@@ -293,6 +340,7 @@ def main():
         data={name:original_table(z,name) for name in NAMES}
     records,source=make_records(data)
     models=evaluate(records)
+    room_validation=room_holdout_sensitivity(records)
     report={
         "schema":"iwe_2022_grouped_stage_vs_overlap_exploratory_v1",
         "doi":DOI,
@@ -308,6 +356,8 @@ def main():
         "all_models_exploratory_post_outcome_comparison":True,
         "original_data_quality":source,
         "model_comparisons":models,
+        "leave_one_room_out_extrapolation_sensitivity":room_validation,
+        "room_holdout_omits_room_fixed_effects_by_design":True,
         "strict_H1_cluster_promotion":False,
     }
     args.outdir.mkdir(parents=True,exist_ok=True)
@@ -323,6 +373,12 @@ def main():
             model:round(row["equal_arena_rmse"],6)
             for model,row in spec["models"].items()
         } for stage,spec in models.items()
+    },sort_keys=True))
+    print("DEMANINCOR2022_ROOM_HOLDOUT_RMSE",json.dumps({
+        stage:{
+            model:round(item["equal_room_rmse"],6)
+            for model,item in val["models"].items()
+        } for stage,val in room_validation.items()
     },sort_keys=True))
     print("DEMANINCOR2022_GROUPED_STAGE_WINS",json.dumps({
         stage:{
