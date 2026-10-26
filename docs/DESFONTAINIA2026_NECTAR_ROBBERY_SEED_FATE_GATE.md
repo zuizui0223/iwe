@@ -24,8 +24,29 @@ Original published no-significance p values are not automatically source-confirm
 
 ## Source status and next action
 
-At initial draft, no original workbook sheet rows/identified individual three-treatment comparisons have been admitted. Reproduce:
-`python -m scripts.probe_desfontainia2026_zenodo_source --outdir /tmp/iwe-desfontainia2026-source`.
-Original publicly hosted bytes stay on Zenodo; workflow saves only source schema/key and code-provenance receipt.
+**Source recovery and matched-shrub experiment now completed.** The original workbook, author R script and README passed immutable source MD5 checks in [GitHub Actions 40282024289](https://github.com/zuizui0223/iwe/actions/runs/40282024289); **10 software tests passed** and 40 original nonduplicated shrub IDs linked exactly to three seed outcomes. The separate nectar sheet has 400 flower observations on 40 numbered shrubs. The same shrub ID does **not** prove it was the same flower used for final seed production.
+
+### Direct mature seed output on 40 paired shrubs
+
+| Original treatment | Flowers with any mature seeds | Mean mature seeds/flower | Median |
+|---|---:|---:|---:|
+| Bagged, pollinators excluded (−P−R) | **2/40 (5%)** | **5.175** | 0 |
+| Pollinators present, robber deterrent (+P−R) | **32/40 (80%)** | **26.125** | 10 |
+| Pollinators present, robbery permitted (+P+R) | **28/40 (70%)** | **31.350** | 17.5 |
+
+- **Pollinators present vs bagged** (+P−R minus −P−R): mean **+20.950 mature seeds per shrub-selected flower**, paired n=40 bootstrap 95% interval **+9.575 to +32.575**. Seed presence difference **+75 percentage points** [**+60 to +87.5**]. Exact paired binary discordance p≈**1.86×10⁻⁹**, exploratory.
+- **Robber allowed vs deterred with pollinators present** (+P+R minus +P−R): mean **+5.225 mature seeds**, paired bootstrap 95% interval **−12.175 to +22.400**. Seed presence changes by **−10 percentage points** [**−30 to +10**]. Exact matched binary discordance p≈**0.4545** (6 shrubs have seeds only in robber-allowed flowers; 10 only in robber-deterred flowers).
+
+These **wide intervals neither show a biologically important reduction nor rule one out**; failure to reject a null is not an equivalence demonstration. The original shrub-paired counts include many zeros/skewed seeds. Notably the naturally robbed, already-open flower (+P+R) was *selected because it was already perforated*, whereas deterrent tape was applied to a separate bud *before opening*. Different flower-selection and anthesis histories prevent causal identification of the effect of robbery from this comparison.
+
+A separate source-hashed follow-up reads the literal 400 nectar observations (source levels `Robada` and `No dañada`) and will quantify within-shrub reward reduction without treating the nectar-sampled flowers as the same final seed flowers. Do not report new nectar difference or same-flower mediation before its source run succeeds.
+
+### Reproduction
+
+`python -m scripts.probe_desfontainia2026_zenodo_source --outdir /tmp/iwe-desfontainia2026-source`
+
+`python -m scripts.analyze_desfontainia2026_paired_seed_fate --outdir /tmp/iwe-desfontainia2026-source`
+
+The original 2026 published Excel and author R code remain on Zenodo. The workflow exports only aggregate paired contrasts, original source hashes, paired bootstrap and source unit/missingness receipts; no individual original plants or workbook is redistributed.
 
 The strict IWE H1 main meta-analysis remains 2 mutualist, 0 antagonist and 0 mixed dependence clusters. Independent nectar robbery source is context/role-buffering evidence, not a synchrony→fitness contrast.
