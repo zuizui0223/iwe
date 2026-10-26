@@ -93,3 +93,53 @@ def test_author_headers_and_source_row_remain_unaltered():
     assert rows[0]["Seed (-P-R)"]=="0"
     assert rows[0]["Seeds (+P-R)"]=="18"
     assert rows[0]["Seeds (+P+R)"]=="20"
+
+
+def test_400_independent_nectar_flower_records_remain_40_paired_shrubs():
+    seeds=m.paired_shrub_records(synthetic_shrubs())
+    raw=[]
+    for shrub in range(1,41):
+        for flower in range(1,11):
+            status="Robada" if flower<=5 else "No dañada"
+            raw.append({
+                "Plant":str(shrub),"Flower":str(flower),
+                "Status":status,
+                "Nectar volumen (microliter)":
+                    str(0.1 if status=="Robada" else 2),
+                "Nectar concentration (% w/w)":"NA",
+            })
+    res=m.paired_nectar_volume(raw,seeds)
+    assert res["paired_shrubs_with_nectar_and_seed_outcomes"]==40
+    assert res["original_flower_status_counts"]=={
+        "Robada":200,"No dañada":200}
+    assert res["healthy_divided_by_pierced_nectar_volume"]==pytest.approx(20)
+    assert res["mean_pierced_minus_healthy_nectar_difference_uL"]==pytest.approx(-1.9)
+    assert res["n_pierced_with_numeric_nectar"]==200
+    assert res["n_healthy_with_numeric_nectar"]==200
+    assert res["no_individual_flower_nectar_to_seed_fate_join"] is True
+
+
+def test_missing_nectar_is_not_assumed_zero_and_unknown_shrub_rejected():
+    seeds=m.paired_shrub_records(synthetic_shrubs())
+    raw=[]
+    for shrub in range(1,41):
+        for flower in range(1,11):
+            raw.append({
+                "Plant":str(shrub),"Flower":str(flower),
+                "Status":"Robada" if flower<=5 else "No dañada",
+                "Nectar volumen (microliter)": (
+                    "NA" if shrub==1 and flower==1 else "1.0"
+                ),
+                "Nectar concentration (% w/w)":"NA",
+            })
+    out=m.paired_nectar_volume(raw,seeds)
+    assert out["unrecorded_flower_nectar_volumes"]=={"Robada":1}
+    assert out["n_pierced_with_numeric_nectar"]==199
+    raw[0]["Plant"]="40000"
+    with pytest.raises(ValueError,match="unknown seed shrub"):
+        m.paired_nectar_volume(raw,seeds)
+
+
+def test_rank_correlation_uses_same_original_shrub_order():
+    assert m.spearman_paired_shrubs([0,2,5,7],[7,5,2,0])==-1
+    assert m.spearman_paired_shrubs([1,1,1,1],[0,3,2,4]) is None
