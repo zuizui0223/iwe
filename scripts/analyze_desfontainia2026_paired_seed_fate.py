@@ -235,6 +235,121 @@ def nectar_schema_statuses(rows):
     }
 
 
+def _numeric_nectar(value):
+    if value is None or str(value).strip().lower() in (
+        "", "na", "nan", "null", "."
+    ):
+        return None
+    try:
+        x=float(value)
+    except (TypeError,ValueError) as exc:
+        raise ValueError("nonnumeric original nectar volume") from exc
+    if not isfinite(x) or x<0:
+        raise ValueError("negative or nonfinite original floral nectar")
+    return x
+
+
+def _ranks(a):
+    """Average ranks for ties without a scientific software dependency."""
+    n=len(a)
+    out=[0.]*n
+    for i,v in enumerate(a):
+        less=sum(x<v for x in a)
+        equal=sum(x==v for x in a)
+        out[i]=less+(equal+1)/2
+    return out
+
+
+def spearman_paired_shrubs(x,y):
+    if len(x)!=len(y) or len(x)<3:
+        raise ValueError("paired shrub rank inputs required")
+    a,b=_ranks(x),_ranks(y)
+    am,bm=mean(a),mean(b)
+    num=sum((v-am)*(w-bm) for v,w in zip(a,b))
+    va=sum((v-am)**2 for v in a)
+    vb=sum((v-bm)**2 for v in b)
+    return num/sqrt(va*vb) if va>0 and vb>0 else None
+
+
+def paired_nectar_volume(rows,paired_seed_rows):
+    """Different flowers sampled on the SAME shrubs, never matched flowers."""
+    expected_status={"Robada","No dañada"}
+    shrub_ids={z["plant"] for z in paired_seed_rows}
+    by=defaultdict(lambda:defaultdict(list))
+    missing_volume=Counter()
+    raw_status=Counter()
+    for r in rows:
+        shrub=_nonnegative_integer(r.get("Plant"),"nectar source shrub ID")
+        if shrub not in shrub_ids:
+            raise ValueError("nectar observation references unknown seed shrub")
+        status=str(r.get("Status","")).strip()
+        raw_status[status]+=1
+        if status not in expected_status:
+            raise ValueError("unrecognized original Spanish floral status")
+        val=_numeric_nectar(r.get("Nectar volumen (microliter)"))
+        if val is None:
+            missing_volume[status]+=1
+        else:
+            by[shrub][status].append(val)
+    if len(rows)!=400:
+        raise ValueError("original nectar sample is not 400 flower rows")
+    if set(by)!=shrub_ids:
+        raise ValueError("not all shrub IDs have original nectar observations")
+    if set(raw_status)!=expected_status or set(raw_status.values())!={200}:
+        raise ValueError("unexpected 200 robbed / 200 healthy flowers")
+    per_shrub=[]
+    for shrub in sorted(shrub_ids):
+        pierced=by[shrub]["Robada"]
+        healthy=by[shrub]["No dañada"]
+        if not pierced or not healthy:
+            raise ValueError("no paired nectar statuses on a sampled shrub")
+        per_shrub.append({
+            "shrub":shrub,
+            "mean_pierced":mean(pierced),
+            "mean_healthy":mean(healthy),
+            "n_pierced_measured":len(pierced),
+            "n_healthy_measured":len(healthy),
+        })
+    robbed=[z["mean_pierced"] for z in per_shrub]
+    healthy=[z["mean_healthy"] for z in per_shrub]
+    healthy_mean=mean(healthy)
+    robbed_mean=mean(robbed)
+    seed_by_shrub={z["plant"]:z for z in paired_seed_rows}
+    reduced_reward=[
+        z["mean_healthy"]-z["mean_pierced"]
+        for z in per_shrub
+    ]
+    seed_change=[
+        seed_by_shrub[z["shrub"]]["pollination_with_robbery"]-
+        seed_by_shrub[z["shrub"]]["pollination_no_robbery"]
+        for z in per_shrub
+    ]
+    return {
+        "paired_shrubs_with_nectar_and_seed_outcomes":len(per_shrub),
+        "original_flower_status_counts":dict(raw_status),
+        "unrecorded_flower_nectar_volumes":dict(missing_volume),
+        "n_pierced_with_numeric_nectar":sum(z["n_pierced_measured"]
+                                           for z in per_shrub),
+        "n_healthy_with_numeric_nectar":sum(z["n_healthy_measured"]
+                                           for z in per_shrub),
+        "mean_pierced_nectar_per_flower_uL":
+            robbed_mean,
+        "mean_healthy_nectar_per_flower_uL":
+            healthy_mean,
+        "healthy_divided_by_pierced_nectar_volume":
+            healthy_mean/robbed_mean if robbed_mean>0 else None,
+        "mean_pierced_minus_healthy_nectar_difference_uL":
+            mean_difference(robbed,healthy),
+        "paired_95pct_bootstrap_nectar_difference_uL":
+            bootstrap_difference(robbed,healthy),
+        "spearman_shrub_level_nectar_depletion_vs_seed_change":
+            spearman_paired_shrubs(reduced_reward,seed_change),
+        "no_individual_flower_nectar_to_seed_fate_join":True,
+        "observational_nectar_loss_seed_change_correlation_is_not_mediation":
+            True,
+    }
+
+
 def run_original():
     original=original_bytes("Raw Data Desfontainia fulgens.xlsx")
     source_headers,seed_rows=source_sheet_rows(original,SOURCE_SHEET)
@@ -248,6 +363,7 @@ def run_original():
     nectar=nectar_schema_statuses(nectar_rows)
     if nectar["n_original_nectar_shrub_IDs"]!=N_SHRUBS:
         raise ValueError("source nectar/shrub sampling count drift")
+    paired_nectar=paired_nectar_volume(nectar_rows,source)
     report={
         "schema":"iwe_desfontainia2026_within_shrub_reproductive_buffer_v1",
         "source_doi":DOI,
@@ -268,6 +384,7 @@ def run_original():
                 summarize_contrast(with_rob,no_rob),
         },
         "original_nectar_status_inventory":nectar,
+        "original_paired_nectar_depletion":paired_nectar,
         "claims": {
             "one_shrub_three_treatments_clustered":True,
             "paired_shrub_bootstrap_nonparametric_exploratory":True,
