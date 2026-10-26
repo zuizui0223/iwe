@@ -6,6 +6,8 @@ on:
     paths:
       - scripts/probe_desfontainia2026_zenodo_source.py
       - tests/test_desfontainia2026_zenodo_source.py
+      - scripts/analyze_desfontainia2026_paired_seed_fate.py
+      - tests/test_desfontainia2026_paired_seed_fate.py
       - docs/DESFONTAINIA2026_NECTAR_ROBBERY_SEED_FATE_GATE.md
       - .github/workflows/desfontainia2026-original-source.yml
 
@@ -23,16 +25,22 @@ jobs:
       - name: Validate source-sheet schema/MD5/ZIP safety software contract
         run: |
           python -m pip install -e '.[dev]'
-          python -m pytest -q tests/test_desfontainia2026_zenodo_source.py
+          python -m pytest -q tests/test_desfontainia2026_zenodo_source.py tests/test_desfontainia2026_paired_seed_fate.py
       - name: Recover original source workbook and author R source with exact DOI checksums
         run: >-
           python -m scripts.probe_desfontainia2026_zenodo_source
+          --outdir /tmp/iwe-desfontainia2026-source
+      - name: Recalculate exact 40-shrub paired pollination/robbery seed contrasts
+        run: >-
+          python -m scripts.analyze_desfontainia2026_paired_seed_fate
           --outdir /tmp/iwe-desfontainia2026-source
       - name: Keep only source schema/identity and provenance, never original plants
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: iwe-desfontainia2026-original-schema-audit
-          path: /tmp/iwe-desfontainia2026-source/original_source_sheet_inventory.json
+          path: |
+            /tmp/iwe-desfontainia2026-source/original_source_sheet_inventory.json
+            /tmp/iwe-desfontainia2026-source/paired_shrub_seed_contrasts.json
           if-no-files-found: warn
           retention-days: 7
