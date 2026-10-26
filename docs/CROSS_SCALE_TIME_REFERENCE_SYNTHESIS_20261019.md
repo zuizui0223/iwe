@@ -108,6 +108,25 @@ Under identical five-shelter-held-out regression, visitor observation rate witho
 
 **This is a different biological clock and endpoint** from the three-plant Osmia source: aggregated visitors over the flowering season and whole-plant *estimated seed number*, not day-matched adult density and sampled-fruit seed proportion. The original authors already documented drought effects mediated mainly by fewer flowers; IWE contributes an explicit block-held-out *conditional resource-versus-visitor information* comparison. The cross-programme interpretation is **conditional service information may exist in multiple systems, while only Osmia directly tests date-matched adult–flower overlap.** There is still no identified host-stage conversion mechanism nor cross-taxon causal timing superiority.
 
+## Independent community boundary: Desfontainia nectar robbery vs final mature seeds
+
+New original-data programme Valdivia & Orellana (2026), *Ecology and Evolution* DOI [10.1002/ece3.73933](https://doi.org/10.1002/ece3.73933), frozen original [Zenodo 10.5281/zenodo.18895003](https://doi.org/10.5281/zenodo.18895003). This hummingbird-pollinated shrub has native/invasive bumblebee nectar robbers. It **is an independent plant–animal role conflict**, not a pollinating-seed-predator lineage, and does **not** contain tagged flowering/adult phase timing to support strict IWE H1.
+
+The original source workbook and author R code both passed exact MD5 validation; a paired shrub ID appears in both a **40 shrubs × 5 pierced + 5 unpierced nectar flowers** measurement and a separate **40 shrubs × one experimental flower in each of three pollinator/robber treatments** mature-seed measurement. Different floral individuals must never be joined to infer mediation. Numeric nectar is observed for 186 pierced and 180 unpierced flowers; 34 missing nectar volumes stay unknown.
+
+| Biological observation (original shrubs) | Source-derived estimate | Paired-shrub 95% bootstrap interval |
+|---|---:|---:|
+| Pierced minus intact nectar standing crop (μL), within 40 shrubs | **−3.968 μL** (0.481 vs 4.449; **89.2% lower**) | **−5.380 to −2.553 μL** |
+| Robber-permitted minus robber-deterred mature seeds / selected flower, with pollinator access | **+5.225 seeds** | **−12.175 to +22.400** |
+| Robber-permitted minus robber-deterred probability of *any* mature seeds | **−10 percentage points** | **−30 to +10 points** |
+| Nectary depletion vs different experiment flower seed-count change (between shrubs) | **Spearman ρ=+0.138** | **−0.207 to +0.465** |
+
+The nectar-loss/seed-change correlation is sensitive to missing nectar support: among only **23 fully numeric 5+5 nectar-status shrubs**, ρ≈**+0.046**. Source labels `Flower=1…5` restart within each nectar status and cannot be used as globally unique flower IDs. The original paper confirms the same 40 *shrubs* were used, not the same tagged *flowers*.
+
+Most importantly, **pollinator access has a much larger reproducible source signal**: compared with bagged exclusion, pollinator-present robber-deterred selected flowers produced **+20.95 mature seeds** (paired 95% interval **+9.58 to +32.58**; seed-presence difference +75 points). The robber-versus-deterrent interval, by contrast, is wide enough to include considerable negative as well as positive effects; **do not claim ecological equivalence or true zero robbery cost**. Robber-permitted flowers were naturally perforated after opening, while robber-prevented flowers were protected at bud stage, so the robber comparison also has selection/anthesis confounding.
+
+The legitimate synthesis is **potential buffering of a proximal resource loss at the measured seed endpoint, with an independently important pollination channel**, not demonstrated causal compensatory seed development or generally zero fitness consequences. This programme adds **zero** stage-confirmatory timing/fitness SMDs and **zero** strict H1 antagonist or mixed clusters. [Original stage, source and effect uncertainty record](DESFONTAINIA2026_NECTAR_ROBBERY_SEED_FATE_GATE.md).
+
 ## The most defensible nontrivial synthesis
 
 **Temporal coincidence is not itself a reproductive payoff.** The informativeness of any measured "matching" variable depends on whether it corresponds to the biological gate currently limiting reproductive success. That gate may be adult access to receptive flowers, a vulnerable tissue window, egg/larval establishment, retention or abortion, effective pollination, or resource availability for seed maturation.
