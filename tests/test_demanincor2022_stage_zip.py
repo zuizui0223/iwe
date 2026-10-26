@@ -131,3 +131,50 @@ def test_2022_stage_profile_does_not_infer_missing_archive_members():
     data = zip_fixture({"only_visits.txt": b"day\tvisits\n1\t2\n"})
     with pytest.raises(ValueError, match="essential original source stage missing"):
         profile_zip_tables(data)
+
+
+def test_unheaded_sequential_R_index_removed_only_when_all_rows_verify():
+    d = zip_fixture({
+        "data_seeds_germ_pSEM.txt":
+            b"trtmt\tarena\tsp\tplant_flwr_ID\tseeds\tgerm\tcotyl\n"
+            b"1\tA\t1\tCH\t39_a\t10\t3\t2\n"
+            b"2\tA\t1\tCH\t39_b\t20\tNA\tNA\n",
+        "data_bee_nest_pSEM.txt":
+            b"trtmt\tarena\tsp\tplant_flwr_ID\tcells\n"
+            b"1\tA\t1\tCH\t39_a\t2\n",
+        "bee_abund_2022.txt":
+            b"DOY\ttrtmt\tarena\tbees\n1\t140\tA\t1\t3\n",
+        "flwrcount_temp2022.txt":
+            b"DOY\ttrtmt_arena\tspecies\tflwr_count\n"
+            b"1\t140\tA1\tCH\t10\n",
+        "imputed_temporal_vars_T.txt":
+            b"doy\ttrtmt\tsp\tarena\tvisits\n"
+            b"1\t140\tA\tCH\t1\t2\n",
+    })
+    p = profile_zip_tables(d)
+    a = p["data_seeds_germ_pSEM.txt"]
+    assert a["original_row_index_provenance"][
+        "row_number_verified_source_sequential"
+    ] is True
+    assert a["source_row_alignment_verified"] is True
+    assert a["timing_unit_and_fate_column_support"]["sp"][
+        "first_distinct_literals"] == ["CH"]
+    assert a["timing_unit_and_fate_column_support"]["germ"][
+        "n_nonmissing"] == 1
+    assert a["timing_unit_and_fate_column_support"]["seeds"][
+        "numeric_min_max"] == [10.0, 20.0]
+    assert a["candidate_grains"][0]["n_unique_keys"] == 2
+
+
+def test_unheaded_nonsequential_row_number_fails_closed():
+    d = zip_fixture({
+        "data_seeds_germ_pSEM.txt":
+            b"trtmt\tarena\tsp\tplant_flwr_ID\tgerm\n"
+            b"11\tA\t1\tCH\t39_a\t2\n",
+        "data_bee_nest_pSEM.txt": b"trtmt\tarena\nA\t1\n",
+        "bee_abund_2022.txt": b"DOY\ttrtmt\n1\tA\n",
+        "flwrcount_temp2022.txt": b"DOY\ttrtmt\n1\tA\n",
+        "imputed_temporal_vars_T.txt": b"doy\ttrtmt\n1\tA\n",
+    })
+    with pytest.raises(ValueError, match="unverified original TSV field shift"):
+        profile_zip_tables(d)
