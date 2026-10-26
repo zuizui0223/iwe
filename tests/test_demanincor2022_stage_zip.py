@@ -7,6 +7,7 @@ import pytest
 from scripts.probe_demanincor2022_stage_zip import (
     DOI, FILES, original_url, fetch_original, sniff_csv_headers,
     validate_member_name, inspect_archive, inspect_analysis_script,
+    profile_zip_tables,
 )
 
 
@@ -96,3 +97,37 @@ def test_invalid_zip_must_fail_closed_not_just_emit_good_status(monkeypatch):
     assert result["source_verified"] is False
     assert result["matched_plant_to_final_seed_germination_verified"] is False
     assert result["status"] == "source_unavailable_or_source_shape_changed"
+
+
+def test_exact_2022_stage_tables_profile_candidate_grain_and_nulls():
+    data = zip_fixture({
+        "data_seeds_germ_pSEM.txt":
+            b"trtmt\tarena\tsp\tplant_flwr_ID\tseeds\tgerm\tcotyl\n"
+            b"C\t1\tCH\tP1_F1\t10\t3\t2\n"
+            b"C\t1\tCH\tP1_F2\t20\tNA\tNA\n",
+        "data_bee_nest_pSEM.txt":
+            b"trtmt\tarena\tsp\tplant_flwr_ID\tcells\nC\t1\tCH\tP1_F1\t2\n",
+        "bee_abund_2022.txt":
+            b"DOY\ttrtmt\tarena\tbees\n140\tC\t1\t3\n",
+        "flwrcount_temp2022.txt":
+            b"DOY\ttrtmt_arena\tspecies\tflwr_count\n"
+            b"140\tC1\tCH\t10\n",
+        "imputed_temporal_vars_T.txt":
+            b"doy\ttrtmt\tsp\tarena\tvisits\n140\tC\tCH\t1\t2\n",
+    })
+    out = profile_zip_tables(data)
+    assert len(out) == 5
+    seeds = out["data_seeds_germ_pSEM.txt"]
+    assert seeds["n_rows"] == 2
+    assert seeds["timing_unit_and_fate_column_support"]["germ"][
+        "n_nonmissing"] == 1
+    assert seeds["candidate_grains"][0]["n_unique_keys"] == 2
+    assert seeds["candidate_grains"][1]["n_unique_keys"] == 1
+    assert out["bee_abund_2022.txt"]["n_rows"] == 1
+    assert out["flwrcount_temp2022.txt"]["candidate_grains"]
+
+
+def test_2022_stage_profile_does_not_infer_missing_archive_members():
+    data = zip_fixture({"only_visits.txt": b"day\tvisits\n1\t2\n"})
+    with pytest.raises(ValueError, match="essential original source stage missing"):
+        profile_zip_tables(data)
