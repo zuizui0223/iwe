@@ -273,38 +273,37 @@ def profile_zip_tables(raw: bytes) -> dict:
             if inf.file_size > 2_000_000:
                 raise ValueError("unexpected original stage source table size")
             text = z.read(inf).decode("utf-8-sig", errors="strict")
-            reader = csv.DictReader(StringIO(text), delimiter="\t")
-            headers = reader.fieldnames or []
+            raw_reader = csv.reader(StringIO(text), delimiter="\t")
+            headers = next(raw_reader, [])
             if not headers or len(headers) != len(set(headers)):
                 raise ValueError("missing/repeated original source header")
-            rows = list(reader)
-            # Some original tables may have more tab fields than their
-            # source headers. Never silently shift named responses or
-            # promote the mismatched rows as a linked biological stage.
-            rows_with_extra = [
-                r.get(None, []) for r in rows if None in r
-            ]
-            rows_with_short = [
-                r for r in rows
-                if any(v is None for k, v in r.items() if k is not None)
-            ]
-            original_profile = _profile_rows([
-                {k: v for k, v in r.items() if k is not None}
-                for r in rows
-            ], headers)
-            original_profile["original_header_width_anomalies"] = {
-                "rows_with_extra_fields": len(rows_with_extra),
-                "rows_with_missing_trailing_fields": len(rows_with_short),
-                "extra_nonempty_field_rows": sum(
-                    any(_nonmissing(v) for v in values)
-                    for values in rows_with_extra
-                ),
-                "extra_field_count_distribution":
-                    dict(Counter(len(values) for values in rows_with_extra)),
+            source_values = list(raw_reader)
+            source_values = [r for r in source_values if any(x.strip() for x in r)]
+            # read.table() R export frequently writes row.names=TRUE
+            # but does NOT label that index in the header. This is a
+            # LEADING unheaded row index, not a trailing extra value.
+            # Repair only when EVERY index is source-exact 1,2,..,n.
+            indexed = (len(source_values) > 0
+                       and all(len(row) == len(headers) + 1
+                               for row in source_values)
+                       and all(row[0].strip() == str(i)
+                               for i, row in enumerate(source_values, 1)))
+            if indexed:
+                aligned = [row[1:] for row in source_values]
+            elif all(len(row) == len(headers) for row in source_values):
+                aligned = source_values
+            else:
+                raise ValueError(
+                    "unverified original TSV field shift; no automatic key repair"
+                )
+            rows = [dict(zip(headers, row)) for row in aligned]
+            original_profile = _profile_rows(rows, headers)
+            original_profile["original_row_index_provenance"] = {
+                "had_unheaded_export_row_number": indexed,
+                "row_number_verified_source_sequential": indexed,
+                "n_original_rows": len(source_values),
             }
-            original_profile["source_row_alignment_verified"] = (
-                not rows_with_extra and not rows_with_short
-            )
+            original_profile["source_row_alignment_verified"] = True
             out[name] = original_profile
     return out
 
