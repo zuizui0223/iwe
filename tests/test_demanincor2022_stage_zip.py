@@ -83,3 +83,16 @@ def test_source_file_bytes_must_match_published_md5(monkeypatch):
     monkeypatch.setattr(mod, "urlopen", lambda *args, **kwargs: Dummy())
     with pytest.raises(ValueError, match="MD5"):
         fetch_original("deManincor-et-al.2025_data_pSEM.zip")
+
+
+def test_invalid_zip_must_fail_closed_not_just_emit_good_status(monkeypatch):
+    import scripts.probe_demanincor2022_stage_zip as m
+    monkeypatch.setattr(
+        m, "fetch_original",
+        lambda name: b"not an archive" if name.endswith(".zip")
+        else b"valid-looking R script",
+    )
+    result = m.audit()
+    assert result["source_verified"] is False
+    assert result["matched_plant_to_final_seed_germination_verified"] is False
+    assert result["status"] == "source_unavailable_or_source_shape_changed"
