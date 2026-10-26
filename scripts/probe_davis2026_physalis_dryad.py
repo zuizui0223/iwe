@@ -171,7 +171,8 @@ def original_version_file_listing(metadata: dict) -> tuple[str,list[dict]]:
         # a short public landing-page preview (e.g., source seed/fruit
         # quality endpoints). Permit only provenance-issued, precisely
         # named author Oikos 2020/2021 CSVs, and list each extra file.
-        if re.fullmatch(r"Oikos_202[01]_[A-Za-z0-9_]+\.csv",path) is None:
+        if (path!="README.md" and
+                re.fullmatch(r"Oikos_202[01]_[A-Za-z0-9_]+\.csv",path) is None):
             raise ValueError("off-contract non-Oikos original file: " + path)
         if re.fullmatch(r"/api/v2/files/[0-9]+/download",uri) is None:
             raise ValueError("published file direct source link missing")
@@ -247,7 +248,23 @@ def audit() -> dict:
                 digest != record["original_body_sha256"].lower()
             ):
                 raise ValueError("original Dryad SHA-256 differs from metadata")
-            profiles.append(profile_csv(original,item["path"]))
+            if item["path"].lower().endswith(".csv"):
+                profiles.append(profile_csv(original,item["path"]))
+            elif item["path"]=="README.md":
+                source_text=original.decode("utf-8-sig")
+                lines=source_text.splitlines()
+                fragments=[
+                    {"line":i+1,"short_source_text":line[:180]}
+                    for i,line in enumerate(lines)
+                    if any(k in line.lower() for k in FIELD_HINTS)
+                ]
+                profiles.append({
+                    "original_filename":item["path"],
+                    "n_source_readme_lines":len(lines),
+                    "original_body_sha256":hashlib.sha256(original).hexdigest(),
+                    "source_unit_and_endpoint_leads":fragments[:65],
+                    "same_flower_set_weight_join_verified":False,
+                })
             attempts.append(record)
         report["source_attempts"]=attempts
         report["recovered_original_schema"]=profiles
@@ -282,8 +299,9 @@ def main():
               v.get("blocked_source_routes",[]))
     for v in outcome.get("recovered_original_schema",[]):
         print("PHYSALIS2026_SCHEMA",v["original_filename"],
-              "N",v["n_rows"],"fields",v["original_columns"],
-              "key_grains",v["candidate_key_grains"])
+              "N",v.get("n_rows"),"fields",v.get("original_columns"),
+              "key_grains",v.get("candidate_key_grains"),
+              "README_LEADS",v.get("source_unit_and_endpoint_leads",[])[:30])
     print("Never promote insect source exposure or same plant fruit without source join")
     return 0 if outcome["published_original_source_manifest_verified"] else 2
 
