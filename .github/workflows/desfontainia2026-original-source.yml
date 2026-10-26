@@ -1,0 +1,38 @@
+name: IWE Desfontainia 2026 robbery-service original source gate
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/probe_desfontainia2026_zenodo_source.py
+      - tests/test_desfontainia2026_zenodo_source.py
+      - docs/DESFONTAINIA2026_NECTAR_ROBBERY_SEED_FATE_GATE.md
+      - .github/workflows/desfontainia2026-original-source.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-original-shrub-exposure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate source-sheet schema/MD5/ZIP safety software contract
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_desfontainia2026_zenodo_source.py
+      - name: Recover original source workbook and author R source with exact DOI checksums
+        run: >-
+          python -m scripts.probe_desfontainia2026_zenodo_source
+          --outdir /tmp/iwe-desfontainia2026-source
+      - name: Keep only source schema/identity and provenance, never original plants
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-desfontainia2026-original-schema-audit
+          path: /tmp/iwe-desfontainia2026-source/original_source_sheet_inventory.json
+          if-no-files-found: warn
+          retention-days: 7
