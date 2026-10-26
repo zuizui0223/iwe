@@ -3,7 +3,8 @@ import math
 from collections import Counter
 import pytest
 from scripts.analyze_demanincor2022_grouped_stage_windows import (
-    ROOMS, SPECIES, ARENAS, make_records, evaluate, MODEL_SPECS, OUTCOMES,
+    ROOMS, SPECIES, ARENAS, make_records, evaluate,
+    room_holdout_sensitivity, MODEL_SPECS, OUTCOMES,
 )
 
 
@@ -105,3 +106,18 @@ def test_observed_bee_census_must_overlap_flowering_day(monkeypatch):
         row["DOY"]="202" if row["DOY"]=="120" else row["DOY"]
     with pytest.raises(ValueError,match="unobserved matched flower"):
         make_records(d)
+
+
+def test_unseen_room_holdout_is_not_room_dummy_replicated_20_times(monkeypatch):
+    import scripts.analyze_demanincor2022_grouped_stage_windows as mod
+    monkeypatch.setattr(mod,"audit_source_tables",lambda _: {})
+    grouped,_=make_records(source_fixture())
+    outer=room_holdout_sensitivity(grouped)
+    assert set(outer)==set(OUTCOMES)
+    for y, spec in outer.items():
+        assert set(spec["models"])==set(MODEL_SPECS)
+        assert spec["interpretation"].endswith("not_causal")
+        for model,score in spec["models"].items():
+            assert score["n_held_out_rooms"]==4
+            assert set(score["per_room_mse"])==set(ROOMS)
+            assert math.isfinite(score["equal_room_rmse"])
