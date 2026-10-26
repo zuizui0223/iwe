@@ -271,13 +271,49 @@ def spearman_paired_shrubs(x,y):
     return num/sqrt(va*vb) if va>0 and vb>0 else None
 
 
+def bootstrap_spearman_paired_shrubs(x,y,reps=4000,seed=SEED):
+    """Paired-SHRUB bootstrap; never bootstrap the 400 nectar flowers as independent."""
+    if len(x)!=len(y) or len(x)<4:
+        raise ValueError("correlation requires matched independent shrubs")
+    rng=random.Random(seed)
+    n=len(x)
+    values=[]
+    for _ in range(reps):
+        ids=[rng.randrange(n) for __ in range(n)]
+        rho=spearman_paired_shrubs([x[i] for i in ids],[y[i] for i in ids])
+        if rho is not None:
+            values.append(rho)
+    if len(values)<reps*.9:
+        return {
+            "valid_bootstrap_samples":len(values),
+            "confidence_interval":None,
+            "status":"insufficient_variation_in_resampled_shrubs",
+        }
+    values.sort()
+    return {
+        "valid_bootstrap_samples":len(values),
+        "confidence_interval":[
+            values[int(.025*(len(values)-1))],
+            values[int(.975*(len(values)-1))]
+        ],
+        "status":"exploratory_paired_shrub_rank_uncertainty",
+    }
+
+
 def paired_nectar_volume(rows,paired_seed_rows):
-    """Different flowers sampled on the SAME shrubs, never matched flowers."""
+    """The publication explicitly uses the same 40 SHRUBS for nectar/seed.
+
+    Nectar flowers were removed for extraction, hence could NOT be the
+    same tagged experimental flowers subsequently scored for seeds.
+    The inter-sheet ID mapping is biological at shrub scale only.
+    """
     expected_status={"Robada","No dañada"}
     shrub_ids={z["plant"] for z in paired_seed_rows}
     by=defaultdict(lambda:defaultdict(list))
     missing_volume=Counter()
     raw_status=Counter()
+    original_shrub_status_rows=Counter()
+    flower_ids=set()
     for r in rows:
         shrub=_nonnegative_integer(r.get("Plant"),"nectar source shrub ID")
         if shrub not in shrub_ids:
@@ -286,6 +322,11 @@ def paired_nectar_volume(rows,paired_seed_rows):
         raw_status[status]+=1
         if status not in expected_status:
             raise ValueError("unrecognized original Spanish floral status")
+        flower_id=_nonnegative_integer(r.get("Flower"),"original nectar flower ID")
+        if (shrub,flower_id) in flower_ids:
+            raise ValueError("duplicate original nectar flower ID within shrub")
+        flower_ids.add((shrub,flower_id))
+        original_shrub_status_rows[(shrub,status)]+=1
         val=_numeric_nectar(r.get("Nectar volumen (microliter)"))
         if val is None:
             missing_volume[status]+=1
@@ -297,6 +338,11 @@ def paired_nectar_volume(rows,paired_seed_rows):
         raise ValueError("not all shrub IDs have original nectar observations")
     if set(raw_status)!=expected_status or set(raw_status.values())!={200}:
         raise ValueError("unexpected 200 robbed / 200 healthy flowers")
+    if any(original_shrub_status_rows[(shrub,status)] != 5
+           for shrub in shrub_ids for status in expected_status):
+        raise ValueError("original nectar design not 5 + 5 flowers per shrub")
+    if len(flower_ids)!=400:
+        raise ValueError("original nectar flower observations not unique")
     per_shrub=[]
     for shrub in sorted(shrub_ids):
         pierced=by[shrub]["Robada"]
@@ -324,9 +370,26 @@ def paired_nectar_volume(rows,paired_seed_rows):
         seed_by_shrub[z["shrub"]]["pollination_no_robbery"]
         for z in per_shrub
     ]
+    complete=[z for z in per_shrub
+              if z["n_pierced_measured"]==5
+              and z["n_healthy_measured"]==5]
+    complete_depletion=[
+        z["mean_healthy"]-z["mean_pierced"] for z in complete
+    ]
+    complete_seed_change=[
+        seed_by_shrub[z["shrub"]]["pollination_with_robbery"]-
+        seed_by_shrub[z["shrub"]]["pollination_no_robbery"]
+        for z in complete
+    ]
     return {
         "paired_shrubs_with_nectar_and_seed_outcomes":len(per_shrub),
         "original_flower_status_counts":dict(raw_status),
+        "source_design_exactly_five_of_each_status_per_shrub":True,
+        "n_shrubs_five_numeric_nectar_observations_in_both_statuses":
+            len(complete),
+        "source_same_focal_shrubs_used_for_nectar_and_seeds":
+            True,  # Valdivia & Orellana 2026, Methods sections 2.3 / 2.5
+        "source_same_tagged_flowers_for_nectar_and_seed_fates":False,
         "unrecorded_flower_nectar_volumes":dict(missing_volume),
         "n_pierced_with_numeric_nectar":sum(z["n_pierced_measured"]
                                            for z in per_shrub),
@@ -344,6 +407,16 @@ def paired_nectar_volume(rows,paired_seed_rows):
             bootstrap_difference(robbed,healthy),
         "spearman_shrub_level_nectar_depletion_vs_seed_change":
             spearman_paired_shrubs(reduced_reward,seed_change),
+        "exploratory_95pct_paired_shrub_bootstrap_spearman":
+            bootstrap_spearman_paired_shrubs(reduced_reward,seed_change),
+        "five_plus_five_complete_nectar_shrub_sensitivity":{
+            "n_shrubs":len(complete),
+            "spearman_nectar_depletion_vs_seed_difference":
+                spearman_paired_shrubs(
+                    complete_depletion,complete_seed_change
+                ) if len(complete)>=3 else None,
+            "correlation_not_identifiable_when_too_few":len(complete)<3,
+        },
         "no_individual_flower_nectar_to_seed_fate_join":True,
         "observational_nectar_loss_seed_change_correlation_is_not_mediation":
             True,
