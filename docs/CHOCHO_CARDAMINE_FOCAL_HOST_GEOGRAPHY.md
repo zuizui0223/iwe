@@ -78,3 +78,45 @@ lepidopteran host against WCVP and preserves the target butterfly's
 complete known-host set. The source-filter receipt retains the raw
 original source SHA-256 and focal-row count, and the final 162/272/110
 check prevents silent divergence from the full-input reconstruction.
+
+
+## Verified frozen empirical receipt (2026-10-27)
+
+The original **full** HOSTS × WCVP rebuild passed
+[Actions run 40463486895](https://github.com/zuizui0223/iwe/actions/runs/40463486895).
+An optimized reconstruction that selects the focal butterfly's HOSTS records
+*before* calling chocho's unchanged base-R resolver passed
+[Actions run 40464292498](https://github.com/zuizui0223/iwe/actions/runs/40464292498).
+Both routes yielded the same 11-host table and the same 110 added-region
+table **byte for byte**. The original full-source outputs are frozen as
+
+- data/frozen/chocho_cardamine_host_geography_v0.1/focal_host_geography_receipt.json
+- data/frozen/chocho_cardamine_host_geography_v0.1/host_contributions.csv
+- data/frozen/chocho_cardamine_host_geography_v0.1/new_resource_units.csv
+
+and are checked byte-exactly by tests/test_chocho_frozen_host_geography.py.
+
+Biological results: the exact HOSTS/WCVP *Cardamine pratensis* accepted
+species ID 2700274 has 75 native and 78 contemporary WGSRPD3 regions.
+It is present in only TWO of the 110 butterfly-wide new resource regions
+(NZN and NZS; New Zealand North and South Islands), both with four
+other accepted contemporary host options. Thus its exclusive contribution
+is zero and its equally shared fractional credit is 0.4 region equivalents.
+Neither a potential host resource map nor an occurrence/occupancy claim
+establishes that *A. cardamines* occurs in New Zealand.
+
+The leading host-resource suppliers are *Brassica rapa* (82 new units
+covered, 30 exclusively; fractional credit 49.2) and
+*Capsella bursa-pastoris* (78 units covered, 21 exclusively;
+fractional credit 43.0). Their raw covered-region counts overlap.
+Fractional credits, not raw coverage counts, sum to 92.2/110 = 83.8%.
+These are host-geographic opportunity contributions, not biological
+feeding frequencies, host preferences, or invasion effects.
+
+The independent 2018 Toftegaard et al. Dryad record,
+DOI 10.5061/dryad.jp328r6, is a **potential** source of
+dated plant phenophase and butterfly egg/larval records for a separately
+defined observed host-use panel. Its records have NOT been ingested or
+validated here. It must not be used as a proxy for the missing
+2012-2014 Dibbinsdale female capture/recapture dates, nor as
+plant reproductive fitness evidence for strict IWE H1.

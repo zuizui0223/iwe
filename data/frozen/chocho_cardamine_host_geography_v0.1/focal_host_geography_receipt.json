@@ -1,0 +1,34 @@
+{
+  "schema": "iwe_chocho_focal_host_geography_v0.1",
+  "butterfly": "Anthocharis cardamines",
+  "focal_host": "Cardamine pratensis",
+  "source_pair_status": "confirmed_exact_in_chocho_HOSTS_sidecar",
+  "focal_accepted_plant_id": "2700274",
+  "resolved_hosts": 11,
+  "native_butterfly_units": 162,
+  "contemporary_butterfly_units": 272,
+  "added_butterfly_units": 110,
+  "focal_native_units": 75,
+  "focal_contemporary_units": 78,
+  "focal_introduced_only_units": 3,
+  "added_units_covered_by_focal": 2,
+  "added_units_exclusively_covered_by_focal": 0,
+  "fractional_added_units_focal": 0.4,
+  "fractional_credit_sum": 110.00000000000001,
+  "regional_pheno_observed": false,
+  "regional_host_use_observed": false,
+  "strict_h1_effects_created": 0,
+  "interpretation": "Potential host-region union only; not occupancy, interaction timing, seed fitness, or invasion causation.",
+  "sources_pinned_to_commits": {
+    "chocho": "df6f920a37c7e86a878d9f6375bb4454128b5d66",
+    "HOSTS": "808e0b869f9ec1adf8efff87cf6a395adda103e0",
+    "WCVP": "65bed76bae9d644ccb6ad200c05f9f5071d89e05"
+  },
+  "input_sha256": {
+    "HOSTS_resolved_pairs": "0a084fb5273e4780b03e015205c87e4545c69f0f8e517feb1a2a3879889508e9",
+    "WCVP_native": "c731906315f7452f83ce302c1d36c75ad94afc24ce7e24d461360312244ac558",
+    "WCVP_contemporary": "55d06cdd2b80002ba1f057dcd57e409ce5688ac802d37e62166e0bd7e67856a6",
+    "chocho_frozen_metrics": "7b2a20387d656dbfcd7b3c38ec6a7fe2505474ad51f783dd1f201eb6b7eabd30"
+  },
+  "analysis_status": "pair_resolved_potential_geography_only"
+}

@@ -101,7 +101,13 @@ def test_counts_can_preserve_region_codes_with_leading_zero():
 def test_source_prefilter_excludes_nonfocal_rows(tmp_path):
     import csv
     from pathlib import Path
-    from scripts.filter_hosts_focal_butterfly import filter_focal_hosts
+    import importlib.util
+    script_path = Path(__file__).resolve().parents[1] / "scripts" / "filter_hosts_focal_butterfly.py"
+    spec = importlib.util.spec_from_file_location("iwe_host_filter_script", script_path)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    filter_focal_hosts = module.filter_focal_hosts
     original = tmp_path / "source.csv"
     header = ["Insect Genus", "Insect Species", "Hostplant Genus", "Hostplant Species"]
     data = [
