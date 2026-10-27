@@ -88,3 +88,23 @@ def test_drift_missing_names_and_duplicated_cohort_fail_closed():
     bad3.loc[0, "n_2010"] = "-1"
     with pytest.raises(ValueError, match="nonnegative integer"):
         build_oikos_sampling_crosswalk(bad3, taxonomy, hosts)
+
+
+def test_cli_generates_source_auditable_outputs(tmp_path):
+    import subprocess
+    import sys
+    import json
+    completed = subprocess.run(
+        [sys.executable, str(BASE / "scripts/audit_oikos_sampling_bridge.py"),
+         "--output-dir", str(tmp_path)],
+        cwd=BASE, text=True, capture_output=True, check=False,
+    )
+    assert completed.returncode == 0, completed.stderr
+    result = json.loads((tmp_path / "source_crosswalk_receipt.json").read_text(encoding="utf-8"))
+    assert result["plant_records_sum_across_strata"] == 22933
+    assert result["year_region_species_strata"] == 60
+    assert result["host_species_in_frozen_chocho_portfolio"] == 3
+    assert len(result["input_sha256"]) == 3
+    assert result["strict_h1_effects_created"] == 0
+    assert len(pd.read_csv(tmp_path / "oikos_region_species_year_strata.csv")) == 60
+    assert len(pd.read_csv(tmp_path / "oikos_species_to_chocho_hosts.csv")) == 6
