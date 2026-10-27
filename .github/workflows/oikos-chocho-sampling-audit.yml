@@ -1,0 +1,42 @@
+name: Published Oikos sampling × chocho host-geography audit
+
+on:
+  push:
+    branches:
+      - feature/oikos-chocho-published-sampling-audit
+    paths:
+      - "src/iwe/oikos_sampling_bridge.py"
+      - "scripts/audit_oikos_sampling_bridge.py"
+      - "data/registry/oikos_2018_table_a1_sampling.csv"
+      - "data/registry/oikos_2018_to_chocho_taxonomy.csv"
+      - "tests/test_oikos_sampling_bridge.py"
+      - ".github/workflows/oikos-chocho-sampling-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  published-denominators:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install IWE tests
+        run: python -m pip install -e '.[dev]'
+      - name: Validate the published sample counts and taxonomy mapping
+        run: python -m pytest -q tests/test_oikos_sampling_bridge.py
+      - name: Build inspectable region-year cohort and 11-host join
+        run: >-
+          python scripts/audit_oikos_sampling_bridge.py
+          --output-dir results/oikos-chocho-published-source
+      - name: Archive noninferential source summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-oikos-chocho-published-sampling
+          path: results/oikos-chocho-published-source/
+          if-no-files-found: error
+          retention-days: 30

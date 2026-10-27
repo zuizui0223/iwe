@@ -1,0 +1,7 @@
+species_as_published,normalized_accepted_name,normalization,portfolio_match,accepted_plant_name_id,normalization_source
+Arabis glabra,Turritis glabra,homotypic_synonym,matched,2431978,https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:278233-1
+Arabis hirsuta,Arabis hirsuta,as_published,not_in_frozen_11_host_portfolio,,
+Cardamine pratensis,Cardamine pratensis,as_published,matched,2700274,
+Arabidopsis thaliana,Arabidopsis thaliana,as_published,not_in_frozen_11_host_portfolio,,
+Capsella bursa-pastoris,Capsella bursa-pastoris,as_published,matched,2697999,
+Thlaspi caerulescens,Noccaea caerulescens,verified_synonym,not_in_frozen_11_host_portfolio,,https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:298955-2
