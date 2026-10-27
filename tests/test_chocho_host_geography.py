@@ -96,3 +96,29 @@ def test_counts_can_preserve_region_codes_with_leading_zero():
     result, _, region = analyze_focal_host_geography(**rows)
     assert result["added_butterfly_units"] == 3
     assert "001D" in set(region["wgsrpd3_unit"])
+
+
+def test_source_prefilter_excludes_nonfocal_rows(tmp_path):
+    import csv
+    from pathlib import Path
+    from scripts.filter_hosts_focal_butterfly import filter_focal_hosts
+    original = tmp_path / "source.csv"
+    header = ["Insect Genus", "Insect Species", "Hostplant Genus", "Hostplant Species"]
+    data = [
+        ["Anthocharis", "cardamines", "Cardamine", "pratensis"],
+        ["Anthocharis", "cardamines", "Alliaria", "petiolata"],
+        ["Other", "species", "Cardamine", "pratensis"],
+    ]
+    with original.open("w", newline="") as f:
+        wr = csv.writer(f)
+        wr.writerow(header)
+        wr.writerows(data)
+    destination = tmp_path / "reduced" / "resource.csv"
+    receipt = filter_focal_hosts(original, destination)
+    assert receipt["focal_source_rows"] == 2
+    assert receipt["distinct_nonblank_species_level_host_names"] == 2
+    with destination.open(newline="") as f:
+        rows = list(csv.DictReader(f))
+    assert len(rows) == 2
+    assert all(r["Insect Genus"] == "Anthocharis" for r in rows)
+    assert original.exists()

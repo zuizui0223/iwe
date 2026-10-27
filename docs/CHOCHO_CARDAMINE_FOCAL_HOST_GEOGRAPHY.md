@@ -67,3 +67,14 @@ Next stage: map the WGSRPD3 added units to independent
 year-specific host phenophase and adult-flight observations,
 accounting for sample effort, climatic differences and year/region
 dependence before testing temporal filtering.
+
+## Focal source prefilter performance guard
+
+The original HOSTS source is read-only and pinned. Before running the
+unchanged chocho base-R reconstructor, a deterministic source-blind
+prefilter retains only exact Anthocharis cardamines records in a
+separate derived resource.csv. This avoids resolving every unrelated
+lepidopteran host against WCVP and preserves the target butterfly's
+complete known-host set. The source-filter receipt retains the raw
+original source SHA-256 and focal-row count, and the final 162/272/110
+check prevents silent divergence from the full-input reconstruction.

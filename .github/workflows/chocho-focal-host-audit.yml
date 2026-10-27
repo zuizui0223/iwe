@@ -8,6 +8,7 @@ on:
       - "src/iwe/host_geography.py"
       - "scripts/analyze_chocho_cardamine_geography.py"
       - "tests/test_chocho_host_geography.py"
+      - "scripts/filter_hosts_focal_butterfly.py"
       - ".github/workflows/chocho-focal-host-audit.yml"
   workflow_dispatch:
 
@@ -63,10 +64,16 @@ jobs:
             data/wcvp_distributions.rda
           sparse-checkout-cone-mode: false
 
+      - name: Prefilter exact A. cardamines HOSTS records without changing source identities
+        run: >-
+          python scripts/filter_hosts_focal_butterfly.py
+          --source _external/HOSTS/resource.csv
+          --output-directory results/hosts_focal
+
       - name: Rebuild native/contemporary WGSRPD3 host sidecars with chocho R code
         run: >-
           Rscript _external/chocho/scripts/build_wcvp_hosts_null_sidecars.R
-          _external/WCVP _external/HOSTS results/native results/contemporary
+          _external/WCVP results/hosts_focal results/native results/contemporary
 
       - name: Reconcile Cardamine-specific source host contribution
         run: >-
@@ -82,6 +89,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: iwe-chocho-cardamine-host-geography
-          path: results/chocho-cardamine/
+          path: |
+            results/chocho-cardamine/
+            results/hosts_focal/source_filter_receipt.json
           if-no-files-found: warn
           retention-days: 30
