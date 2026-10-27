@@ -1,0 +1,39 @@
+name: Audit independent Dryad Anthocharis host-use observations
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dryad-observation-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install IWE test dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Test response gate and strict-effect firewall
+        run: python -m pytest -q tests/test_toftegaard_dryad_source.py
+      - name: Report known Dryad authorization blocker without anonymous retries
+        id: source
+        continue-on-error: true
+        run: python scripts/acquire_toftegaard_dryad.py --output-dir results/toftegaard-dryad
+      - name: Upload raw dataset and source/provenance receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-independent-toftegaard-2018-host-use
+          path: results/toftegaard-dryad/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Fail source-readiness gate if field data was not retrieved
+        run: |
+          if [ ! -s results/toftegaard-dryad/toftegaard_2018_plant_phenology.txt ]; then
+            echo "::error::Source is inaccessible by automated public endpoints. This is an external access blocker, not an ecology result."
+            exit 1
+          fi

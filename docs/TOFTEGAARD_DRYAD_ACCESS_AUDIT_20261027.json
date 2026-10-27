@@ -1,0 +1,28 @@
+{
+  "schema": "iwe_toftegaard_dryad_source_audit_v0.1",
+  "doi": "10.5061/dryad.jp328r6",
+  "observed_on": "2026-10-27",
+  "github_run": 40466275403,
+  "retrieval_status": "blocked_external_download",
+  "errors": [
+    {
+      "endpoint": "https://datadryad.org/api/v2/files/79537/download",
+      "error_type": "HTTPError",
+      "error_summary": "HTTP Error 401: Unauthorized"
+    },
+    {
+      "endpoint": "https://datadryad.org/downloads/file_stream/79537",
+      "error_type": "HTTPError",
+      "error_summary": "HTTP Error 403: Forbidden"
+    },
+    {
+      "endpoint": "https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.jp328r6/download",
+      "error_type": "HTTPError",
+      "error_summary": "HTTP Error 401: Unauthorized"
+    }
+  ],
+  "source_data_rows": 0,
+  "strict_h1_effects_created": 0,
+  "source_readiness": "blocked_external_access_only",
+  "result_can_support_ecological_claims": false
+}
