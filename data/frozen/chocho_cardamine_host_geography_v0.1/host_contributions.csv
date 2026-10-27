@@ -1,0 +1,12 @@
+accepted_plant_name_id,accepted_name,native_host_units,contemporary_host_units,introduced_only_host_units,butterfly_added_units_covered,butterfly_added_units_exclusively_covered,fractional_added_unit_credit,is_focal_host
+2628680,Alliaria petiolata,59,103,44,5,0,1.0,False
+2645228,Arabidopsis lyrata,67,67,0,0,0,0.0,False
+2645259,Arabidopsis suecica,4,8,4,0,0,0.0,False
+2669712,Barbarea vulgaris,62,127,65,13,0,3.533333333333333,False
+2682652,Brassica rapa,21,223,202,82,30,49.20000000000002,False
+2697999,Capsella bursa-pastoris,93,238,145,78,21,43.0,False
+2700274,Cardamine pratensis,75,78,3,2,0,0.4,True
+2867046,Isatis tinctoria,11,84,73,4,0,1.25,False
+2417297,Rorippa islandica,20,25,5,5,0,1.3166666666666667,False
+2437621,Thlaspi arvense,72,162,90,27,0,8.216666666666665,False
+2431978,Turritis glabra,113,123,10,6,0,2.083333333333333,False
