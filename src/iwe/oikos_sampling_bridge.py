@@ -131,7 +131,7 @@ def build_oikos_sampling_crosswalk(
                   "butterfly_added_units_exclusively_covered"]:
         geovals[field] = pd.to_numeric(geovals[field], errors="raise")
     species = grouped.merge(
-        geovals, on="accepted_plant_name_id", how="left", validate="one_to_one"
+        geovals, on="accepted_plant_name_id", how="left", validate="many_to_one"
     )
     if species.loc[
         species["portfolio_match"] == "matched", "_geographic_accepted_name"
