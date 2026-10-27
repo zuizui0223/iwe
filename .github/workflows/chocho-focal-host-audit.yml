@@ -1,0 +1,87 @@
+name: IWE-chocho pinned focal host geography audit
+
+on:
+  push:
+    branches:
+      - feature/chocho-cardamine-host-audit
+    paths:
+      - "src/iwe/host_geography.py"
+      - "scripts/analyze_chocho_cardamine_geography.py"
+      - "tests/test_chocho_host_geography.py"
+      - ".github/workflows/chocho-focal-host-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cardamine-host-geography:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+      - name: Install IWE with test dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Verify new host geography tests
+        run: python -m pytest -q tests/test_chocho_host_geography.py
+
+      - name: Checkout frozen chocho reconstructors and metrics
+        uses: actions/checkout@v4
+        with:
+          repository: zuizui0223/chocho
+          ref: df6f920a37c7e86a878d9f6375bb4454128b5d66
+          path: _external/chocho
+          sparse-checkout: |
+            scripts/build_wcvp_hosts_null_sidecars.R
+            data/frozen/figure_sources/anthropogenic_species_metrics.csv
+          sparse-checkout-cone-mode: false
+
+      - name: Checkout frozen HOSTS archive
+        uses: actions/checkout@v4
+        with:
+          repository: globalbioticinteractions/HOSTS
+          ref: 808e0b869f9ec1adf8efff87cf6a395adda103e0
+          path: _external/HOSTS
+          sparse-checkout: |
+            resource.csv
+          sparse-checkout-cone-mode: false
+
+      - name: Checkout frozen WCVP v13 species and distributions
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _external/WCVP
+          sparse-checkout: |
+            data/wcvp_names.rda
+            data/wcvp_distributions.rda
+          sparse-checkout-cone-mode: false
+
+      - name: Rebuild native/contemporary WGSRPD3 host sidecars with chocho R code
+        run: >-
+          Rscript _external/chocho/scripts/build_wcvp_hosts_null_sidecars.R
+          _external/WCVP _external/HOSTS results/native results/contemporary
+
+      - name: Reconcile Cardamine-specific source host contribution
+        run: >-
+          python scripts/analyze_chocho_cardamine_geography.py
+          --host-pairs results/native/insect_host_accepted.csv
+          --native results/native/native_extant_nondoubtful_wgsrpd3.csv
+          --contemporary results/contemporary/extant_nondoubtful_wgsrpd3.csv
+          --chocho-metrics _external/chocho/data/frozen/figure_sources/anthropogenic_species_metrics.csv
+          --output-dir results/chocho-cardamine
+
+      - name: Upload source-verified pair geography receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-chocho-cardamine-host-geography
+          path: results/chocho-cardamine/
+          if-no-files-found: warn
+          retention-days: 30
