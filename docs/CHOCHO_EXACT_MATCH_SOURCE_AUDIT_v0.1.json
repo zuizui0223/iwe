@@ -1,0 +1,40 @@
+{
+  "schema": "iwe_chocho_exact_taxon_source_audit_v0.1",
+  "date": "2026-10-27",
+  "source_commits": {
+    "iwe": "149976d64165fe80d7b8622eb52417a6837e1cc8",
+    "chocho": "df6f920a37c7e86a878d9f6375bb4454128b5d66"
+  },
+  "source_files": {
+    "iwe": "data/registry/replication_candidates.csv",
+    "chocho": "data/frozen/figure_sources/anthropogenic_species_metrics.csv"
+  },
+  "source_git_blobs": {
+    "iwe": "9e26d43600597ec71f3c9aa7da01646bf4c53259",
+    "chocho": "9f83d2d9ac8e46f1cfd4ded572c7a023273503dd"
+  },
+  "match_rule": "exact unambiguous species-level binomial from IWE animal_taxon to chocho species (no genus, spp., abbreviations or inferred synonyms)",
+  "candidate_rows": 50,
+  "chocho_species_rows": 239,
+  "exact_candidate_species_matches": 1,
+  "matches": [
+    {
+      "candidate_id": "ANT002_CARDAMINE_ANTHOCHARIS_2024",
+      "plant_taxon": "Cardamine pratensis",
+      "animal_taxon": "Anthocharis cardamines",
+      "interaction_type": "antagonist",
+      "iwe_candidate_status": "blocked_timing_linkage",
+      "resource_metrics": {
+        "native_resource_units": 162,
+        "contemporary_resource_units": 272,
+        "introduced_added_units": 110,
+        "resolved_host_species": 11
+      }
+    }
+  ],
+  "host_pair_confirmation": "not_checked_without_independent_HOSTS_sidecar",
+  "temporal_phenophase_rows": 0,
+  "strict_h1_effects_created": 0,
+  "ecological_inference": "species-wide larval-host geography only; no region-level focal-host interaction, measured synchrony, fitness or invasion-causal inference",
+  "claim_support_declared": false
+}

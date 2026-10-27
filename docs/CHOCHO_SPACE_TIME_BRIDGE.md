@@ -129,3 +129,12 @@ host-phenophase timing and adult/larval activity are mismatched.
 **IWE remains the plant-fitness/meta-analysis home; chocho remains the
 butterfly geographic-opportunity manuscript. Neither frozen manuscript,
 adjudication registry, nor strict-H1 effect set is modified by this bridge.**
+
+## Frozen cross-repository source audit
+
+The full 50 × 239 source-input comparison (not the one-row smoke fixture) is
+recorded at docs/CHOCHO_EXACT_MATCH_SOURCE_AUDIT_v0.1.json, including both
+repository commit IDs, the Git blob hashes of the registry and metrics file,
+the one exact species match, and the no-host-pair/no-phenology claim ceiling.
+This receipt was computed directly from the pinned input files; the CLI and
+tests provide the reusable reconstruction path.
