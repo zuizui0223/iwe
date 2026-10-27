@@ -7,7 +7,9 @@ independently observed adult female flight dates or any plant fitness outcome.
 from __future__ import annotations
 import argparse
 import hashlib
+import io
 import json
+import zipfile
 from pathlib import Path
 import urllib.error
 import urllib.request
@@ -17,6 +19,7 @@ FILE_NAME = "Plant phenology in the field.txt"
 PUBLIC_ENDPOINTS = (
     "https://datadryad.org/api/v2/files/79537/download",
     "https://datadryad.org/downloads/file_stream/79537",
+    "https://datadryad.org/api/v2/datasets/doi%3A10.5061%2Fdryad.jp328r6/download",
 )
 MAX_BYTES = 15_000_000
 MIN_BYTES = 50_000
@@ -47,6 +50,25 @@ def fetch_text_publicly(url: str) -> tuple[bytes, dict]:
         final_url = response.geturl()
         payload = response.read(MAX_BYTES + 1)
     return payload, {"status_code": status, "content_type": content_type, "resolved_url": final_url}
+
+
+def extract_text_if_archive(payload: bytes) -> tuple[bytes, str]:
+    """Read only the exact named Dryad text file from a bounded ZIP package."""
+    if not payload.startswith(b"PK\x03\x04"):
+        return payload, "individual_plaintext"
+    with zipfile.ZipFile(io.BytesIO(payload)) as archive:
+        candidates = [
+            info for info in archive.infolist()
+            if Path(info.filename).name == FILE_NAME
+        ]
+        if len(candidates) != 1:
+            raise ValueError("dataset ZIP missing a unique named phenology data file")
+        info = candidates[0]
+        if not (MIN_BYTES <= info.file_size <= MAX_BYTES):
+            raise ValueError("archive member declared source size invalid")
+        with archive.open(info) as handle:
+            data = handle.read(MAX_BYTES + 1)
+    return data, "dataset_zip_named_member"
 
 
 def audit_file(raw: bytes) -> dict:
@@ -91,8 +113,10 @@ def main() -> int:
     errors: list[dict] = []
     for uri in PUBLIC_ENDPOINTS:
         try:
-            raw, http = fetch_text_publicly(uri)
+            payload, http = fetch_text_publicly(uri)
+            raw, package_kind = extract_text_if_archive(payload)
             report = audit_file(raw)
+            report["retrieved_package_format"] = package_kind
             (args.output_dir / "toftegaard_2018_plant_phenology.txt").write_bytes(raw)
             report["http"] = http
             report["retrieval_status"] = "source_downloaded_schema_pending"
@@ -103,7 +127,7 @@ def main() -> int:
             )
             print(json.dumps(report, indent=2))
             return 0
-        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError) as exc:
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ValueError, zipfile.BadZipFile) as exc:
             errors.append({
                 "endpoint": uri,
                 "error_type": type(exc).__name__,
