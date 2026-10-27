@@ -1,12 +1,6 @@
 name: Audit independent Dryad Anthocharis host-use observations
 
 on:
-  push:
-    branches: [feature/anthocardamines-host-use-source-audit]
-    paths:
-      - "scripts/acquire_toftegaard_dryad.py"
-      - "tests/test_toftegaard_dryad_source.py"
-      - ".github/workflows/toftegaard-dryad-acquisition.yml"
   workflow_dispatch:
 
 permissions:
@@ -25,7 +19,7 @@ jobs:
         run: python -m pip install -e '.[dev]'
       - name: Test response gate and strict-effect firewall
         run: python -m pytest -q tests/test_toftegaard_dryad_source.py
-      - name: Retrieve publicly shared Toftegaard 2018 phenology data
+      - name: Report known Dryad authorization blocker without anonymous retries
         id: source
         continue-on-error: true
         run: python scripts/acquire_toftegaard_dryad.py --output-dir results/toftegaard-dryad

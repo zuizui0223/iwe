@@ -108,8 +108,48 @@ def _decodable(raw: bytes, name: str) -> bool:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument(
+        "--source-file", type=Path,
+        help="Locally supplied original Dryad TXT or ZIP; origin is not yet verified",
+    )
+    parser.add_argument(
+        "--try-anonymous-legacy-downloads", action="store_true",
+        help="Diagnostic only: known 401/403 endpoints; never used by default",
+    )
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
+    if args.source_file is not None:
+        payload = args.source_file.read_bytes()
+        raw, package_kind = extract_text_if_archive(payload)
+        report = audit_file(raw)
+        report["retrieval_status"] = "supplied_input_schema_pending"
+        report["source_origin"] = "user_or_institution_supplied_not_yet_independently_verified"
+        report["retrieved_package_format"] = package_kind
+        report["supplied_file_sha256"] = hashlib.sha256(payload).hexdigest()
+        (args.output_dir / "toftegaard_2018_plant_phenology.txt").write_bytes(raw)
+        (args.output_dir / "dryad_retrieval_audit.json").write_text(
+            json.dumps(report, indent=2) + "\n", encoding="utf-8"
+        )
+        print(json.dumps(report, indent=2))
+        return 0
+
+    if not args.try_anonymous_legacy_downloads:
+        receipt = {
+            "schema": "iwe_toftegaard_dryad_source_audit_v0.1",
+            "doi": DOI,
+            "retrieval_status": "auth_required_no_input",
+            "cause": "Published Dryad REST API download requires a bearer token; the anonymous API routes have already returned HTTP 401",
+            "source_data_rows": 0,
+            "strict_h1_effects_created": 0,
+            "input_file_present": False,
+            "ecological_claim_supported": False,
+        }
+        (args.output_dir / "dryad_retrieval_audit.json").write_text(
+            json.dumps(receipt, indent=2) + "\n", encoding="utf-8"
+        )
+        print(json.dumps(receipt, indent=2))
+        return 2
+
     errors: list[dict] = []
     for uri in PUBLIC_ENDPOINTS:
         try:

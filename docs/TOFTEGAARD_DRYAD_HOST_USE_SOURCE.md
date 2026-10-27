@@ -61,3 +61,33 @@ firewall and avoids replacing observed butterfly adult activity
 with egg or larval records. Until the file is present, the
 separate acquisition workflow intentionally fails its source
 readiness gate, while still archiving the explicit error receipt.
+
+
+## Updated access diagnosis and local-input gate (2026-10-28)
+
+Dryad's official API-account documentation specifies that file and
+dataset downloads require a bearer token:
+https://github.com/datadryad/dryad-app/blob/main/documentation/apis/api_accounts.md
+The 401 responses recorded above are therefore an authorization
+limitation, not a new biological finding or proof of an unpublished
+file. Automatic anonymous retries are disabled by default; the old
+routes are usable only with --try-anonymous-legacy-downloads for
+explicit diagnostics.
+
+Once the original Dryad TXT or dataset ZIP has been downloaded via
+an authorized browser/service, run:
+
+    python scripts/acquire_toftegaard_dryad.py \
+      --source-file "/path/to/Plant phenology in the field.txt" \
+      --output-dir outputs/toftegaard-original
+
+The audit records original SHA-256, bytes, line count, and format,
+but source origin, column semantics and observation units remain
+unverified until checked separately. It never creates IWE strict-H1
+fitness effects or independent female adult flight dates.
+
+Merged PR #114 separately recovers the published Oikos Appendix 1
+Table A1 denominators (60 region×species×year cells; 22,933
+plant records) and a Kew-backed synonym crosswalk. These are NOT
+individual egg/plant-stage records. No API secrets, token-bearing
+URLs or uninspected raw observations may be committed.
