@@ -37,8 +37,9 @@ jobs:
           path: results/toftegaard-dryad/
           if-no-files-found: warn
           retention-days: 30
-      - name: Report whether source is available
+      - name: Fail source-readiness gate if field data was not retrieved
         run: |
           if [ ! -s results/toftegaard-dryad/toftegaard_2018_plant_phenology.txt ]; then
-            echo "::warning::Dryad field data not downloaded; no ecological inference."
+            echo "::error::Source is inaccessible by automated public endpoints. This is an external access blocker, not an ecology result."
+            exit 1
           fi
