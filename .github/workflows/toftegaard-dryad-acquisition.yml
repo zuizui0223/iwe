@@ -1,0 +1,42 @@
+name: Audit independent Dryad Anthocharis host-use observations
+
+on:
+  push:
+    branches: [feature/anthocardamines-host-use-source-audit]
+    paths:
+      - "scripts/acquire_toftegaard_dryad.py"
+      - "tests/test_toftegaard_dryad_source.py"
+      - ".github/workflows/toftegaard-dryad-acquisition.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dryad-observation-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test response gate and strict-effect firewall
+        run: python -m pytest -q tests/test_toftegaard_dryad_source.py
+      - name: Retrieve publicly shared Toftegaard 2018 phenology data
+        id: source
+        continue-on-error: true
+        run: python scripts/acquire_toftegaard_dryad.py --output-dir results/toftegaard-dryad
+      - name: Upload raw dataset and source/provenance receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-independent-toftegaard-2018-host-use
+          path: results/toftegaard-dryad/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Report whether source is available
+        run: |
+          if [ ! -s results/toftegaard-dryad/toftegaard_2018_plant_phenology.txt ]; then
+            echo "::warning::Dryad field data not downloaded; no ecological inference."
+          fi
