@@ -176,6 +176,9 @@ def build_ambio_host_use(
     table = table.sort_values(
         ["region", "species_as_published"], kind="stable"
     ).reset_index(drop=True)
+    # Rebuild the boolean mask after sorting/resetting row indices. Retaining
+    # the pre-sort mask would silently mislabel unmatched taxa as matched.
+    m = table["portfolio_match"].eq("matched")
 
     # A deliberately complete three-region comparison. Published
     # rates are NOT used: South C. paludosa printed ratio is inconsistent.
