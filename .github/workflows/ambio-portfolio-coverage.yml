@@ -1,0 +1,39 @@
+name: Ambio host-portfolio source coverage diagnostic
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [feature/ambio-portfolio-coverage]
+    paths:
+      - "src/iwe/ambio_portfolio_coverage.py"
+      - "scripts/audit_ambio_portfolio_coverage.py"
+      - "tests/test_ambio_portfolio_coverage.py"
+      - ".github/workflows/ambio-portfolio-coverage.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  source-coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependency and test environment
+        run: python -m pip install -e '.[dev]'
+      - name: Test published egg-count accounting and negative controls
+        run: python -m pytest -q tests/test_ambio_portfolio_coverage.py
+      - name: Produce non-promoting regional source host coverage
+        run: >-
+          python scripts/audit_ambio_portfolio_coverage.py
+          --out-dir results/ambio-portfolio-coverage
+      - name: Retain auditable regional evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-ambio-portfolio-coverage-v01
+          path: results/ambio-portfolio-coverage/
+          if-no-files-found: error
+          retention-days: 30
