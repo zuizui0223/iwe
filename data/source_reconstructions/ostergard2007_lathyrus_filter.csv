@@ -1,0 +1,11 @@
+quantity,value,uncertainty_or_n,source
+initiated_fruits_random_scenario,410,N=410,Östergård_et_al_2007
+fruits_surveyed_for_developed_beetles,238,N=238,Östergård_et_al_2007
+mean_eggs_per_initiated_fruit,3.64,SD=4.14,Östergård_et_al_2007
+estimated_beetles_random_oviposition,2.02,SD=0.11,Östergård_et_al_2007
+observed_developed_beetles_selective_oviposition,2.84,SD=0.14,Östergård_et_al_2007
+flower_to_initiated_fruit_r2,0.59,P<0.001; df=46,Östergård_et_al_2007
+flower_to_mature_fruit_r2,0.47,P<0.001; df=46,Östergård_et_al_2007
+fruit_abortion_pattern,late_and_distal_fruits_more_likely_to_abort,source conclusion,Östergård_et_al_2007
+beetle_choice,preferential_oviposition_on_lower_abortion_probability_fruits,phenology + position + unidentified cue,Östergård_et_al_2007
+plant_reproductive_output_effect,lower_under_observed_than_random_oviposition,source conclusion; exact aggregate intact-seed delta not reconstructed,Östergård_et_al_2007

@@ -1,0 +1,35 @@
+name: IWE Slimon 2026 public archive one-time source screen
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/probe_slimon2026_zenodo_source.py
+      - tests/test_slimon2026_zenodo_source.py
+      - .github/workflows/slimon2026-zenodo-source-screen.yml
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-original-files-only:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check source-limited inventory without network
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_slimon2026_zenodo_source.py
+      - name: Inventory exact Zenodo source files, no effect-size reconstruction
+        run: python -m scripts.probe_slimon2026_zenodo_source --outdir /tmp/iwe-slimon2026-source
+      - name: Save only metadata inventory (never redistribute archived raw data)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slimon2026-source-inventory-only
+          path: /tmp/iwe-slimon2026-source/source_only_inventory.json
+          if-no-files-found: warn
+          retention-days: 7

@@ -1,0 +1,5 @@
+source_doi,experiment,original_year,record_type,original_rows,rows_with_original_plant_id,unique_original_plant_ids,rows_without_original_plant_id,unkeyed_rows_with_numeric_stage_values,unkeyed_rows_with_positive_stage_values,unkeyed_rows_with_nonempty_other_metadata,repeated_original_plant_ids,source_dated_weekly_columns,source_stage_join_admissible,strict_h1_effect
+10.5281/zenodo.19488509,exp1,2023,new_Mompha,159,157,157,2,0,0,0,0,11,yes,no
+10.5281/zenodo.19488509,exp1,2023,old_Mompha,159,157,157,2,0,0,0,0,11,yes,no
+10.5281/zenodo.19488509,exp2,2023,new_Mompha,123,123,123,0,0,0,0,0,9,yes,no
+10.5281/zenodo.19488509,exp2,2023,old_Mompha,951,123,123,828,0,0,0,0,9,yes,no

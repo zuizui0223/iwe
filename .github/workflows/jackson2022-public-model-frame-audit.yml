@@ -1,0 +1,47 @@
+name: Jackson 2022 published fruit-fate model-frame access audit
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/probe_jackson2022_saved_model_frames.R
+      - scripts/analyze_jackson2022_predator_crop_regularities.R
+      - .github/workflows/jackson2022-public-model-frame-audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-published-model-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+      - name: Download public published model object at pinned source commit
+        run: |
+          git clone --quiet --depth=1 https://github.com/ee-jackson/premature-fruit-drop.git /tmp/jackson2022
+          test "$(git -C /tmp/jackson2022 rev-parse HEAD)" = "7568638780b880a83a0cbd89e777104fbb14f6b9"
+          test -f /tmp/jackson2022/output/results/model-fits.rds
+          echo "Pinned public model bundle present"
+      - name: Inspect model-frame provenance without extracting seed outcomes into repository
+        run: >-
+          Rscript scripts/probe_jackson2022_saved_model_frames.R
+          /tmp/jackson2022/output/results/model-fits.rds
+          /tmp/jackson-model-frame-audit
+      - name: Test recorded predator interaction with crop-size variation (exploratory)
+        run: >-
+          Rscript scripts/analyze_jackson2022_predator_crop_regularities.R
+          /tmp/jackson2022/output/results/model-fits.rds
+          /tmp/jackson-model-frame-audit
+      - name: Publish source audit and descriptive model summaries only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jackson2022-public-model-frame-metadata-only
+          path: /tmp/jackson-model-frame-audit/
+          if-no-files-found: warn
+          retention-days: 7

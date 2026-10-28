@@ -1,0 +1,5 @@
+curve,amplitude,center_z,sigma,r_squared,biological_definition,source
+total_egg_load,2.14,-1.10,0.92,0.46,"all eggs laid per plant vs standardized flowering date","Davies & Saccheri 2024 Figure 6a"
+active_egg_load,1.49,-0.61,0.66,0.33,"eggs laid <=7 days post-flowering per plant vs standardized flowering date","Davies & Saccheri 2024 Figure 6a"
+active_high_fecundity,2.00,-0.53,0.63,0.19,"active egg load on high-fecundity ramets","Davies & Saccheri 2024 Figure 6b"
+active_medium_fecundity,0.75,-0.76,0.78,0.13,"active egg load on medium-fecundity ramets","Davies & Saccheri 2024 Figure 6b"

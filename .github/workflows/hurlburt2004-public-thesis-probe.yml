@@ -1,0 +1,50 @@
+name: Hurlburt 2004 institutional PDF source access probe
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/probe_hurlburt2004_public_thesis.py
+      - scripts/screen_hurlburt2004_thesis_text.py
+      - tests/test_hurlburt2004_thesis_text_screen.py
+      - tests/test_hurlburt2004_public_thesis_probe.py
+      - .github/workflows/hurlburt2004-public-thesis-probe.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-only-access:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify fail-closed downloader without network
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pip install 'pymupdf>=1.23,<1.29'
+          python -m pytest -q tests/test_hurlburt2004_public_thesis_probe.py tests/test_hurlburt2004_thesis_text_screen.py
+      - name: Retrieve DOI-linked original institution-hosted PDF if public
+        run: >-
+          python -m scripts.probe_hurlburt2004_public_thesis
+          --outdir /tmp/hurlburt2004-public-thesis-source
+          --timeout 15
+      - name: Locate likely original thesis table pages (not source verification)
+        run: |
+          if test -f /tmp/hurlburt2004-public-thesis-source/NQ95948.pdf; then
+            python -m scripts.screen_hurlburt2004_thesis_text --pdf /tmp/hurlburt2004-public-thesis-source/NQ95948.pdf --outdir /tmp/hurlburt2004-public-thesis-source
+          else
+            echo 'No original PDF; no table/page audit possible'
+          fi
+      - name: Save unreviewed source and access manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hurlburt2004-source-access-manifests-only
+          path: |
+            /tmp/hurlburt2004-public-thesis-source/manifest.json
+            /tmp/hurlburt2004-public-thesis-source/page_review_leads.json
+          if-no-files-found: warn
+          retention-days: 7

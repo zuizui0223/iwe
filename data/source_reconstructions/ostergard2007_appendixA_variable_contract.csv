@@ -1,0 +1,14 @@
+study_id,appendix_doi,variable_label,source_definition,source_unit_or_grain,source_transform,semantic_audit
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Number of flowers,Count of flowers on plant,plant,log10,count_direct
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Number of initiated fruits,Count of initiated fruits on plant,plant,log10,count_direct
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Number of mature fruits,Count of mature fruits on plant,plant,log10,count_direct
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Fruit abortion,Number of fruits aborted on plant,plant,log10,count_direct
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Number of eggs per plant,Total Bruchus eggs on plant,plant,log10,count_direct
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Number of seeds,All developed seeds on plant,plant,log10,not_identical_to_escaped_seeds
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Number of escaped seeds,All seeds escaping Bruchus seed predation on plant,plant,log10,final_predator_escape_not_necessarily_seed_germination
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Proportion fruits aborted,Ratio mature fruits divided by initiated fruits,plant,arcsine_sqrt,LABEL_DEFINITION_OPPOSITE_RETENTION_VS_ABORTION
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Flower position,(position - 0.5) / number of raceme positions,flower_or_fruit_position,continuous,normalized_within_raceme
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Raceme position,(position - 0.5) / number of racemes,inflorescence_position,continuous,normalized_within_shoot
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Number of eggs per fruit,Total eggs present on fruit,fruit,none,realized_egg_placement_not_independent_adult_activity
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Number of eggs recorded at first survey,Eggs counted at first survey of same fruit,fruit,none,realized_egg_placement_not_independent_adult_activity
+OSTERGARD2007_LATHYRUS,10.6084/m9.figshare.3528548.v1,Fruit phenology,Early or intermediate or late or very late by dates after initiation,fruit,4_source_defined_classes,not_independent_adult_activity

@@ -1,0 +1,11 @@
+source_doi,system,component,timing_or_value,interpretation
+10.1007/BF00377197,Trollius europaeus × Chiastocheta spp.,pollinator_efficacy,"fixed proportion of remaining unfertilized ovules fertilized per visit","marginal seed initiation declines as flower ages and fewer unfertilized ovules remain"
+10.1007/BF00377197,Trollius europaeus × Chiastocheta spp.,larval_cost,"seed consumption per larva treated as approximately fixed in the cost-benefit analysis","later ovipositing pollinators can consume more seeds than their mothers newly fertilize"
+10.1007/BF00377197,Trollius europaeus × Chiastocheta spp.,cost_benefit_break_even,"4-5 eggs per flower","estimated point at which pollination benefits and seed-consumption costs are equal"
+10.1007/BF00377197,Trollius europaeus × Chiastocheta spp.,natural_egg_load,"2.3-7.25 eggs per flower across three study years","natural populations span both sides of the estimated break-even region"
+10.1046/j.1420-9101.1999.00088.x,Trollius europaeus × Chiastocheta rotundiventris,oviposition_timing,"mainly flower day 1, few on day 2","earliest ovipositing species; visits young flowers with high remaining pollination opportunity"
+10.1046/j.1420-9101.1999.00088.x,Trollius europaeus × Chiastocheta setifera,oviposition_timing,"begins about flower day 2","early-intermediate flower-age window"
+10.1046/j.1420-9101.1999.00088.x,Trollius europaeus × Chiastocheta macropyga,oviposition_timing,"flower days 3-6","intermediate flower-age window"
+10.1046/j.1420-9101.1999.00088.x,Trollius europaeus × Chiastocheta trollii,oviposition_timing,"starts about flower day 5","late flower-age window"
+10.1046/j.1420-9101.1999.00088.x,Trollius europaeus × Chiastocheta inermella,oviposition_timing,"from day 5, most eggs on day 7","late flower-age window"
+10.1046/j.1420-9101.1999.00088.x,Trollius europaeus × Chiastocheta dentifera,oviposition_timing,"starts about day 6 and mostly after flowering","latest window; minimal remaining pollination opportunity"

@@ -1,0 +1,40 @@
+name: IWE three-species Osmia original interaction-window test
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/analyze_demanincor2023_service_window.py
+      - tests/test_demanincor2023_service_window.py
+      - docs/DEMANINCOR2023_THREE_SPECIES_SERVICE_WINDOW.md
+      - .github/workflows/demanincor2023-three-species-original.yml
+
+permissions:
+  contents: read
+
+jobs:
+  original-plant-bee-seed-stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test plant/arena/source-unit isolation
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_demanincor2023_service_window.py
+      - name: Fetch MD5-pinned original Zenodo bytes and analyze matched plant seed set
+        run: >-
+          python -m scripts.analyze_demanincor2023_service_window
+          --outdir /tmp/iwe-3species-original
+      - name: Save only derived arena-species and analysis audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-3species-flower-bee-seed-derived
+          path: |
+            /tmp/iwe-3species-original/audit.json
+            /tmp/iwe-3species-original/arena_species_derived.csv
+          if-no-files-found: warn
+          retention-days: 7
