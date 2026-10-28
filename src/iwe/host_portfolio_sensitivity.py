@@ -42,6 +42,7 @@ def build_portfolio_sensitivity(
     baseline_counts: tuple[int, int, int] = (162, 272, 110),
     frozen_n: int = 11,
     candidate_names: tuple[str, ...] = CANDIDATES,
+    reference_added_regions: set[str] | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     if not PRESENCE_COLUMNS <= set(regional):
         raise ValueError("missing WCVP regional presence columns")
@@ -104,6 +105,8 @@ def build_portfolio_sensitivity(
     bn, bc, be = union(base_ids)
     if (len(bn), len(bc), len(be)) != baseline_counts:
         raise ValueError("frozen whole-butterfly 162/272/110 baseline drift")
+    if reference_added_regions is not None and be != reference_added_regions:
+        raise ValueError("frozen original 110 region codes do not match source reconstruction")
 
     reports: list[dict] = []
     transitions: list[dict] = []
