@@ -95,6 +95,8 @@ def test_duplicate_region_and_invalid_truth_flag_rejected():
     with pytest.raises(ValueError, match="duplicate plant"):
         run(d=pd.concat([d, d.iloc[[0]]], ignore_index=True), b=b)
     d, b = toy()
+    # Pandas 3 disallows assigning a string into a boolean dtype in-place.
+    d["native_present"] = d["native_present"].astype(object)
     d.loc[0, "native_present"] = "unknown"
     with pytest.raises(ValueError, match="explicit true/false"):
         run(d=d, b=b)
