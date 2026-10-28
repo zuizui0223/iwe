@@ -1,0 +1,22 @@
+region,species_as_published,sampling_status,sampled_populations,n_eggs,n_plants,n_trait_plants,published_eggs_per_plant
+South,Arabidopsis thaliana,sampled,7,10,1057,445,0.009
+South,Thlaspi caerulescens,host_not_found,,,,,
+South,Capsella bursa-pastoris,sampled,6,6,795,394,0.007
+South,Cardamine pratensis,sampled,6,30,2307,587,0.012
+South,Cardamine paludosa,sampled,4,11,369,63,0.085
+South,Arabis hirsuta,sampled,11,53,1651,645,0.032
+South,Arabis glabra,host_not_found,,,,,
+Central,Arabidopsis thaliana,sampled,9,3,815,448,0.004
+Central,Thlaspi caerulescens,sampled,3,7,297,177,0.024
+Central,Capsella bursa-pastoris,sampled,8,24,556,331,0.043
+Central,Cardamine pratensis,sampled,3,21,67,67,0.313
+Central,Cardamine paludosa,sampled,9,104,1746,682,0.060
+Central,Arabis hirsuta,sampled,7,13,271,264,0.048
+Central,Arabis glabra,sampled,2,22,386,386,0.057
+North,Arabidopsis thaliana,sampled,4,3,827,415,0.004
+North,Thlaspi caerulescens,sampled,7,13,3132,365,0.004
+North,Capsella bursa-pastoris,sampled,3,42,719,156,0.058
+North,Cardamine pratensis,sampled,1,2,180,177,0.011
+North,Cardamine paludosa,sampled,4,130,1208,515,0.108
+North,Arabis hirsuta,host_not_found,,,,,
+North,Arabis glabra,sampled,1,53,70,70,0.757
