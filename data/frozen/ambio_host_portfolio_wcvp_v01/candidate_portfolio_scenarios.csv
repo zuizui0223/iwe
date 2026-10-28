@@ -1,0 +1,9 @@
+scenario,candidate_count,added_candidate_species,host_count,native_units,contemporary_units,introduced_added_units,delta_native_vs_frozen,delta_contemporary_vs_frozen,delta_added_vs_frozen,baseline_added_retained,baseline_added_now_native,newly_added_after_host_extension,contemporary_over_native_ratio,biological_basis,strict_h1_effects_created
+frozen_11,0,,11,162,272,110,0,0,0,110,0,0,1.6790123456790123,egg_receipt_only_larval_suitability_unverified,0
+frozen_11_plus_Arabis hirsuta,1,Arabis hirsuta,12,162,272,110,0,0,0,110,0,0,1.6790123456790123,egg_receipt_only_larval_suitability_unverified,0
+frozen_11_plus_Arabidopsis thaliana,1,Arabidopsis thaliana,12,168,274,106,6,2,-4,106,4,0,1.630952380952381,egg_receipt_only_larval_suitability_unverified,0
+frozen_11_plus_Noccaea caerulescens,1,Noccaea caerulescens,12,162,272,110,0,0,0,110,0,0,1.6790123456790123,egg_receipt_only_larval_suitability_unverified,0
+frozen_11_plus_Arabis hirsuta__Arabidopsis thaliana,2,Arabis hirsuta;Arabidopsis thaliana,13,168,274,106,6,2,-4,106,4,0,1.630952380952381,egg_receipt_only_larval_suitability_unverified,0
+frozen_11_plus_Arabis hirsuta__Noccaea caerulescens,2,Arabis hirsuta;Noccaea caerulescens,13,162,272,110,0,0,0,110,0,0,1.6790123456790123,egg_receipt_only_larval_suitability_unverified,0
+frozen_11_plus_Arabidopsis thaliana__Noccaea caerulescens,2,Arabidopsis thaliana;Noccaea caerulescens,13,168,274,106,6,2,-4,106,4,0,1.630952380952381,egg_receipt_only_larval_suitability_unverified,0
+frozen_11_plus_Arabis hirsuta__Arabidopsis thaliana__Noccaea caerulescens,3,Arabis hirsuta;Arabidopsis thaliana;Noccaea caerulescens,14,168,274,106,6,2,-4,106,4,0,1.630952380952381,egg_receipt_only_larval_suitability_unverified,0

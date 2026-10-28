@@ -99,3 +99,60 @@ Outputs:
 Do not use the interrupted Dryad PR #113 to fabricate unobserved
 2010 time windows. The original field file is still required
 for a properly independent phenophase test.
+
+
+## First source-backed empirical result (2026-10-28)
+
+A complete pinned WCVP v13 rebuild succeeded on GitHub Actions
+run 40612290047. Baseline recovery matched all 11 original host
+IDs and per-host footprint sizes, 162 native/272 contemporary/110
+introduced-attributed units, AND the exact 110 original region codes
+were independently rechecked against the frozen source list.
+
+Pinned accepted IDs for the three extra egg-receiving species:
+- Arabis hirsuta: 2645681; 59 native/62 contemporary WCVP units.
+  There were THREE exact-name entries in the old WCVP names table,
+  but just ONE accepted species record. This record was selected by
+  source WCVP status rather than by guessing a name string.
+- Arabidopsis thaliana: 2645262; 86 native/139 contemporary units.
+- Noccaea caerulescens: 2381293; 11 native/21 contemporary units.
+
+Among all eight scenario subsets, ONLY adding Arabidopsis thaliana
+changes the union of potential host regions:
+
+- Frozen original 11: native 162, contemporary 272, introduced-added 110.
+- Add Arabidopsis thaliana: native 168 (+6), contemporary 274 (+2),
+  introduced-added 106 (-4).
+- Add Arabis hirsuta alone, Noccaea caerulescens alone, or both
+  without Arabidopsis thaliana: no WHOLE-UNION region change.
+- Add all three: the same 168/274/106 outcome.
+
+The new native WCVP units contributed by Arabidopsis thaliana
+relative to the original host union are:
+CNY, CVI, DJI, MDR, SOM, SUD.
+The additional contemporary units are CVI and SOM. The original
+introduced-attributed units CNY, DJI, MDR and SUD are now also
+native opportunities. None of the expanded contemporary-only
+units are wholly new compared with the original 110 added regions.
+
+Thus 272/162 = 1.6790 compared with 274/168 = 1.6310.
+The source-defined introduced-range opportunity remains large
+but becomes slightly smaller after allowing this particular
+observed-egg host identity. This is not a fitness or real
+occupancy result. The two other candidate hosts are geographically
+redundant at WGSRPD3 scale for these union summaries;
+they are not thereby proven unimportant to larvae or adults.
+
+Audited source artifacts are frozen, byte-identical to the GitHub
+Actions results, in
+data/frozen/ambio_host_portfolio_wcvp_v01
+including candidate_portfolio_scenarios.csv,
+source_taxon_resolution.csv and portfolio_sensitivity_receipt.json.
+The full per-region WCVP table and 8-scenario regional transitions
+remain reproducible from the fixed source code and immutable
+GitHub Actions artifact for run 40612290047.
+
+The analysis CLI also now verifies exact original region keys
+against the preexisting frozen source, not just three area counts.
+This prevents a different 110-region baseline from silently
+producing comparable totals.

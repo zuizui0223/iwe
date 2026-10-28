@@ -108,3 +108,12 @@ def test_no_larval_viability_or_strict_h1_claim():
     assert receipt["octoploid_cardamine_added_as_new_species"] is False
     assert receipt["causal_colonization_effect_identified"] is False
     assert receipt["new_iwe_strict_h1_effects"] == 0
+
+
+def test_original_region_key_reference_blocks_wrong_source():
+    d, b = toy()
+    with pytest.raises(ValueError, match="region codes do not match"):
+        build_portfolio_sensitivity(
+            d, b, baseline_counts=(2, 4, 2), frozen_n=2,
+            reference_added_regions={"C", "X"}
+        )

@@ -1,0 +1,48 @@
+{
+  "schema": "iwe_chocho_host_extension_v0.1",
+  "frozen_original_host_count": 11,
+  "frozen_baseline": {
+    "native": 162,
+    "contemporary": 272,
+    "added": 110
+  },
+  "taxon_candidates_from_observed_eggs": [
+    "Arabis hirsuta",
+    "Arabidopsis thaliana",
+    "Noccaea caerulescens"
+  ],
+  "scenarios_tested": 8,
+  "all_candidates": {
+    "scenario": "frozen_11_plus_Arabis hirsuta__Arabidopsis thaliana__Noccaea caerulescens",
+    "candidate_count": 3,
+    "added_candidate_species": "Arabis hirsuta;Arabidopsis thaliana;Noccaea caerulescens",
+    "host_count": 14,
+    "native_units": 168,
+    "contemporary_units": 274,
+    "introduced_added_units": 106,
+    "delta_native_vs_frozen": 6,
+    "delta_contemporary_vs_frozen": 2,
+    "delta_added_vs_frozen": -4,
+    "baseline_added_retained": 106,
+    "baseline_added_now_native": 4,
+    "newly_added_after_host_extension": 0,
+    "contemporary_over_native_ratio": 1.630952380952381,
+    "biological_basis": "egg_receipt_only_larval_suitability_unverified",
+    "strict_h1_effects_created": 0
+  },
+  "egg_receipt_confirms_larval_suitability": false,
+  "octoploid_cardamine_added_as_new_species": false,
+  "observed_host_use_time_window_validated": false,
+  "causal_colonization_effect_identified": false,
+  "new_iwe_strict_h1_effects": 0,
+  "chocho_frozen_paper_modified": false,
+  "pinned_upstream": {
+    "chocho": "df6f920a37c7e86a878d9f6375bb4454128b5d66",
+    "WCVP": "65bed76bae9d644ccb6ad200c05f9f5071d89e05",
+    "observed_egg_reference_DOI": "10.1007/s13280-014-0602-z"
+  },
+  "input_sha256": {
+    "WCVP_host_region_presence": "9c59036831be320740b27337cf845e24db88a650d9ac3c725844125efd2cf3dc",
+    "11_frozen_HOSTS_host_metrics": "e51c3b604cad82f5899136f078f13ad60a301df5d75ebd1f71f45fc877763cbd"
+  }
+}
