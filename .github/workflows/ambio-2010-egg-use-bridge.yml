@@ -1,0 +1,40 @@
+name: Ambio 2010 observed eggs × chocho potential geography audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [feature/ambio-2010-egg-use-bridge]
+    paths:
+      - "data/registry/ambio_2015_table1_2010_host_use.csv"
+      - "src/iwe/ambio_host_use.py"
+      - "scripts/audit_ambio_host_use.py"
+      - "tests/test_ambio_host_use.py"
+      - ".github/workflows/ambio-2010-egg-use-bridge.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  observed-host-use:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install reproducibility and test dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Validate all Table 1 counts, missing hosts, taxonomy, and discrepancy
+        run: python -m pytest -q tests/test_ambio_host_use.py
+      - name: Build egg/plant host-specific descriptive source audit
+        run: >-
+          python scripts/audit_ambio_host_use.py
+          --output-dir results/ambio-2010-chocho
+      - name: Upload source-audited egg and spatial metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-ambio-2010-host-use-chocho
+          path: results/ambio-2010-chocho/
+          if-no-files-found: error
+          retention-days: 30
