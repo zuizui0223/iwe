@@ -1,0 +1,63 @@
+name: Observed-egg host portfolio WCVP sensitivity
+
+on:
+  push:
+    branches: [feature/ambio-host-portfolio-wcvp]
+    paths:
+      - "scripts/build_ambio_host_portfolio_wcvp.R"
+      - "src/iwe/host_portfolio_sensitivity.py"
+      - "scripts/analyze_ambio_host_portfolio_geography.py"
+      - "tests/test_ambio_host_portfolio_sensitivity.py"
+      - ".github/workflows/ambio-host-portfolio-wcvp.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source_sensitivity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+      - name: Install IWE dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Test host additions, nonmonotone changes, provenance
+        run: python -m pytest -q tests/test_ambio_host_portfolio_sensitivity.py
+      - name: Checkout fixed WCVP v13 accepted plant IDs and distributions
+        uses: actions/checkout@v4
+        with:
+          repository: matildabrown/rWCVPdata
+          ref: 65bed76bae9d644ccb6ad200c05f9f5071d89e05
+          path: _external/WCVP
+          sparse-checkout: |
+            data/wcvp_names.rda
+            data/wcvp_distributions.rda
+          sparse-checkout-cone-mode: false
+      - name: Rebuild frozen and candidate species geographic presence
+        run: >-
+          Rscript scripts/build_ambio_host_portfolio_wcvp.R
+          _external/WCVP
+          data/frozen/chocho_cardamine_host_geography_v0.1/host_contributions.csv
+          results/portfolio-wcvp
+      - name: Analyze eight observed-egg portfolio scenarios
+        run: >-
+          python scripts/analyze_ambio_host_portfolio_geography.py
+          --wcvp-presence results/portfolio-wcvp/host_region_presence.csv
+          --out-dir results/portfolio-sensitivity
+      - name: Archive audited source geography and scenario outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-ambio-host-portfolio-wcvp-v01
+          path: |
+            results/portfolio-wcvp/
+            results/portfolio-sensitivity/
+          if-no-files-found: warn
+          retention-days: 30
