@@ -41,13 +41,20 @@ candidate_ids <- vapply(candidate_names, function(name) {
     n$taxon_name == name, , drop=FALSE
   ]
   if (nrow(x) < 1L) stop(paste("Pinned WCVP v13 exact species missing:", name))
-  accepted_id <- as.character(x$accepted_plant_name_id)
-  fallback <- is.na(accepted_id) | !nzchar(accepted_id)
+  # Some original name strings occur in synonym/homonym records whose
+  # accepted IDs differ. The authoritative record is the unique species
+  # entry whose own WCVP taxon_status is Accepted. Never pool IDs across
+  # alternative homonyms merely because the displayed binomial matches.
   is_accepted <- tolower(trimws(as.character(x$taxon_status))) == "accepted"
-  accepted_id[fallback & is_accepted] <- x$plant_name_id[fallback & is_accepted]
-  ids <- sort(unique(accepted_id[!is.na(accepted_id) & nzchar(accepted_id)]))
-  if (length(ids) != 1L) {
-    stop(paste("Pinned WCVP v13 accepted plant ID ambiguous:", name))
+  accepted_rows <- x[!is.na(is_accepted) & is_accepted, , drop=FALSE]
+  ids <- sort(unique(as.character(accepted_rows$plant_name_id)))
+  ids <- ids[!is.na(ids) & nzchar(ids)]
+  cat("NAME_RESOLUTION ", name,
+      " exact_name_rows=", nrow(x),
+      " accepted_species_rows=", nrow(accepted_rows),
+      " accepted_ids=", paste(ids, collapse=";"), "\n", sep="")
+  if (length(ids) != 1L || nrow(accepted_rows) != 1L) {
+    stop(paste("Pinned WCVP v13 lacks exactly one authoritative accepted species row:", name))
   }
   accepted_name <- unname(id_to_name[ids])
   if (length(accepted_name) != 1L || is.na(accepted_name) || accepted_name != name) {
