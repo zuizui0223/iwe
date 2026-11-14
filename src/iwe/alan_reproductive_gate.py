@@ -113,7 +113,7 @@ def build_crossstudy_readiness(
     ):
         raise ValueError("Kendall preceding satellite light is not an ALAN intervention")
     if p.loc[p["study_id"] == "KENDALL2025_DIEL_META", "alan_manipulated"].iloc[0].lower() != "no":
-        raise ValueError("Original Kendall studies manipulated diel access, not ALAN")
+        raise ValueError("Kendall diel pollination exclusions are not an ALAN intervention")
     for col in BOOL_COLS:
         p[col] = _bool(p[col], col)
     if p.loc[p["study_id"] == "KENDALL2025_DIEL_META", "floral_schedule_measured"].any():
