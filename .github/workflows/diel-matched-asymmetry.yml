@@ -1,0 +1,89 @@
+name: Matched diel reproductive asymmetry and anthesis sensitivity
+on:
+  push:
+    branches: [analysis/diel-matched-asymmetry-20261114]
+    paths:
+      - src/iwe/diel_matched_asymmetry.py
+      - scripts/run_diel_matched_asymmetry.py
+      - tests/test_diel_matched_asymmetry.py
+      - .github/workflows/diel-matched-asymmetry.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install existing analysis dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Test shared open-arm uncertainty and minimal source matching
+        run: python -m pytest -q tests/test_diel_matched_asymmetry.py tests/test_diel_reserve_meta.py
+      - name: Recover original author tables and verify their exact Git blobs
+        run: |
+          python - <<'PY'
+          import hashlib,urllib.request
+          from pathlib import Path
+          target=Path('source');target.mkdir(exist_ok=True)
+          root='https://raw.githubusercontent.com/liamkendall/bumble-bat/main/data/'
+          for filename,source,expected in [
+            ('author.csv','DvN_LiteratureDataClean_2024-09-13.csv','39a82d966afcdde670603add1c881ace8791ffe9'),
+            ('traits.csv','SppTraitData_clean.csv','18381e550a7e405fe4f198909f0bb381bbecf1e0')]:
+            with urllib.request.urlopen(root+source,timeout=60) as response:
+              raw=response.read(3000000)
+            actual=hashlib.sha1(f'blob {len(raw)}\0'.encode()+raw).hexdigest()
+            assert actual==expected,(source,actual)
+            (target/filename).write_bytes(raw)
+          PY
+      - name: Run matched publication-level meta and joint anthesis bootstrap
+        run: python scripts/run_diel_matched_asymmetry.py --author source/author.csv --traits source/traits.csv --out results/diel-matched
+      - name: Independent source-cell algebra and REML score-root verification
+        run: |
+          python - <<'PY'
+          import json,numpy as np,pandas as pd
+          from pathlib import Path
+          from scipy.optimize import brentq
+          from scipy.stats import t
+          from iwe.diel_matched_asymmetry import extract_matched
+          from iwe.diel_reserve_meta import extract,collapse_studies
+          out=Path('results/diel-matched')
+          f,_=extract_matched(Path('source/author.csv'),Path('source/traits.csv'))
+          old,_=extract(Path('source/author.csv'))
+          p=old.pivot(index='cell_id',columns='contrast',values='effect')
+          p['paired']=p.night_marginal-p.day_marginal
+          j=f.set_index('cell_id').join(p[['paired']])
+          error=float((j.effect-j.paired).abs().max());assert error<1e-12
+          assert len(f)==344
+          eligible=f[f.precision_status=='source_precision_available']
+          assert len(eligible)==254 and eligible.study.nunique()==94 and eligible.plant.nunique()==92
+          models=pd.read_csv(out/'matched_models.csv');checks=[]
+          for metric in ['fruit set','seed set']:
+            st=collapse_studies(eligible[eligible.metric==metric]);y=st.effect.to_numpy();v=st.variance_bound.to_numpy()
+            def score(tau):
+              w=1/(v+tau);mu=np.sum(w*y)/np.sum(w)
+              return np.sum(w*w*(y-mu)**2)-np.sum(w)+np.sum(w*w)/np.sum(w)
+            tau=brentq(score,0,10,xtol=1e-13) if score(0)>0 else 0
+            w=1/(v+tau);mu=(w*y).sum()/w.sum();q=(w*(y-mu)**2).sum()/(len(y)-1)
+            se=np.sqrt(max(q,1)/w.sum());lo=mu-t.ppf(.975,len(y)-1)*se;hi=mu+t.ppf(.975,len(y)-1)*se
+            orig=models[(models.metric==metric)&(models.panel=='primary')&(models.covariance=='bound')].iloc[0]
+            delta=max(abs(mu-orig['mean']),abs(tau-orig.tau2),abs(lo-orig.ci_low),abs(hi-orig.ci_high))
+            assert delta<1e-7
+            checks.append({'metric':metric,'independent_score_root_tau2':tau,'independent_mean':mu,'max_difference':delta})
+          receipt=json.loads((out/'matched_asymmetry_receipt.json').read_text())
+          assert receipt['ALAN_manipulation_effect_estimated'] is False
+          assert receipt['new_iwe_strict_H1_effects']==0
+          (out/'independent_numerical_verification.json').write_text(json.dumps({'max_cell_algebraic_difference':error,'REML_score_root_checks':checks},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iwe-matched-diel-asymmetry-anthesis
+          path: results/diel-matched/
+          if-no-files-found: error
+          retention-days: 90
