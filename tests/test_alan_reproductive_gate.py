@@ -141,3 +141,45 @@ def test_original_missing_seed_is_not_imputed_zero():
     _, _, _, report = audit_li_original(text.encode(), original_source_verified=False)
     assert report["unknown_seed_outcome_plant_rows"] == 1
     assert report["source_verified_original_git_blob"] is False
+
+
+def test_hurdle_decomposition_uses_only_seed_and_fruit_counts_not_pollen():
+    # Original toy controls have no seed and therefore undefined ratios;
+    # missing reference denominators must NOT be coerced to a finite effect.
+    _, _, _, empty = audit_li_original(
+        synthetic_li(), original_source_verified=False
+    )
+    assert empty["Li_original_seed_and_fruit_accounting_factors"][
+        "observed_seeds_per_known_plant_L_over_C"
+    ] is None
+
+    import math
+    raw = synthetic_li().decode()
+    data = list(csv.DictReader(io.StringIO(raw)))
+    for row in data:
+        if row["Treatment"] == "C" and row["species"] == "ML":
+            row["Seeds"], row["Fruit"], row["pollinated"] = "2", "1", "1"
+    buffer = io.StringIO()
+    writer = csv.DictWriter(buffer, fieldnames=data[0].keys(), lineterminator="\n")
+    writer.writeheader()
+    writer.writerows(data)
+    _, _, _, result = audit_li_original(
+        buffer.getvalue().encode(), original_source_verified=False
+    )
+    factors = result["Li_original_seed_and_fruit_accounting_factors"]
+    total = factors["observed_seeds_per_known_plant_L_over_C"]
+    assert total > 0
+    assert math.isclose(
+        total,
+        factors["seed_presence_fraction_L_over_C"] *
+        factors["seeds_per_seed_bearing_plant_L_over_C"],
+        abs_tol=1e-10,
+    )
+    assert math.isclose(
+        total,
+        factors["fruits_per_known_plant_L_over_C"] *
+        factors["seeds_per_fruit_from_original_totals_L_over_C"],
+        abs_tol=1e-10,
+    )
+    assert factors["reconciliation"] == "numerical_identities_not_causal_mediation"
+    assert result["source_pollinated_column_is_actual_conspecific_pollen"] is False
