@@ -1,0 +1,13 @@
+doi,plant,endpoint,pollination_access,reported_effect,percent_change,lit_dark_ratio,endpoint_definition,source_pages,numeric_scope_resolution,sem,sampling_variance,p_value,raw_data_obtained
+10.1093/jpe/rtag160,Pedicularis kansuensis,conspecific_pollen,open,decrease_reported,-23.09,0.7691,conspecific_pollen_grains_per_stigma,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Pedicularis kansuensis,conspecific_pollen,day_only,no_significant_effect_reported,,,conspecific_pollen_grains_per_stigma,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Pedicularis kansuensis,conspecific_pollen,night_only,decrease_reported,-53.8,0.462,conspecific_pollen_grains_per_stigma,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Pedicularis kansuensis,seed_set,open,no_significant_effect_reported,,,developed_seeds_divided_by_total_ovules_per_fruit,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Pedicularis kansuensis,seed_set,day_only,no_significant_effect_reported,,,developed_seeds_divided_by_total_ovules_per_fruit,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Pedicularis kansuensis,seed_set,night_only,decrease_reported,-56,0.44,developed_seeds_divided_by_total_ovules_per_fruit,14;16,number_in_discussion_access_scope_in_results_TableS4b_unavailable,,,,no
+10.1093/jpe/rtag160,Euphrasia regelii,conspecific_pollen,open,no_significant_effect_reported,,,conspecific_pollen_grains_per_stigma,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Euphrasia regelii,conspecific_pollen,day_only,no_significant_effect_reported,,,conspecific_pollen_grains_per_stigma,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Euphrasia regelii,conspecific_pollen,night_only,no_significant_effect_reported,,,conspecific_pollen_grains_per_stigma,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Euphrasia regelii,seed_set,open,no_significant_effect_reported,,,developed_seeds_divided_by_total_ovules_per_fruit,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Euphrasia regelii,seed_set,day_only,no_significant_effect_reported,,,developed_seeds_divided_by_total_ovules_per_fruit,14,reported_results_text_not_raw_data,,,,no
+10.1093/jpe/rtag160,Euphrasia regelii,seed_set,night_only,no_significant_effect_reported,,,developed_seeds_divided_by_total_ovules_per_fruit,14,reported_results_text_not_raw_data,,,,no
