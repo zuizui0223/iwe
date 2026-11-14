@@ -46,7 +46,7 @@ def test_boom_all_light_spectra_rounded_seed_formula_and_significance_ceiling():
     components = table.set_index("light_spectrum")
     assert components.loc["dark", "fruit_set_fraction"] == pytest.approx(.73)
     assert components.loc["green", "fruit_infestation_fraction"] == pytest.approx(.53)
-    assert components.loc["green", "noninfested_ovule_fertilized_fraction"] == pytest.approx(.43)
+    assert components.loc["green", "uninfested_ovule_fertilized_fraction"] == pytest.approx(.43)
     assert components.loc["green", "model_seeds_from_rounded_components"] == pytest.approx(
         .75 * .47 * .43 * 404
     )
@@ -96,7 +96,7 @@ def test_unverified_subgroup_and_nonfrozen_spectra_fail_closed():
     with pytest.raises(ValueError, match="smaller than recorded subset"):
         analyze_lu_night_channels(bad)
     bad = boom.copy()
-    bad.loc[bad["light_spectrum"] == "green", "fruit_infestation_fraction"] = .15
+    bad.loc[bad["light_spectrum"] == "green", "fruit_infestation_fraction"] = "0.15"
     with pytest.raises(ValueError, match="published spectrum data drift"):
         analyze_boom_spectral_nursery(bad)
     bad = candidates.copy()
