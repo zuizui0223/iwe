@@ -53,6 +53,24 @@ def main() -> int:
     )
     if not li["source_verified_original_git_blob"] or li["original_field_blocks"] != 3:
         raise ValueError("Li original seedset source/provenance not verified")
+    frozen_path = Path("data/frozen/alan_li2026_original_aggregate_v01.json")
+    frozen = json.loads(frozen_path.read_text(encoding="utf-8"))
+    if (li["original_source_git_blob_sha1"] != frozen["source_git_blob_sha1"]
+            or li["original_source_sha256"] != frozen["source_sha256"]
+            or li["observed_total_seed_count"] != frozen["source_observed_seeds_total"]
+            or li["observed_total_fruits_count"] != frozen["source_observed_fruits_total"]
+            or li["source_original_rows"] != frozen["original_author_plant_records"]
+            or li["seed_outcome_known_plant_rows"] != frozen["records_with_known_seeds"]):
+        raise ValueError("Frozen source snapshot and original author Li data do not reconcile")
+    by_arm = {x["treatment"]: x for x in arm}
+    for item in frozen["treatments"]:
+        original = by_arm[item["treatment"]]
+        if (original["seed_outcome_known_plant_rows"] != item["nonmissing"]
+                or original["seed_present_plant_rows"] != item["seed_present"]
+                or original["actual_seed_count_from_known_plants"] != item["seeds"]
+                or original["actual_fruit_count_from_known_plants"] != item["fruits"]):
+            raise ValueError("Frozen Li arm snapshot differs from authentic replay")
+    ledger["frozen_author_aggregate_snapshot_sha256"] = _sha(frozen_path)
     li["not_an_independent_replication_of_network_or_spectrum_experiments"] = True
     li["observed_moth_pollinator_or_substitution_evidence_in_this_dataset"] = False
     ledger["li_2026_source_verified"] = {
