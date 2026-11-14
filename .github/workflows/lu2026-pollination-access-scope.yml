@@ -1,0 +1,58 @@
+name: Lu JPE pollination-access scope correction
+on:
+  push:
+    branches: [analysis/lu2026-reproductive-assurance-original-20261114]
+    paths:
+      - 'data/registry/lu2026_*'
+      - 'data/registry/alan_reproduction_claims_v01.csv'
+      - 'data/registry/alan_reproduction_programmes_v01.csv'
+      - 'scripts/audit_lu2026_access_scope.py'
+      - 'tests/test_lu2026_pollination_access_scope.py'
+      - '.github/workflows/lu2026-pollination-access-scope.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  treatment-scope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install IWE dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Check Lu scope and existing reproductive source guards
+        run: python -m pytest -q tests/test_lu2026_pollination_access_scope.py tests/test_alan_reproductive_gate.py
+      - name: Rebuild access-scoped full-text transcription
+        run: python scripts/audit_lu2026_access_scope.py --output-dir results/lu2026-access-scope
+      - name: Verify manuscript design metadata and preserve primary-source locator
+        run: |
+          python - <<'PY'
+          import csv,json,hashlib,shutil
+          from pathlib import Path
+          source=Path('data/registry/lu2026_fulltext_scope_source_v01.json')
+          metadata=json.loads(source.read_text())
+          assert metadata['pdf_byte_sha256'] is None
+          assert metadata['supplementary_table_S4b_access']=='not_retrieved'
+          assert metadata['crossref_metadata_is_not_pdf_bytes'] is True
+          with Path('data/registry/alan_reproduction_programmes_v01.csv').open(newline='') as h:
+              rows=list(csv.DictReader(h))
+          lu=next(r for r in rows if r['study_id']=='LU_REPRO2026_TIBET')
+          assert lu['source_field_blocks']=='5'
+          assert lu['source_reconstruction_class']=='accepted_manuscript_fulltext_no_raw_TableS4b_unavailable'
+          out=Path('results/lu2026-access-scope')
+          shutil.copy2(source,out/source.name)
+          receipt=out/'lu2026_access_scope_receipt.json'
+          data=json.loads(receipt.read_text())
+          data['input_sha256'][source.name]=hashlib.sha256(source.read_bytes()).hexdigest()
+          data['head_commit']=__import__('os').environ.get('GITHUB_SHA')
+          receipt.write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iwe-lu2026-corrected-pollination-access-scope
+          path: results/lu2026-access-scope/
+          if-no-files-found: error
+          retention-days: 90
