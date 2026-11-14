@@ -242,3 +242,24 @@ gates. Synthetic test fixtures never masquerade
 as original author observations. No raw per-plant
 original data, site coordinates or visitor IDs
 are committed or included in uploaded artifacts.
+
+
+## Provenance freeze of actual Li source without sharing per-plant records
+
+The original author-public CSV was independently fetched in IWE
+and verified by Git blob SHA1 and file SHA256 on
+[Actions run 43583203567](https://github.com/zuizui0223/iwe/actions/runs/43583203567).
+The source was 79 original rows, with 78 known seed outcomes,
+5,368 true counted seeds and 214 true counted fruits;
+the field-balanced difference was +0.4313131313.
+The reproducible original-count arithmetic showed
+(2.4074074 × 2.2196429) = 5.3435847,
+and (4.4837963 × 1.1917546) = 5.3435847.
+
+Only the machine-readable AGGREGATE receipt is frozen at
+data/frozen/alan_li2026_original_aggregate_v01.json,
+with its source SHA256 and three original hayfield counts.
+The CLI now checks the complete source hash, plant totals,
+all treatment-arm outcomes, and that aggregate-only freeze
+before publishing any results. No original author raw
+individual plant rows were uploaded to the new IWE source.
