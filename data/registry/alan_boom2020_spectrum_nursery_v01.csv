@@ -1,0 +1,5 @@
+study_id,light_spectrum,plant,insect,fruit_set_fraction,fruit_infestation_fraction,uninfested_ovule_fertilized_fraction,reported_estimated_seeds_per_flower,mean_ovules_per_fruit,reported_seed_mean_anova_p,field_sites,study_doi,alan_source_commit,source_jats_sha256
+BOOM2020_NL,dark,Silene latifolia,Hadena bicruris,0.73,0.28,0.56,117,404,0.63,4,10.1038/s41598-020-75471-1,7a249f22286d60e2dcf2f5979c35f4e80220bd4c,182dafe1e99fef5453ecf0d1d1401361fe949fd8d8617ae040588fd19795154f
+BOOM2020_NL,white,Silene latifolia,Hadena bicruris,0.78,0.44,0.49,86,404,0.63,4,10.1038/s41598-020-75471-1,7a249f22286d60e2dcf2f5979c35f4e80220bd4c,182dafe1e99fef5453ecf0d1d1401361fe949fd8d8617ae040588fd19795154f
+BOOM2020_NL,green,Silene latifolia,Hadena bicruris,0.75,0.53,0.43,61,404,0.63,4,10.1038/s41598-020-75471-1,7a249f22286d60e2dcf2f5979c35f4e80220bd4c,182dafe1e99fef5453ecf0d1d1401361fe949fd8d8617ae040588fd19795154f
+BOOM2020_NL,red,Silene latifolia,Hadena bicruris,0.71,0.33,0.47,90,404,0.63,4,10.1038/s41598-020-75471-1,7a249f22286d60e2dcf2f5979c35f4e80220bd4c,182dafe1e99fef5453ecf0d1d1401361fe949fd8d8617ae040588fd19795154f

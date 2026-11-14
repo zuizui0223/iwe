@@ -1,0 +1,41 @@
+name: IWE x chocho x ALAN signed functional evidence boundary
+
+on:
+  push:
+    branches: [feature/iwe-alan-chocho-function-bridge-20261114]
+    paths:
+      - "src/iwe/alan_function_bridge.py"
+      - "data/registry/alan_lu2026_night_visits_v01.csv"
+      - "data/registry/alan_boom2020_spectrum_nursery_v01.csv"
+      - "scripts/audit_alan_iwe_chocho_function.py"
+      - "tests/test_alan_iwe_chocho_function.py"
+      - ".github/workflows/alan-iwe-chocho-bridge.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  functional-evidence-gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install IWE developer dependencies
+        run: python -m pip install -e '.[dev]'
+      - name: Validate signed evidence boundary
+        run: python -m pytest -q tests/test_alan_iwe_chocho_function.py
+      - name: Build source-locked mechanism crosswalk and arithmetic
+        run: >-
+          python scripts/audit_alan_iwe_chocho_function.py
+          --output-dir results/alan-iwe-chocho
+      - name: Publish aggregate non-promoting scientific receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-alan-chocho-functional-bridge
+          path: results/alan-iwe-chocho/
+          if-no-files-found: error
+          retention-days: 30
