@@ -1,0 +1,85 @@
+{
+  "schema": "iwe_alan_li2026_original_source_aggregate_frozen_v0.1",
+  "source": "Li et al. 2026 bioRxiv DOI 10.64898/2026.07.10.737511",
+  "source_publication_status": "preprint_not_peer_reviewed",
+  "author_repo": "Dongboli/experimental-data",
+  "author_path": "Artificial lights at night/seedset.csv",
+  "source_git_blob_sha1": "b616aca5beeba1457549841477d61ca4f796a147",
+  "source_sha256": "7d0311a2507fafe8e3f469196ac2efb17abc30960084aed384557cbcf7e33162",
+  "verified_original_author_replay_run": "https://github.com/zuizui0223/iwe/actions/runs/43583203567",
+  "original_author_plant_records": 79,
+  "records_with_known_seeds": 78,
+  "missing_seed_outcomes": 1,
+  "independent_original_hayfields": 3,
+  "original_plant_species": 3,
+  "source_observed_seeds_total": 5368,
+  "source_observed_fruits_total": 214,
+  "treatments": [
+    {
+      "treatment": "C",
+      "nonmissing": 26,
+      "seed_present": 8,
+      "seeds": 672,
+      "fruits": 32
+    },
+    {
+      "treatment": "P",
+      "nonmissing": 25,
+      "seed_present": 12,
+      "seeds": 967,
+      "fruits": 33
+    },
+    {
+      "treatment": "L",
+      "nonmissing": 27,
+      "seed_present": 20,
+      "seeds": 3729,
+      "fruits": 149
+    }
+  ],
+  "original_hayfield_seed_presence": [
+    {
+      "field": 1,
+      "C_positive": 1,
+      "C_n": 6,
+      "L_positive": 4,
+      "L_n": 8,
+      "P_positive": 6,
+      "P_n": 9
+    },
+    {
+      "field": 2,
+      "C_positive": 3,
+      "C_n": 11,
+      "L_positive": 7,
+      "L_n": 9,
+      "P_positive": 4,
+      "P_n": 9
+    },
+    {
+      "field": 3,
+      "C_positive": 4,
+      "C_n": 9,
+      "L_positive": 9,
+      "L_n": 10,
+      "P_positive": 2,
+      "P_n": 7
+    }
+  ],
+  "derived_source_identities": {
+    "L_minus_C_seed_presence_risk_difference": 0.433048433048433,
+    "equal_field_L_minus_C_risk_difference": 0.4313131313131313,
+    "seeds_per_plant_L_over_C": 5.343584656084656,
+    "seed_presence_L_over_C": 2.407407407407407,
+    "seeds_per_seed_bearing_plant_L_over_C": 2.219642857142857,
+    "fruits_per_plant_L_over_C": 4.483796296296296,
+    "seeds_per_fruit_L_over_C": 1.1917545541706616
+  },
+  "source_plant_label_is_verified_independent_plant_ID": false,
+  "pollen_deposition_measured": false,
+  "true_nocturnal_moth_visits_measured": false,
+  "independent_light_geometry_vs_lamp_number_identified": false,
+  "mediator_plant_flower_availability_measured": false,
+  "original_source_rows_redistributed": false,
+  "new_iwe_strict_h1_effects": 0
+}
