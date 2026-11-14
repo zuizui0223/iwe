@@ -9,6 +9,7 @@ on:
       - "scripts/audit_alan_reproduction_source_grain.py"
       - "data/registry/alan_reproduction_programmes_v01.csv"
       - "data/registry/alan_reproduction_claims_v01.csv"
+      - "data/frozen/alan_li2026_original_aggregate_v01.json"
       - "tests/test_alan_reproductive_gate.py"
       - ".github/workflows/alan-reproductive-outcome-grain.yml"
   workflow_dispatch:
