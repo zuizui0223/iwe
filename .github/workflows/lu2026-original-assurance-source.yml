@@ -1,0 +1,111 @@
+name: Lu JPE original reproductive-assurance source recovery
+on:
+  push:
+    branches: [analysis/lu2026-reproductive-assurance-original-20261114]
+    paths: [.github/workflows/lu2026-original-assurance-source.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install public-document parsers
+        run: python -m pip install requests beautifulsoup4 pypdf python-docx
+      - name: Inspect bounded official original sources and linked supplemental files
+        run: |
+          python - <<'PY'
+          import concurrent.futures, hashlib, json, re
+          from pathlib import Path
+          from urllib.parse import urljoin, urlparse
+          import requests
+          from bs4 import BeautifulSoup
+          from pypdf import PdfReader
+          from docx import Document
+          import io
+          out=Path('results/lu2026-original'); out.mkdir(parents=True,exist_ok=True)
+          roots=[
+            'https://academic.oup.com/jpe/advance-article/doi/10.1093/jpe/rtag160/8731923',
+            'https://www.jpe.ac.cn/EN/10.1093/jpe/rtag160',
+            'https://api.crossref.org/works/10.1093/jpe/rtag160',
+            'https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:10.1093/jpe/rtag160&format=json']
+          allowed={'academic.oup.com','www.jpe.ac.cn','jpe.ac.cn','oup.silverchair-cdn.com','api.crossref.org','www.ebi.ac.uk','pmc.ncbi.nlm.nih.gov'}
+          records=[]; discovered=[]
+          def retrieve(url):
+            try:
+              response=requests.get(url,timeout=35,headers={'User-Agent':'IWE-public-scientific-source-audit/0.1'})
+              data=response.content
+              if len(data)>20000000: raise ValueError('source_size_limit')
+              return url,response.status_code,response.url,response.headers.get('content-type',''),data,None
+            except Exception as exc:
+              return url,None,url,'',b'',str(exc)[:300]
+          def inspect(result, index):
+            url,status,final,kind,data,error=result
+            record={'url':url,'status':status,'resolved_url':final,'content_type':kind,'bytes':len(data),'error':error}
+            if status!=200:
+              records.append(record); print(json.dumps(record)); return
+            record['sha256']=hashlib.sha256(data).hexdigest()
+            stem=out/f'source_{index:02d}'
+            if data.startswith(b'%PDF'):
+              stem.with_suffix('.pdf').write_bytes(data)
+              pdf=PdfReader(io.BytesIO(data))
+              text='\n'.join(f'PAGE {i+1}\n'+(page.extract_text() or '') for i,page in enumerate(pdf.pages))
+              stem.with_suffix('.txt').write_text(text,encoding='utf-8')
+              record.update(type='pdf',pages=len(pdf.pages),text_file=stem.with_suffix('.txt').name)
+            elif data.startswith(b'PK') and ('docx' in url.lower() or 'wordprocessingml' in kind):
+              stem.with_suffix('.docx').write_bytes(data)
+              doc=Document(io.BytesIO(data))
+              text='\n'.join(p.text for p in doc.paragraphs)
+              for i,t in enumerate(doc.tables):
+                text+='\nTABLE '+str(i+1)+'\n'+'\n'.join('\t'.join(c.text for c in r.cells) for r in t.rows)
+              stem.with_suffix('.txt').write_text(text,encoding='utf-8')
+              record.update(type='docx',tables=len(doc.tables),text_file=stem.with_suffix('.txt').name)
+            elif 'json' in kind:
+              stem.with_suffix('.json').write_bytes(data)
+              obj=response_object=json.loads(data)
+              if 'api.crossref.org' in url:
+                message=obj.get('message',{})
+                for link in message.get('link',[]):
+                  if link.get('URL'): discovered.append((link['URL'],'official_crossref_link'))
+              record.update(type='json',summary=str(obj)[:2500])
+            else:
+              html=data.decode('utf-8',errors='replace')
+              stem.with_suffix('.html').write_text(html,encoding='utf-8')
+              soup=BeautifulSoup(html,'html.parser')
+              stem.with_suffix('.txt').write_text(soup.get_text(' ',strip=True),encoding='utf-8')
+              links=[]
+              for tag in soup.select('a[href],meta[name="citation_pdf_url"]'):
+                href=tag.get('href') or tag.get('content') or ''
+                target=urljoin(final,href); label=tag.get_text(' ',strip=True)
+                if re.search(r'rtag160|supplement|article-pdf|\.pdf|downloadArticleFile',target+' '+label,re.I):
+                  links.append({'url':target,'label':label[:150]})
+                  if re.search(r'rtag160|supplement|article-pdf|\.pdf|downloadArticleFile',target,re.I):
+                    discovered.append((target,'linked_from_'+url))
+              record.update(type='html',title=soup.title.get_text() if soup.title else '',links=links[:35])
+            records.append(record); print(json.dumps(record,ensure_ascii=False))
+          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+            for i,result in enumerate(executor.map(retrieve,roots)): inspect(result,i)
+          targets=[]; seen=set(roots)
+          for url,origin in discovered:
+            if url in seen or urlparse(url).hostname not in allowed: continue
+            if not re.search(r'pdf|docx|supplement|downloadArticleFile',url,re.I): continue
+            seen.add(url); targets.append((url,origin))
+          for i,(url,origin) in enumerate(targets[:6],start=4):
+            inspect(retrieve(url),i)
+          receipt={'schema':'iwe_lu_jpe_original_source_probe_v1','doi':'10.1093/jpe/rtag160','source_records':records,'discovered_links':discovered,'raw_observations_verified':False,'new_iwe_h1_effects':0}
+          (out/'source_recovery_receipt.json').write_text(json.dumps(receipt,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+          print('RECOVERED_DOCUMENTS',json.dumps([r for r in records if r.get('type') in ('pdf','docx')],ensure_ascii=False))
+          PY
+      - name: Preserve source documents and retrieval receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-lu-jpe-original-sources
+          path: results/lu2026-original/
+          if-no-files-found: error
+          retention-days: 30
