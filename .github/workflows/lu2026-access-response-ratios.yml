@@ -1,0 +1,51 @@
+name: Lu same-endpoint open versus night-only light-response ratios
+on:
+  push:
+    branches: [analysis/lu2026-open-night-response-ratio-20261114]
+    paths:
+      - 'src/iwe/alan_access_response_ratio.py'
+      - 'scripts/audit_lu2026_response_ratios.py'
+      - 'tests/test_alan_access_response_ratio.py'
+      - 'data/registry/lu2026_access_scoped_contrasts_v01.csv'
+      - '.github/workflows/lu2026-access-response-ratios.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-scoped-ratios:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install IWE tests
+        run: python -m pip install -e '.[dev]'
+      - name: Test original treatment-scope correction and new ratio calculation
+        run: python -m pytest -q tests/test_lu2026_pollination_access_scope.py tests/test_alan_access_response_ratio.py
+      - name: Generate four matched pairs from exact original transcription
+        run: python scripts/audit_lu2026_response_ratios.py --output-dir results/lu2026-response-ratios
+      - name: Validate source-level result and missingness accounting
+        run: |
+          python - <<'PY'
+          import json, math
+          from pathlib import Path
+          p=Path('results/lu2026-response-ratios/access_response_ratio_receipt.json')
+          r=json.loads(p.read_text())
+          assert r['matched_species_endpoint_pairs']==4
+          assert r['numeric_paired_contrasts']==1
+          assert r['not_numeric_paired_contrasts']==3
+          assert r['inferential_meta_ready_contrasts']==0
+          pollen=next(x for x in r['paired_results'] if x['plant']=='Pedicularis kansuensis' and x['endpoint']=='conspecific_pollen')
+          assert math.isclose(pollen['ratio_of_response_ratios'],0.7691/0.462,rel_tol=1e-12)
+          assert math.isclose(pollen['log_ratio_of_response_ratios'],math.log(0.7691/0.462),rel_tol=1e-12)
+          assert all(x['variance'] is None and x['p_value'] is None for x in r['paired_results'])
+          assert r['new_iwe_strict_h1_effects']==0
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iwe-lu2026-access-matched-light-response-ratios
+          path: results/lu2026-response-ratios/
+          if-no-files-found: error
+          retention-days: 90
