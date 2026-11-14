@@ -163,11 +163,56 @@ def audit_li_original(
                 for i in range(min(positive, negative) + 1)) / (2 ** n_signed)
         if n_signed else None
     )
+    # Exact two-factor accounting identities on the aggregated original
+    # seed source. Neither identity is a causal mediation decomposition.
+    C = arms_by_name["C"]
+    L = arms_by_name["L"]
+    numerator = L["actual_seed_count_from_known_plants"] / L["seed_outcome_known_plant_rows"]
+    denominator = C["actual_seed_count_from_known_plants"] / C["seed_outcome_known_plant_rows"]
+    if denominator > 0 and C["seed_present_plant_rows"] > 0 and C["actual_fruit_count_from_known_plants"] > 0 and L["actual_fruit_count_from_known_plants"] > 0:
+        seeds_per_plant_ratio = numerator / denominator
+        prevalence_factor = (
+            L["seed_presence_fraction"] / C["seed_presence_fraction"]
+        )
+        positive_plant_yield_factor = (
+            (L["actual_seed_count_from_known_plants"] / L["seed_present_plant_rows"]) /
+            (C["actual_seed_count_from_known_plants"] / C["seed_present_plant_rows"])
+        )
+        fruits_per_plant_factor = (
+            (L["actual_fruit_count_from_known_plants"] / L["seed_outcome_known_plant_rows"]) /
+            (C["actual_fruit_count_from_known_plants"] / C["seed_outcome_known_plant_rows"])
+        )
+        seeds_per_fruit_factor = (
+            (L["actual_seed_count_from_known_plants"] / L["actual_fruit_count_from_known_plants"]) /
+            (C["actual_seed_count_from_known_plants"] / C["actual_fruit_count_from_known_plants"])
+        )
+        if not math.isclose(seeds_per_plant_ratio, prevalence_factor * positive_plant_yield_factor, abs_tol=1e-10):
+            raise ValueError("Li original hurdle identity not reconciled")
+        if not math.isclose(seeds_per_plant_ratio, fruits_per_plant_factor * seeds_per_fruit_factor, abs_tol=1e-10):
+            raise ValueError("Li original fruits/seed identity not reconciled")
+        component_factors = {
+            "observed_seeds_per_known_plant_L_over_C": seeds_per_plant_ratio,
+            "seed_presence_fraction_L_over_C": prevalence_factor,
+            "seeds_per_seed_bearing_plant_L_over_C": positive_plant_yield_factor,
+            "fruits_per_known_plant_L_over_C": fruits_per_plant_factor,
+            "seeds_per_fruit_from_original_totals_L_over_C": seeds_per_fruit_factor,
+            "reconciliation": "numerical_identities_not_causal_mediation",
+        }
+    else:
+        component_factors = {
+            "observed_seeds_per_known_plant_L_over_C": None,
+            "seed_presence_fraction_L_over_C": None,
+            "seeds_per_seed_bearing_plant_L_over_C": None,
+            "fruits_per_known_plant_L_over_C": None,
+            "seeds_per_fruit_from_original_totals_L_over_C": None,
+            "reconciliation": "undefined_zero_reference_or_missing_positive_plant",
+        }
     receipt = {
         "schema": "iwe_alan_li2026_genuine_seed_source_v0.1",
         "original_source_git_blob_sha1": sha1,
         "original_source_sha256": hashlib.sha256(raw).hexdigest(),
         "source_doi": SOURCE_DOI,
+        "Li_original_seed_and_fruit_accounting_factors": component_factors,
         "source_verified_original_git_blob": original_source_verified,
         "source_original_rows": len(rows),
         "seed_outcome_known_plant_rows": len(rows) - errors,
