@@ -1,0 +1,31 @@
+{
+  "schema": "iwe_lu_jpe_fulltext_scope_source_v1",
+  "doi": "10.1093/jpe/rtag160",
+  "accepted_manuscript_url": "https://academic.oup.com/jpe/advance-article-pdf/doi/10.1093/jpe/rtag160/68754751/rtag160.pdf",
+  "pdf_pages": 33,
+  "pdf_byte_sha256": null,
+  "metadata_sha256": "8e410ab3f86a3d11dd163890e2ef4d3911671938eece47ab7952fe7ac832e799",
+  "crossref_metadata_is_not_pdf_bytes": true,
+  "content_access": "web_cached_parsed_fulltext",
+  "pdf_screenshot_attempts": "failed_cache_miss_or_status",
+  "supplementary_table_S4b_access": "not_retrieved",
+  "primary_source_statements": [
+    {"page": 8, "lines": "16-22", "paraphrase": "Five lit-unlit replicate pairs established June 2024; mean illuminance 4.52 +/- 0.23 SEM lux."},
+    {"page": 9, "lines": "5-8", "paraphrase": "Nighttime lights 19:30-05:30; experiment July-August 2024."},
+    {"page": 10, "lines": "6-16", "paraphrase": "Factorial light x open, bagged, day-only, night-only access; 20 plants reported per combination; exact distribution among plot pairs not clarified."},
+    {"page": 11, "lines": "6-8", "paraphrase": "Three to five mature fruits per sampled plant; seed set is developed seeds divided by total ovules per fruit."},
+    {"page": 14, "lines": "6-12", "paraphrase": "P. kansuensis pollen drops 23.09% under open access and 53.80% under night-only access. Seed decline is reported for night-only rather than other two treatments. No significant pollen or seed effects reported for E. regelii."},
+    {"page": 16, "lines": "10-16", "paraphrase": "Total visits similar but guild composition changes; 56.0% seed reduction discussed with the nocturnal pathway; per-visit pollination efficiency not measured."},
+    {"page": 26, "lines": "1-11", "paraphrase": "Captions distinguish significant solid versus nonsignificant dashed lines in Figures 4-5 and label error bars SEM. Images not visually verified in this retrieval."}
+  ],
+  "interpretation_limits": [
+    "No raw plant-level data or fitted coefficients recovered",
+    "No direct comparative species-by-light effect reestimated",
+    "Non-significance is not equivalence or zero effect",
+    "Selfing capacity and night-visitor reliance are confounded with species identity",
+    "Night-only seed penalty must not become an open-access whole-plant seed penalty"
+  ],
+  "original_source_probe_run": 43593452266,
+  "source_probe_success_is_not_raw_data_recovery": true,
+  "new_meta_effects": 0
+}
