@@ -297,7 +297,7 @@ def build_three_repo_receipt(
             "cross_scale_model_evaluable": False,
         },
         "treatment_exposure_modes": [
-            "local_manipulated_alighting_with_spectrum_boom",
+            "local_manipulated_lighting_with_spectrum_boom",
             "manipulated_lit_vs_dark_lu",
         ],
         "satellite_annual_VIIRS_is_not_equivalent_to_ground_lux": True,
