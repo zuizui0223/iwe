@@ -1,0 +1,44 @@
+name: IWE ALAN reproduction source-grain and functional evidence gates
+
+on:
+  push:
+    branches: [feature/alan-reproductive-outcome-grain-20261114]
+    paths:
+      - "src/iwe/alan_reproductive_gate.py"
+      - "src/iwe/alan_li_source.py"
+      - "scripts/audit_alan_reproduction_source_grain.py"
+      - "data/registry/alan_reproduction_programmes_v01.csv"
+      - "data/registry/alan_reproduction_claims_v01.csv"
+      - "data/frozen/alan_li2026_original_aggregate_v01.json"
+      - "tests/test_alan_reproductive_gate.py"
+      - ".github/workflows/alan-reproductive-outcome-grain.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-author-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install IWE with developer tests
+        run: python -m pip install -e '.[dev]'
+      - name: Test dependency, source definition, and negative controls
+        run: python -m pytest -q tests/test_alan_reproductive_gate.py
+      - name: Replay true author Li seed counts with Git SHA
+        run: >-
+          python scripts/audit_alan_reproduction_source_grain.py
+          --download-li-author-original
+          --out-dir results/alan-reproduction
+      - name: Archive aggregate-only scientific receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-alan-reproductive-grain-author-verified
+          path: results/alan-reproduction/
+          if-no-files-found: error
+          retention-days: 30
