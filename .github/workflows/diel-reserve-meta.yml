@@ -1,0 +1,72 @@
+name: Diel reproductive meta with source precision and covariance bounds
+on:
+  push:
+    branches: [analysis/diel-functional-reserve-meta-20261114]
+    paths:
+      - 'src/iwe/diel_reserve_meta.py'
+      - 'scripts/run_diel_reserve_meta.py'
+      - 'tests/test_diel_reserve_meta.py'
+      - '.github/workflows/diel-reserve-meta.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source_meta:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install IWE
+        run: python -m pip install -e '.[dev]'
+      - name: Test denominators, minimal required arms and covariance bounds
+        run: python -m pytest -q tests/test_diel_reserve_meta.py
+      - name: Fetch exact public author reproducibility sources
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,urllib.request
+          out=Path('_source');out.mkdir()
+          for target,name,expected in [
+            ('author.csv','DvN_LiteratureDataClean_2024-09-13.csv','39a82d966afcdde670603add1c881ace8791ffe9'),
+            ('traits.csv','SppTraitData_clean.csv','18381e550a7e405fe4f198909f0bb381bbecf1e0')]:
+              b=urllib.request.urlopen('https://raw.githubusercontent.com/liamkendall/bumble-bat/main/data/'+name,timeout=40).read(3000000)
+              actual=hashlib.sha1(f'blob {len(b)}\0'.encode()+b).hexdigest()
+              assert actual==expected,(name,actual)
+              (out/target).write_bytes(b)
+          PY
+      - name: Fit six primary endpoint-specific models and full sensitivities
+        run: python scripts/run_diel_reserve_meta.py --author _source/author.csv --traits _source/traits.csv --out-dir results/diel-reserve
+      - name: Verify actual source coverage and independent source arithmetic
+        run: |
+          python - <<'PY'
+          import json,math
+          from pathlib import Path
+          r=json.loads(Path('results/diel-reserve/diel_meta_receipt.json').read_text())
+          assert r['coverage']=={
+              'available_mean_cells_any_contrast':344,'available_mean_publications':114,'available_mean_plant_taxa':114,
+              'source_precision_cells_any_contrast':276,'source_precision_publications':96,'source_precision_plant_taxa':94,
+              'full_fourarm_valid_mean_cells':180}
+          assert r['source_audit']['original_rows']==1652
+          assert r['new_ALAN_causal_effect'] is False
+          assert r['new_iwe_strict_H1_effects']==0
+          assert r['outcomes_pooled_together'] is False
+          target={('fruit set','night_marginal'):(62,.286797902),('fruit set','day_marginal'):(66,.152062937),
+                  ('seed set','night_marginal'):(55,.225070630),('seed set','day_marginal'):(60,.089607904)}
+          assert len(r['primary_models'])==6
+          for x in r['primary_models']:
+              key=(x['metric'],x['contrast'])
+              if key in target:
+                  k,mean=target[key];assert x['k_publications']==k
+                  assert abs(x['mean']-mean)<2e-6,(key,x['mean'],mean)
+                  assert x['p_holm_primary_six']<.05
+          print('SOURCE_VERIFIED_276_CELLS_96_PUBLICATIONS_94_TAXA_NO_ALAN_CAUSAL_EFFECT')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iwe-diel-reproductive-meta-aggregate-results
+          path: results/diel-reserve/
+          if-no-files-found: error
+          retention-days: 90
