@@ -1,265 +1,77 @@
-# ALAN × IWE × chocho: reproductive outcome and identification audit
+# ALAN × IWE × chocho: reproductive outcomes and pollinator-access scope
 
-Source-checked 2026-11-14. Distinguishes measured VISITS, true
-CONSPECIFIC STIGMA POLLEN, FRUIT/SEEDS, seed-predator infestation,
-floral phenophase, and actual exposure. A change in one is not a
-validated quantitative change in another.
+## Correction after full-text inspection — 2026-11-14
 
-## Original experimental evidence and confirmed source boundaries
+**The Lu JPE 2026 −56% seed-set figure must be scoped to NIGHT-ONLY access, not unrestricted/open pollination or total plant seed production.** The preceding abstract-based version of this report omitted that experimental condition. The accepted manuscript Results p14 reports the seed decline in the nocturnal treatment rather than the other two access treatments; its Discussion p16 supplies the 56.0% figure. Table S4b and original observations remain unavailable.
 
-This ledger has NINE source entries: eight distinct paper-level
-manipulated-ALAN reports and a NON-INDEPENDENT global day/night
-pollinator-exclusion literature synthesis with observational
-historical light. Eight entries must not be treated as eight
-confirmed statistically independent ALAN manipulations: two Lu
-2026 papers have overlapping authors and study geography, and
-whether they used identical field blocks remains unresolved.
+Full correction, primary-source page map, 12 contrasts and the future matched-access effect estimand: [Lu night-only versus open seed effect](LU2026_NIGHT_ONLY_VS_OPEN_SEED_EFFECT_CORRECTION_20261114.md).
 
-**Source measuring VISITS, POLLEN, and SEEDS together.**
-Lu et al. 2026 Journal of Plant Ecology, DOI 10.1093/jpe/rtag160,
-published 10 July 2026, compares self-incompatible
-Pedicularis kansuensis with self-compatible Euphrasia regelii
-under lit/unlit × closed/night/day/open pollinator access.
+The original pre-correction report is retained in [commit 2b3e0af](https://github.com/zuizui0223/iwe/blob/2b3e0afc264c7b1dcd49430e689cc7ca75f99298/docs/ALAN_REPRODUCTIVE_FUNCTION_OUTCOME_GATE_20261114.md) for provenance, not as the current interpretation.
 
-The published abstract reports P. kansuensis:
-- −49.1% nocturnal Lepidoptera visits under ALAN;
-- −53.8% nocturnal conspecific pollen receipt;
-- −56.0% seed set; and 35.71% contribution of nocturnal
-  pollination to seed set in the source-defined comparison.
+## Original evidence inventory
 
-For E. regelii, no statistically detected seed light effect was
-reported and autonomous selfing accounts for 65.0% of seeds.
-A nonsignificant difference must not be recoded as exactly zero.
+The ledger contains nine source entries: eight paper-level manipulated-light reports and one secondary day/night exclusion literature synthesis with observational prior satellite light. These are not nine verified independent light experiments. In particular, the two Lu 2026 publications may share experimental infrastructure; block identity has not been established.
 
-This is one publication, one local experimental programme and
-two plant taxa, not two independent papers or a globally
-transportable breeding-system interaction. Its paper-level
-summaries do not supply covariance of visits, pollen, and
-individual plant seeds; causal mediated percentages must not
-be obtained by multiplying the three reported declines. Exact
-site/block and 2024 treatment reuse by the related Lu 2026
-Ecology & Evolution network study, DOI 10.1002/ece3.74368,
-is UNVERIFIED and conservatively grouped as one potentially
-dependent programme until original site IDs and field dates
-are checked.
+### Lu: access-specific pollen and reproductive endpoints
 
-**Authentic author-original Li source with the opposite
-observed reproductive response direction.**
+Lu et al. *Journal of Plant Ecology*, DOI [10.1093/jpe/rtag160](https://doi.org/10.1093/jpe/rtag160), established five paired lit/unlit plots in 2024. The same source compares two species with differing selfing capacity and visitor dependence.
 
-Li et al. 2026 bioRxiv PREPRINT, DOI
-10.64898/2026.07.10.737511, describes a 2022 experiment
-in three UK hayfields with 3 moth-associated potted plant
-species under control C, point-light P and 25-m multiple-LED
-linear-array L treatments. Original author's public GitHub
-seedset.csv is Git blob SHA1
-b616aca5beeba1457549841477d61ca4f796a147.
-It is tagged 'data for peer review only' by the authors;
-therefore the original 79 per-plant rows are never republished
-as IWE artifacts. Our own source fetch validates this exact
-SHA and produces aggregate receipts only.
+| P. kansuensis access treatment | Source-reported pollen change under light | Source-reported seed-set response |
+|---|---|---|
+| Open day and night | −23.09% | No significant effect reported; point estimate not recovered |
+| Day only | No significant effect reported; point estimate not recovered | No significant effect reported; point estimate not recovered |
+| Night only | −53.80% | −56.0% scoped from Results/Discussion; Table S4b not retrieved |
 
-Original author counts are 79 plant rows, 78 outcomes known,
-one point-light unknown:
-- No-light control C: 8/26 had seeds; 672 counted seeds; 32 fruits.
-- Point-light P: 12/25 had seeds; 967 seeds; 33 fruits.
-- Linear array L: 20/27 had seeds; 3,729 seeds; 149 fruits.
+Seed set is developed seeds divided by ovules per fruit (Methods p11). None of these is a count of viable seeds per whole plant. Open and day-only nonsignificance is not an exact zero, equivalence or proven full compensation.
 
-An additional ORIGINAL-COUNT accounting check decomposes the
-large array/control difference in average counted seeds per
-known-outcome plant (138.111 versus 25.846, ratio 5.3436).
-This is exactly the product of:
-- Seed-present PLANT FRACTION: (20/27)/(8/26) = 2.4074;
-- Counted seeds per seed-bearing plant: (3729/20)/(672/8) = 2.2196.
+The source also reports −49.1% nocturnal Lepidoptera visits on P. kansuensis while total nocturnal visitation remained similar and Diptera increased. Per-visit pollen effectiveness was not measured. E. regelii showed no significant pollen or seed response across access treatments and no observed night visitors; the abstract attributes 65% of seed formation to autonomous selfing. Mating system is confounded with species and nocturnal reliance, so a causal selfing moderator is not isolated by the two-species comparison.
 
-An alternative exact identity on the same source totals is:
-- Counted FRUITS per measured plant:
-  (149/27)/(32/26) = 4.4838;
-- Counted SEEDS per counted fruit:
-  (3729/149)/(672/32) = 1.19175.
+The separate Lu *Ecology and Evolution* network study, DOI 10.1002/ece3.74368, has no source-matched seed endpoint. Its 400 survey rows and night Lepidoptera counts 838→357 must not be merged with the JPE focal-species dataset. Source-pinned calculations remain in earlier IWE PR #118 and ALAN draft PR #65.
 
-Both products equal 5.3436 by arithmetic. They describe how
-seed-production totals differ in THIS source population and
-are NOT causal mediators. Most of the source aggregate
-seed-per-plant contrast lies in fruit count rather than
-seed count per fruit, but plant flower budgets, species
-mix, field handling and unknown moth visits are alternative
-reasons for the difference. No same-plant floral opportunity
-denominator or pollen delivery was validated from these
-totals. Never convert the product factors to statistically
-independent effects or infer a moth-mediated mechanism.
+### Li: authentic seed-count source, with a positive direction
 
-The unadjusted L−C plant-row seed-presence difference is
-20/27−8/26 = +0.43305. Each original HAYFIELD shows a
-positive seed-presence difference:
-field 1 = 4/8−1/6 = +0.3333;
-field 2 = 7/9−3/11 = +0.5051;
-field 3 = 9/10−4/9 = +0.4556.
-Equal-field mean +0.4313; the minimum two-sided
-three-field sign-fraction diagnostic is 0.25, NOT an
-assignment-randomization p-value. The original paper's
-GLM inferential result is separate. Do not treat 79
-plants or all treatment rounds as independent light fields.
+Li et al. bioRxiv preprint DOI [10.64898/2026.07.10.737511](https://doi.org/10.64898/2026.07.10.737511) is not established peer-reviewed here. The original author's public `seedset.csv` Git blob is `b616aca5beeba1457549841477d61ca4f796a147`; raw SHA256 is `7d0311a2507fafe8e3f469196ac2efb17abc30960084aed384557cbcf7e33162`. The 79 original rows comprise 78 known seed outcomes and one unknown point-light outcome.
 
-Crucial: the paper's variable named 'pollinated' is only
-the binary indicator of observed Seeds>0; it is NOT
-independent visitation, pollen deposition, or proof of
-a specific moth pollinating. Point and linear array treatments
-differ BOTH lamp number/footprint AND geometry, so the
-geometry-only causal mechanism and moth movement corridor
-are not identified. Source seed counts have no independently
-verified viability assay in this material.
+| Light treatment | Seed-bearing / measured plants | Counted seeds | Counted fruits |
+|---|---:|---:|---:|
+| Dark C | 8/26 | 672 | 32 |
+| Point P | 12/25 | 967 | 33 |
+| Linear array L | 20/27 | 3,729 | 149 |
 
-**Other original studies, still at non-equivalent endpoints.**
+The source-row L−C seed-presence difference is +0.43305; the equal-hayfield mean is +0.43131. All three physical hayfields have positive differences (+0.3333, +0.5051, +0.4556), but three fields cannot be treated as 79 independent randomized light replicates. A three-of-three sign diagnostic has minimum two-sided fraction 0.25 and is not an assignment-based randomization test.
 
-- Knop et al. 2017 Nature, DOI 10.1038/nature23288:
-  Swiss experimental lights, originally reported −62%
-  nocturnal visits and −13% focal plant FRUIT SET. This
-  study published both results but our compilation does not
-  reconstruct same-flower pollen transfer and variance.
-- Boom et al. 2020 Scientific Reports,
-  DOI 10.1038/s41598-020-75471-1, mixed
-  Silene latifolia × Hadena bicruris nursery-pollination
-  costs under dark/white/green/red spectra.
-  Fruit infestation and ovule fertilization change.
-  The SOURCE ROUNDED-MEANS derived seeds per flower
-  green/dark ratio is about 0.515, but actual reported
-  net reproductive ANOVA p=.63, so significant halving
-  of actual mature seeds is NOT established.
-  ALAN source-verified draft PR #67.
-- Grognuz & Knop 2026 publicly shared PREPRINT,
-  DOI 10.13140/RG.2.2.36822.10563, reports
-  ALAN×slug factorial, daytime visitors and later seeds;
-  florivory and folivory are distinct damage mediators.
-  Original row-level Mendeley data were not obtained in
-  ALAN draft PR #70. Model coefficients must not be turned
-  into percentages without the original link and units.
-- Giavi et al. 2021 Nature Communications,
-  DOI 10.1038/s41467-021-22011-8, contains
-  source-original Swiss day VISITS and floral-cover proxy,
-  but no matched plant seed/pollen transfer in ALAN PR #69.
-- Grognuz et al. 2026 Biological Conservation,
-  DOI 10.1016/j.biocon.2025.111650, manipulated ALAN
-  over 14 lit /14 unlit field sites and measured
-  daily/seasonal plant opening/flowering shifts, but
-  NOT same-site effective visitor pollen + final seed
-  consequences. A date shift alone cannot establish mismatch.
+The original source seed-per-known-plant ratio 5.3436 equals both (seed-bearing fraction ratio 2.4074 × seeds-per-seed-bearing-plant ratio 2.2196) and (fruits-per-known-plant ratio 4.4838 × seeds-per-fruit ratio 1.19175). These are accounting identities, not mediation estimates. Species composition, flower budgets and field history remain relevant.
 
-**Macroecological evidence is not randomized light effects.**
+The original `pollinated` column is `Seeds > 0`, not a measured visit or stigma pollen count. Geometry and total lamp number/footprint differ together. There is no demonstrated moth movement-corridor mechanism or seed viability test. The frozen aggregate-only source receipt remains `data/frozen/alan_li2026_original_aggregate_v01.json`; original individual records are not redistributed.
 
-Kendall & Nicholson (2025) Ecology Letters meta-analysis,
-DOI 10.1111/ele.70036, compiled 135 original
-diel pollinator-exclusion studies (139 plants).
-ALAN draft PR #53 reanalyzed 301 true paired
-source outcomes from 118 papers; among 196 paired
-observations / 73 papers with NIGHT- or DAY-bloom
-traits, night-blooming plants had a source-adjusted
-+21.475 percentage points greater nighttime share
-of day/night reproductive output, 95% study-cluster
-CI [+10.751,+32.199]. Only FOUR original papers
-compare both bloom categories in one source study.
-This association is not a manipulated nightlight effect.
-In the same ALAN observational reanalysis, the
-bloom-class × preceding satellite PCNL interaction
-was +1.738 percentage points per log PCNL, CI
-[-4.913,+8.388], p=.6085. It does NOT support
-a light-related amplification or reduction.
-PCNL exposure contrasts are predominantly BETWEEN
-papers and geographical sites, so fixed site lighting
-is not identified.
+### Other sources retain their own endpoints
 
-## Three-repository implications
+- Knop et al. 2017, DOI 10.1038/nature23288: original authors reported −62% nocturnal visits and −13% focal fruit set. Fruit set is not Li's seed-presence outcome.
+- Boom et al. 2020, DOI 10.1038/s41598-020-75471-1: Silene–Hadena light-spectrum experiment alters fruit-infestation/fertilization components. The rounded-components green/dark seed estimate is approximately 0.515, but the original model-derived net seed test has p=.63. This is not significant halving of counted mature seeds (ALAN draft #67).
+- Giavi et al. 2021, DOI 10.1038/s41467-021-22011-8: Swiss daytime visits and floral-cover proxy, without matched seed/pollen outcomes in the source reanalysis (ALAN draft #69).
+- Grognuz & Knop 2026 preprint, DOI 10.13140/RG.2.2.36822.10563: light×slug experiment, visits and later seeds; folivory and florivory are distinct pathways. Raw source unavailable, model coefficients not converted into percentages (ALAN draft #70).
+- Grognuz et al. 2026, DOI 10.1016/j.biocon.2025.111650: flowering schedules at 14 lit and 14 dark locations, without same-unit effective visitor and final-seed observations. A flowering shift alone is not demonstrated mismatch.
 
-IWE: requires independent SAME-SEASON flower/partner
-availability, final reproduction and quantitative variance
-for strict synchrony SMD. These experimental ALAN
-effects do not repair the strict-H1 gate.
-Earlier PR #118 relates the independently recorded
-nighttime Lu network to a separate Silene–Hadena
-mixed light nursery system, without pooling their
-visits and seed outcomes.
+## Macro evidence and source dependence
 
-chocho: the 239-species global host range is
-POTENTIAL larval host geography; the Anthocharis
-native/current 162/272 units and 14-host
-alternative 168/274 units have no same-place
-light treatment, matched nocturnal activity,
-pollen delivery or subsequent seed output.
-The butterfly's host eggs are not moth pollination.
+Kendall & Nicholson 2025, DOI 10.1111/ele.70036, is a published diel-exclusion literature synthesis, not manipulated ALAN. Its separate ALAN draft #53 reanalysis has 301 paired outcomes from 118 papers. The night-bloom contrast in 196 outcome pairs/73 papers is +21.475 percentage points nighttime reproductive share (study-cluster CI +10.751 to +32.199), but only four papers compare both bloom classes. The bloom×preceding-PCNL interaction is +1.738 pp/logPCNL (CI −4.913 to +8.388; p=.6085), unresolved. These values are ALAN reanalysis outputs, not direct original-paper light-intervention results.
 
-alan: directly manipulated nighttime light can
-cause guild turnover, fruit/seed costs, changed
-flowering schedule OR positive reproductive
-outcomes in different source conditions. Light
-spectral composition, bulb number/geometry,
-flowering site, mating system, true vector
-effectiveness and seed-predator life stage
-are separate explanatory dimensions.
+The observation is compatible with different reproductive sensitivity under different functional conditions, but it does not establish a universal ALAN×mating-system interaction. A significant night-only effect and nonsignificant open effect cannot by themselves substitute for a tested light×access interaction with appropriate covariance.
 
-**Testable prediction**: net reproductive
-vulnerability occurs when light-sensitive
-nocturnal effective pollen delivery declines
-and alternative vectors + autonomous reproductive
-assurance cannot restore pollen/seed; dual-role
-seed predators can shift the plant's net
-outcome in the opposite direction. This is
-a prospective conditional hypothesis,
-NOT a single statistically supported
-global light×syndrome×island interaction.
+## Current cross-repository boundary and execution
 
-## Eligibility gates and reproduction
+IWE's strict seasonal synchrony requires independently measured same-season flower/animal availability and appropriate plant-reproduction effect variance. The access-specific effects here do not meet that contract. `chocho` still describes potential larval-host geography, not locally measured lighting, pollen or seed response. No source here identifies a true island/mainland lighting-by-effective-substitution reproductive contrast.
 
-The evidence ledger must not report:
-- a single pooled cross-study effect using
-  moth visits, direct pollen, fruit set,
-  derived treatment means and counted seeds;
-- a 3-field Li source as 79 independently
-  randomized field replicates;
-- Li seed>0 as observed pollinator delivery;
-- an ALAN×phenology×pollen×seedpredator
-  complete mediation or island/mainland
-  comparison; none are currently present;
-- two Lu publications as verified independent
-  field programmes without site/time audit;
-- a Kendall observational PCNL coefficient as
-  a randomized lighting effect;
-- false IWE strict-H1 effect promotion.
+Retained original-source reproduction:
 
-Scripts:
-  python scripts/audit_alan_reproduction_source_grain.py
-  --download-li-author-original --out-dir results/alan-reproduction
+```bash
+python scripts/audit_alan_reproduction_source_grain.py --download-li-author-original --out-dir results/alan-reproduction
+```
 
-Data:
-  data/registry/alan_reproduction_programmes_v01.csv
-  data/registry/alan_reproduction_claims_v01.csv
+Corrected Lu scope validation:
 
-The CLI loads the pinned programme and claim ledger,
-downloads the original author Li raw source from
-its public GitHub location and verifies the Git
-blob SHA1, recounts all three hayfields,
-exports ONLY source aggregate CSVs and provenance
-hashes, and evaluates effect-identifiability
-gates. Synthetic test fixtures never masquerade
-as original author observations. No raw per-plant
-original data, site coordinates or visitor IDs
-are committed or included in uploaded artifacts.
+```bash
+python scripts/audit_lu2026_access_scope.py --output-dir results/lu2026-access-scope
+```
 
-
-## Provenance freeze of actual Li source without sharing per-plant records
-
-The original author-public CSV was independently fetched in IWE
-and verified by Git blob SHA1 and file SHA256 on
-[Actions run 43583203567](https://github.com/zuizui0223/iwe/actions/runs/43583203567).
-The source was 79 original rows, with 78 known seed outcomes,
-5,368 true counted seeds and 214 true counted fruits;
-the field-balanced difference was +0.4313131313.
-The reproducible original-count arithmetic showed
-(2.4074074 × 2.2196429) = 5.3435847,
-and (4.4837963 × 1.1917546) = 5.3435847.
-
-Only the machine-readable AGGREGATE receipt is frozen at
-data/frozen/alan_li2026_original_aggregate_v01.json,
-with its source SHA256 and three original hayfield counts.
-The CLI now checks the complete source hash, plant totals,
-all treatment-arm outcomes, and that aggregate-only freeze
-before publishing any results. No original author raw
-individual plant rows were uploaded to the new IWE source.
+Both pipelines retain source hashes, unknown effects, actual units and study dependence. The new 12-row Lu table is a full-text transcription, not recovered individual observations or twelve independent studies. The correction changes interpretation and scope, not original reported numeric values or any existing IWE strict-H1 effect set.
