@@ -183,3 +183,44 @@ def test_hurdle_decomposition_uses_only_seed_and_fruit_counts_not_pollen():
     )
     assert factors["reconciliation"] == "numerical_identities_not_causal_mediation"
     assert result["source_pollinated_column_is_actual_conspecific_pollen"] is False
+
+
+def test_frozen_original_author_numeric_snapshot_is_source_consistent():
+    import math
+    frozen = json.loads((
+        ROOT / "data/frozen/alan_li2026_original_aggregate_v01.json"
+    ).read_text(encoding="utf-8"))
+    assert frozen["source_git_blob_sha1"] == ORIGINAL_GIT_BLOB_SHA1
+    assert frozen["source_sha256"] == "7d0311a2507fafe8e3f469196ac2efb17abc30960084aed384557cbcf7e33162"
+    assert frozen["original_author_plant_records"] == 79
+    assert frozen["records_with_known_seeds"] == 78
+    assert frozen["source_observed_seeds_total"] == 5368
+    assert frozen["source_observed_fruits_total"] == 214
+    arms = {x["treatment"]: x for x in frozen["treatments"]}
+    assert (arms["C"]["seed_present"], arms["C"]["nonmissing"]) == (8, 26)
+    assert (arms["L"]["seed_present"], arms["L"]["nonmissing"]) == (20, 27)
+    assert (arms["P"]["seed_present"], arms["P"]["nonmissing"]) == (12, 25)
+    assert sum(x["nonmissing"] for x in arms.values()) == 78
+    assert sum(x["seeds"] for x in arms.values()) == 5368
+    ratios = frozen["derived_source_identities"]
+    assert math.isclose(
+        ratios["seeds_per_plant_L_over_C"],
+        ratios["seed_presence_L_over_C"] *
+        ratios["seeds_per_seed_bearing_plant_L_over_C"],
+        abs_tol=1e-10,
+    )
+    assert math.isclose(
+        ratios["seeds_per_plant_L_over_C"],
+        ratios["fruits_per_plant_L_over_C"] *
+        ratios["seeds_per_fruit_L_over_C"],
+        abs_tol=1e-10,
+    )
+    assert all(
+        row["L_positive"]/row["L_n"] >
+        row["C_positive"]/row["C_n"]
+        for row in frozen["original_hayfield_seed_presence"]
+    )
+    assert frozen["true_nocturnal_moth_visits_measured"] is False
+    assert frozen["pollen_deposition_measured"] is False
+    assert frozen["independent_light_geometry_vs_lamp_number_identified"] is False
+    assert frozen["new_iwe_strict_h1_effects"] == 0
