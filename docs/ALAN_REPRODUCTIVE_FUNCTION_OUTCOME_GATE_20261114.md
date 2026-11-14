@@ -64,6 +64,30 @@ one point-light unknown:
 - Point-light P: 12/25 had seeds; 967 seeds; 33 fruits.
 - Linear array L: 20/27 had seeds; 3,729 seeds; 149 fruits.
 
+An additional ORIGINAL-COUNT accounting check decomposes the
+large array/control difference in average counted seeds per
+known-outcome plant (138.111 versus 25.846, ratio 5.3436).
+This is exactly the product of:
+- Seed-present PLANT FRACTION: (20/27)/(8/26) = 2.4074;
+- Counted seeds per seed-bearing plant: (3729/20)/(672/8) = 2.2196.
+
+An alternative exact identity on the same source totals is:
+- Counted FRUITS per measured plant:
+  (149/27)/(32/26) = 4.4838;
+- Counted SEEDS per counted fruit:
+  (3729/149)/(672/32) = 1.19175.
+
+Both products equal 5.3436 by arithmetic. They describe how
+seed-production totals differ in THIS source population and
+are NOT causal mediators. Most of the source aggregate
+seed-per-plant contrast lies in fruit count rather than
+seed count per fruit, but plant flower budgets, species
+mix, field handling and unknown moth visits are alternative
+reasons for the difference. No same-plant floral opportunity
+denominator or pollen delivery was validated from these
+totals. Never convert the product factors to statistically
+independent effects or infer a moth-mediated mechanism.
+
 The unadjusted L−C plant-row seed-presence difference is
 20/27−8/26 = +0.43305. Each original HAYFIELD shows a
 positive seed-presence difference:
