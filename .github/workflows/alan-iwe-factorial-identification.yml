@@ -1,0 +1,73 @@
+name: ALAN x IWE original light-access factorial identification and null control
+
+on:
+  push:
+    branches: [analysis/alan-iwe-factorial-identification-20261115]
+    paths:
+      - 'src/iwe/alan_joint_factorial.py'
+      - 'scripts/audit_alan_joint_factorial.py'
+      - 'tests/test_alan_joint_factorial.py'
+      - 'tests/test_alan_joint_factorial_cli.py'
+      - 'data/registry/alan_iwe_light_access_source_v01.csv'
+      - '.github/workflows/alan-iwe-factorial-identification.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  science-identification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install test and original PDF source parser
+        run: python -m pip install -e '.[dev]' requests pypdf fonttools
+      - name: Exercise the shared-denominator bias and strict empirical source gate
+        run: python -m pytest -q tests/test_alan_joint_factorial.py tests/test_alan_joint_factorial_cli.py
+      - name: Recompute source accounting and simulated null diagnostics
+        run: python scripts/audit_alan_joint_factorial.py --output-dir results/alan-joint-factorial
+      - name: Check original Macgregor 2019 published paper and author-name distinctions
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,re,requests
+          from pypdf import PdfReader
+          from io import BytesIO
+          url='https://eprints.whiterose.ac.uk/id/eprint/149121/1/Macgregor_et_al_2019_Ecosphere.pdf'
+          r=requests.get(url,timeout=55,headers={'User-Agent':'IWE-ecological-source-audit/1.0'})
+          r.raise_for_status()
+          data=r.content
+          digest=hashlib.sha256(data).hexdigest()
+          pinned='e0f83cc2086f2f494f175b0d1eee8495cf9153dd62f9ca7f35338ff9e5f1ad1c'
+          if digest!=pinned:raise ValueError('Original Macgregor 2019 PDF bytes drifted: '+digest)
+          reader=PdfReader(BytesIO(data))
+          corpus=' '.join((p.extract_text() or '') for p in reader.pages).lower()
+          squashed=re.sub(r'\s+',' ',corpus)
+          for pattern in ('lacanobia oleracea','nocturnal','caging','interaction'):
+              if pattern not in squashed:raise ValueError('Primary paper missing observed source statement: '+pattern)
+          out=Path('results/alan-joint-factorial');out.mkdir(parents=True,exist_ok=True)
+          (out/'Macgregor_primary_paper_source_receipt.json').write_text(json.dumps({
+              'doi':'10.1002/ecs2.2550','official_open_repository_url':url,
+              'original_pdf_sha256':digest,'original_pdf_pages':len(reader.pages),
+              'reared_seed_moth_identified':'Lacanobia oleracea',
+              'original_light_access_interaction_reported_non_significant':True,
+              'the_pooled_caging_rates_are_dark_only':False,
+              'published_raw_2x2_covariance_recovered':False,
+              'source_pdf_redistributed':False,'new_experimental_effect_estimated':False,
+          },indent=2)+'\n')
+          print('ORIGINAL_MACGREGOR_PDF_SHA_VERIFIED',digest,len(reader.pages))
+          PY
+      - name: Archive aggregate-only source, numerical and eligibility receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-alan-shared-control-factorial-identification-v01
+          path: results/alan-joint-factorial/
+          if-no-files-found: error
+          retention-days: 90
