@@ -1,0 +1,112 @@
+name: Direct diel index original-species-and-phylogeny sensitivity
+on:
+  push:
+    branches: [analysis/diel-direct-original-phylogeny-20261115]
+    paths:
+      - src/iwe/diel_direct_lineage.py
+      - scripts/run_diel_direct_lineage.py
+      - scripts/verify_diel_direct_phylogeny.py
+      - tests/test_diel_direct_lineage.py
+      - .github/workflows/diel-direct-original-phylogeny.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-tree:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install source, inference and test dependencies
+        run: python -m pip install -e '.[dev]' requests rdata
+      - name: Exercise null precision, source identity, and phylogeny gates
+        run: python -m pytest -q tests/test_diel_direct_lineage.py tests/test_diel_index_selection.py tests/test_diel_endpoint_lineage.py
+      - name: Fetch signed original treatment data and RData phylogeny
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from urllib.parse import quote
+          import requests,numpy as np,pandas as pd,rdata,hashlib,json
+          src=Path('results/source');src.mkdir(parents=True,exist_ok=True)
+          pins={
+            'data/DvN_LiteratureDataClean_2024-09-13.csv':('39a82d966afcdde670603add1c881ace8791ffe9','author.csv'),
+            'data/SppTraitData_clean.csv':('18381e550a7e405fe4f198909f0bb381bbecf1e0','traits.csv'),
+            'output/DvN_plant_phylogeny final.RData':('d823c2adbdd088372168addece4ec34063ad0b8a','tree.RData'),
+            'output/DvN_analysis_dataframe final.RData':('82935a0ab6172106e798d3bee88c43359007699a','analysis.RData'),
+          }
+          audit=[]
+          def safe(x):
+              if isinstance(x,dict):return {str(k):safe(v) for k,v in x.items()}
+              if isinstance(x,np.ndarray):return x.tolist()
+              if isinstance(x,(list,tuple)):return [safe(v) for v in x]
+              if isinstance(x,np.generic):return x.item()
+              return str(x)
+          for rel,(expected,local) in pins.items():
+              url='https://raw.githubusercontent.com/liamkendall/bumble-bat/main/'+quote(rel)
+              resp=requests.get(url,timeout=45);resp.raise_for_status()
+              raw=resp.content
+              sha=hashlib.sha1(f'blob {len(raw)}\0'.encode()+raw).hexdigest()
+              if sha!=expected:raise ValueError(f'Original author source drift: {rel}: {sha}')
+              target=src/local;target.write_bytes(raw)
+              audit.append({'original_path':rel,'original_git_blob':sha,'sha256':hashlib.sha256(raw).hexdigest()})
+              if local.endswith('.RData'):
+                  for name,value in rdata.read_rda(target).items():
+                      if isinstance(value,pd.DataFrame):value.to_csv(src/f'{name}.csv',index=False)
+                      else:(src/f'{name}.json').write_text(json.dumps(safe(value),ensure_ascii=False))
+          out=Path('results/analysis');out.mkdir(parents=True,exist_ok=True)
+          (out/'original_source_manifest.json').write_text(json.dumps(audit,indent=2)+'\n')
+          PY
+      - name: Fit source-matched E under original author phylogeny
+        run: >-
+          python scripts/run_diel_direct_lineage.py
+          --author results/source/author.csv
+          --traits results/source/traits.csv
+          --tree results/source/diel.tree.out.json
+          --original-analysis results/source/diel.all.diffs.csv
+          --out results/analysis
+      - name: Independent eigensolver and Nelder-Mead verification
+        run: >-
+          python scripts/verify_diel_direct_phylogeny.py
+          --author results/source/author.csv
+          --traits results/source/traits.csv
+          --tree results/source/diel.tree.out.json
+          --original-analysis results/source/diel.all.diffs.csv
+          --models results/analysis/direct_phylogeny_models.csv
+          --out results/analysis/independent_E_numerical_verification.json
+      - name: Assert actual published-source headline values, never invented biological conclusions
+        run: |
+          python - <<'PY'
+          import json,pandas as pd
+          from pathlib import Path
+          base=Path('results/analysis')
+          d=pd.read_csv(base/'direct_phylogeny_models.csv')
+          report=json.loads((base/'direct_phylogeny_receipt.json').read_text())
+          q=d[(d.panel=='tree_common')&(d.model=='publication_species_phylogeny')].set_index('metric')
+          assert len(d)==8 and set(q.index)=={'fruit set','seed set'}
+          for metric,n,mean,low,high in [
+              ('fruit set',69,.137568,.023008,.252127),
+              ('seed set',59,.071684,-.155222,.298589),
+          ]:
+              row=q.loc[metric]
+              assert row.k_publications==n
+              for key,val in [('mean',mean),('ci_low',low),('ci_high',high)]:
+                  assert abs(row[key]-val)<.0001,(metric,key,row[key],val)
+          assert q.loc['fruit set','ci_low']>0 and q.loc['seed set','ci_low']<0<q.loc['seed set','ci_high']
+          assert report['full_precision_cells']==254
+          assert report['tree_mapped_precision_cells']==252
+          assert report['tree_mapped_precision_publication_ids']==99
+          assert report['original_tree_tips']==139 and report['new_iwe_strict_H1_effects']==0
+          print('SOURCE_E_PHYLOGENY_REPLICATED',q[['mean','ci_low','ci_high']].to_string())
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iwe-direct-diel-original-phylogeny-20261115
+          path: results/analysis/
+          if-no-files-found: error
+          retention-days: 90
