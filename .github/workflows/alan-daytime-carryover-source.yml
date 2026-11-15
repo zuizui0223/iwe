@@ -1,0 +1,86 @@
+name: Source-pinned ALAN daytime-only reproduction after nighttime exposure
+
+on:
+  push:
+    branches: [analysis/alan-daytime-carryover-source-20261115]
+    paths:
+      - 'src/iwe/alan_daytime_carryover.py'
+      - 'scripts/audit_alan_daytime_carryover.py'
+      - 'tests/test_alan_daytime_carryover.py'
+      - '.github/workflows/alan-daytime-carryover-source.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  signed-daytime-seed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install IWE test environment
+        run: python -m pip install -e '.[dev]'
+      - name: Test original source, seed stage and mechanistic claim gates
+        run: python -m pytest -q tests/test_alan_daytime_carryover.py
+      - name: Fetch already-transcribed author Table S3 from pinned ALAN commit
+        run: |
+          python - <<'PY'
+          import hashlib
+          from pathlib import Path
+          import urllib.request
+          from iwe.alan_daytime_carryover import ALAN_PINNED_COMMIT,ALAN_SOURCE_GIT_BLOB
+          url=('https://raw.githubusercontent.com/zuizui0223/alan/'+ALAN_PINNED_COMMIT+
+               '/results/alan_Grognuz2026_tableS3_block_derived_20261115.csv')
+          with urllib.request.urlopen(url,timeout=40) as resp:
+              raw=resp.read(100000)
+          sha=hashlib.sha1(f'blob {len(raw)}\0'.encode()+raw).hexdigest()
+          if sha!=ALAN_SOURCE_GIT_BLOB:raise ValueError('Upstream derived source blob drift')
+          folder=Path('results/transient');folder.mkdir(parents=True,exist_ok=True)
+          (folder/'alan_original_derived_blocks.csv').write_bytes(raw)
+          print('SIGNED_UPSTREAM_TRANSCRIBED_TABLE',sha,len(raw))
+          PY
+      - name: Rebuild per-species day-only reproductive carryover, observed counts and missingness
+        run: >-
+          python scripts/audit_alan_daytime_carryover.py
+          --alan-derived-block-source results/transient/alan_original_derived_blocks.csv
+          --out-dir results/analysis
+      - name: Enforce 28 repeated choice rounds cannot become 28 independent lights
+        run: |
+          python - <<'PY'
+          import json,pandas as pd
+          from pathlib import Path
+          r=Path('results/analysis')
+          receipt=json.loads((r/'daytime_only_seed_function_receipt.json').read_text())
+          summary=pd.read_csv(r/'daytime_only_seed_stage_summary.csv').set_index('species')
+          source=receipt['study']
+          assert source['original_n_daytime_choice_rounds']==28
+          assert source['original_n_observed_seed_outcomes']==425
+          assert source['original_n_missing_seed_outcomes']==23
+          assert source['original_fully_bagged_control_flower_total']==39
+          assert source['fully_bagged_control_flower_seed_positive']==3
+          assert source['daylight_carryover_mechanism_identified'] is False
+          assert source['focal_species_original_nocturnal_dependence_measured'] is False
+          assert source['strict_h1_effects_created']==0
+          for species,all_ratio,noslug_ratio,missing_lit_tip in [
+              ('Trifolium pratense',.714467,.805170,34.714286),
+              ('Centaurea jacea',.714790,.270833,4.0),
+          ]:
+              line=summary.loc[species]
+              assert abs(line.equal_choice_round_lit_dark_ratio-all_ratio)<.0002,(species,line.equal_choice_round_lit_dark_ratio)
+              assert abs(line.no_slug_lit_dark_ratio-noslug_ratio)<.0002
+              assert abs(line.tipping_missing_lit_pot_seed_per_pot_if_dark_missing_assumed_zero-missing_lit_tip)<.001
+              assert line.source_choice_rounds_are_independent_lamp_installations==False
+              assert line.valid_new_lighting_study_effect_SE==False
+          print('SOURCE_STAGE_AND_REPLICATION_GATES_PASS')
+          PY
+      - name: Preserve only two-species aggregates and provenance, not unpublished individual pots
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-ALAN-daytime-carryover-verified-v01
+          path: results/analysis/
+          if-no-files-found: error
+          retention-days: 90
