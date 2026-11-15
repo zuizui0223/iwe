@@ -1,0 +1,89 @@
+name: Diel endpoint and original-lineage robustness
+on:
+  push:
+    branches: [analysis/diel-endpoint-lineage-audit-20261115]
+    paths:
+      - 'src/iwe/diel_endpoint_lineage.py'
+      - 'scripts/run_diel_endpoint_lineage.py'
+      - 'scripts/verify_diel_lineage_numerics.py'
+      - 'tests/test_diel_endpoint_lineage.py'
+      - '.github/workflows/diel-endpoint-lineage-analysis.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -e '.[dev]' requests rdata
+      - name: Test endpoint meanings, tree covariance and publication membership
+        run: python -m pytest -q tests/test_diel_endpoint_lineage.py
+      - name: Fetch original author treatments, traits, tree and final analysis with exact blob verification
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from urllib.parse import quote
+          import requests,rdata,numpy as np,pandas as pd,hashlib,json
+          src=Path('results/source');src.mkdir(parents=True,exist_ok=True)
+          out=Path('results/analysis');out.mkdir(parents=True,exist_ok=True)
+          pins={
+            'data/DvN_LiteratureDataClean_2024-09-13.csv':('39a82d966afcdde670603add1c881ace8791ffe9','author.csv'),
+            'data/SppTraitData_clean.csv':('18381e550a7e405fe4f198909f0bb381bbecf1e0','traits.csv'),
+            'output/DvN_plant_phylogeny final.RData':('d823c2adbdd088372168addece4ec34063ad0b8a','tree.RData'),
+            'output/DvN_analysis_dataframe final.RData':('82935a0ab6172106e798d3bee88c43359007699a','analysis.RData')}
+          receipt=[]
+          def safe(x):
+              if isinstance(x,dict):return {str(k):safe(v) for k,v in x.items()}
+              if isinstance(x,np.ndarray):return x.tolist()
+              if isinstance(x,(tuple,list)):return [safe(v) for v in x]
+              if isinstance(x,np.generic):return x.item()
+              return str(x)
+          for path,(sha,name) in pins.items():
+              resp=requests.get('https://raw.githubusercontent.com/liamkendall/bumble-bat/main/'+quote(path),timeout=45);resp.raise_for_status();raw=resp.content
+              actual=hashlib.sha1(f'blob {len(raw)}\0'.encode()+raw).hexdigest();assert actual==sha,(path,actual)
+              target=src/name;target.write_bytes(raw)
+              receipt.append({'path':path,'original_git_blob':sha,'sha256':hashlib.sha256(raw).hexdigest()})
+              if name.endswith('.RData'):
+                  objects=rdata.read_rda(target)
+                  for obj,value in objects.items():
+                      if isinstance(value,pd.DataFrame):value.to_csv(src/f'{obj}.csv',index=False)
+                      else:(src/f'{obj}.json').write_text(json.dumps(safe(value),ensure_ascii=False))
+          (out/'original_source_pins.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          PY
+      - name: Refit same-panel models and all source endpoint subgroups
+        run: >-
+          python scripts/run_diel_endpoint_lineage.py
+          --author results/source/author.csv --traits results/source/traits.csv
+          --tree results/source/diel.tree.out.json
+          --original-analysis results/source/diel.all.diffs.csv
+          --out results/analysis
+      - name: Independently verify tree matrix and likelihood minima
+        run: >-
+          python scripts/verify_diel_lineage_numerics.py
+          --author results/source/author.csv --traits results/source/traits.csv
+          --tree results/source/diel.tree.out.json
+          --original-analysis results/source/diel.all.diffs.csv
+          --out results/analysis/independent_numerical_verification.json
+      - name: Preserve code identity without distributing original locations or notes
+        run: |
+          python - <<'PY'
+          import os,json,hashlib
+          from pathlib import Path
+          paths=['src/iwe/diel_endpoint_lineage.py','scripts/run_diel_endpoint_lineage.py','scripts/verify_diel_lineage_numerics.py','tests/test_diel_endpoint_lineage.py']
+          receipt={'head_commit':os.environ['GITHUB_SHA'],'code_sha256':{p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths},'original_coordinate_notes_distributed':False}
+          Path('results/analysis/execution_identity.json').write_text(json.dumps(receipt,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iwe-diel-endpoint-lineage-robustness
+          path: results/analysis/
+          if-no-files-found: error
+          retention-days: 90

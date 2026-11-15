@@ -1,0 +1,61 @@
+name: Diel endpoint and lineage original-source staging
+on:
+  push:
+    branches: [analysis/diel-endpoint-lineage-audit-20261115]
+    paths: [.github/workflows/diel-endpoint-lineage-source.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install requests rdata pandas numpy
+      - name: Recover exact author R data and serialize original tree without branch imputation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from urllib.parse import quote
+          import requests,hashlib,json,rdata,numpy as np,pandas as pd
+          out=Path('results/source');out.mkdir(parents=True,exist_ok=True)
+          pins={'output/DvN_plant_phylogeny final.RData':'d823c2adbdd088372168addece4ec34063ad0b8a','output/DvN_analysis_dataframe final.RData':'82935a0ab6172106e798d3bee88c43359007699a'}
+          records=[]
+          def safe(x):
+              if isinstance(x,dict):return {str(k):safe(v) for k,v in x.items()}
+              if isinstance(x,np.ndarray):return x.tolist()
+              if isinstance(x,(tuple,list)):return [safe(v) for v in x]
+              if isinstance(x,np.generic):return x.item()
+              return str(x)
+          for i,(path,sha) in enumerate(pins.items()):
+              url='https://raw.githubusercontent.com/liamkendall/bumble-bat/main/'+quote(path)
+              response=requests.get(url,timeout=40);response.raise_for_status();raw=response.content
+              observed=hashlib.sha1(f'blob {len(raw)}\0'.encode()+raw).hexdigest()
+              assert observed==sha,(path,observed)
+              local=out/f'author_{i}.RData';local.write_bytes(raw)
+              objects=rdata.read_rda(local)
+              meta={'path':path,'blob':sha,'sha256':hashlib.sha256(raw).hexdigest(),'objects':{}}
+              for name,value in objects.items():
+                  meta['objects'][name]={'type':str(type(value))}
+                  if isinstance(value,pd.DataFrame):
+                      value.to_csv(out/f'{name}.csv',index=False)
+                      meta['objects'][name].update(rows=len(value),columns=value.columns.tolist())
+                  else:
+                      (out/f'{name}.json').write_text(json.dumps(safe(value),ensure_ascii=False))
+                      meta['objects'][name]['preview']=str(value)[:2000]
+              records.append(meta)
+          (out/'source_receipt.json').write_text(json.dumps(records,indent=2,ensure_ascii=False))
+          print(json.dumps(records,indent=2,ensure_ascii=False))
+          PY
+      - name: Include current analysis checkout for isolated local validation
+        run: tar --exclude=.git --exclude=results -czf results/source/iwe_checkout.tar.gz src scripts tests data docs pyproject.toml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iwe-diel-endpoint-lineage-source
+          path: results/source/
+          if-no-files-found: error
+          retention-days: 7
