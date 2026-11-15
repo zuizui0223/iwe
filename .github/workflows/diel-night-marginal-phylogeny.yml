@@ -1,0 +1,121 @@
+name: Night marginal reproduction with original species and phylogeny
+
+on:
+  push:
+    branches: [analysis/night-marginal-phylogeny-20261115]
+    paths:
+      - 'src/iwe/diel_night_phylogeny.py'
+      - 'scripts/run_diel_night_phylogeny.py'
+      - 'scripts/verify_diel_night_phylogeny.py'
+      - 'tests/test_diel_night_phylogeny.py'
+      - '.github/workflows/diel-night-marginal-phylogeny.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install IWE and original RData dependencies
+        run: python -m pip install -e '.[dev]' requests rdata
+      - name: Validate source grain and phylogeny controls
+        run: >-
+          python -m pytest -q
+          tests/test_diel_night_phylogeny.py
+          tests/test_diel_endpoint_lineage.py
+          tests/test_diel_reserve_meta.py
+      - name: Retrieve four original author files with immutable Git hashes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from urllib.parse import quote
+          import hashlib,json,numpy as np,pandas as pd,rdata,requests
+          src=Path('results/source');src.mkdir(parents=True,exist_ok=True)
+          out=Path('results/analysis');out.mkdir(parents=True,exist_ok=True)
+          pins={
+            'data/DvN_LiteratureDataClean_2024-09-13.csv':('39a82d966afcdde670603add1c881ace8791ffe9','author.csv'),
+            'data/SppTraitData_clean.csv':('18381e550a7e405fe4f198909f0bb381bbecf1e0','traits.csv'),
+            'output/DvN_plant_phylogeny final.RData':('d823c2adbdd088372168addece4ec34063ad0b8a','tree.RData'),
+            'output/DvN_analysis_dataframe final.RData':('82935a0ab6172106e798d3bee88c43359007699a','analysis.RData'),
+          }
+          def safe(x):
+              if isinstance(x,dict):return {str(k):safe(v) for k,v in x.items()}
+              if isinstance(x,np.ndarray):return x.tolist()
+              if isinstance(x,(tuple,list)):return [safe(v) for v in x]
+              if isinstance(x,np.generic):return x.item()
+              return str(x)
+          audit=[]
+          for path,(expected,name) in pins.items():
+              uri='https://raw.githubusercontent.com/liamkendall/bumble-bat/main/'+quote(path)
+              response=requests.get(uri,timeout=45);response.raise_for_status()
+              raw=response.content
+              actual=hashlib.sha1(f'blob {len(raw)}\0'.encode()+raw).hexdigest()
+              if actual!=expected:raise ValueError(f'Original source changed: {path} {actual}')
+              target=src/name;target.write_bytes(raw)
+              audit.append({'original_path':path,'git_blob':actual,'sha256':hashlib.sha256(raw).hexdigest()})
+              if name.endswith('.RData'):
+                  for k,v in rdata.read_rda(target).items():
+                      if isinstance(v,pd.DataFrame):v.to_csv(src/f'{k}.csv',index=False)
+                      else:(src/f'{k}.json').write_text(json.dumps(safe(v),ensure_ascii=False))
+          (out/'original_source_manifest.json').write_text(json.dumps(audit,indent=2)+'\n')
+          PY
+      - name: Refit marginal night response with original author phylogeny
+        run: >-
+          python scripts/run_diel_night_phylogeny.py
+          --author results/source/author.csv
+          --traits results/source/traits.csv
+          --tree results/source/diel.tree.out.json
+          --original-analysis results/source/diel.all.diffs.csv
+          --out results/analysis
+      - name: Validate independent source cohorts and literal seed denominators
+        run: |
+          python - <<'PY'
+          import json,pandas as pd
+          from pathlib import Path
+          folder=Path('results/analysis')
+          m=pd.read_csv(folder/'night_marginal_phylogeny_models.csv')
+          d=pd.read_csv(folder/'night_marginal_denominator_coverage.csv')
+          r=json.loads((folder/'night_marginal_phylogeny_receipt.json').read_text())
+          assert len(m)==8 and r['full_source_mean_cells']==344
+          assert r['precision_cells']==246 and r['tree_mapped_precision_cells']==244
+          assert r['original_tree_tips']==139 and r['new_strict_iwe_h1_effects']==0
+          for metric,k,mean,low,high in [
+              ('fruit set',61,.283670,.182200,.385140),
+              ('seed set',54,.221730,.135697,.307762),
+          ]:
+              row=m[(m.metric==metric)&(m.panel=='tree_common')&
+                    (m.dependence=='publication_species_phylogeny')]
+              assert len(row)==1 and row.iloc[0].k_publications==k
+              for key,val in [('mean',mean),('ci_low',low),('ci_high',high)]:
+                  assert abs(row.iloc[0][key]-val)<.0001,(metric,key,row.iloc[0][key],val)
+          z=d[(d.metric=='seed set')&(d.denominator=='seeds_per_fruit')]
+          assert len(z)==1 and z.iloc[0].precision_publications==32
+          assert abs(z.iloc[0].conditional_phylogeny_mean-.172860)<.0001
+          assert z.iloc[0].conditional_phylogeny_ci_low>0
+          print('ORIGINAL_PHYLOGENY_AND_DENOMINATOR_REPLAY_SUCCESS')
+          PY
+      - name: Verify REML independently with eigenvalues and derivative-free optimizer
+        run: >-
+          python scripts/verify_diel_night_phylogeny.py
+          --author results/source/author.csv
+          --tree results/source/diel.tree.out.json
+          --original-analysis results/source/diel.all.diffs.csv
+          --models results/analysis/night_marginal_phylogeny_models.csv
+          --denominators results/analysis/night_marginal_denominator_coverage.csv
+          --out results/analysis/independent_eigensolver_verification.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: iwe-night-marginal-phylogeny-v01
+          path: results/analysis/
+          if-no-files-found: error
+          retention-days: 90
