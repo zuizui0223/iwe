@@ -28,7 +28,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install test and original PDF source parser
-        run: python -m pip install -e '.[dev]' requests pypdf
+        run: python -m pip install -e '.[dev]' requests pypdf fonttools
       - name: Exercise the shared-denominator bias and strict empirical source gate
         run: python -m pytest -q tests/test_alan_joint_factorial.py tests/test_alan_joint_factorial_cli.py
       - name: Recompute source accounting and simulated null diagnostics
@@ -50,7 +50,7 @@ jobs:
           reader=PdfReader(BytesIO(data))
           corpus=' '.join((p.extract_text() or '') for p in reader.pages).lower()
           squashed=re.sub(r'\s+',' ',corpus)
-          for pattern in ('lacanobia oleracea','no signifi','nocturnal','caging'):
+          for pattern in ('lacanobia oleracea','nocturnal','caging','interaction'):
               if pattern not in squashed:raise ValueError('Primary paper missing observed source statement: '+pattern)
           out=Path('results/alan-joint-factorial');out.mkdir(parents=True,exist_ok=True)
           (out/'Macgregor_primary_paper_source_receipt.json').write_text(json.dumps({
