@@ -1,0 +1,3 @@
+plant_species,final_endpoint,ontogeny_test_no_control,p_value,source_interpretation,transformation
+Sinapis arvensis,reproductive_potential,0.21,0.81,"Timing changes total seed mass, individual seed mass and germination, but not reproductive potential (seed number × germination); compensation across seed quantity/quality removes the timing effect at the integrated endpoint.",buffered
+Brassica nigra,reproductive_potential,41.2,<0.001,"Reproductive potential differs strongly with ontogenetic stage of herbivory; vegetative/budding attack reduces final reproductive potential whereas flowering-stage attack is similar to control.",preserved

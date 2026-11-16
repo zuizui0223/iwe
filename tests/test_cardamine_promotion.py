@@ -39,6 +39,10 @@ def _provenance(**overrides):
         "source_id": "author_archive:cardamine_female_mrr",
         "source_backed": True,
         "synthetic_fixture": False,
+        "adult_event_doy_basis": "calendar_day_of_year",
+        "plant_observation_doy_basis": "calendar_day_of_year",
+        "adult_calendar_origin_source_locator": "original 2012-2014 female capture/recapture calendar-date records",
+        "figure_digitization_performed": False,
     }
     item.update(overrides)
     return item

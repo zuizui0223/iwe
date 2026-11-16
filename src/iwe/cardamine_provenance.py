@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from calendar import isleap
 
 import pandas as pd
 
@@ -84,6 +85,30 @@ def validate_cardamine_adult_provenance(
         if declared_years != CARDAMINE_REAL_YEARS:
             errors.append("real adult provenance years must be exactly 2012, 2013, 2014")
 
+        # Figures 2 and 4 in Davies & Saccheri (2024) reset Day 1 to
+        # the first observed early-ecotype flowering date *separately*
+        # for each year. The raw Dryad transect Date is calendar DOY.
+        # Both may contain numbers between 1 and 366; range validation
+        # alone cannot detect a biologically disastrous origin mismatch.
+        for field in ("adult_event_doy_basis", "plant_observation_doy_basis"):
+            if provenance.get(field) != "calendar_day_of_year":
+                errors.append(
+                    f"real Cardamine {field} must explicitly be "
+                    "calendar_day_of_year; Figure-4 relative Day 1 is "
+                    "not an absolute DOY"
+                )
+        locator = provenance.get("adult_calendar_origin_source_locator")
+        if not isinstance(locator, str) or len(locator.strip()) < 12:
+            errors.append(
+                "real adult events require a specific original capture/recapture "
+                "calendar-date column or reviewed year-specific origin locator"
+            )
+        if provenance.get("figure_digitization_performed") is not False:
+            errors.append(
+                "real adult events must declare figure_digitization_performed=false; "
+                "Figure 4 graphical values are not raw event dates"
+            )
+
     if "year" not in adult_events.columns or "event_doy" not in adult_events.columns:
         errors.append("adult_events must contain year and event_doy")
         return errors
@@ -106,6 +131,21 @@ def validate_cardamine_adult_provenance(
     else:
         if doys.isna().any() or ((doys < 1) | (doys > 366)).any():
             errors.append("adult event_doy values must lie within 1..366")
+        # A non-leap-year day 366 can be numerically plausible in a
+        # graph but never an actual calendar date.
+        if "year" in adult_events:
+            for y, d in zip(adult_events["year"], doys):
+                try:
+                    yy = int(y)
+                    if float(y) != yy:
+                        continue  # independently flagged as non-integer
+                except (ValueError, TypeError, OverflowError):
+                    continue
+                if pd.notna(d) and float(d) > (366 if isleap(yy) else 365):
+                    errors.append(
+                        f"calendar DOY exceeds year={yy} day limit"
+                    )
+                    break
 
     return errors
 

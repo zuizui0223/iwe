@@ -1,0 +1,15 @@
+site,quantity,value,uncertainty_or_note,source
+Shiga,benefit_viable_seed_proportion,0.6285,2024 cost-benefit assessment,Kawashima_et_al_2026
+Awaji,benefit_viable_seed_proportion,0.3683,2024 cost-benefit assessment,Kawashima_et_al_2026
+Shiga,cost_min_seed_fraction,0.0497,minimum cost = seeds consumed by larvae,Kawashima_et_al_2026
+Shiga,cost_max_seed_fraction,0.1064,maximum cost = seeds in larva-infested aborted fruits,Kawashima_et_al_2026
+Awaji,cost_min_seed_fraction,0.0895,minimum cost = seeds consumed by larvae,Kawashima_et_al_2026
+Awaji,cost_max_seed_fraction,0.2672,maximum cost = seeds in larva-infested aborted fruits,Kawashima_et_al_2026
+Shiga,benefit_cost_ratio_min,5.91,benefit / maximum cost,Kawashima_et_al_2026
+Shiga,benefit_cost_ratio_max,12.65,benefit / minimum cost,Kawashima_et_al_2026
+Awaji,benefit_cost_ratio_min,1.38,benefit / maximum cost,Kawashima_et_al_2026
+Awaji,benefit_cost_ratio_max,4.12,benefit / minimum cost,Kawashima_et_al_2026
+pooled,viable_seed_fraction_infested_aborted,0.201,n=35,Kawashima_et_al_2026
+pooled,viable_seed_fraction_mature,0.772,n=325,Kawashima_et_al_2026
+pooled,germination_infested_aborted,0.027,n=1242,Kawashima_et_al_2026
+pooled,germination_mature,0.387,n=821,Kawashima_et_al_2026

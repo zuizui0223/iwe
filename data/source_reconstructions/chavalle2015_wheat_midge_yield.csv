@@ -1,0 +1,8 @@
+source_doi,season,cultivar,response,value,units,qualifier
+10.1002/ps.3855,2012-2013,all,timed_insecticide_larval_reduction_min,44,percent,"range across insecticide products; no variance in abstract"
+10.1002/ps.3855,2012-2013,all,timed_insecticide_larval_reduction_max,96,percent,"range across insecticide products; no variance in abstract"
+10.1002/ps.3855,2013,Julius,insecticide_yield_gain,1558,kg_per_hectare,"highly exposed cultivar; +18% relative gain"
+10.1002/ps.3855,2013,Julius,insecticide_yield_gain_percent,18,percent,"source abstract"
+10.1002/ps.3855,2013,Lear,insecticide_yield_gain,780,kg_per_hectare,"midge-resistant cultivar; +8% relative gain"
+10.1002/ps.3855,2013,Lear,insecticide_yield_gain_percent,8,percent,"source abstract"
+10.1002/ps.3855,2012-2013,all,larval_count_to_yield_form,logarithmic,categorical,"source-reported association; exact coefficients not recovered"

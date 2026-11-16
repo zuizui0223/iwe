@@ -1,0 +1,5 @@
+year,path_from,path_to,coefficient,significance,source
+2001,peak_flowering_date,pollinator_per_day,-0.37,significant,Althoff_et_al_2005_Fig3
+2001,pollinator_per_day,relative_fruit_set,0.60,significant,Althoff_et_al_2005_Fig3
+2002,peak_flowering_date,pollinator_per_day,-0.27,significant,Althoff_et_al_2005_Fig3
+2002,pollinator_per_day,relative_fruit_set,0.48,significant,Althoff_et_al_2005_Fig3

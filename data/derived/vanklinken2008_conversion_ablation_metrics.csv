@@ -1,0 +1,11 @@
+coordinate,n_region_seasons,n_regions,pearson_r,leave_one_region_out_rmse_pp,leave_one_region_out_mae_pp,analysis_status
+annual_eggs,7,4,0.4762529941,20.5841932718,19.0385930653,exploratory_outcome_exposed
+stage_eggs,7,4,0.5964140926,19.9286407547,16.0994007182,exploratory_outcome_exposed
+nonparasitized_fraction,7,4,0.9519255124,4.7194997141,4.1370305752,exploratory_outcome_exposed
+hatch_fraction,7,4,0.3125903797,15.8299035679,14.4029608385,exploratory_outcome_exposed
+joint_survival_fraction,7,4,0.9721743395,4.1079791112,3.6060550771,exploratory_outcome_exposed
+annual_nonparasitized,7,4,0.7723149719,10.9241032570,9.8775965134,exploratory_outcome_exposed
+stage_nonparasitized,7,4,0.8457132569,7.6575682328,6.7784985264,exploratory_outcome_exposed
+stage_hatched,7,4,0.8220460464,6.9843637109,5.8412721377,exploratory_outcome_exposed
+annual_joint_survival,7,4,0.8619382983,8.1766460327,7.3149885352,exploratory_outcome_exposed
+stage_joint_survival,7,4,0.9378943315,4.9243281848,4.7808172933,exploratory_outcome_exposed

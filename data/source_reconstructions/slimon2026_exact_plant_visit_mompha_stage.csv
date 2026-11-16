@@ -1,0 +1,8 @@
+source_doi,experiment,flowering_calendar_year,source_observation,shared_source_plants,common_survey_dates,paired_plant_visits,relative_to_observed_flowering,phase_plant_visits,unique_plants_at_phase,mompha_positive_plant_visits,sum_new_mompha_observations,mompha_positive_visits_zero_open_flower,source_calendar_year_replicate,strict_h1_effect
+10.5281/zenodo.19488509,exp1,2023,weekly_new_Mompha_visible_counts,149,11,1468,before_first_recorded_flower,22,19,1,1,1,no,no
+10.5281/zenodo.19488509,exp1,2023,weekly_new_Mompha_visible_counts,149,11,1468,within_recorded_flower_window,991,145,405,1266,290,no,no
+10.5281/zenodo.19488509,exp1,2023,weekly_new_Mompha_visible_counts,149,11,1468,after_last_recorded_flower,455,133,0,0,0,no,no
+10.5281/zenodo.19488509,exp2,2023,weekly_new_Mompha_visible_counts,123,9,987,before_first_recorded_flower,129,45,28,74,27,no,no
+10.5281/zenodo.19488509,exp2,2023,weekly_new_Mompha_visible_counts,123,9,987,within_recorded_flower_window,480,95,191,533,156,no,no
+10.5281/zenodo.19488509,exp2,2023,weekly_new_Mompha_visible_counts,123,9,987,after_last_recorded_flower,361,102,0,0,0,no,no
+10.5281/zenodo.19488509,exp2,2023,weekly_new_Mompha_visible_counts,123,9,987,missing_or_invalid_window,17,3,5,11,5,no,no

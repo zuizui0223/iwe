@@ -1,0 +1,38 @@
+name: IWE original Physalis 2026 herbivore-mediated pollinator source gate
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/probe_davis2026_physalis_dryad.py
+      - tests/test_davis2026_physalis_dryad.py
+      - docs/DAVIS2026_PHYSALIS_SOURCE_GATE.md
+      - .github/workflows/davis2026-physalis-source.yml
+
+permissions:
+  contents: read
+
+jobs:
+  original-herbivore-pollinator-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test official Dryad version provenance, route and source key integrity
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_davis2026_physalis_dryad.py
+      - name: Check original publicly deposited eight Dryad source files and unit signatures
+        run: >-
+          python -m scripts.probe_davis2026_physalis_dryad
+          --outdir /tmp/iwe-davis2026-physalis
+      - name: Save only access receipts and source-header audit; no raw observation redistribution
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-davis2026-physalis-original-source-access
+          path: /tmp/iwe-davis2026-physalis/physalis2026_source_admission.json
+          if-no-files-found: warn
+          retention-days: 7

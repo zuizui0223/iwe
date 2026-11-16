@@ -1,0 +1,37 @@
+name: IWE Slimon exact plant-visit stage lag audit
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/analyze_slimon2026_plant_visit_stage_lag.py
+      - tests/test_slimon2026_plant_visit_stage_lag.py
+      - .github/workflows/slimon2026-plant-visit-stage-lag.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-stage-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify exact-date and biological grain guards
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_slimon2026_plant_visit_stage_lag.py
+      - name: Join original 2023 per-plant visit flower and Mompha records
+        run: >-
+          python -m scripts.analyze_slimon2026_plant_visit_stage_lag
+          --outdir /tmp/iwe-slimon2026-plant-visits
+      - name: Save only derived source count summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slimon2026-plant-visit-stage-summary
+          path: /tmp/iwe-slimon2026-plant-visits/plant_visit_stage_diagnostic.json
+          if-no-files-found: warn
+          retention-days: 7

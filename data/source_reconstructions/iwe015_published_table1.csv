@@ -1,0 +1,5 @@
+year,period,adult_plants,fruit_initiation_mean,fruit_initiation_printed_dispersion,successful_fruits_mean,successful_fruits_printed_dispersion,predation_rate_mean,predation_rate_printed_dispersion,printed_dispersion_label
+2012,early,59,0.91,0.19,2.66,2.95,0.59,0.36,SE
+2012,late,58,0.92,0.19,3.91,4.13,0.41,0.35,SE
+2013,early,55,0.93,0.10,9.77,6.91,0.20,0.30,SE
+2013,late,55,0.93,0.10,8.60,7.01,0.19,0.24,SE

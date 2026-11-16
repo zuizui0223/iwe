@@ -1,0 +1,7 @@
+route_id,study_doi,original_source_doi,dryad_version_id,original_file,experiment_type,original_file_metadata_public,original_file_bytes_recovered_github_runner,independently_timed_adult_partner_activity_verified,same_native_plant_unit_terminal_plant_seed_fitness_verified,same_host_native_benefit_cost_linkage_verified,strict_h1_effect_admitted
+JAD2025-COST,10.1086/736460,10.5061/dryad.2bvq83c2b,367420,Cost_of_a_Pollinating_Seed_Predator_to_the_Host_Plant.zip,offspring_seed_viability_cost,yes,no,no,no,no,no
+JAD2025-FIELD,10.1086/736460,10.5061/dryad.2bvq83c2b,367420,Pollination_Success_in_the_Field.zip,adult_pollination_field,yes,no,no,no,no,no
+JAD2025-GREENHOUSE,10.1086/736460,10.5061/dryad.2bvq83c2b,367420,Test_of_Pollination_Success_in_a_Greenhouse.zip,adult_pollination_greenhouse,yes,no,no,no,no,no
+JAD2025-TIME,10.1086/736460,10.5061/dryad.2bvq83c2b,367420,Greennhouse_time.zip,greenhouse_timing_unreviewed,yes,no,no,no,no,no
+JAD2025-README,10.1086/736460,10.5061/dryad.2bvq83c2b,367420,README.md,source_dictionary_unrecovered,yes,no,no,no,no,no
+JAD2025-CODE,10.1086/736460,10.5061/dryad.2bvq83c2b,367420,Dryad_New_Twist_Old_Story_Code.Rmd,source_analysis_code_unrecovered,yes,no,no,no,no,no

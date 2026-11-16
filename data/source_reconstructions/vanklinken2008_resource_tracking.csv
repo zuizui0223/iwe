@@ -1,0 +1,12 @@
+quantity,value,uncertainty_or_note,source
+mean_seed_predation,2-30%,across study sites/regions,van_Klinken_Flack_2008
+mean_egg_density,0.55-3.2 eggs_per_seed,across study sites/regions,van_Klinken_Flack_2008
+unexplained_egg_mortality,6-44%,across sites,van_Klinken_Flack_2008
+egg_parasitism,10-70%,across sites; only density-dependent mortality factor,van_Klinken_Flack_2008
+larval_pupal_mortality,62%,overall estimate,van_Klinken_Flack_2008
+predation_without_direct_immature_mortality,5-56%,deterministic model at observed egg densities,van_Klinken_Flack_2008
+egg_density_needed_for_80pct_predation_no_parasitism,8.5 eggs_per_seed,model benchmark,van_Klinken_Flack_2008
+egg_density_needed_for_80pct_predation_70pct_parasitism,27.8 eggs_per_seed,model benchmark,van_Klinken_Flack_2008
+pod_maturation_to_drop_lag,about 6 weeks,pods mature synchronously before drop,van_Klinken_Flack_2008
+egg_density_at_pod_maturation,drops,consistently associated with maturation,van_Klinken_Flack_2008
+main_temporal_result,"egg density fails to peak when most seeds are available","within-season tracking inertia limits annual seed loss",van_Klinken_Flack_2008

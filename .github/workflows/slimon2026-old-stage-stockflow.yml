@@ -1,0 +1,41 @@
+name: IWE Slimon new-old stock-flow source-dependency audit
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/audit_slimon2026_old_mompha_stockflow.py
+      - tests/test_slimon2026_old_mompha_stockflow.py
+      - tests/test_slimon2026_old_mompha_stockflow_receipt.py
+      - data/source_reconstructions/slimon2026_old_mompha_stock_flow.csv
+      - docs/SLIMON2026_OLD_MOMPHA_STOCK_FLOW_AUDIT_20261013.md
+      - docs/SLIMON2026_NEW_OLD_STAGE_PROVENANCE_20261011.md
+      - .github/workflows/slimon2026-old-stage-stockflow.yml
+
+permissions:
+  contents: read
+
+jobs:
+  original-source-arithmetic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check old-stage cumulative bookkeeping detection offline
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_slimon2026_old_mompha_stockflow.py tests/test_slimon2026_old_mompha_stockflow_receipt.py
+      - name: Inspect exact original new/old stock flow and R source locators
+        run: >-
+          python -m scripts.audit_slimon2026_old_mompha_stockflow
+          --outdir /tmp/iwe-slimon2026-stockflow
+      - name: Preserve source-derived arithmetic and method receipt only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: slimon2026-new-old-stockflow-dependency-audit
+          path: /tmp/iwe-slimon2026-stockflow/source_new_old_stock_flow_audit.json
+          if-no-files-found: warn
+          retention-days: 7
