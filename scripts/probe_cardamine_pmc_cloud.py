@@ -82,16 +82,23 @@ def exact_candidate_urls(version: int, metadata_urls: list[str], listed_keys: li
 def docx_source_signals(raw: bytes) -> dict:
     """Diagnostic only: tokens are NOT sufficient evidence for the missing events."""
     with zipfile.ZipFile(io.BytesIO(raw)) as arc:
+        names = arc.namelist()
         member = arc.getinfo("word/document.xml")
         if member.file_size > 2_000_000:
             raise ValueError("oversized Word document XML")
         xml = arc.read("word/document.xml")
+        charts = sorted(x for x in names if x.startswith("word/charts/"))
+        embedded = sorted(x for x in names if x.startswith("word/embeddings/"))
+        images = sorted(x for x in names if x.startswith("word/media/"))
     root = ET.fromstring(xml)
     para = [" ".join(t.text or "" for t in p.findall(".//w:t", NS))
             for p in root.findall(".//w:p", NS)]
     normalized = "\n".join(para).casefold()
     return {
         "paragraphs": len(para),
+        "tables": len(root.findall(".//w:tbl", NS)),
+        "numeric_embedded_parts": charts + embedded,
+        "image_part_count": len(images),
         "has_all_2012_2014_tokens": all(str(y) in normalized for y in (2012, 2013, 2014)),
         "has_female_token": any(w in normalized for w in ("female", "females")),
         "has_captured_event_token": any(w in normalized for w in ("capture", "recapture")),
