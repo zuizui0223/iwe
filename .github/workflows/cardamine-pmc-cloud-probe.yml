@@ -1,0 +1,32 @@
+name: Cardamine PMC Cloud source probe
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/probe_cardamine_pmc_cloud.py'
+      - 'tests/test_cardamine_pmc_cloud.py'
+      - '.github/workflows/cardamine-pmc-cloud-probe.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate fail-closed logic
+        run: python -m unittest discover -s tests -p 'test_cardamine_pmc_cloud.py' -v
+      - name: Probe official NLM open-access cloud without promoting data
+        run: python scripts/probe_cardamine_pmc_cloud.py --out outputs/cardamine_pmc_cloud_receipt.json
+      - name: Upload metadata-only audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cardamine-pmc-cloud-probe
+          path: outputs/cardamine_pmc_cloud_receipt.json
+          if-no-files-found: warn
