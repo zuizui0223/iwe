@@ -137,7 +137,6 @@ def run() -> dict:
             if (filename.lower() not in ALLOWED or filename.lower() in seen
                     or not urlparse(u).path.startswith(f"/{PMCID}.{n}/")):
                 continue
-            seen.add(filename.lower())
             rec = {"filename": filename, "url": u.split("?")[0]}
             try:
                 raw = fetch(u)
@@ -145,6 +144,7 @@ def run() -> dict:
                 rec["bytes"] = len(raw)
                 rec["signals"] = docx_source_signals(raw)
                 rec["adjudication"] = "requires_human_source_verification"
+                seen.add(filename.lower())
             except (HTTPError, URLError, TimeoutError, ValueError, zipfile.BadZipFile,
                     KeyError, ET.ParseError) as e:
                 rec["adjudication"] = "access_or_parse_failed"
