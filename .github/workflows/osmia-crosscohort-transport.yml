@@ -1,0 +1,38 @@
+name: IWE Osmia 2021-2022 cross-cohort seed production transfer
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/analyze_osmia_crosscohort_transfer_2021_2022.py
+      - tests/test_osmia_crosscohort_transfer.py
+      - docs/OSMIA_2021_2022_CROSSCOHORT_TRANSPORT.md
+      - .github/workflows/osmia-crosscohort-transport.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-original-cohort-transport:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test source-grain, cross-cohort splits and outcome blindness
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_osmia_crosscohort_transfer.py
+      - name: Retrieve exactly original MD5-pinned 2021 and 2022 source bytes and evaluate untouched cohorts
+        run: >-
+          python -m scripts.analyze_osmia_crosscohort_transfer_2021_2022
+          --outdir /tmp/iwe-osmia-transport
+      - name: Share only source-derived aggregated audit, not individual plant records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-osmia-2021-2022-transport-derived
+          path: /tmp/iwe-osmia-transport/crosscohort_transport_audit.json
+          if-no-files-found: warn
+          retention-days: 7

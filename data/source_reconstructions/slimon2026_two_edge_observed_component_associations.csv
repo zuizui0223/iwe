@@ -1,0 +1,5 @@
+source_doi,experiment,flowering_calendar_year,n_four_file_plant_join,phenology_axis,mompha_count_n,mompha_count_spearman_rho,mompha_share_proxy_n,mompha_share_proxy_spearman_rho,conditional_rank_n,conditional_mompha_share_partial_rank_rho,raw_large_fruit_n,raw_large_fruit_spearman_rho,raw_small_fruit_n,raw_small_fruit_spearman_rho,original_intact_mature_seed_count_verified,independent_partner_activity_verified,strict_h1_effect
+10.5281/zenodo.19488509,exp1,2023,148,first_doy,148,0.08389,146,0.37189,146,0.18559,146,-0.42426,146,-0.31730,no,no,no
+10.5281/zenodo.19488509,exp1,2023,148,last_doy,148,0.13459,146,-0.06846,146,0.13676,146,0.24783,146,0.42129,no,no,no
+10.5281/zenodo.19488509,exp2,2023,123,first_doy,120,0.06038,114,0.28476,113,0.23428,115,-0.41908,115,-0.37530,no,no,no
+10.5281/zenodo.19488509,exp2,2023,123,last_doy,123,0.50452,116,0.41200,113,0.35585,117,0.25264,117,0.29792,no,no,no

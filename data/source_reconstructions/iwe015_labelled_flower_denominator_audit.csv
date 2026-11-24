@@ -1,0 +1,5 @@
+year,period,adult_plants,source_reported_measured_flowers,source_reported_mean_measured_flowers_per_plant,table1_successful_fruits_mean_per_plant,flower_measurement_scope,source_fitness_scope,scope_reconciled
+2012,early,59,280,4.8,2.66,one_week_tagged_followed_flowers,post_maturation_successful_fruits,not_yet
+2012,late,58,239,4.1,3.91,one_week_tagged_followed_flowers,post_maturation_successful_fruits,not_yet
+2013,early,55,294,5.4,9.77,one_week_tagged_followed_flowers,post_maturation_successful_fruits,not_yet
+2013,late,55,281,5.1,8.60,one_week_tagged_followed_flowers,post_maturation_successful_fruits,not_yet

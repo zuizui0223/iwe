@@ -1,0 +1,6 @@
+ecotype,mean_flowering_to_egg_days,se_days,n_eggs_or_plants,dehisced_before_larval_completion_pct,wholly_consumed_before_dehiscence_pct,source
+early,11.50,1.44,31,34,41,Davies_Saccheri_2024
+late,5.72,0.53,270,4,58,Davies_Saccheri_2024
+contrast,,,,,,"overall fate difference chi-square(df=2)=11.95; p=0.003"
+active_egg_threshold,7,,158,,,"eggs laid within 7 days of flowering produced fifth-instar larvae"
+inactive_egg_threshold,8,,87,,,"eggs laid later than 8 days after flowering did not produce fifth-instar larvae"

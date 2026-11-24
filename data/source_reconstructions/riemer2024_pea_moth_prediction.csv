@@ -1,0 +1,7 @@
+model,predictors,n_fields,predicted_observed_r2,delta_aic,loocv_mae_pct,loocv_rmse_pct,correct_pct,overestimated_pct,underestimated_pct,source
+M1,flowering_onset_only,88,0.58,44.28,6.42,9.20,85.23,2.27,12.50,Riemer_et_al_2024_Table3_4
+M2,min_distance_plus_flowering,88,0.65,32.35,6.15,8.61,85.23,4.54,10.23,Riemer_et_al_2024_Table3_4
+M3,first_moth_arrival_x_flowering,88,0.78,4.84,4.81,7.36,95.45,1.14,3.41,Riemer_et_al_2024_Table3_4
+M4,min_distance_plus_first_moth_arrival_x_flowering,88,0.80,0.00,4.85,7.16,95.45,1.14,3.41,Riemer_et_al_2024_Table3_4
+comparison,flower_only_to_moth_x_flower_rmse_reduction_pct,88,20.00,,,,,,,derived_from_source_tables
+comparison,flower_only_to_moth_x_flower_correct_classification_gain_pp,88,10.22,,,,,,,derived_from_source_tables

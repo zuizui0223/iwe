@@ -1,0 +1,38 @@
+name: IWE original Sinapis floral opportunity to fruit and seed conversion
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - scripts/analyze_hofer2022_conversion_components.py
+      - tests/test_hofer2022_conversion_components.py
+      - docs/HOFER2022_FRUIT_SEED_CONVERSION_AUDIT.md
+      - .github/workflows/hofer2022-fruit-seed-conversion.yml
+
+permissions:
+  contents: read
+
+jobs:
+  exact-original-reproductive-fate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test exact source grain, missing pod and seed states, shelter holdout
+        run: |
+          python -m pip install -e '.[dev]'
+          python -m pytest -q tests/test_hofer2022_conversion_components.py
+      - name: Original MD5-pinned Sinapis flower-fruit-seed decomposition
+        run: >-
+          python -m scripts.analyze_hofer2022_conversion_components
+          --outdir /tmp/iwe-hofer2022-stages
+      - name: Upload derived stage summary only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: iwe-sinapis-stage-conversion-derived
+          path: /tmp/iwe-hofer2022-stages/stage_conversion_audit.json
+          if-no-files-found: warn
+          retention-days: 7

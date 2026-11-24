@@ -1,0 +1,7 @@
+study_id,source_doi,experiment,flowering_calendar_year,original_unique_plant_ids,exact_triple_window_plant_visits,source_survey_dates,mompha_positive_visits,model_exposure,additive_joint_twfe_slope,source_plant_bootstrap_95_low,source_plant_bootstrap_95_high,single_axis_vs_fe_incremental_in_sample_r2,full_three_axis_model_fe_incremental_in_sample_r2,bootstrap_replicates,observed_oviposition,source_bud_denominator,observed_postlarval_intact_seeds,strict_h1_effect
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,exp1,2023,148,1055,8,390,prior_open_7d,0.255065,0.185100,0.315346,0.067663,0.091447,160,no,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,exp1,2023,148,1055,8,390,current_open,0.162720,0.093654,0.245225,0.024988,0.091447,160,no,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,exp1,2023,148,1055,8,390,future_open_7d,-0.016049,-0.101084,0.053073,0.003504,0.091447,160,no,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,exp2,2023,123,731,7,199,prior_open_7d,0.183456,0.069155,0.282144,0.031967,0.037802,160,no,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,exp2,2023,123,731,7,199,current_open,0.028497,-0.080981,0.126418,0.000572,0.037802,160,no,no,no,no
+PIVOT_SLIMON2026,10.5281/zenodo.19488509,exp2,2023,123,731,7,199,future_open_7d,-0.086583,-0.163644,0.025242,0.011291,0.037802,160,no,no,no,no

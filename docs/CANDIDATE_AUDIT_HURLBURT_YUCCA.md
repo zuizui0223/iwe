@@ -60,6 +60,22 @@ Therefore IWE will not use:
 - Pinhorn absence of moths/fruit as a phenological contrast;
 - pooled 1999–2003 viable-seed variance as if it were a year-specific high/low-overlap variance.
 
+## Additional biological interest, not an unlock
+
+Official 2013 COSEWIC assessments citing this thesis report a northern
+**reverse selective abscission** pattern: flowers with fewer moth eggs
+or poor pollen delivery tend to be aborted, unlike sanctions against
+egg-rich flowers described in other yuccas. This is a source-backed
+ecological boundary suggesting that when pollen delivery is limiting,
+oviposition may mark service receipt and plant retention can favour
+units with more moth eggs.
+
+The report is secondary, does not isolate egg effects from pollination
+or host resource allocation, and contains no within-season adult
+overlap-to-intact-seed join. It therefore does not fix the missing
+Hurlburt key or create a quantitative mixed cluster. See
+`LANDSCAPE_HURLBURT_YUCCA_REVERSE_ABSCISSION.md`.
+
 ## Exact unlock condition
 
 The Hurlburt programme can close mixed #2 if the 2004 thesis or archived field data provide, for at least two independent biological groups/windows within the programme:
@@ -77,8 +93,16 @@ A year-specific overlap index combined with year-specific final reproduction cou
 - **Dodd & Linhart / Yucca glauca**: reproductive outcomes and moth abundance vary along elevation, but the focal contrast is spatial abundance/environment, not temporal synchrony.
 - **Hurlburt / Yucca glauca**: the field design actually collected repeated within-season adult-moth counts during flowering and final reproduction, making it the strongest Yucca archival lead if the date-resolved series can be recovered.
 
-## Retrieval status
+## Retrieval status — updated 2026-10-02
 
-The thesis is repeatedly cited by Canadian federal/provincial recovery documents, but an openly retrievable full dissertation was not located in the current search.
+The dissertation has since been located as a public University of Alberta Scholaris item:
 
-Until the thesis/data are recovered, the candidate remains `blocked_timing_linkage`, P1, rather than being promoted from annual abundance summaries.
+- DOI `10.7939/r3-fe1d-kj80`;
+- primary file `NQ95948.pdf`;
+- repository-reported size 7.27 MB.
+
+The remaining blocker is therefore **not source discovery**. Independent public programme sources already verify repeated within-season adult-moth counts, marked clone/inflorescence follow-up, mature-fruit dissections, and variance-bearing viable-seed summaries.
+
+The exact unresolved datum is the **join key**: whether the dissected mature-fruit/viable-seed records retain marked clone/inflorescence identity plus flowering date/cohort, or another source-defined timing group that can be ordered against the adult-moth series.
+
+The current execution environment receives HTTP 403 from the Scholaris file endpoint. That is a runtime-access limitation, not source unavailability. See `CANDIDATE_AUDIT_HURLBURT_LINKAGE_20261002.md` for the narrowed stop rule.
