@@ -52,6 +52,33 @@ def media_urls(meta: dict) -> list[str]:
     return output
 
 
+
+def cloud_file_names(version: int) -> list[str]:
+    """Use NLM-documented S3 ListObjectsV2 on a single known article prefix."""
+    uri = f"{S3}/?list-type=2&prefix={PMCID}.{version}/"
+    root = ET.fromstring(fetch(uri, max_bytes=500_000))
+    names = []
+    for element in root.iter():
+        if element.tag.split("}")[-1] == "Key" and element.text:
+            names.append(element.text)
+    return names
+
+
+def exact_candidate_urls(version: int, metadata_urls: list[str], listed_keys: list[str]) -> list[str]:
+    """Only known publisher filenames within source-verified article prefix."""
+    from urllib.parse import quote
+    prefix = f"/{PMCID}.{version}/"
+    out = list(metadata_urls)
+    out.extend(f"{S3}/{quote(key, safe='/')}" for key in listed_keys
+               if key.startswith(prefix.lstrip("/"))
+               and key.split("/")[-1].lower() in ALLOWED)
+    # Explicit published source names: a 404 remains a legitimate negative probe.
+    out.extend(f"{S3}{prefix}{name}" for name in
+               ("ECE3-14-e11330-s001.docx", "ECE3-14-e11330-s002.docx"))
+    return list(dict.fromkeys(out))
+
+
+
 def docx_source_signals(raw: bytes) -> dict:
     """Diagnostic only: tokens are NOT sufficient evidence for the missing events."""
     with zipfile.ZipFile(io.BytesIO(raw)) as arc:
@@ -86,17 +113,29 @@ def run() -> dict:
         if not isinstance(meta, dict) or not metadata_is_source(meta):
             versions.append({"version": n, "metadata": "identity_or_license_not_verified"})
             continue
-        urls = media_urls(meta)
+        metadata_urls = media_urls(meta)
+        try:
+            listed_keys = cloud_file_names(n)
+            listing_state = "ok"
+        except (HTTPError, URLError, TimeoutError, ValueError, ET.ParseError) as e:
+            listed_keys = []
+            listing_state = type(e).__name__
+        urls = exact_candidate_urls(n, metadata_urls, listed_keys)
         v = {
             "version": n,
             "metadata": "source_identity_and_license_present",
+            "metadata_keys": sorted(meta.keys()),
             "license_code": str(meta.get("license_code")),
-            "media_count": len(urls),
+            "media_count": len(metadata_urls),
+            "bucket_listing": listing_state,
+            "bucket_object_count": len(listed_keys),
+            "bucket_object_names": [key.split("/")[-1] for key in listed_keys][:30],
             "candidate_files": [],
         }
         for u in urls:
             filename = unquote(urlparse(u).path.split("/")[-1])
-            if filename.lower() not in ALLOWED or filename.lower() in seen:
+            if (filename.lower() not in ALLOWED or filename.lower() in seen
+                    or not urlparse(u).path.startswith(f"/{PMCID}.{n}/")):
                 continue
             seen.add(filename.lower())
             rec = {"filename": filename, "url": u.split("?")[0]}
